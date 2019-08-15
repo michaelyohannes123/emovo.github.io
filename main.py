@@ -21,16 +21,16 @@ jinja_env=jinja2.Environment(
 #To run the code: dev_appserver.py app.yaml
 class StartPage(webapp2.RequestHandler): #get, post
     def get(self):
-        about_template=jinja_env.get_template('templates/start.html')
+        about_template=jinja_env.get_template('index.html')
         self.response.write(about_template.render())
 
 class InputPage(webapp2.RequestHandler):
     def get(self): #get input
-        input_template=jinja_env.get_template('templates/input.html')
+        input_template=jinja_env.get_template('input.html')
         vars={"username":"Bob"}
         self.response.write(about_template.render(vars))
     def post(self): #search
-        input_template=jinja_env.get_template('templates/loading.html')
+        input_template=jinja_env.get_template('loading.html')
         self.response.write(about_template.render())
 
 
