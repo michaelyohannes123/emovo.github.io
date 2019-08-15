@@ -6,33 +6,16 @@ from time import ctime
 import urllib2
 import json
 from flask import Flask,render_template
-
-app = Flask(__name__)
-csp = require('express-csp-header');
-app.use(csp({
-    policies: {
-        'default-src': [csp.NONE],
-        'img-src': [csp.SELF],
-    }
-}));
 @app.route('/')
 def homepage():
-    try:
-        x += 5
-        return "Hi there"
-    except Exception, e:
-        return str(e)
+    return render_template("index.html")
 
-@app.route('/input.html')
+@app.route('/input')
 def homepage():
-    try:
-        x += 5
-        return "Hi there"
-    except Exception, e:
-        return str(e)
+    return render_template("contact.html")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 '''jinja_env=jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
