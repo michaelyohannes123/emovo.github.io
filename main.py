@@ -2,14 +2,9 @@ import webapp2
 import jinja2
 import os
 import datetime
-from google.appengine.ext import ndb
-from google.appengine.api import urlfetch
-from google.appengine.api import users
 from time import ctime
-import uuid
 import urllib2
 import json
-import random
 
 jinja_env=jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
