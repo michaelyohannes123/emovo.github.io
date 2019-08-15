@@ -8,7 +8,13 @@ import json
 from flask import Flask,render_template
 
 app = Flask(__name__)
-
+const csp = require('express-csp-header');
+app.use(csp({
+    policies: {
+        'default-src': [csp.NONE],
+        'img-src': [csp.SELF],
+    }
+}));
 @app.route('/')
 def homepage():
     try:
