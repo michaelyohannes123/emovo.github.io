@@ -8,6 +8,15 @@ import json
 from flask import Flask,render_template
 
 app = Flask(__name__)
+app.use(cors());
+app.options('*',cors());
+var allowCrossDomain = function(req,res,next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+app.use(allowCrossDomain);
 const csp = require('express-csp-header');
 app.use(csp({
     policies: {
