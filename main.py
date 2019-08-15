@@ -1,12 +1,33 @@
-import webapp2
-import jinja2
+#import webapp2
+#import jinja2
 import os
 import datetime
 from time import ctime
 import urllib2
 import json
+from flask import Flask,render_template
 
-jinja_env=jinja2.Environment(
+app = Flask(__name__)
+
+@app.route('/')
+def homepage():
+    try:
+        x += 5
+        return "Hi there"
+    except Exception, e:
+        return str(e)
+
+@app.route('/dog')
+def homepage():
+    try:
+        x += 5
+        return "Hi there"
+    except Exception, e:
+        return str(e)
+
+if __name__ == "__main__":
+    app.run()
+'''jinja_env=jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     undefined=jinja2.StrictUndefined, #catches template errors
@@ -32,4 +53,4 @@ class InputPage(webapp2.RequestHandler):
 
 app=webapp2.WSGIApplication([
     ('/', StartPage), ('/input', InputPage)
-], debug=True)
+], debug=True)'''
