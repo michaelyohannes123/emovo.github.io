@@ -5,7 +5,6 @@ import datetime
 from time import ctime
 import urllib2
 import json
-import cherrypy
 
 jinja_env=jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -16,13 +15,10 @@ jinja_env=jinja2.Environment(
 #http://127.0.0.1:8000/
 #To run the code: dev_appserver.py app.yaml
 class StartPage(webapp2.RequestHandler): #get, post
-    @cherrypy.expose
     def get(self):
         about_template=jinja_env.get_template('index.html')
-        index = open("index.html").read().format(username='goodbye')
         #vars={"username":"Bob"}
         self.response.write(about_template.render())
-        return index
 
 class InputPage(webapp2.RequestHandler):
     def get(self): #get input
