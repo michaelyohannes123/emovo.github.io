@@ -18,6 +18,7 @@ class StartPage(webapp2.RequestHandler): #get, post
     def get(self):
         about_template=jinja_env.get_template('index.html')
         vars={"username":"Bob"}
+        self.respone.write("hi")
         self.response.write(about_template.render(vars))
 
 class InputPage(webapp2.RequestHandler):
