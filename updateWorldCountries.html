@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title></title>
+<meta charset="UTF-8">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<style>
+.selected {
+    color:red;
+}
+.highlight {
+    background:yellow;
+}
+</style>
+</head>
+<body>
+<script>
+window.onload=function(){
+var freeIndices={"Abkhazia *":{"FREEINDEX":"41"},"Afghanistan":{"FREEINDEX":"26"},"Albania":{"FREEINDEX":"68"},"Algeria":{"FREEINDEX":"35"},"Andorra":{"FREEINDEX":"96"},"Angola":{"FREEINDEX":"26"},"Antigua and Barbuda":{"FREEINDEX":"83"},"Argentina":{"FREEINDEX":"83"},"Armenia":{"FREEINDEX":"45"},"Australia":{"FREEINDEX":"98"},"Austria":{"FREEINDEX":"94"},"Azerbaijan":{"FREEINDEX":"12"},"Bahamas":{"FREEINDEX":"91"},"Bahrain":{"FREEINDEX":"12"},"Bangladesh":{"FREEINDEX":"45"},"Barbados":{"FREEINDEX":"96"},"Belarus":{"FREEINDEX":"21"},"Belgium":{"FREEINDEX":"95"},"Belize":{"FREEINDEX":"86"},"Benin":{"FREEINDEX":"82"},"Bhutan":{"FREEINDEX":"55"},"Bolivia":{"FREEINDEX":"67"},"Bosnia and Herzegovina":{"FREEINDEX":"55"},"Botswana":{"FREEINDEX":"72"},"Brazil":{"FREEINDEX":"78"},"Brunei Darussalam":{"FREEINDEX":"28"},"Bulgaria":{"FREEINDEX":"80"},"Burkina Faso":{"FREEINDEX":"60"},"Burundi":{"FREEINDEX":"18"},"Cambodia":{"FREEINDEX":"30"},"Cameroon":{"FREEINDEX":"22"},"Canada":{"FREEINDEX":"99"},"Cabo Verde":{"FREEINDEX":"90"},"Central African Republic":{"FREEINDEX":"9"},"Chad":{"FREEINDEX":"18"},"Chile":{"FREEINDEX":"94"},"China":{"FREEINDEX":"14"},"Colombia":{"FREEINDEX":"65"},"Comoros":{"FREEINDEX":"55"},"Democratic Republic of the Congo":{"FREEINDEX":"17"},"Congo":{"FREEINDEX":"21"},"Costa Rica":{"FREEINDEX":"91"},"Crimea *":{"FREEINDEX":"9"},"Croatia":{"FREEINDEX":"86"},"Cuba":{"FREEINDEX":"14"},"Cyprus":{"FREEINDEX":"94"},"Czech Republic":{"FREEINDEX":"93"},"Côte d'Ivoire":{"FREEINDEX":"51"},"Denmark":{"FREEINDEX":"97"},"Djibouti":{"FREEINDEX":"26"},"Dominica":{"FREEINDEX":"93"},"Dominican Republic":{"FREEINDEX":"67"},"Ecuador":{"FREEINDEX":"60"},"Egypt":{"FREEINDEX":"26"},"El Salvador":{"FREEINDEX":"70"},"Equatorial Guinea":{"FREEINDEX":"7"},"Eritrea":{"FREEINDEX":"3"},"Estonia":{"FREEINDEX":"94"},"Swaziland":{"FREEINDEX":"16"},"Ethiopia":{"FREEINDEX":"12"},"Fiji":{"FREEINDEX":"59"},"Finland":{"FREEINDEX":"100"},"France":{"FREEINDEX":"90"},"Gabon":{"FREEINDEX":"23"},"Gambia":{"FREEINDEX":"41"},"Palestine":{"FREEINDEX":"12"},"Georgia":{"FREEINDEX":"64"},"Germany":{"FREEINDEX":"94"},"Ghana":{"FREEINDEX":"83"},"Greece":{"FREEINDEX":"85"},"Grenada":{"FREEINDEX":"88"},"Guatemala":{"FREEINDEX":"56"},"Guinea":{"FREEINDEX":"41"},"Guinea-Bissau":{"FREEINDEX":"41"},"Guyana":{"FREEINDEX":"74"},"Haiti":{"FREEINDEX":"41"},"Honduras":{"FREEINDEX":"46"},"Hong Kong":{"FREEINDEX":"59"},"Hungary":{"FREEINDEX":"72"},"Iceland":{"FREEINDEX":"95"},"India":{"FREEINDEX":"77"},"Indian Kashmir *":{"FREEINDEX":"49"},"Indonesia":{"FREEINDEX":"64"},"Iran":{"FREEINDEX":"18"},"Iraq":{"FREEINDEX":"31"},"Ireland":{"FREEINDEX":"96"},"Israel":{"FREEINDEX":"79"},"Italy":{"FREEINDEX":"89"},"Jamaica":{"FREEINDEX":"77"},"Japan":{"FREEINDEX":"96"},"Jordan":{"FREEINDEX":"37"},"Kazakhstan":{"FREEINDEX":"22"},"Kenya":{"FREEINDEX":"48"},"Kiribati":{"FREEINDEX":"93"},"Republic of Kosovo":{"FREEINDEX":"52"},"Kuwait":{"FREEINDEX":"36"},"Kyrgyzstan":{"FREEINDEX":"37"},"Lao People's Democratic Republic":{"FREEINDEX":"12"},"Latvia":{"FREEINDEX":"87"},"Lebanon":{"FREEINDEX":"43"},"Lesotho":{"FREEINDEX":"64"},"Liberia":{"FREEINDEX":"62"},"Libya":{"FREEINDEX":"9"},"Liechtenstein":{"FREEINDEX":"90"},"Lithuania":{"FREEINDEX":"91"},"Luxembourg":{"FREEINDEX":"98"},"North Macedonia":{"FREEINDEX":"58"},"Madagascar":{"FREEINDEX":"56"},"Malawi":{"FREEINDEX":"63"},"Malaysia":{"FREEINDEX":"45"},"Maldives":{"FREEINDEX":"35"},"Mali":{"FREEINDEX":"44"},"Malta":{"FREEINDEX":"92"},"Marshall Islands":{"FREEINDEX":"92"},"Mauritania":{"FREEINDEX":"30"},"Mauritius":{"FREEINDEX":"89"},"Mexico":{"FREEINDEX":"62"},"Micronesia (Federated States of)":{"FREEINDEX":"93"},"Moldova (Republic of)":{"FREEINDEX":"61"},"Monaco":{"FREEINDEX":"82"},"Mongolia":{"FREEINDEX":"85"},"Montenegro":{"FREEINDEX":"67"},"Morocco":{"FREEINDEX":"39"},"Mozambique":{"FREEINDEX":"52"},"Myanmar":{"FREEINDEX":"31"},"Nagorno-Karabakh *":{"FREEINDEX":"30"},"Namibia":{"FREEINDEX":"77"},"Nauru":{"FREEINDEX":"81"},"Nepal":{"FREEINDEX":"55"},"Netherlands":{"FREEINDEX":"99"},"New Zealand":{"FREEINDEX":"98"},"Nicaragua":{"FREEINDEX":"44"},"Niger":{"FREEINDEX":"49"},"Nigeria":{"FREEINDEX":"50"},"North Korea":{"FREEINDEX":"3"},"Northern Cyprus *":{"FREEINDEX":"81"},"Norway":{"FREEINDEX":"100"},"Oman":{"FREEINDEX":"23"},"Pakistan":{"FREEINDEX":"43"},"Pakistani Kashmir *":{"FREEINDEX":"28"},"Palau":{"FREEINDEX":"92"},"Panama":{"FREEINDEX":"83"},"Papua New Guinea":{"FREEINDEX":"63"},"Paraguay":{"FREEINDEX":"64"},"Peru":{"FREEINDEX":"73"},"Philippines":{"FREEINDEX":"62"},"Poland":{"FREEINDEX":"85"},"Portugal":{"FREEINDEX":"97"},"Qatar":{"FREEINDEX":"24"},"Romania":{"FREEINDEX":"84"},"Russian Federation":{"FREEINDEX":"20"},"Rwanda":{"FREEINDEX":"23"},"Samoa":{"FREEINDEX":"80"},"San Marino":{"FREEINDEX":"97"},"Saudi Arabia":{"FREEINDEX":"7"},"Senegal":{"FREEINDEX":"75"},"Serbia":{"FREEINDEX":"73"},"Seychelles":{"FREEINDEX":"71"},"Sierra Leone":{"FREEINDEX":"66"},"Singapore":{"FREEINDEX":"52"},"Slovakia":{"FREEINDEX":"89"},"Slovenia":{"FREEINDEX":"93"},"Solomon Islands":{"FREEINDEX":"72"},"Somalia":{"FREEINDEX":"7"},"Somaliland *":{"FREEINDEX":"44"},"South Africa":{"FREEINDEX":"78"},"South Korea":{"FREEINDEX":"84"},"South Ossetia *":{"FREEINDEX":"10"},"South Sudan":{"FREEINDEX":"2"},"Spain":{"FREEINDEX":"94"},"Sri Lanka":{"FREEINDEX":"55"},"Saint Kitts and Nevis":{"FREEINDEX":"89"},"Saint Lucia":{"FREEINDEX":"91"},"Saint Vincent and the Grenadines":{"FREEINDEX":"90"},"Sudan":{"FREEINDEX":"8"},"Suriname":{"FREEINDEX":"78"},"Sweden":{"FREEINDEX":"100"},"Switzerland":{"FREEINDEX":"96"},"Syrian Arab Republic":{"FREEINDEX":"-1"},"Sao Tome and Principe":{"FREEINDEX":"82"},"Taiwan":{"FREEINDEX":"93"},"Tajikistan":{"FREEINDEX":"11"},"Tanzania":{"FREEINDEX":"52"},"Thailand":{"FREEINDEX":"31"},"Tibet *":{"FREEINDEX":"1"},"Timor-Leste":{"FREEINDEX":"69"},"Togo":{"FREEINDEX":"47"},"Tonga":{"FREEINDEX":"75"},"Transnistria *":{"FREEINDEX":"24"},"Trinidad and Tobago":{"FREEINDEX":"81"},"Tunisia":{"FREEINDEX":"70"},"Turkey":{"FREEINDEX":"32"},"Turkmenistan":{"FREEINDEX":"4"},"Tuvalu":{"FREEINDEX":"94"},"Uganda":{"FREEINDEX":"37"},"Ukraine":{"FREEINDEX":"62"},"Ukraine Україна (Translation)":{"FREEINDEX":"62"},"United Arab Emirates":{"FREEINDEX":"17"},"United Kingdom":{"FREEINDEX":"94"},"United States":{"FREEINDEX":"86"},"Uruguay":{"FREEINDEX":"98"},"Uzbekistan":{"FREEINDEX":"7"},"Vanuatu":{"FREEINDEX":"81"},"Venezuela":{"FREEINDEX":"26"},"Vietnam":{"FREEINDEX":"20"},"West Bank":{"FREEINDEX":"28"},"Western Sahara":{"FREEINDEX":"4"},"Yemen":{"FREEINDEX":"13"},"Zambia":{"FREEINDEX":"55"},"Zimbabwe":{"FREEINDEX":"30"},"Åland Islands":{"FREEINDEX":"100"},"American Samoa":{"FREEINDEX":"76.8"},"Aruba":{"FREEINDEX":"90"},"Anguilla":{"FREEINDEX":"90"},"Bermuda":{"FREEINDEX":"90"},"Bonaire, Sint Eustatius and Saba":{"FREEINDEX":"90"},"British Virgin Islands":{"FREEINDEX":"94"},"U.S. Virgin Islands":{"FREEINDEX":"86"},"Cayman Islands":{"FREEINDEX":"90"},"Cook Islands":{"FREEINDEX":"90"},"Curaçao":{"FREEINDEX":"90"},"Falkland Islands (Malvinas)":{"FREEINDEX":"90"},"Faroe Islands":{"FREEINDEX":"97"},"French Guiana":{"FREEINDEX":"76"},"French Polynesia":{"FREEINDEX":"90"},"Gibraltar":{"FREEINDEX":"90"},"Greenland":{"FREEINDEX":"97"},"Guadeloupe":{"FREEINDEX":"97"},"Guam":{"FREEINDEX":"86"},"Guernsey":{"FREEINDEX":"94"},"Holy See":{"FREEINDEX":"89"},"Isle of Man":{"FREEINDEX":"94"},"Jersey":{"FREEINDEX":"94"},"Mayotte":{"FREEINDEX":"55"},"Martinique":{"FREEINDEX":"90"},"Macao":{"FREEINDEX":"59"},"Montserrat":{"FREEINDEX":"94"},"New Caledonia":{"FREEINDEX":"90"},"Niue":{"FREEINDEX":"98"},"Northern Mariana Islands":{"FREEINDEX":"86"},"Puerto Rico":{"FREEINDEX":"86"},"Réunion":{"FREEINDEX":"90"},"Saint Martin (French part)":{"FREEINDEX":"90"},"Sint Maarten (Dutch part)":{"FREEINDEX":"90"},"Saint Pierre and Miquelon":{"FREEINDEX":"90"},"Tokelau":{"FREEINDEX":"98"},"Turks and Caicos Islands":{"FREEINDEX":"94"},"Wallis and Futuna":{"FREEINDEX":"90"}}//Aland uses Finland freeindex, American samoa uses american fi, caribbean countries w/o data get 90 based on nearby islands
+
+var crimeRates={"Burundi":{"CRIMERATE":"6.02"},"Comoros":{"CRIMERATE":"7.70"},"Djibouti":{"CRIMERATE":"6.48"},"Eritrea":{"CRIMERATE":"8.04"},"Ethiopia":{"CRIMERATE":"7.56"},"Kenya":{"CRIMERATE":"5.00"},"Madagascar":{"CRIMERATE":"7.69"},"Malawi":{"CRIMERATE":"1.73"},"Mauritius":{"CRIMERATE":"1.82"},"Mayotte":{"CRIMERATE":"5.93"},"Mozambique":{"CRIMERATE":"3.40"},"Réunion":{"CRIMERATE":"1.82"},"Rwanda":{"CRIMERATE":"2.52"},"Seychelles":{"CRIMERATE":"12.74"},"Somalia":{"CRIMERATE":"4.31"},"South Sudan":{"CRIMERATE":"13.90"},"Uganda":{"CRIMERATE":"11.00"},"Tanzania":{"CRIMERATE":"6.95"},"Zambia":{"CRIMERATE":"5.30"},"Zimbabwe":{"CRIMERATE":"6.67"},"Angola":{"CRIMERATE":"4.85"},"Cameroon":{"CRIMERATE":"1.40"},"Central African Republic":{"CRIMERATE":"19.76"},"Chad":{"CRIMERATE":"9.04"},"Congo":{"CRIMERATE":"9.32"},"Democratic Republic of the Congo":{"CRIMERATE":"13.55"},"Equatorial Guinea":{"CRIMERATE":"2.31"},"Gabon":{"CRIMERATE":"8.04"},"Sao Tome and Principe":{"CRIMERATE":"3.36"},"Algeria":{"CRIMERATE":"1.36"},"Egypt":{"CRIMERATE":"2.51"},"Libya":{"CRIMERATE":"2.50"},"Morocco":{"CRIMERATE":"2.10"},"Sudan":{"CRIMERATE":"5.16"},"Tunisia":{"CRIMERATE":"3.05"},"Botswana":{"CRIMERATE":"15.04"},"Swaziland":{"CRIMERATE":"9.50"},"Lesotho":{"CRIMERATE":"41.25"},"Namibia":{"CRIMERATE":"17.14"},"South Africa":{"CRIMERATE":"35.90"},"Benin":{"CRIMERATE":"1.10"},"Burkina Faso":{"CRIMERATE":"1.30"},"Cabo Verde":{"CRIMERATE":"11.49"},"Côte d'Ivoire":{"CRIMERATE":"11.63"},"Gambia":{"CRIMERATE":"9.13"},"Ghana":{"CRIMERATE":"2.10"},"Guinea":{"CRIMERATE":"8.82"},"Guinea-Bissau":{"CRIMERATE":"1.10"},"Liberia":{"CRIMERATE":"3.23"},"Mali":{"CRIMERATE":"10.90"},"Mauritania":{"CRIMERATE":"9.94"},"Niger":{"CRIMERATE":"4.44"},"Nigeria":{"CRIMERATE":"9.85"},"Saint Helena":{"CRIMERATE":"0.00"},"Senegal":{"CRIMERATE":"7.38"},"Sierra Leone":{"CRIMERATE":"1.71"},"Togo":{"CRIMERATE":"9.00"},"Anguilla":{"CRIMERATE":"27.66"},"Antigua and Barbuda":{"CRIMERATE":"10.33"},"Aruba":{"CRIMERATE":"1.93"},"Bahamas":{"CRIMERATE":"30.90"},"Barbados":{"CRIMERATE":"10.50"},"British Virgin Islands":{"CRIMERATE":"8.37"},"Cayman Islands":{"CRIMERATE":"8.45"},"Cuba":{"CRIMERATE":"4.99"},"Curaçao":{"CRIMERATE":"19.19"},"Dominica":{"CRIMERATE":"25.70"},"Dominican Republic":{"CRIMERATE":"11.30"},"Grenada":{"CRIMERATE":"11.10"},"Guadeloupe":{"CRIMERATE":"8.01"},"Haiti":{"CRIMERATE":"10.04"},"Jamaica":{"CRIMERATE":"57.00"},"Martinique":{"CRIMERATE":"2.78"},"Montserrat":{"CRIMERATE":"19.88"},"Puerto Rico":{"CRIMERATE":"18.50"},"Saint Kitts and Nevis":{"CRIMERATE":"34.23"},"Saint Lucia":{"CRIMERATE":"29.60"},"Saint Vincent and the Grenadines":{"CRIMERATE":"36.46"},"Trinidad and Tobago":{"CRIMERATE":"30.88"},"Turks and Caicos Islands":{"CRIMERATE":"5.93"},"U.S. Virgin Islands":{"CRIMERATE":"49.26"},"Belize":{"CRIMERATE":"37.90"},"Costa Rica":{"CRIMERATE":"12.30"},"El Salvador":{"CRIMERATE":"61.80"},"Guatemala":{"CRIMERATE":"26.10"},"Honduras":{"CRIMERATE":"41.70"},"Mexico":{"CRIMERATE":"24.8"},"Nicaragua":{"CRIMERATE":"7.37"},"Panama":{"CRIMERATE":"9.70"},"Bermuda":{"CRIMERATE":"8.20"},"Canada":{"CRIMERATE":"1.80"},"Greenland":{"CRIMERATE":"5.31"},"Saint Pierre and Miquelon":{"CRIMERATE":"15.93"},"United States":{"CRIMERATE":"5.30"},"Argentina":{"CRIMERATE":"5.10"},"Bolivia":{"CRIMERATE":"6.30"},"Brazil":{"CRIMERATE":"30.50"},"Chile":{"CRIMERATE":"4.30"},"Colombia":{"CRIMERATE":"24.90"},"Ecuador":{"CRIMERATE":"5.80"},"French Guiana":{"CRIMERATE":"13.15"},"Guyana":{"CRIMERATE":"14.80"},"Paraguay":{"CRIMERATE":"9.29"},"Peru":{"CRIMERATE":"7.70"},"Suriname":{"CRIMERATE":"5.50"},"Uruguay":{"CRIMERATE":"8.20"},"Venezuela":{"CRIMERATE":"56.33"},"Kazakhstan":{"CRIMERATE":"5.00"},"Kyrgyzstan":{"CRIMERATE":"4.20"},"Tajikistan":{"CRIMERATE":"1.61"},"Turkmenistan":{"CRIMERATE":"4.22"},"Uzbekistan":{"CRIMERATE":"1.10"},"China":{"CRIMERATE":"0.60"},"Hong Kong":{"CRIMERATE":"0.30"},"Macao":{"CRIMERATE":"0.3"},"Taiwan":{"CRIMERATE":"0.82"},"North Korea":{"CRIMERATE":"4.40"},"Japan":{"CRIMERATE":"0.20"},"Mongolia":{"CRIMERATE":"6.20"},"South Korea":{"CRIMERATE":"0.60"},"Brunei Darussalam":{"CRIMERATE":"0.49"},"Cambodia":{"CRIMERATE":"1.84"},"Indonesia":{"CRIMERATE":"0.40"},"Lao People's Democratic Republic":{"CRIMERATE":"7.01"},"Malaysia":{"CRIMERATE":"2.11"},"Myanmar":{"CRIMERATE":"2.27"},"Philippines":{"CRIMERATE":"8.40"},"Singapore":{"CRIMERATE":"0.20"},"Thailand":{"CRIMERATE":"3.24"},"Timor-Leste":{"CRIMERATE":"3.95"},"Vietnam":{"CRIMERATE":"1.52"},"Afghanistan":{"CRIMERATE":"7.10"},"Bangladesh":{"CRIMERATE":"2.20"},"Bhutan":{"CRIMERATE":"1.60"},"India":{"CRIMERATE":"3.22"},"Iran":{"CRIMERATE":"2.47"},"Maldives":{"CRIMERATE":"0.75"},"Nepal":{"CRIMERATE":"2.16"},"Pakistan":{"CRIMERATE":"4.20"},"Sri Lanka":{"CRIMERATE":"2.30"},"Armenia":{"CRIMERATE":"2.40"},"Azerbaijan":{"CRIMERATE":"2.00"},"Bahrain":{"CRIMERATE":"0.52"},"Cyprus":{"CRIMERATE":"0.60"},"Georgia":{"CRIMERATE":"0.99"},"Iraq":{"CRIMERATE":"9.85"},"Central Iraq":{"CRIMERATE":"10.08"},"Kurdistan Region (Iraq)":{"CRIMERATE":"2.20"},"Israel":{"CRIMERATE":"1.36"},"Jordan":{"CRIMERATE":"1.40"},"Kuwait":{"CRIMERATE":"1.80"},"Lebanon":{"CRIMERATE":"3.99"},"Oman":{"CRIMERATE":"0.50"},"Qatar":{"CRIMERATE":"0.38"},"Saudi Arabia":{"CRIMERATE":"1.30"},"Palestine":{"CRIMERATE":"0.69"},"Syrian Arab Republic":{"CRIMERATE":"2.20"},"Turkey":{"CRIMERATE":"4.31"},"United Arab Emirates":{"CRIMERATE":"0.50"},"Yemen":{"CRIMERATE":"6.66"},"Belarus":{"CRIMERATE":"3.58"},"Bulgaria":{"CRIMERATE":"1.50"},"Czech Republic":{"CRIMERATE":"0.60"},"Hungary":{"CRIMERATE":"2.50"},"Poland":{"CRIMERATE":"0.80"},"Moldova (Republic of)":{"CRIMERATE":"3.19"},"Romania":{"CRIMERATE":"1.50"},"Russian Federation":{"CRIMERATE":"9.20"},"Slovakia":{"CRIMERATE":"1.50"},"Ukraine":{"CRIMERATE":"6.20"},"Jersey":{"CRIMERATE":"0.00"},"Denmark":{"CRIMERATE":"1.20"},"Estonia":{"CRIMERATE":"2.20"},"Finland":{"CRIMERATE":"1.20"},"Iceland":{"CRIMERATE":"0.90"},"Ireland":{"CRIMERATE":"0.90"},"Isle of Man":{"CRIMERATE":"0.00"},"Latvia":{"CRIMERATE":"4.20"},"Lithuania":{"CRIMERATE":"4.50"},"Norway":{"CRIMERATE":"0.50"},"Sweden":{"CRIMERATE":"1.10"},"England and Wales":{"CRIMERATE":"1.20"},"Northern Ireland":{"CRIMERATE":"1.30"},"Scotland":{"CRIMERATE":"1.10"},"United Kingdom":{"CRIMERATE":"1.20"},"Albania":{"CRIMERATE":"2.30"},"Andorra":{"CRIMERATE":"0.00"},"Bosnia and Herzegovina":{"CRIMERATE":"1.20"},"Croatia":{"CRIMERATE":"1.10"},"Gibraltar":{"CRIMERATE":"3.01"},"Greece":{"CRIMERATE":"0.70"},"Holy See":{"CRIMERATE":"0.00"},"Italy":{"CRIMERATE":"0.67"},"Republic of Kosovo":{"CRIMERATE":"1.60"},"Malta":{"CRIMERATE":"0.94"},"Montenegro":{"CRIMERATE":"2.40"},"Portugal":{"CRIMERATE":"0.70"},"San Marino":{"CRIMERATE":"0.00"},"Serbia":{"CRIMERATE":"1.10"},"Slovenia":{"CRIMERATE":"0.90"},"Spain":{"CRIMERATE":"0.70"},"North Macedonia":{"CRIMERATE":"1.50"},"Austria":{"CRIMERATE":"0.66"},"Belgium":{"CRIMERATE":"1.70"},"France":{"CRIMERATE":"1.30"},"Germany":{"CRIMERATE":"1.00"},"Liechtenstein":{"CRIMERATE":"0.00"},"Luxembourg":{"CRIMERATE":"0.30"},"Monaco":{"CRIMERATE":"0.00"},"Netherlands":{"CRIMERATE":"0.80"},"Switzerland":{"CRIMERATE":"0.50"},"Australia":{"CRIMERATE":"0.80"},"New Zealand":{"CRIMERATE":"0.70"},"Fiji":{"CRIMERATE":"2.26"},"New Caledonia":{"CRIMERATE":"3.23"},"Papua New Guinea":{"CRIMERATE":"7.85"},"Solomon Islands":{"CRIMERATE":"3.77"},"Vanuatu":{"CRIMERATE":"2.13"},"Guam":{"CRIMERATE":"2.51"},"Kiribati":{"CRIMERATE":"7.50"},"Micronesia (Federated States of)":{"CRIMERATE":"4.67"},"Nauru":{"CRIMERATE":"0.00"},"Palau":{"CRIMERATE":"3.11"},"American Samoa":{"CRIMERATE":"5.40"},"Cook Islands":{"CRIMERATE":"3.49"},"French Polynesia":{"CRIMERATE":"0.38"},"Niue":{"CRIMERATE":"0.00"},"Samoa":{"CRIMERATE":"3.15"},"Tonga":{"CRIMERATE":"0.95"},"Tuvalu":{"CRIMERATE":"18.65"},"Åland Islands":{"CRIMERATE":"0.00"}, "Bonaire, Sint Eustatius and Saba":{"CRIMERATE":"6.00"}, "Falkland Islands (Malvinas)":{"CRIMERATE":"0.00"}, "Faroe Islands":{"CRIMERATE":"0.00"}, "Guernsey":{"CRIMERATE":"0.279"}, "Marshall Islands":{"CRIMERATE":"0.00"}, "Northern Mariana Islands":{"CRIMERATE":"0.00"}, "Saint Martin (French part)":{"CRIMERATE":"0.00"},"Sint Maarten (Dutch part)":{"CRIMERATE":"0.00"}, "Tokelau":{"CRIMERATE":"0.00"}, "Wallis and Futuna":{"CRIMERATE":"0.00"}, "Western Sahara":{"CRIMERATE":"2.10"}}
+var ageValues={"Monaco":{"AGE":"89.4"},"Japan":{"AGE":"85.3"},"Singapore":{"AGE":"85.2"},"Macao":{"AGE":"84.6"},"San Marino":{"AGE":"83.3"},"Iceland":{"AGE":"83.1"},"Hong Kong":{"AGE":"83"},"Andorra":{"AGE":"82.9"},"Guernsey":{"AGE":"82.6"},"Switzerland":{"AGE":"82.6"},"Israel":{"AGE":"82.5"},"South Korea":{"AGE":"82.5"},"Luxembourg":{"AGE":"82.3"},"Australia":{"AGE":"82.3"},"Italy":{"AGE":"82.3"},"Sweden":{"AGE":"82.1"},"Canada":{"AGE":"81.9"},"Jersey":{"AGE":"81.9"},"Liechtenstein":{"AGE":"81.9"},"France":{"AGE":"81.9"},"Norway":{"AGE":"81.9"},"Spain":{"AGE":"81.8"},"Austria":{"AGE":"81.6"},"Anguilla":{"AGE":"81.5"},"Bermuda":{"AGE":"81.4"},"Netherlands":{"AGE":"81.4"},"Cayman Islands":{"AGE":"81.3"},"Isle of Man":{"AGE":"81.3"},"New Zealand":{"AGE":"81.3"},"Belgium":{"AGE":"81.1"},"Finland":{"AGE":"81"},"Ireland":{"AGE":"80.9"},"Puerto Rico":{"AGE":"80.9"},"Germany":{"AGE":"80.8"},"United Kingdom":{"AGE":"80.8"},"Greece":{"AGE":"80.7"},"Saint Pierre and Miquelon":{"AGE":"80.6"},"Faroe Islands":{"AGE":"80.5"},"Malta":{"AGE":"80.5"},"European Union":{"AGE":"80.2"},"Taiwan":{"AGE":"80.2"},"Turks and Caicos Islands":{"AGE":"80"},"United States":{"AGE":"80"},"Wallis and Futuna":{"AGE":"79.8"},"Saint Helena, Ascension and Tristan da Cunha":{"AGE":"79.6"},"Gibraltar":{"AGE":"79.6"},"Denmark":{"AGE":"79.5"},"Portugal":{"AGE":"79.4"},"U.S. Virgin Islands":{"AGE":"79.4"},"Bahrain":{"AGE":"79"},"Chile":{"AGE":"78.9"},"Cuba":{"AGE":"78.8"},"Cyprus":{"AGE":"78.8"},"Qatar":{"AGE":"78.8"},"British Virgin Islands":{"AGE":"78.8"},"Panama":{"AGE":"78.8"},"Czech Republic":{"AGE":"78.8"},"Costa Rica":{"AGE":"78.7"},"Albania":{"AGE":"78.5"},"Curaçao":{"AGE":"78.5"},"Slovenia":{"AGE":"78.3"},"Dominican Republic":{"AGE":"78.3"},"Sint Maarten (Dutch part)":{"AGE":"78.3"},"Kuwait":{"AGE":"78.2"},"New Caledonia":{"AGE":"77.9"},"Saint Lucia":{"AGE":"77.9"},"Lebanon":{"AGE":"77.8"},"Poland":{"AGE":"77.8"},"United Arab Emirates":{"AGE":"77.7"},"French Polynesia":{"AGE":"77.4"},"Paraguay":{"AGE":"77.4"},"Uruguay":{"AGE":"77.4"},"Brunei Darussalam":{"AGE":"77.3"},"Argentina":{"AGE":"77.3"},"Slovakia":{"AGE":"77.3"},"Dominica":{"AGE":"77.2"},"Morocco":{"AGE":"77.1"},"Algeria":{"AGE":"77"},"Ecuador":{"AGE":"77"},"Aruba":{"AGE":"76.9"},"Sri Lanka":{"AGE":"76.9"},"Bosnia and Herzegovina":{"AGE":"76.9"},"Estonia":{"AGE":"76.9"},"China":{"AGE":"76.7"},"Antigua and Barbuda":{"AGE":"76.7"},"Libya":{"AGE":"76.7"},"Georgia":{"AGE":"76.4"},"North Macedonia":{"AGE":"76.4"},"Tonga":{"AGE":"76.4"},"Croatia":{"AGE":"76.1"},"Hungary":{"AGE":"76.1"},"Mexico":{"AGE":"76.1"},"Venezuela":{"AGE":"76"},"Cook Islands":{"AGE":"76"},"Guam":{"AGE":"76"},"Colombia":{"AGE":"75.9"},"Saint Kitts and Nevis":{"AGE":"75.9"},"Maldives":{"AGE":"75.8"},"Mauritius":{"AGE":"75.8"},"Oman":{"AGE":"75.7"},"Serbia":{"AGE":"75.7"},"Tunisia":{"AGE":"75.7"},"Solomon Islands":{"AGE":"75.6"},"Saint Vincent and the Grenadines":{"AGE":"73.5"},"Barbados":{"AGE":"75.5"},"Saudi Arabia":{"AGE":"75.5"},"Northern Mariana Islands":{"AGE":"75.4"},"Romania":{"AGE":"75.4"},"Malaysia":{"AGE":"75.2"},"West Bank":{"AGE":"75.2"},"Syrian Arab Republic":{"AGE":"75.1"},"Lithuania":{"AGE":"75"},"Turkey":{"AGE":"75"},"Iraq":{"AGE":"74.9"},"El Salvador":{"AGE":"74.9"},"Seychelles":{"AGE":"74.9"},"Thailand":{"AGE":"74.9"},"Armenia":{"AGE":"74.9"},"Jordan":{"AGE":"74.8"},"Bulgaria":{"AGE":"74.7"},"Latvia":{"AGE":"74.7"},"Montserrat":{"AGE":"74.6"},"Grenada":{"AGE":"74.5"},"Palestine":{"AGE":"74.2"},"Samoa":{"AGE":"74"},"Brazil":{"AGE":"74"},"Uzbekistan":{"AGE":"74"},"Peru":{"AGE":"74"},"Iran":{"AGE":"74"},"Jamaica":{"AGE":"73.7"},"Vanuatu":{"AGE":"73.7"},"Vietnam":{"AGE":"73.7"},"Bangladesh":{"AGE":"73.4"},"Nicaragua":{"AGE":"73.4"},"American Samoa":{"AGE":"73.4"},"Marshall Islands":{"AGE":"73.4"},"Palau":{"AGE":"73.4"},"Micronesia (Federated States of)":{"AGE":"73.1"},"Trinidad and Tobago":{"AGE":"73.1"},"Belarus":{"AGE":"73"},"Egypt":{"AGE":"73"},"Fiji":{"AGE":"73"},"Indonesia":{"AGE":"73"},"Azerbaijan":{"AGE":"72.8"},"Greenland":{"AGE":"72.6"},"Bahamas":{"AGE":"72.6"},"Guatemala":{"AGE":"72.6"},"Suriname":{"AGE":"72.5"},"Cabo Verde":{"AGE":"72.4"},"Ukraine":{"AGE":"72.1"},"Honduras":{"AGE":"71.2"},"Kazakhstan":{"AGE":"71.1"},"Moldova (Republic of)":{"AGE":"71"},"Nepal":{"AGE":"71"},"Russian Federation":{"AGE":"71"},"Kyrgyzstan":{"AGE":"70.9"},"North Korea":{"AGE":"70.7"},"Bhutan":{"AGE":"70.6"},"Turkmenistan":{"AGE":"70.4"},"Mongolia":{"AGE":"69.9"},"Bolivia":{"AGE":"69.5"},"Philippines":{"AGE":"69.4"},"Belize":{"AGE":"68.9"},"India":{"AGE":"68.8"},"Guyana":{"AGE":"68.6"},"Timor-Leste":{"AGE":"68.4"},"Myanmar":{"AGE":"68.2"},"Pakistan":{"AGE":"68.1"},"Tajikistan":{"AGE":"68.1"},"Nauru":{"AGE":"67.4"},"Papua New Guinea":{"AGE":"67.3"},"Ghana":{"AGE":"67"},"Tuvalu":{"AGE":"66.9"},"Kiribati":{"AGE":"66.5"},"Madagascar":{"AGE":"66.3"},"Yemen":{"AGE":"65.9"},"Togo":{"AGE":"65.4"},"Sao Tome and Principe":{"AGE":"65.3"},"Eritrea":{"AGE":"65.2"},"Gambia":{"AGE":"65.1"},"Cambodia":{"AGE":"64.9"},"Lao People's Democratic Republic":{"AGE":"64.6"},"Comoros":{"AGE":"64.6"},"Equatorial Guinea":{"AGE":"64.6"},"Sudan":{"AGE":"64.4"},"Kenya":{"AGE":"64.3"},"Rwanda":{"AGE":"64.3"},"Haiti":{"AGE":"64.2"},"Namibia":{"AGE":"64"},"South Africa":{"AGE":"63.8"},"Djibouti":{"AGE":"63.6"},"Sahrawi Arab Democratic Republic":{"AGE":"63.4"},"Mauritania":{"AGE":"63.4"},"Botswana":{"AGE":"63.3"},"Liberia":{"AGE":"63.3"},"Ethiopia":{"AGE":"62.6"},"Tanzania":{"AGE":"62.6"},"Benin":{"AGE":"62.3"},"Senegal":{"AGE":"62.1"},"Malawi":{"AGE":"61.7"},"Guinea":{"AGE":"61"},"Burundi":{"AGE":"60.9"},"Zimbabwe":{"AGE":"60.4"},"Mali":{"AGE":"60.3"},"Angola":{"AGE":"60.2"},"Congo":{"AGE":"59.8"},"Côte d'Ivoire":{"AGE":"59"},"Cameroon":{"AGE":"59"},"Sierra Leone":{"AGE":"58.6"},"Democratic Republic of the Congo":{"AGE":"57.7"},"Burkina Faso":{"AGE":"55.9"},"Niger":{"AGE":"55.9"},"Uganda":{"AGE":"55.9"},"Nigeria":{"AGE":"53.8"},"Mozambique":{"AGE":"53.7"},"Lesotho":{"AGE":"53"},"Somalia":{"AGE":"52.8"},"Central African Republic":{"AGE":"52.8"},"Zambia":{"AGE":"52.7"},"Gabon":{"AGE":"52.1"},"Swaziland":{"AGE":"52.1"},"Afghanistan":{"AGE":"51.7"},"Guinea-Bissau":{"AGE":"51"},"Chad":{"AGE":"50.6"},"Åland Islands":{"AGE":"81"},"Bonaire, Sint Eustatius and Saba":{"AGE":"80.2"},"Falkland Islands (Malvinas)":{"AGE":"77.9"},"French Guiana":{"AGE":"78.98"},"Guadeloupe":{"AGE":"80.56"},"Holy See":{"AGE":"77.56"},"Martinique":{"AGE":"81.18"},"Mayotte":{"AGE":"79.34"},"Montenegro":{"AGE":"76.1"},"Niue":{"AGE":"71.5"},"Réunion":{"AGE":"79.54"},"Republic of Kosovo":{"AGE":"71.65"},"Saint Martin (French part)":{"AGE":"79.47"},"South Sudan":{"AGE":"55.06"},"Tokelau":{"AGE":"69"},"Western Sahara":{"AGE":"67.61"}}
+var hdiValues={"Norway":{"HDI":"0.953"},"Switzerland":{"HDI":"0.944"},"Australia":{"HDI":"0.939"},"Ireland":{"HDI":"0.938"},"Germany":{"HDI":"0.936"},"Iceland":{"HDI":"0.935"},"Hong Kong":{"HDI":"0.933"},"Sweden":{"HDI":"0.933"},"Singapore":{"HDI":"0.932"},"Netherlands":{"HDI":"0.931"},"Denmark":{"HDI":"0.929"},"Canada":{"HDI":"0.926"},"United States":{"HDI":"0.924"},"United Kingdom":{"HDI":"0.922"},"Finland":{"HDI":"0.920"},"New Zealand":{"HDI":"0.917"},"Belgium":{"HDI":"0.916"},"Liechtenstein":{"HDI":"0.916"},"Japan":{"HDI":"0.909"},"Austria":{"HDI":"0.908"},"Luxembourg":{"HDI":"0.904"},"Israel":{"HDI":"0.903"},"South Korea":{"HDI":"0.903"},"France":{"HDI":"0.901"},"Slovenia":{"HDI":"0.896"},"Spain":{"HDI":"0.891"},"Czech Republic":{"HDI":"0.888"},"Italy":{"HDI":"0.880"},"Malta":{"HDI":"0.878"},"Estonia":{"HDI":"0.871"},"Greece":{"HDI":"0.870"},"Cyprus":{"HDI":"0.869"},"Poland":{"HDI":"0.865"},"United Arab Emirates":{"HDI":"0.863"},"Andorra":{"HDI":"0.858"},"Lithuania":{"HDI":"0.858"},"Qatar":{"HDI":"0.856"},"Slovakia":{"HDI":"0.855"},"Brunei Darussalam":{"HDI":"0.853"},"Saudi Arabia":{"HDI":"0.853"},"Latvia":{"HDI":"0.847"},"Portugal":{"HDI":"0.847"},"Bahrain":{"HDI":"0.846"},"Chile":{"HDI":"0.843"},"Hungary":{"HDI":"0.838"},"Croatia":{"HDI":"0.831"},"Argentina":{"HDI":"0.825"},"Oman":{"HDI":"0.821"},"Russian Federation":{"HDI":"0.816"},"Montenegro":{"HDI":"0.814"},"Bulgaria":{"HDI":"0.813"},"Romania":{"HDI":"0.811"},"Belarus":{"HDI":"0.808"},"Bahamas":{"HDI":"0.807"},"Uruguay":{"HDI":"0.804"},"Kuwait":{"HDI":"0.803"},"Malaysia":{"HDI":"0.802"},"Barbados":{"HDI":"0.800"},"Kazakhstan":{"HDI":"0.800"},"HIGH HUMAN DEVELOPMENT":{"HDI":""},"Iran":{"HDI":"0.798"},"Palau":{"HDI":"0.798"},"Seychelles":{"HDI":"0.797"},"Costa Rica":{"HDI":"0.794"},"Turkey":{"HDI":"0.791"},"Mauritius":{"HDI":"0.790"},"Panama":{"HDI":"0.789"},"Serbia":{"HDI":"0.787"},"Albania":{"HDI":"0.785"},"Trinidad and Tobago":{"HDI":"0.784"},"Antigua and Barbuda":{"HDI":"0.780"},"Georgia":{"HDI":"0.780"},"Saint Kitts and Nevis":{"HDI":"0.778"},"Cuba":{"HDI":"0.777"},"Mexico":{"HDI":"0.774"},"Grenada":{"HDI":"0.772"},"Sri Lanka":{"HDI":"0.770"},"Bosnia and Herzegovina":{"HDI":"0.768"},"Venezuela":{"HDI":"0.761"},"Brazil":{"HDI":"0.759"},"Azerbaijan":{"HDI":"0.757"},"Lebanon":{"HDI":"0.757"},"North Macedonia":{"HDI":"0.757"},"Armenia":{"HDI":"0.755"},"Thailand":{"HDI":"0.755"},"Algeria":{"HDI":"0.754"},"China":{"HDI":"0.752"},"Ecuador":{"HDI":"0.752"},"Ukraine":{"HDI":"0.751"},"Peru":{"HDI":"0.750"},"Colombia":{"HDI":"0.747"},"Saint Lucia":{"HDI":"0.747"},"Fiji":{"HDI":"0.741"},"Mongolia":{"HDI":"0.741"},"Dominican Republic":{"HDI":"0.736"},"Jordan":{"HDI":"0.735"},"Tunisia":{"HDI":"0.735"},"Jamaica":{"HDI":"0.732"},"Tonga":{"HDI":"0.726"},"Saint Vincent and the Grenadines":{"HDI":"0.723"},"Suriname":{"HDI":"0.720"},"Botswana":{"HDI":"0.717"},"Maldives":{"HDI":"0.717"},"Dominica":{"HDI":"0.715"},"Samoa":{"HDI":"0.713"},"Uzbekistan":{"HDI":"0.710"},"Belize":{"HDI":"0.708"},"Marshall Islands":{"HDI":"0.708"},"Libya":{"HDI":"0.706"},"Turkmenistan":{"HDI":"0.706"},"Gabon":{"HDI":"0.702"},"Paraguay":{"HDI":"0.702"},"Moldova (Republic of)":{"HDI":"0.700"},"MEDIUM HUMAN DEVELOPMENT":{"HDI":""},"Philippines":{"HDI":"0.699"},"South Africa":{"HDI":"0.699"},"Egypt":{"HDI":"0.696"},"Indonesia":{"HDI":"0.694"},"Vietnam":{"HDI":"0.694"},"Bolivia":{"HDI":"0.693"},"Palestine":{"HDI":"0.686"},"Iraq":{"HDI":"0.685"},"El Salvador":{"HDI":"0.674"},"Kyrgyzstan":{"HDI":"0.672"},"Morocco":{"HDI":"0.667"},"Nicaragua":{"HDI":"0.658"},"Cabo Verde":{"HDI":"0.654"},"Guyana":{"HDI":"0.654"},"Guatemala":{"HDI":"0.650"},"Tajikistan":{"HDI":"0.650"},"Namibia":{"HDI":"0.647"},"India":{"HDI":"0.640"},"Micronesia (Federated States of)":{"HDI":"0.627"},"Timor-Leste":{"HDI":"0.625"},"Honduras":{"HDI":"0.617"},"Bhutan":{"HDI":"0.612"},"Kiribati":{"HDI":"0.612"},"Bangladesh":{"HDI":"0.608"},"Congo":{"HDI":"0.606"},"Vanuatu":{"HDI":"0.603"},"Lao People's Democratic Republic":{"HDI":"0.601"},"Ghana":{"HDI":"0.592"},"Equatorial Guinea":{"HDI":"0.591"},"Kenya":{"HDI":"0.590"},"Sao Tome and Principe":{"HDI":"0.589"},"Swaziland":{"HDI":"0.588"},"Zambia":{"HDI":"0.588"},"Cambodia":{"HDI":"0.582"},"Angola":{"HDI":"0.581"},"Myanmar":{"HDI":"0.578"},"Nepal":{"HDI":"0.574"},"Pakistan":{"HDI":"0.562"},"Cameroon":{"HDI":"0.556"},"LOW HUMAN DEVELOPMENT":{"HDI":""},"Solomon Islands":{"HDI":"0.546"},"Papua New Guinea":{"HDI":"0.544"},"Tanzania":{"HDI":"0.538"},"Syrian Arab Republic":{"HDI":"0.536"},"Zimbabwe":{"HDI":"0.535"},"Nigeria":{"HDI":"0.532"},"Rwanda":{"HDI":"0.524"},"Lesotho":{"HDI":"0.520"},"Mauritania":{"HDI":"0.520"},"Madagascar":{"HDI":"0.519"},"Uganda":{"HDI":"0.516"},"Benin":{"HDI":"0.515"},"Senegal":{"HDI":"0.505"},"Comoros":{"HDI":"0.503"},"Togo":{"HDI":"0.503"},"Sudan":{"HDI":"0.502"},"Afghanistan":{"HDI":"0.498"},"Haiti":{"HDI":"0.498"},"Côte d'Ivoire":{"HDI":"0.492"},"Malawi":{"HDI":"0.477"},"Djibouti":{"HDI":"0.476"},"Ethiopia":{"HDI":"0.463"},"Gambia":{"HDI":"0.460"},"Guinea":{"HDI":"0.459"},"Democratic Republic of the Congo":{"HDI":"0.457"},"Guinea-Bissau":{"HDI":"0.455"},"Yemen":{"HDI":"0.452"},"Eritrea":{"HDI":"0.440"},"Mozambique":{"HDI":"0.437"},"Liberia":{"HDI":"0.435"},"Mali":{"HDI":"0.427"},"Burkina Faso":{"HDI":"0.423"},"Sierra Leone":{"HDI":"0.419"},"Burundi":{"HDI":"0.417"},"Chad":{"HDI":"0.404"},"South Sudan":{"HDI":"0.388"},"Central African Republic":{"HDI":"0.367"},"Niger":{"HDI":"0.354"},"Åland Islands":{"HDI":"0.894"},"American Samoa":{"HDI":"0.827"},"Anguilla":{"HDI":"0.865"},"Aruba":{"HDI":"0.908"},"Bermuda":{"HDI":"0.981"},"Bonaire, Sint Eustatius and Saba":{"HDI":"0.833"},"British Virgin Islands":{"HDI":"0.945"},"U.S. Virgin Islands":{"HDI":"0.894"},"Cayman Islands":{"HDI":"0.983"},"Cook Islands":{"HDI":"0.829"},"Curaçao":{"HDI":"0.811"},"Falkland Islands (Malvinas)":{"HDI":"0.933"},"Faroe Islands":{"HDI":"0.950"},"French Guiana":{"HDI":"0.784"},"French Polynesia":{"HDI":"0.737"},"Gibraltar":{"HDI":"0.961"},"Greenland":{"HDI":"0.839"},"Guadeloupe":{"HDI":"0.835"},"Guam":{"HDI":"0.901"},"Guernsey":{"HDI":"0.975"},"Holy See":{"HDI":"0.880"},"Isle of Man":{"HDI":"0.950"},"Jersey":{"HDI":"0.985"},"Macao":{"HDI":"0.905"},"Martinique":{"HDI":"0.813"},"Mayotte":{"HDI":"0.784"},"Monaco":{"HDI":"0.956"},"Montserrat":{"HDI":"0.821"},"Nauru":{"HDI":"0.721"},"New Caledonia":{"HDI":"0.789"},"Niue":{"HDI":"0.794"},"Northern Mariana Islands":{"HDI":"0.875"},"Puerto Rico":{"HDI":"0.845"},"Republic of Kosovo":{"HDI":"0.739"},"Réunion":{"HDI":"0.750"},"Saint Martin (French part)":{"HDI":"0.702"},"Sint Maarten (Dutch part)":{"HDI":"0.702"},"Somalia":{"HDI":"0.285"},"Taiwan":{"HDI":"0.866"},"Tokelau":{"HDI":"0.750"},"Turks and Caicos Islands":{"HDI":"0.873"},"Tuvalu":{"HDI":"0.711"},"Wallis and Futuna":{"HDI":"0.763"},"Western Sahara":{"HDI":"0.647"},"San Marino":{"HDI":"0.961"},"Saint Pierre and Miquelon":{"HDI":"0.762"},"North Korea":{"HDI":"0.733"}}//western sahara data uses morocco hdi
+var taxCosts={
+    "Saint Martin (French part)": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "41",
+        "SALES": "4"
+    },
+    "Sint Maarten (Dutch part)": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "47.5",
+        "SALES": "5"
+    },
+    "Wallis and Futuna": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "6"
+    },
+    "Western Sahara": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "20"
+    },
+    "Réunion": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "45",
+        "SALES": "8.5"
+    },
+    "Republic of Kosovo": {
+        "LOWINCOME": "3",
+        "HIGHINCOME": "10",
+        "SALES": "18"
+    },
+    "Northern Mariana Islands": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "39.6",
+        "SALES": "0.00"
+    },
+    "Mayotte": {
+        "LOWINCOME": "45",
+        "HIGHINCOME": "14",
+        "SALES": "0.00"
+    },
+    "Martinique": {
+        "LOWINCOME": "8.78",
+        "HIGHINCOME": "10",
+        "SALES": "8.5"
+    },
+    "Holy See": {
+        "LOWINCOME": "0.00",
+        "HIGHINCOME": "0.00",
+        "SALES": "0.00"
+    },
+    "Guam": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "39.6",
+        "SALES": "2"
+    },
+    "Guadeloupe": {
+        "LOWINCOME": "8.78",
+        "HIGHINCOME": "10",
+        "SALES": "8.5"
+    },
+    "Greenland": {
+        "LOWINCOME": "36",
+        "HIGHINCOME": "44",
+        "SALES": "0.00"
+    },
+    "French Polynesia": {
+        "LOWINCOME": "0.5",
+        "HIGHINCOME": "5",
+        "SALES": "16"
+    },
+    "French Guiana": {
+        "LOWINCOME": "8",
+        "HIGHINCOME": "45",
+        "SALES": "0.00"
+    },
+    "Faroe Islands": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "50",
+        "SALES": "25"
+    },
+    "Bonaire, Sint Eustatius and Saba": {
+        "LOWINCOME": "8.9",
+        "HIGHINCOME": "51.9",
+        "SALES": "7"
+    },
+    "Afghanistan": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "0"
+    },
+    "Åland Islands": {
+        "LOWINCOME": "6",
+        "HIGHINCOME": "31.25",
+        "SALES": "0"
+    },
+    "Antigua and Barbuda": {
+        "LOWINCOME": "0.00",
+        "HIGHINCOME": "0.00",
+        "SALES": "15"
+    },
+    "Albania": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "23",
+        "SALES": "20"
+    },
+    "Algeria": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "19"
+    },
+    "American Samoa": {
+        "LOWINCOME": "4",
+        "HIGHINCOME": "6",
+        "SALES": "0"
+    },
+    "Andorra": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "4.5"
+    },
+    "Angola": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "17",
+        "SALES": "10"
+    },
+    "Anguilla": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0"
+    },
+    "Argentina": {
+        "LOWINCOME": "9",
+        "HIGHINCOME": "35",
+        "SALES": "21"
+    },
+    "Armenia": {
+        "LOWINCOME": "24.4",
+        "HIGHINCOME": "36",
+        "SALES": "20"
+    },
+    "Aruba": {
+        "LOWINCOME": "7",
+        "HIGHINCOME": "58.95",
+        "SALES": "1.5"
+    },
+    "Australia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "47",
+        "SALES": "10"
+    },
+    "Austria": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "55",
+        "SALES": "20"
+    },
+    "Azerbaijan": {
+        "LOWINCOME": "14",
+        "HIGHINCOME": "25",
+        "SALES": "18"
+    },
+    "Bahamas": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "12"
+    },
+    "Bahrain": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "5"
+    },
+    "Bangladesh": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "15"
+    },
+    "Barbados": {
+        "LOWINCOME": "25",
+        "HIGHINCOME": "38",
+        "SALES": "17.5"
+    },
+    "Belarus": {
+        "LOWINCOME": "13",
+        "HIGHINCOME": "17",
+        "SALES": "20"
+    },
+    "Belgium": {
+        "LOWINCOME": "25",
+        "HIGHINCOME": "50",
+        "SALES": "21"
+    },
+    "Belize": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "12.5"
+    },
+    "Benin": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "35",
+        "SALES": "18"
+    },
+    "Bermuda": {
+        "LOWINCOME": "0.00",
+        "HIGHINCOME": "0.00",
+        "SALES": "0.00"
+    },
+    "Bhutan": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "50"
+    },
+    "Bolivia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "13"
+    },
+    "Bosnia and Herzegovina": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "17"
+    },
+    "Botswana": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "12"
+    },
+    "Brazil": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "27.5",
+        "SALES": "25"
+    },
+    "Brunei Darussalam": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0"
+    },
+    "Bulgaria": {
+        "LOWINCOME": "8",
+        "HIGHINCOME": "10",
+        "SALES": "20"
+    },
+    "Burkina Faso": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "18"
+    },
+    "Burundi": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "18"
+    },
+    "Cambodia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "10"
+    },
+    "Cameroon": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "35",
+        "SALES": "19.25"
+    },
+    "Canada": {
+        "LOWINCOME": "19",
+        "HIGHINCOME": "54",
+        "SALES": "15"
+    },
+    "Cabo Verde": {
+        "LOWINCOME": "16.5",
+        "HIGHINCOME": "27.5",
+        "SALES": "15"
+    },
+    "Cayman Islands": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0"
+    },
+    "Central African Republic": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "50",
+        "SALES": "19"
+    },
+    "Chad": {
+        "LOWINCOME": "60.00",
+        "HIGHINCOME": "60.00",
+        "SALES": "18"
+    },
+    "Chile": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "19"
+    },
+    "China": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "45",
+        "SALES": "16"
+    },
+    "Colombia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "19"
+    },
+    "Comoros": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "10"
+    },
+    "Cook Islands": {
+        "LOWINCOME": "18.5",
+        "HIGHINCOME": "30",
+        "SALES": "15"
+    },
+    "Democratic Republic of the Congo": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "40",
+        "SALES": "20"
+    },
+    "Congo": {
+        "LOWINCOME": "30",
+        "HIGHINCOME": "30",
+        "SALES": "18.9"
+    },
+    "Costa Rica": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "13"
+    },
+    "Croatia": {
+        "LOWINCOME": "12",
+        "HIGHINCOME": "40",
+        "SALES": "25"
+    },
+    "Cuba": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "50",
+        "SALES": "20"
+    },
+    "Curaçao": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "5"
+    },
+    "Cyprus": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "19"
+    },
+    "Czech Republic": {
+        "LOWINCOME": "20.1",
+        "HIGHINCOME": "45.7",
+        "SALES": "21"
+    },
+    "Denmark": {
+        "LOWINCOME": "39.8596",
+        "HIGHINCOME": "55.8584",
+        "SALES": "25"
+    },
+    "Djibouti": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "10"
+    },
+    "Dominica": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "15"
+    },
+    "Dominican Republic": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "18"
+    },
+    "Timor-Leste": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "10",
+        "SALES": "2.5"
+    },
+    "Ecuador": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "12"
+    },
+    "Egypt": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "22.5",
+        "SALES": "14"
+    },
+    "El Salvador": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "13"
+    },
+    "Equatorial Guinea": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "35",
+        "SALES": "15"
+    },
+    "Eritrea": {
+        "LOWINCOME": "2",
+        "HIGHINCOME": "2",
+        "SALES": "5"
+    },
+    "Estonia": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "20",
+        "SALES": "20"
+    },
+    "Swaziland": {
+        "LOWINCOME": "33",
+        "HIGHINCOME": "33",
+        "SALES": "14"
+    },
+    "Ethiopia": {
+        "LOWINCOME": "35",
+        "HIGHINCOME": "35",
+        "SALES": "15"
+    },
+    "Falkland Islands (Malvinas)": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "26",
+        "SALES": "0"
+    },
+    "Micronesia (Federated States of)": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "5"
+    },
+    "Fiji": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "9"
+    },
+    "Finland": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "54.25",
+        "SALES": "24"
+    },
+    "France": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "45",
+        "SALES": "20"
+    },
+    "Gabon": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "35",
+        "SALES": "18"
+    },
+    "Gambia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "15"
+    },
+    "Germany": {
+        "LOWINCOME": "14",
+        "HIGHINCOME": "47.475",
+        "SALES": "19"
+    },
+    "Georgia": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "20",
+        "SALES": "18"
+    },
+    "Ghana": {
+        "LOWINCOME": "25",
+        "HIGHINCOME": "25",
+        "SALES": "3"
+    },
+    "Gibraltar": {
+        "LOWINCOME": "17",
+        "HIGHINCOME": "40",
+        "SALES": "0"
+    },
+    "Greece": {
+        "LOWINCOME": "22",
+        "HIGHINCOME": "45",
+        "SALES": "24"
+    },
+    "Grenada": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "30",
+        "SALES": "15"
+    },
+    "Guatemala": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "7",
+        "SALES": "12"
+    },
+    "Guinea": {
+        "LOWINCOME": "40",
+        "HIGHINCOME": "40",
+        "SALES": "18"
+    },
+    "Guinea-Bissau": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "20",
+        "SALES": "10"
+    },
+    "Guyana": {
+        "LOWINCOME": "28",
+        "HIGHINCOME": "40",
+        "SALES": "16"
+    },
+    "Guernsey": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "0"
+    },
+    "Haiti": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "10"
+    },
+    "Honduras": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "15"
+    },
+    "Hong Kong": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "15",
+        "SALES": "0"
+    },
+    "Hungary": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "15",
+        "SALES": "27"
+    },
+    "Iceland": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "46",
+        "SALES": "24"
+    },
+    "India": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "28"
+    },
+    "Indonesia": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "30",
+        "SALES": "10"
+    },
+    "Iran": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "9"
+    },
+    "Iraq": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "15",
+        "SALES": "10"
+    },
+    "Ireland": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "52",
+        "SALES": "23"
+    },
+    "Isle of Man": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "20",
+        "SALES": "20"
+    },
+    "Israel": {
+        "LOWINCOME": "11.5",
+        "HIGHINCOME": "50",
+        "SALES": "17"
+    },
+    "Italy": {
+        "LOWINCOME": "23",
+        "HIGHINCOME": "47",
+        "SALES": "22"
+    },
+    "Côte d'Ivoire": {
+        "LOWINCOME": "60",
+        "HIGHINCOME": "60",
+        "SALES": "18"
+    },
+    "Jamaica": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "20"
+    },
+    "Japan": {
+        "LOWINCOME": "15.105",
+        "HIGHINCOME": "55.945",
+        "SALES": "8"
+    },
+    "Jersey": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "5"
+    },
+    "Jordan": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "14",
+        "SALES": "16"
+    },
+    "Kazakhstan": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "12"
+    },
+    "Kenya": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "30",
+        "SALES": "16"
+    },
+    "Kiribati": {
+        "LOWINCOME": "25",
+        "HIGHINCOME": "35",
+        "SALES": "10"
+    },
+    "Kuwait": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0"
+    },
+    "North Korea": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "4"
+    },
+    "South Korea": {
+        "LOWINCOME": "6",
+        "HIGHINCOME": "42",
+        "SALES": "10"
+    },
+    "Kyrgyzstan": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "12"
+    },
+    "Lao People's Democratic Republic": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "24",
+        "SALES": "10"
+    },
+    "Latvia": {
+        "LOWINCOME": "23",
+        "HIGHINCOME": "23",
+        "SALES": "21"
+    },
+    "Lebanon": {
+        "LOWINCOME": "2",
+        "HIGHINCOME": "20",
+        "SALES": "11"
+    },
+    "Lesotho": {
+        "LOWINCOME": "30",
+        "HIGHINCOME": "30",
+        "SALES": "14"
+    },
+    "Liberia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "10"
+    },
+    "Libya": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "10",
+        "SALES": "4"
+    },
+    "Liechtenstein": {
+        "LOWINCOME": "3",
+        "HIGHINCOME": "24",
+        "SALES": "7.7"
+    },
+    "Lithuania": {
+        "LOWINCOME": "31.2",
+        "HIGHINCOME": "42.77",
+        "SALES": "21"
+    },
+    "Luxembourg": {
+        "LOWINCOME": "6",
+        "HIGHINCOME": "52.45",
+        "SALES": "17"
+    },
+    "Macao": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "12",
+        "SALES": "0"
+    },
+    "Madagascar": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "23",
+        "SALES": "20"
+    },
+    "Malawi": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "30",
+        "SALES": "16.5"
+    },
+    "Malaysia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "28",
+        "SALES": "10"
+    },
+    "Maldives": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "15",
+        "SALES": "6"
+    },
+    "Mali": {
+        "LOWINCOME": "3",
+        "HIGHINCOME": "30",
+        "SALES": "18"
+    },
+    "Malta": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "18"
+    },
+    "Marshall Islands": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "12",
+        "SALES": "4"
+    },
+    "Mauritania": {
+        "LOWINCOME": "40",
+        "HIGHINCOME": "40",
+        "SALES": "16"
+    },
+    "Mauritius": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "15",
+        "SALES": "15"
+    },
+    "Mexico": {
+        "LOWINCOME": "1.92",
+        "HIGHINCOME": "35",
+        "SALES": "16"
+    },
+    "Moldova (Republic of)": {
+        "LOWINCOME": "12",
+        "HIGHINCOME": "12",
+        "SALES": "20"
+    },
+    "Monaco": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "19.6"
+    },
+    "Mongolia": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "10"
+    },
+    "Montenegro": {
+        "LOWINCOME": "9",
+        "HIGHINCOME": "12.65",
+        "SALES": "11"
+    },
+    "Montserrat": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "0.00"
+    },
+    "Morocco": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "20",
+        "SALES": "20"
+    },
+    "Mozambique": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "32",
+        "SALES": "17"
+    },
+    "Myanmar": {
+        "LOWINCOME": "1",
+        "HIGHINCOME": "25",
+        "SALES": "5"
+    },
+    "Namibia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "37",
+        "SALES": "15"
+    },
+    "Nauru": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "20"
+    },
+    "Nepal": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "50",
+        "SALES": "13"
+    },
+    "Netherlands": {
+        "LOWINCOME": "36.55",
+        "HIGHINCOME": "51.95",
+        "SALES": "21"
+    },
+    "New Zealand": {
+        "LOWINCOME": "10.5",
+        "HIGHINCOME": "33",
+        "SALES": "15"
+    },
+    "New Caledonia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "40",
+        "SALES": "3"
+    },
+    "Nicaragua": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "15"
+    },
+    "Niger": {
+        "LOWINCOME": "35",
+        "HIGHINCOME": "35",
+        "SALES": "19"
+    },
+    "Nigeria": {
+        "LOWINCOME": "7",
+        "HIGHINCOME": "24",
+        "SALES": "5"
+    },
+    "Niue": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "12.5"
+    },
+    "Norfolk Island": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "12"
+    },
+    "North Macedonia": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "18",
+        "SALES": "18"
+    },
+    "Norway": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "23",
+        "SALES": "25"
+    },
+    "Oman": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "5"
+    },
+    "Pakistan": {
+        "LOWINCOME": "7.5",
+        "HIGHINCOME": "31",
+        "SALES": "17"
+    },
+    "Palau": {
+        "LOWINCOME": "19.6",
+        "HIGHINCOME": "7.5",
+        "SALES": "0.00"
+    },
+    "Palestine": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "15",
+        "SALES": "14.5"
+    },
+    "Panama": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "27",
+        "SALES": "7"
+    },
+    "Papua New Guinea": {
+        "LOWINCOME": "22",
+        "HIGHINCOME": "42",
+        "SALES": "10"
+    },
+    "Paraguay": {
+        "LOWINCOME": "8",
+        "HIGHINCOME": "10",
+        "SALES": "10"
+    },
+    "Peru": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "16"
+    },
+    "Philippines": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "12"
+    },
+    "Pitcairn Islands": {
+        "LOWINCOME": "0.00",
+        "HIGHINCOME": "0.00",
+        "SALES": "0.00"
+    },
+    "Poland": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "32",
+        "SALES": "23"
+    },
+    "Portugal": {
+        "LOWINCOME": "14.5",
+        "HIGHINCOME": "48",
+        "SALES": "23"
+    },
+    "Puerto Rico": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "33.34",
+        "SALES": "11.5"
+    },
+    "Qatar": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0"
+    },
+    "Romania": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "19"
+    },
+    "Russian Federation": {
+        "LOWINCOME": "13",
+        "HIGHINCOME": "47",
+        "SALES": "20"
+    },
+    "Rwanda": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "18"
+    },
+    "Saint Kitts and Nevis": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "17"
+    },
+    "Saint Lucia": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "30",
+        "SALES": "12.5"
+    },
+    "Saint Pierre and Miquelon": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "15"
+    },
+    "Saint Vincent and the Grenadines": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "32.5",
+        "SALES": "15"
+    },
+    "Samoa": {
+        "LOWINCOME": "27",
+        "HIGHINCOME": "27",
+        "SALES": "15"
+    },
+    "San Marino": {
+        "LOWINCOME": "12",
+        "HIGHINCOME": "50",
+        "SALES": "0"
+    },
+    "Sao Tome and Principe": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "20",
+        "SALES": "5"
+    },
+    "Sark": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0"
+    },
+    "Saudi Arabia": {
+        "LOWINCOME": "2.5",
+        "HIGHINCOME": "2.5",
+        "SALES": "5"
+    },
+    "Senegal": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "50",
+        "SALES": "20"
+    },
+    "Serbia": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "25",
+        "SALES": "20"
+    },
+    "Seychelles": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "15",
+        "SALES": "15"
+    },
+    "Sierra Leone": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "35",
+        "SALES": "15"
+    },
+    "Singapore": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "22",
+        "SALES": "7"
+    },
+    "Sint Maarten": {
+        "LOWINCOME": "14",
+        "HIGHINCOME": "14",
+        "SALES": "5"
+    },
+    "Slovakia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "20"
+    },
+    "Slovenia": {
+        "LOWINCOME": "16",
+        "HIGHINCOME": "50",
+        "SALES": "22"
+    },
+    "Solomon Islands": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "30",
+        "SALES": "10"
+    },
+    "Somalia": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "10"
+    },
+    "South Africa": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "45",
+        "SALES": "15"
+    },
+    "South Sudan": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "15",
+        "SALES": "20"
+    },
+    "Spain": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "45",
+        "SALES": "21"
+    },
+    "Sri Lanka": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "15",
+        "SALES": "12"
+    },
+    "Sudan": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "15",
+        "SALES": "17"
+    },
+    "Suriname": {
+        "LOWINCOME": "38",
+        "HIGHINCOME": "38",
+        "SALES": "10"
+    },
+    "Sweden": {
+        "LOWINCOME": "32",
+        "HIGHINCOME": "57",
+        "SALES": "25"
+    },
+    "Switzerland": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "11.5",
+        "SALES": "7.7"
+    },
+    "Syrian Arab Republic": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "15",
+        "SALES": "22"
+    },
+    "Taiwan": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "40",
+        "SALES": "5"
+    },
+    "Tajikistan": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "13",
+        "SALES": "18"
+    },
+    "Tanzania": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "30",
+        "SALES": "18"
+    },
+    "Thailand": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "7"
+    },
+    "Togo": {
+        "LOWINCOME": "45",
+        "HIGHINCOME": "45",
+        "SALES": "18"
+    },
+    "Tokelau": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "25",
+        "SALES": "8"
+    },
+    "Tonga": {
+        "LOWINCOME": "20",
+        "HIGHINCOME": "25",
+        "SALES": "15"
+    },
+    "Trinidad and Tobago": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "25",
+        "SALES": "12.5"
+    },
+    "Tunisia": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "35",
+        "SALES": "18"
+    },
+    "Turkey": {
+        "LOWINCOME": "15",
+        "HIGHINCOME": "35",
+        "SALES": "18"
+    },
+    "Turkmenistan": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "10",
+        "SALES": "15"
+    },
+    "Turks and Caicos Islands": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "37.5"
+    },
+    "Tuvalu": {
+        "LOWINCOME": "30",
+        "HIGHINCOME": "30",
+        "SALES": "2.5"
+    },
+    "Uganda": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "40",
+        "SALES": "18"
+    },
+    "Ukraine": {
+        "LOWINCOME": "18",
+        "HIGHINCOME": "18",
+        "SALES": "20"
+    },
+    "United Arab Emirates": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "5"
+    },
+    "United Kingdom": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "47",
+        "SALES": "20"
+    },
+    "United States": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "50.3",
+        "SALES": "11.725"
+    },
+    "Uruguay": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "30",
+        "SALES": "22"
+    },
+    "Uzbekistan": {
+        "LOWINCOME": "12",
+        "HIGHINCOME": "12",
+        "SALES": "20"
+    },
+    "Vanuatu": {
+        "LOWINCOME": "0.00",
+        "HIGHINCOME": "0.00",
+        "SALES": "15"
+    },
+    "Venezuela": {
+        "LOWINCOME": "6",
+        "HIGHINCOME": "34",
+        "SALES": "16"
+    },
+    "Vietnam": {
+        "LOWINCOME": "5",
+        "HIGHINCOME": "35",
+        "SALES": "10"
+    },
+    "British Virgin Islands": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "0",
+        "SALES": "0.00"
+    },
+    "U.S. Virgin Islands": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "50.3",
+        "SALES": "0.00"
+    },
+    "Yemen": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "15",
+        "SALES": "2"
+    },
+    "Zambia": {
+        "LOWINCOME": "10",
+        "HIGHINCOME": "30",
+        "SALES": "16"
+    },
+    "Zimbabwe": {
+        "LOWINCOME": "0",
+        "HIGHINCOME": "45",
+        "SALES": "15"
+    }
+}
+var noIncomeList={
+        "ASM":10532,
+        "AND":39700,
+        "VGB":13660, //from 1989; could be ~8915 due to apparent fluctuations from 1989 (being the max gni found) to 2006
+        "JEY":62474,
+        "CUB":7872,
+        "DJI":1880,
+        "FRO":55837,
+        "PYF":19419,
+        "GIB":61700, //gdp per capita (PPP) instead due to lack of gni
+        "GRL":34260,
+        "GUM":24446,
+        "IMN":71761,
+        "PRK":664,
+        "LIE":134479,
+        "MCO":173238,
+        "NCL":34177,
+        "MNP":23047,
+        "SMR":40752,
+        "SYR":1178,
+        "SOM":98,
+        "SXM":66800, //gdp per capita (PPP) instead due to lack of gni
+        "MAF":19300, //gdp per capita (PPP) instead due to lack of gni
+        "VIR":34955,
+        "ALA":46462,
+        "AIA":10951.93,
+        "BES":22667, //https://www.saba-news.com/gdp-increased-in-2015-in-caribbean-netherlands/
+        "COK":6557.68,
+        "FLK":16730.41,
+        "GUF":17767,
+        "GLP":22957,
+        "GGY":55783,
+        "VAT":21198, //gdp per capita (PPP) instead due to lack of gni
+        "MTQ":25244,
+        "MYT":2780,
+        "MSR":8367.72,
+        "NIU":12550.95,
+        "KOS":11050,
+        "REU":22456,
+        "SPM":9368.30,
+        "TWN":25360,
+        "TKL":6275, //gdp per capita (PPP) instead due to lack of gni
+        "WLF":4930.95, //gdp per capita (PPP) instead due to lack of gni
+        "ESH":4930.95 //gdp per capita (PPP) instead due to lack of gni
+    } //not in world bank
+function Currency(name, code, symbol, income, savings) {
+    this.name=name
+    this.code=code
+    this.symbol=symbol
+    this.convertedIncome=income
+    this.convertedSavings=savings
+}
+function Language(name, localname) {
+    this.name=name
+    this.localName=localname
+}
+function TaxRates(high, low, sales) {
+  this.highIncomeTax=high
+  this.lowIncomeTax=low
+  this.salesTax=sales
+}
+function Temperature(ftemp, ctemp, category) {
+  this.fTemp=ftemp
+  this.cTemp=ctemp
+  this.category=category
+}
+function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyList, crimerate, languageList, alpha2, alpha3, population, area, lat, lng, flaglink, incomelevel, incomeDiff, temp, freedom, hdi, age, rankAvg, cities, citiesData, match, comments){
+  this.name=name
+  this.capitalCity=capitalcity
+  this.gini=gini
+  this.gni=gni
+  this.taxRates=taxrates
+  this.housingCost=housingcost
+  this.currencyList=currencyList
+  this.crimeRate=crimerate
+  this.languageList=languageList
+  this.alpha2=alpha2
+  this.alpha3=alpha3
+  this.population=population
+  this.area=area //in billion meters squared
+  this.lat=lat
+  this.lng=lng
+  this.flaglink=flaglink
+  this.incomeLevel=incomelevel
+  this.incomeDiff=incomeDiff
+  this.temp=temp
+  this.freedomIndex=freedom
+  this.hdiValue=hdi
+  this.ageExp=age
+  this.rankAvg=rankAvg
+  this.cities=cities
+  this.citiesData=citiesData
+  this.percentMatch=match
+  this.comments=comments
+}
+var config = {
+    apiKey: "AIzaSyAJD37p9xcHp22p5cnpp3YxHLDQnAuHtKw",
+    authDomain: "emovo-1a6a7.firebaseapp.com",
+    databaseURL: "https://emovo-1a6a7.firebaseio.com/",
+    storageBucket: "emovo-1a6a7.appspot.com"
+  }
+firebase.initializeApp(config);
+function getWorldData(country){
+  var incomeUrl="https://api.worldbank.org/countries/"+country.alpha3+"/indicators/NY.GNP.PCAP.PP.CD?format=json&per_page=1000"
+  $.getJSON(incomeUrl, function(d1) {
+      data=d1[1]
+      for (var v in data){ //date: returns year string ex. "2018"
+          if(v.value!=null){
+              country.gni=parseFloat(v.value)
+              break
+          }
+        }
+    var incomeLevelUrl="https://api.worldbank.org/v2/country/"+country.alpha3+"?format=json"
+    $.getJSON(incomeLevelUrl, function(d2) {
+        var data=d2
+        if(data.length>1){
+            if(data[1].length>0){
+                country.incomeLevel=data[1][0].incomeLevel.value
+            }
+        }
+        country.incomeDiff=null//yearlyIncome-country.gni //can be used to establish an affordability gradient
+                    if (country.name=="Macedonia (the former Yugoslav Republic of)")
+                        country.name="North Macedonia"
+                    if (country.name=="Palestine, State of")
+                        country.name = "Palestine"
+                    //if country.name=="Korea (Democratic People's Republic of)":
+                    //    country.name = "North Korea"
+                    if (country.name=="Korea (Republic of)")
+                        country.name = "South Korea"
+                    if (country.name=="Tanzania, United Republic of")
+                        country.name="Tanzania"
+                    if (country.name=="United Kingdom of Great Britain and Northern Ireland")
+                        country.name="United Kingdom"
+                    if (country.name=="Venezuela (Bolivarian Republic of)")
+                        country.name="Venezuela"
+                    if (country.name=="Viet Nam")
+                        country.name="Vietnam"
+                    if (country.name=="Bolivia (Plurinational State of)")
+                        country.name="Bolivia"
+                    if (country.name=="Virgin Islands (British)")
+                        country.name = "British Virgin Islands"
+                    if (country.name=="Virgin Islands (U.S.)")
+                        country.name = "U.S. Virgin Islands"
+                    if (country.name=="Congo (Democratic Republic of the)")
+                        country.name="Democratic Republic of the Congo"
+                    if (country.name=="Iran (Islamic Republic of)")
+                        country.name="Iran"
+                    country.crimeRate=parseFloat(crimeRates[country.name]["CRIMERATE"])
+                    country.taxRates=new TaxRates(parseFloat(taxCosts[country.name]["HIGHINCOME"]), parseFloat(taxCosts[country.name]["LOWINCOME"]), parseFloat(taxCosts[country.name]["SALES"])) //high, low, sales
+                    var tempsManualC={"Åland Islands":5.4,"Bonaire, Sint Eustatius and Saba":27.5,"Curaçao":29.5,"Holy See":14.65,"Republic of Kosovo":9.5,"Saint Martin (French part)":26.5,"Sint Maarten (Dutch part)":26.5,"Saint Pierre and Miquelon":5.06,"South Sudan":29.9}
+                    var tempAvgC=0.0
+                    if (country.name in tempsManualC){
+                    /*  var tempAvgC=tempsManualC[country.name]
+                      var categ = ""
+                      var tempAvgF = (tempAvgC * 9.0 / 5.0) + 32.0
+                      if(parseFloat(Math.floor(tempAvgC)) > 18.0)  // "hot" "moderate" "cold"
+                          categ = "hot"
+                      else if(parseFloat(Math.floor(tempAvgC)) > 0.0)
+                          categ = "moderate"
+                      else
+                          categ = "cold"
+                      country.temp = new Temperature(tempAvgF, tempAvgC, categ) */ // ftemp, ctemp, category,
+                      country.freedomIndex = parseFloat(freeIndices[country.name]["FREEINDEX"])
+                      country.hdiValue=parseFloat(hdiValues[country.name]["HDI"])
+                      country.ageExp = parseFloat(ageValues[country.name]["AGE"])
+                      //country
+                      if(country.name=="U.S. Virgin Islands"){
+                        country.name="US Virgin Islands" //change it back to orig string when getting cities
+                      }
+                      var sRef = firebase.database().ref().child("countries")
+                      sRef.child(country.name).set(
+                                                        {
+                                                          "name":country.name,
+                                                          "capitalCity":country.capitalCity,
+                                                          "gini":country.gini,
+                                                          "gni":country.gni,
+                                                          "housingCost":country.housingCost,
+                                                          "currencyList":country.currencyList,
+                                                          "crimeRate":country.crimeRate,
+                                                          "languageList":country.languageList,
+                                                          "alpha2":country.alpha2,
+                                                          "alpha3":country.alpha3,
+                                                          "population":country.population,
+                                                          "area":country.area,
+                                                          "lat":country.lat,
+                                                          "lng":country.lng,
+                                                          "flaglink":country.flaglink,
+                                                          "incomeLevel":country.incomeLevel,
+                                                          "incomeDiff":country.incomeDiff,
+                                                          "freedomIndex":country.freedomIndex,
+                                                          "hdiValue":country.hdiValue,
+                                                          "ageExp":country.ageExp,
+                                                          "rankAvg":country.rankAvg,
+                                                          "percentMatch":country.percentMatch,
+                                                          //"category":country.temp.category,
+                                                          //"ftemp":country.temp.ftemp,
+                                                          //"ctemp":country.temp.ctemp,
+                                                          "highIncomeTax":country.taxRates.highIncomeTax,
+                                                          "lowIncomeTax":country.taxRates.lowIncomeTax,
+                                                          "salesTax":country.taxRates.salesTax,
+                                                          "comments":[]
+                                                        }
+                                                    )
+                    }
+                    else{
+                      /*var tempUrl="http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/2020/2039/"+country.alpha3
+                      $.getJSON(tempUrl, function(d3) {
+                      data=d3
+                      var tempTotal=0.0
+                      var tempAdd=0.0
+                      for(var t in data){
+                          tempAdd+=data[t].annualData[0]
+                          tempTotal+=1.0
+                      }
+                      var tempAvgC=tempTotal/tempAdd
+                      var categ = ""
+                      var tempAvgF = (tempAvgC * 9.0 / 5.0) + 32.0
+                      if(parseFloat(Math.floor(tempAvgC)) > 18.0)  // "hot" "moderate" "cold"
+                          categ = "hot"
+                      else if(parseFloat(Math.floor(tempAvgC)) > 0.0)
+                          categ = "moderate"
+                      else
+                          categ = "cold"
+                      country.temp = new Temperature(tempAvgF, tempAvgC, categ)*/  // ftemp, ctemp, category,
+                      country.freedomIndex = parseFloat(freeIndices[country.name]["FREEINDEX"])
+                      country.hdiValue=parseFloat(hdiValues[country.name]["HDI"])
+                      country.ageExp = parseFloat(ageValues[country.name]["AGE"])
+                      //country
+                      var sRef = firebase.database().ref().child("countries")
+                      if(country.name=="U.S. Virgin Islands"){
+                        country.name="US Virgin Islands" //change it back to orig string when getting cities
+                      }
+                      sRef.child(country.name).set(
+                                                        {
+                                                          "name":country.name,
+                                                          "capitalCity":country.capitalCity,
+                                                          "gini":country.gini,
+                                                          "gni":country.gni,
+                                                          "housingCost":country.housingCost,
+                                                          "currencyList":country.currencyList,
+                                                          "crimeRate":country.crimeRate,
+                                                          "languageList":country.languageList,
+                                                          "alpha2":country.alpha2,
+                                                          "alpha3":country.alpha3,
+                                                          "population":country.population,
+                                                          "area":country.area,
+                                                          "lat":country.lat,
+                                                          "lng":country.lng,
+                                                          "flaglink":country.flaglink,
+                                                          "incomeLevel":country.incomeLevel,
+                                                          "incomeDiff":country.incomeDiff,
+                                                          "freedomIndex":country.freedomIndex,
+                                                          "hdiValue":country.hdiValue,
+                                                          "ageExp":country.ageExp,
+                                                          "rankAvg":country.rankAvg,
+                                                          "percentMatch":country.percentMatch,
+                                                          //"category":country.temp.category,
+                                                          //"fTemp":country.temp.fTemp,
+                                                          //"cTemp":country.temp.cTemp,
+                                                          "highIncomeTax":country.taxRates.highIncomeTax,
+                                                          "lowIncomeTax":country.taxRates.lowIncomeTax,
+                                                          "salesTax":country.taxRates.salesTax,
+                                                        }
+                                                    )
+                    //  })
+                        }
+            })
+          })
+}
+var worldUrl="https://restcountries.eu/rest/v2/all"
+$.getJSON(worldUrl, function(d0) {
+    var worldList = d0
+    for(var c in worldList){
+        var name=worldList[c].name
+        if(name!="United States of America" && name!="Antarctica" && name!="Bouvet Island" && name!="British Indian Ocean Territory" && name!="United States Minor Outlying Islands" && name!="Christmas Island" && name!="Cocos (Keeling) Islands" && name!="French Southern Territories" && name!="Heard Island and McDonald Islands" && name!="Norfolk Island" && name!="Pitcairn" && name!="Saint Barthélemy" && name!="Saint Helena, Ascension and Tristan da Cunha" && name!="South Georgia and the South Sandwich Islands" && name!="Svalbard and Jan Mayen" && name!="Korea (Democratic People's Republic of)"){
+                var alpha2=worldList[c].alpha2Code
+                var alpha3=worldList[c].alpha3Code
+                var capital=worldList[c].capital
+                var population=worldList[c].population
+                var lat=null
+                var lng=null
+                if(worldList[c].latlng.length>0){
+                    lat=worldList[c].latlng[0]
+                    lng=worldList[c].latlng[1]
+                }
+                var area=worldList[c].area
+                var gini=worldList[c].gini
+                var currList=[]
+                for (var m in worldList[c].currencies){
+                    var currCode=worldList[c].currencies[m].code
+                    var currName=worldList[c].currencies[m].name
+                    var currSymbol=worldList[c].currencies[m].symbol
+                    //for income check 2016 then 2015 then 2014 to get latest income value
+                    currList.push(new Currency(currName, currCode, currSymbol, null, null)) //name, code, symbol, income, savings
+                }
+                var langList=[]
+                for (var la in worldList[c].languages){
+                    var langName=worldList[c].languages[la].name
+                    var langLocal=worldList[c].languages[la].nativeName
+                    langList.push(new Language(langName, langLocal))
+                }
+                var flaglink=worldList[c]["flag"]
+                if(area==null){
+                    area=-1.0
+                }
+                var country=new Country(name, capital, gini, null, null, -1.0, currList, null, langList, alpha2, alpha3, population, area, lat, lng, flaglink, null, null, null, null, null, null, null, null, null, null)
+                var data=null
+                /*if(country.alpha3 in noIncomeList){
+                    country.gni=parseFloat(noIncomeList[country.alpha3])
+                 getWorldData(country)
+
+               }else{*/
+               if(!(country.alpha3 in noIncomeList)){
+                    /*var incomeUrl="https://api.worldbank.org/countries/"+country.alpha3+"/indicators/NY.GNP.PCAP.PP.CD?format=json&per_page=1000"
+                    $.getJSON(incomeUrl, function(d1) {
+                        data=d1[1]
+                        for (var v in data){ //date: returns year string ex. "2018"
+                            if(v.value!=null){
+                                country.gni=parseFloat(v.value)
+                                break
+                            }
+                          }*/
+                          getWorldData(country)
+                  ///  });
+
+              }
+
+        }
+    }
+  });
+}
+</script>
+</body>
+</html>

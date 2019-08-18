@@ -54,34 +54,34 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 </div>
 
 <div id="input" style="text-align: center;">
-      <h2>Hello {{ username }}!</h2>
+      <h2>Hello!</h2>
       <h3>Search the world with us</h3>
-      <form action="loading.html" target="_blank" class="w3-row-padding" style="display: inline-block; text-align:left"><!--margin:0 -16px; -->
+      <form action="loading.html" method="GET" target="_blank" class="w3-row-padding" style="display: inline-block; text-align:left"><!--margin:0 -16px; -->
           <label>Enter your monthly income before taxes (in USD):</label>
-          <input class="w3-input w3-border" type="number" style="display: inline-block; align:left" placeholder="Monthly Income ($)" required name="Monthly Income ($)">
+          <input class="w3-input w3-border" type="number" style="display: inline-block; align:left" placeholder="Monthly Income ($)" name="mi">
           <p></p>
           <label>Enter your savings before taxes (in USD)</label>
-          <input class="w3-input w3-border" type="number" placeholder="Total Savings ($)" required name="Total Savings ($)">
+          <input class="w3-input w3-border" type="number" placeholder="Total Savings ($)" name="ts">
           <p></p>
           <label>I prefer areas with temperatures that are...</label>
-          <form id="tempPref" class="w3-row-padding" required>
+          <div id="tempPref" class="w3-row-padding">
             <br>
-            <input type="radio" name="temp" value="hot" checked> hotter
+            <input type="radio" name="temp" value="moderate" checked> moderate
             <br>
-            <input type="radio" name="temp" value="moderate"> moderate
+            <input type="radio" name="temp" value="hot"> hotter
             <br>
             <input type="radio" name="temp" value="cold"> colder
             <br>
-          </form>
+          </div>
           <br>
-          <form class="scopeChoice" required>
+          <div class="scopeChoice">
               <label>Do you plan to live in the US or abroad?</label>
               <p></p>
               <input id="world" type="radio" name="stayInUS" value="World" />
               <label class="selecting world" for="world"></label>
               <input id="us" type="radio" name="stayInUS" value="US" />
               <label class="selecting us"for="us"></label>
-          </form>
+          </div>
           <br>
           <button type="submit" class="w3-button w3-red" style="text-align: center;" width="120px" height="120px">Search!</button>
       </form>
@@ -114,7 +114,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 
 <script>
 // Tabs
-function openLink(evt, linkName) {
+/*function openLink(evt, linkName) {
   var i, x, tablinks;
   x = document.getElementsByClassName("myLink");
   for (i = 0; i < x.length; i++) {
@@ -127,9 +127,7 @@ function openLink(evt, linkName) {
   document.getElementById(linkName).style.display = "block";
   evt.currentTarget.className += " w3-red";
 }
-
-// Click on the first tablink on load
-document.getElementsByClassName("tablink")[0].click();
+document.getElementsByClassName("tablink")[0].click();*/
 </script>
 
 </body>

@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+.selected {
+    color:red;
+}
+.highlight {
+    background:yellow;
+}
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+//JSCRIPT KEEPS SET ORDER APPARENTLY
+//user inputs monthly income (usd), savings (usd), temp preference, go to/stay in us or leave?,
+var config = {
+    apiKey: "AIzaSyAJD37p9xcHp22p5cnpp3YxHLDQnAuHtKw",
+    authDomain: "emovo-1a6a7.firebaseapp.com",
+    databaseURL: "https://emovo-1a6a7.firebaseio.com/",
+    storageBucket: "emovo-1a6a7.appspot.com"
+  }
+  if (!firebase.database().length) {
+         firebase.initializeApp(config);
+      }
+var sRef = firebase.database().ref().child("states")
+var monthlyIncome=1500.00 //in usd, from social security, avg is 1413/month
+var yearlyIncome=monthlyIncome*12.0
+var yourSavings=200000 //
+var tempPref="hot" //"hot" "moderate" "cold"
+var choiceCount=1
+var stayInUS=true
+var avgUSSavings=228900 //The conditional mean savings is $228,900; Transamerica reports the estimated median savings for sixtysomethings is $172,000
+var savingsDiff=yourSavings-avgUSSavings
+/*function getIndexOfTuple(l, index, value){
+    for pos,t in enumerate(l):
+        if t[index] == value:
+            return pos
+}*/
+function getUSData(sName, sId){
+    if(sName!="Puerto Rico"){//!="Puerto Rico"
+            if(sName=="District of Columbia"){
+                sId="05000US11001"
+            }
+            var avgIncome=0.0
+            var medianPropertyCost=0.0
+            var popPerDoctorRatio=0.0
+            var popPerDentistRatio=0.0
+            var popPerMentalHealthRatio = 0.0
+            var popOtherHealthRatio=0.0
+            var healthCareCost=0.0
+            var violentCrime=0.0
+            var foodHealthIndex=0.0
+            var exerciseAccess=0.0
+            var pollution=0.0
+            var socialGroup=0.0  //maximize
+            var diabeticScreening=0.0 //maximize
+            var mammogramScreening=0.0 //maximize
+            var waterViolations=0.0
+            var housingIssues=0.0 //%
+            var meanCommute=0.0 //minimize
+            var foodInsecurity=0.0 //%
+            var limitedFoodAccess=0.0 //%
+            var unemploymentRate=0.0 //%
+            var popHealth=0.0 //% minimize
+            var incomeUrl="https://api.datausa.io/api/join/?required=income&show=geo&geo="+sId
+            var data = null
+            $.getJSON(incomeUrl, function(d1) {
+              data=d1.data
+              var size=0.0
+              for(i in data){
+                  if (data[i][2]!=null){
+                      size+=1.0
+                      avgIncome += data[i][2]
+                    }
+              }
+              avgIncome = avgIncome / size
+              var medianPropUrl="https://api.datausa.io/api/join/?required=median_property_value&show=geo&geo="+sId
+              $.getJSON(medianPropUrl, function(d2) {
+                data=d2.data
+                var size=0.0
+                for(i in data){
+                    if (data[i][0]!=null){
+                        size+=1.0
+                        medianPropertyCost += data[i][0]
+                      }
+                }
+                medianPropertyCost=medianPropertyCost/size
+                var doctorRatioUrl = "https://api.datausa.io/api/join/?required=primary_care_physicians&show=geo&geo=" + sId
+                $.getJSON(doctorRatioUrl, function(d3) {
+                  data=d3.data
+                  var size=0.0
+                  for(i in data){
+                      if (data[i][0]!=null){
+                          size+=1.0
+                          popPerDoctorRatio += data[i][0]
+                        }
+                  }
+                  popPerDoctorRatio = popPerDoctorRatio / size
+                  var dentistRatioUrl = "https://api.datausa.io/api/join/?required=dentists&show=geo&geo=" + sId
+                  $.getJSON(dentistRatioUrl, function(d4) {
+                    data=d4.data
+                    var size=0.0
+                    for(i in data){
+                        if (data[i][0]!=null){
+                            size+=1.0
+                            popPerDentistRatio += data[i][0]
+                          }
+                    }
+                    popPerDentistRatio = popPerDentistRatio / size
+                    var mentalHealthRatioUrl = "https://api.datausa.io/api/join/?required=mental_health_providers&show=geo&geo=" + sId
+                    $.getJSON(mentalHealthRatioUrl, function(d5) {
+                      data=d5.data
+                      var size=0.0
+                      for(i in data){
+                          if (data[i][0]!=null){
+                              size+=1.0
+                              popPerMentalHealthRatio += data[i][0]
+                            }
+                      }
+                      popPerMentalHealthRatio = popPerMentalHealthRatio / size
+                      var otherProviderUrl = "https://api.datausa.io/api/join/?required=other_primary_care_providers&show=geo&geo=" + sId
+                      $.getJSON(otherProviderUrl, function(d6) {
+                        data=d6.data
+                        var size=0.0
+                        for(i in data){
+                            if (data[i][0]!=null){
+                                size+=1.0
+                                popOtherHealthRatio += data[i][0]
+                              }
+                        }
+                        popOtherHealthRatio = popOtherHealthRatio / size
+                        var healthCareCostUrl = "https://api.datausa.io/api/join/?required=health_care_costs&show=geo&geo=" + sId
+                        $.getJSON(healthCareCostUrl, function(d7) {
+                          data=d7.data
+                          var size=0.0
+                          for(i in data){
+                              if (data[i][0]!=null){
+                                  size+=1.0
+                                  healthCareCost += data[i][0]
+                                }
+                          }
+                          healthCareCost = healthCareCost / size
+                          var violentCrimeUrl = "https://api.datausa.io/api/join/?required=violent_crime&show=geo&geo=" + sId
+                          $.getJSON(violentCrimeUrl, function(d8) {
+                            data=d8.data
+                            var size=0.0
+                            for(i in data){
+                                if (data[i][2]!=null){
+                                    size+=1.0
+                                    violentCrime += data[i][2]
+                                  }
+                            }
+                            violentCrime = violentCrime / size
+                            var foodHealthUrl = "https://api.datausa.io/api/join/?required=food_environment_index&show=geo&geo=" + sId
+                            $.getJSON(foodHealthUrl, function(d9) {
+                              data=d9.data
+                              var size=0.0
+                              for(i in data){
+                                  if (data[i][1]!=null){
+                                      size+=1.0
+                                      foodHealthIndex += data[i][1]
+                                    }
+                              }
+                              foodHealthIndex = foodHealthIndex / size
+                              var exerciseAccessUrl = "https://api.datausa.io/api/join/?required=access_to_exercise_opportunities&show=geo&geo=" + sId
+                              $.getJSON(exerciseAccessUrl, function(d10) {
+                                data=d10.data
+                                var size=0.0
+                                for(i in data){
+                                    if (data[i][0]!=null){
+                                        size+=1.0
+                                        exerciseAccess += data[i][0]
+                                      }
+                                }
+                                exerciseAccess = exerciseAccess / size
+                                var pollutionUrl = "https://api.datausa.io/api/join/?required=polution_ppm&show=geo&geo=" + sId
+                                $.getJSON(pollutionUrl, function(d11) {
+                                  data=d11.data
+                                  var size=0.0
+                                  for(i in data){
+                                      if (data[i][0]!=null){
+                                          size+=1.0
+                                          pollution += data[i][0]
+                                        }
+                                  }
+                                  if (size==0.0){
+                                      if (sName=="Hawaii"){
+                                          pollution=9.17333 // since https://www.americashealthrankings.org/explore/annual/measure/air/state/ALL ranks hawaii same as north dakota, I used nd's data
+                                          size=1.0
+                                      }
+                                      if (sName=="Alaska"){ //same as above except took avg btwn nc and sc
+                                          pollution=11.421667
+                                          size=1.0
+                                      }
+                                  }
+                                  pollution = pollution / size
+                                  var socialGroupUrl = "https://api.datausa.io/api/join/?required=social_associations&show=geo&geo=" + sId
+                                  $.getJSON(socialGroupUrl, function(d12) {
+                                    data=d12.data
+                                    var size=0.0
+                                    for(i in data){
+                                        if (data[i][0]!=null){
+                                            size+=1.0
+                                            socialGroup += data[i][0]
+                                          }
+                                    }
+                                    socialGroup = socialGroup / size
+                                    var diabeticScreeningUrl = "https://api.datausa.io/api/join/?required=diabetic_screening&show=geo&geo=" + sId
+                                    $.getJSON(diabeticScreeningUrl, function(d13) {
+                                      data=d13.data
+                                      var size=0.0
+                                      for(i in data){
+                                          if (data[i][0]!=null){
+                                              size+=1.0
+                                              diabeticScreening += data[i][0]
+                                            }
+                                      }
+                                      diabeticScreening = diabeticScreening / size
+                                      var mammogramScreeningUrl = "https://api.datausa.io/api/join/?required=mammography_screening&show=geo&geo=" + sId
+                                      $.getJSON(mammogramScreeningUrl, function(d14) {
+                                        data=d14.data
+                                        var size=0.0
+                                        for(i in data){
+                                            if (data[i][0]!=null){
+                                                size+=1.0
+                                                mammogramScreening += data[i][0]
+                                              }
+                                        }
+                                        mammogramScreening = mammogramScreening / size
+                                        var waterViolationsUrl = "https://api.datausa.io/api/join/?required=drinking_water_violations&show=geo&geo=" + sId
+                                        $.getJSON(waterViolationsUrl, function(d15) {
+                                          data=d15.data
+                                          var size=0.0
+                                          for(i in data){
+                                              if (data[i][0]!=null){
+                                                  size+=1.0
+                                                  waterViolations += data[i][0]
+                                                }
+                                          }
+                                          waterViolations = waterViolations / size
+                                          var housingIssuesUrl = "https://api.datausa.io/api/join/?required=severe_housing_problems&show=geo&geo=" + sId
+                                          $.getJSON(housingIssuesUrl, function(d16) {
+                                            data=d16.data
+                                            var size=0.0
+                                            for(i in data){
+                                                if (data[i][0]!=null){
+                                                    size+=1.0
+                                                    housingIssues += data[i][0]
+                                                  }
+                                            }
+                                            housingIssues = housingIssues / size
+                                            var meanCommuteUrl = "https://api.datausa.io/api/join/?required=mean_commute_minutes&show=geo&geo=" + sId
+                                            $.getJSON(meanCommuteUrl, function(d17) {
+                                              data=d17.data
+                                              size=0.0
+                                              for(i in data){
+                                                  if (data[i][0]!=null){
+                                                      size+=1.0
+                                                      meanCommute += data[i][0]
+                                                    }
+                                              }
+                                              meanCommute = meanCommute / size
+                                              var foodInsecurityUrl = "https://api.datausa.io/api/join/?required=food_insecurity&show=geo&geo=" + sId
+                                              $.getJSON(foodInsecurityUrl, function(d18) {
+                                                data=d18.data
+                                                size=0.0
+                                                for(i in data){
+                                                    if (data[i][0]!=null){
+                                                        size+=1.0
+                                                        foodInsecurity += data[i][0]
+                                                      }
+                                                }
+                                                foodInsecurity = foodInsecurity / size
+                                                var limitedFoodAccessUrl = "https://api.datausa.io/api/join/?required=limited_access_to_healthy_foods&show=geo&geo=" + sId
+                                                $.getJSON(limitedFoodAccessUrl, function(d19) {
+                                                  data=d19.data
+                                                  size=0.0
+                                                  for(i in data){
+                                                      if (data[i][1]!=null){
+                                                          size+=1.0
+                                                          limitedFoodAccess += data[i][1]
+                                                        }
+                                                  }
+                                                  limitedFoodAccess = limitedFoodAccess / size
+                                                  var unemploymentRateUrl = "https://api.datausa.io/api/join/?required=unemployment&show=geo&geo=" + sId
+                                                  $.getJSON(unemploymentRateUrl, function(d20) {
+                                                    data=d20.data
+                                                    size=0.0
+                                                    for(i in data){
+                                                        if (data[i][2]!=null){
+                                                            size+=1.0
+                                                            unemploymentRate += data[i][2]
+                                                          }
+                                                    }
+                                                    unemploymentRate = unemploymentRate / size
+                                                    var popHealthUrl = "https://api.datausa.io/api/join/?required=poor_or_fair_health&show=geo&geo=" + sId
+                                                    $.getJSON(popHealthUrl, function(d21) {
+                                                      data=d21.data
+                                                      size=0.0
+                                                      for(i in data){
+                                                          if (data[i][1]!=null){
+                                                              size+=1.0
+                                                              popHealth += data[i][1]
+                                                            }
+                                                      }
+                                                      popHealth = popHealth / size
+                                                      document.getElementById("myid").innerHTML=document.getElementById("myid").innerHTML+" "+sName
+                                                      sRef.child(sName).set(
+                                                          {
+                                                            "id":sId,
+                                                            "name":sName,
+                                                            "avgIncome":avgIncome,
+                                                            "medianPropertyCost":medianPropertyCost,
+                                                            "popPerDoctorRatio":popPerDoctorRatio,
+                                                            "popPerDentistRatio":popPerDentistRatio,
+                                                            "popPerMentalHealthRatio":popPerMentalHealthRatio,
+                                                            "popOtherHealthRatio":popOtherHealthRatio,
+                                                            "healthCareCost":healthCareCost,
+                                                            "violentCrime":violentCrime,
+                                                            "foodHealthIndex":foodHealthIndex,
+                                                            "exerciseAccess":exerciseAccess,
+                                                            "pollution":pollution,
+                                                            "socialGroup":socialGroup,
+                                                            "diabeticScreening":diabeticScreening,
+                                                            "mammogramScreening":mammogramScreening,
+                                                            "waterViolations":waterViolations,
+                                                            "housingIssues":housingIssues,
+                                                            "meanCommute":meanCommute,
+                                                            "foodInsecurity":foodInsecurity,
+                                                            "limitedFoodAccess":limitedFoodAccess,
+                                                            "unemploymentRate":unemploymentRate,
+                                                            "popHealth":popHealth,
+                                                            "propertytax":statePropertyTaxes[sName]["PROPERTY"],
+                                                            "incometax":stateIncomeTaxes[sName],
+                                                            "salestax":stateSalesTaxes[sName]["SALES"],
+                                                            "tempf":parseFloat(stateTemps[sName]["TEMPF"]),
+                                                            "tempc":parseFloat(stateTemps[sName]["TEMPC"]),
+                                                            "comments":[]
+                                                          }
+                                                      )
+                                                      /*var state=new State(sId,sName,avgIncome,medianPropertyCost,popPerDoctorRatio,popPerDentistRatio,popPerMentalHealthRatio,popOtherHealthRatio,healthCareCost,violentCrime,foodHealthIndex,exerciseAccess,pollution,socialGroup,diabeticScreening,mammogramScreening,waterViolations,housingIssues,meanCommute,foodInsecurity,limitedFoodAccess,unemploymentRate,popHealth,USTaxRates(statePropertyTaxes[sName]["PROPERTY"],stateIncomeTaxes[sName],stateSalesTaxes[sName]["SALES"]),Temperature(parseFloat(stateTemps[sName]["TEMPF"]),parseFloat(stateTemps[sName]["TEMPC"]),null))
+                                    states[sName]=state*/
+
+                                                    });
+                                                  });
+                                                });
+                                              });
+                                            });
+                                          });
+                                        });
+                                      });
+                                    });
+                                  });
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+        }
+}
+function Currency(name, code, symbol, income, savings) {
+    this.name=name
+    this.code=code
+    this.symbol=symbol
+    this.convertedIncome=income
+    this.convertedSavings=savings
+}
+function Language(name, localname) {
+    this.name=name
+    this.localName=localname
+}
+function USTaxRates(prop, income, sales) {
+  this.propertyTax=prop
+  this.incomeTax=income
+  this.salesTax=sales
+}
+function TaxRates(high, low, sales) {
+  this.highIncomeTax=high
+  this.lowIncomeTax=low
+  this.salesTax=sales
+}
+function Temperature(ftemp, ctemp, category) {
+  this.fTemp=ftemp
+  this.cTemp=ctemp
+  this.category=category
+}
+function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyList, crimerate, languageList, alpha2, alpha3, population, area, lat, lng, flaglink, incomelevel, incomeDiff, temp, freedom, hdi, age, rankAvg, cities, citiesData, match){
+  this.name=name
+  this.capitalCity=capitalcity
+  this.gini=gini
+  this.gni=gni
+  this.taxRates=taxrates
+  this.housingCost=housingcost
+  this.currencyList=currencyList
+  this.crimeRate=crimerate
+  this.languageList=languageList
+  this.alpha2=alpha2
+  this.alpha3=alpha3
+  this.population=population
+  this.area=area //in billion meters squared
+  this.lat=lat
+  this.lng=lng
+  this.flaglink=flaglink
+  this.incomeLevel=incomelevel
+  this.incomeDiff=incomeDiff
+  this.temp=temp
+  this.freedomIndex=freedom
+  this.hdiValue=hdi
+  this.ageExp=age
+  this.rankAvg=rankAvg
+  this.cities=cities
+  this.citiesData=citiesData
+  this.percentMatch=match
+}
+function State(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,tr,temp,comments){
+  this.id=id
+  this.name=name
+  this.avgIncome=avgincome
+  this.medianPropertyCost=mpc
+  this.popPerDoctorRatio = ppdrr
+  this.popPerDentistRatio = ppdr
+  this.popPerMentalHealthRatio = ppmhr
+  this.popOtherHealthRatio = pohr
+  this.healthCareCost = hcc
+  this.violentCrime = vc
+  this.foodHealthIndex = fhi
+  this.exerciseAccess = ea
+  this.pollution = p
+  this.socialGroup = sg  // maximize
+  this.diabeticScreening = ds // maximize
+  this.mammogramScreening = ms  // maximize
+  this.waterViolations = wv
+  this.housingIssues = hi  // %
+  this.meanCommute = mc  // minimize
+  this.foodInsecurity = fi // %
+  this.limitedFoodAccess = lfa  // %
+  this.unemploymentRate = ur // %
+  this.popHealth = ph  // % minimize
+  this.UStaxRates=tr //high, low, sales
+  this.temp=temp //ftemp, ctemp, category
+  this.rankAvg=0.0
+  this.percentMatch=0.0
+  this.cites=[]
+  this.comments=comments
+}
+function USCity(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,comments){
+  this.id=id
+  this.name=name
+  this.avgIncome=avgincome
+  this.medianPropertyCost=mpc
+  this.popPerDoctorRatio = ppdrr
+  this.popPerDentistRatio = ppdr
+  this.popPerMentalHealthRatio = ppmhr
+  this.popOtherHealthRatio = pohr
+  this.healthCareCost = hcc
+  this.violentCrime = vc
+  this.foodHealthIndex = fhi
+  this.exerciseAccess = ea
+  this.pollution = p
+  this.socialGroup = sg  // maximize
+  this.diabeticScreening = ds // maximize
+  this.mammogramScreening = ms  // maximize
+  this.waterViolations = wv
+  this.housingIssues = hi  // %
+  this.meanCommute = mc  // minimize
+  this.foodInsecurity = fi // %
+  this.limitedFoodAccess = lfa  // %
+  this.unemploymentRate = ur // %
+  this.popHealth = ph  // % minimize
+  this.rankAvg=0.0
+  this.percentMatch=0.0
+  this.comments=comments
+}
+function City(name, subcountry, country, costofliving, climate, crimerate){
+  this.name=name
+  this.subcountry=subcountry
+  this.country=country
+  this.costOfLiving=costofliving
+  this.climate=climate
+  this.crimeRate=crimerate
+}
+if(stayInUS==true){
+    var stateTemps={"Alabama":{"TEMPF":"62.8","TEMPC":"17.1"},"Alaska":{"TEMPF":"26.6","TEMPC":"-3.0"},"Arizona":{"TEMPF":"60.3","TEMPC":"15.7"},"Arkansas":{"TEMPF":"60.4","TEMPC":"15.8"},"California":{"TEMPF":"59.4","TEMPC":"15.2"},"Colorado":{"TEMPF":"45.1","TEMPC":"7.3"},"Connecticut":{"TEMPF":"49.0","TEMPC":"9.4"},"Delaware":{"TEMPF":"55.3","TEMPC":"12.9"},"Florida":{"TEMPF":"70.7","TEMPC":"21.5"},"Georgia":{"TEMPF":"63.5","TEMPC":"17.5"},"Hawaii":{"TEMPF":"70.0","TEMPC":"21.1"},"Idaho":{"TEMPF":"44.4","TEMPC":"6.9"},"Illinois":{"TEMPF":"51.8","TEMPC":"11.0"},"Indiana":{"TEMPF":"51.7","TEMPC":"10.9"},"Iowa":{"TEMPF":"47.8","TEMPC":"8.8"},"Kansas":{"TEMPF":"54.3","TEMPC":"12.4"},"Kentucky":{"TEMPF":"55.6","TEMPC":"13.1"},"Louisiana":{"TEMPF":"66.4","TEMPC":"19.1"},"Maine":{"TEMPF":"41.0","TEMPC":"5.0"},"Maryland":{"TEMPF":"54.2","TEMPC":"12.3"},"Massachusetts":{"TEMPF":"47.9","TEMPC":"8.8"},"Michigan":{"TEMPF":"44.4","TEMPC":"6.9"},"Minnesota":{"TEMPF":"41.2","TEMPC":"5.1"},"Mississippi":{"TEMPF":"63.4","TEMPC":"17.4"},"Missouri":{"TEMPF":"54.5","TEMPC":"12.5"},"Montana":{"TEMPF":"42.7","TEMPC":"5.9"},"Nebraska":{"TEMPF":"48.8","TEMPC":"9.3"},"Nevada":{"TEMPF":"49.9","TEMPC":"9.9"},"New Hampshire":{"TEMPF":"43.8","TEMPC":"6.6"},"New Jersey":{"TEMPF":"52.7","TEMPC":"11.5"},"New Mexico":{"TEMPF":"53.4","TEMPC":"11.9"},"New York":{"TEMPF":"45.4","TEMPC":"7.4"},"North Carolina":{"TEMPF":"59.0","TEMPC":"15.0"},"North Dakota":{"TEMPF":"40.4","TEMPC":"4.7"},"Ohio":{"TEMPF":"50.7","TEMPC":"10.4"},"Oklahoma":{"TEMPF":"59.6","TEMPC":"15.3"},"Oregon":{"TEMPF":"48.4","TEMPC":"9.1"},"Pennsylvania":{"TEMPF":"48.8","TEMPC":"9.3"},"Rhode Island":{"TEMPF":"50.1","TEMPC":"10.1"},"South Carolina":{"TEMPF":"62.4","TEMPC":"16.9"},"South Dakota":{"TEMPF":"45.2","TEMPC":"7.3"},"Tennessee":{"TEMPF":"57.6","TEMPC":"14.2"},"Texas":{"TEMPF":"64.8","TEMPC":"18.2"},"Utah":{"TEMPF":"48.6","TEMPC":"9.2"},"Vermont":{"TEMPF":"42.9","TEMPC":"6.1"},"Virginia":{"TEMPF":"55.1","TEMPC":"12.8"},"Washington":{"TEMPF":"48.3","TEMPC":"9.1"},"West Virginia":{"TEMPF":"51.8","TEMPC":"11.0"},"Wisconsin":{"TEMPF":"43.1","TEMPC":"6.2"},"Wyoming":{"TEMPF":"42.0","TEMPC":"5.6"}, "District of Columbia":{"TEMPF":"55.7","TEMPC":"13.166667"}}
+    var statePropertyTaxes={"Hawaii":{"PROPERTY":0.27},"Alabama":{"PROPERTY":0.42},"Louisiana":{"PROPERTY":0.52},"Colorado":{"PROPERTY":0.55},"District of Columbia":{"PROPERTY":0.55},"Delaware":{"PROPERTY":0.56},"South Carolina":{"PROPERTY":0.57},"West Virginia":{"PROPERTY":0.59},"Wyoming":{"PROPERTY":0.61},"Arkansas":{"PROPERTY":0.63},"Utah":{"PROPERTY":0.66},"Nevada":{"PROPERTY":0.69},"Arizona":{"PROPERTY":0.72},"Tennessee":{"PROPERTY":0.74},"Idaho":{"PROPERTY":0.75},"California":{"PROPERTY":0.77},"New Mexico":{"PROPERTY":0.78},"Virginia":{"PROPERTY":0.8},"Mississippi":{"PROPERTY":0.8},"Montana":{"PROPERTY":0.84},"North Carolina":{"PROPERTY":0.86},"Kentucky":{"PROPERTY":0.86},"Indiana":{"PROPERTY":0.87},"Oklahoma":{"PROPERTY":0.9},"Georgia":{"PROPERTY":0.91},"Florida":{"PROPERTY":0.98},"Missouri":{"PROPERTY":0.99},"North Dakota":{"PROPERTY":1.01},"Washington":{"PROPERTY":1.03},"Oregon":{"PROPERTY":1.04},"Maryland":{"PROPERTY":1.1},"Minnesota":{"PROPERTY":1.15},"Alaska":{"PROPERTY":1.19},"Massachusetts":{"PROPERTY":1.22},"South Dakota":{"PROPERTY":1.32},"Maine":{"PROPERTY":1.35},"Kansas":{"PROPERTY":1.4},"Iowa":{"PROPERTY":1.53},"Ohio":{"PROPERTY":1.57},"Pennsylvania":{"PROPERTY":1.58},"Michigan":{"PROPERTY":1.64},"Rhode Island":{"PROPERTY":1.66},"New York":{"PROPERTY":1.68},"Nebraska":{"PROPERTY":1.8},"Texas":{"PROPERTY":1.83},"Vermont":{"PROPERTY":1.83},"Wisconsin":{"PROPERTY":1.94},"Connecticut":{"PROPERTY":2.07},"New Hampshire":{"PROPERTY":2.2},"Illinois":{"PROPERTY":2.31},"New Jersey":{"PROPERTY":2.44}}
+    var stateSalesTaxes={"Alabama":{"SALES":8.75},"Alaska":{"SALES":3.5},"Arizona":{"SALES":8.1625},"Arkansas":{"SALES":9.0625},"California":{"SALES":8.75},"Colorado":{"SALES":6.45},"Connecticut":{"SALES":6.35},"Delaware":{"SALES":0},"District of Columbia":{"SALES":5.75},"Florida":{"SALES":6.75},"Georgia":{"SALES":6},"Guam":{"SALES":4},"Hawaii":{"SALES":4.439},"Idaho":{"SALES":7.25},"Illinois":{"SALES":8.25},"Indiana":{"SALES":7},"Iowa":{"SALES":6.5},"Kansas":{"SALES":9},"Kentucky":{"SALES":6},"Louisiana":{"SALES":7.949999999999999},"Maine":{"SALES":5.5},"Maryland":{"SALES":6},"Massachusetts":{"SALES":6.25},"Michigan":{"SALES":6},"Minnesota":{"SALES":7.375},"Mississippi":{"SALES":7.125},"Missouri":{"SALES":7.5375},"Montana":{"SALES":0},"Nebraska":{"SALES":6.5},"Nevada":{"SALES":7.55},"New Hampshire":{"SALES":0},"New Jersey":{"SALES":9.625},"New Mexico":{"SALES":6.9065},"New York":{"SALES":6.4375},"North Carolina":{"SALES":6.125},"North Dakota":{"SALES":6.5},"Ohio":{"SALES":6.875},"Oklahoma":{"SALES":7.75},"Oregon":{"SALES":0},"Pennsylvania":{"SALES":7},"Puerto Rico":{"SALES":11},"Rhode Island":{"SALES":7},"South Carolina":{"SALES":7.5},"South Dakota":{"SALES":5},"Tennessee":{"SALES":8.375},"Texas":{"SALES":7.25},"Utah":{"SALES":7.15},"Vermont":{"SALES":6.5},"Virginia":{"SALES":5.65},"Washington":{"SALES":8.45},"West Virginia":{"SALES":6.5},"Wisconsin":{"SALES":5.875},"Wyoming":{"SALES":5}}
+    var stateIncomeTaxes={"Alabama":3.5,"Alaska":0,"Arizona":3.565,"Arkansas":3.9000000000000004,"California":7.15,"Colorado":4.63,"Connecticut":4.995,"Delaware":4.4,"Florida":0,"Georgia":3.4,"Hawaii":6.2,"Idaho":4.0275,"Illinois":4.95,"Indiana":3.23,"Iowa":4.67,"Kansas":4.4,"Kentucky":4,"Louisiana":4,"Maine":6.475,"Maryland":3.875,"Massachusetts":5.1,"Michigan":4.25,"Minnesota":7.6,"Mississippi":4,"Missouri":3.7,"Montana":3.95,"Nebraska":4.65,"Nevada":0,"New Hampshire":5,"New Jersey":6.075,"New Mexico":3.3000000000000003,"New York":6.41,"North Carolina":5.25,"North Dakota":2,"Ohio":2.746,"Oklahoma":2.75,"Oregon":7.45,"Pennsylvania":3.07,"Rhode Island":4.87,"South Carolina":4.05,"South Dakota":0,"Tennessee":2,"Texas":0,"Utah":4.95,"Vermont":6.25,"Virginia":3.875,"Washington":0,"West Virginia":4.75,"Wisconsin":5.825,"Wyoming":0,"District of Columbia":6.475}
+    var states={}
+    var statesUrl="https://api.datausa.io/attrs/geo/01000US/children/"
+    var stateList=null
+    $.getJSON(statesUrl, function(d0) {
+    stateList = d0.data
+    for(var s in stateList){
+        var sId=stateList[s][0]
+        var sName=stateList[s][1]
+        getUSData(sName, sId)
+    }
+    cities = {}
+    citiesUrl = "http://api.datausa.io/attrs/geo/"+tc.id+"/children/?sumlevel=160"
+
+    var sCount=0
+    var toSort=[]
+    for(var stuple in avgIncomeSort){
+        var ins=sCount*30.0
+        var state=(list)(stuple)[1]
+        var sname=(list)(stuple)[0]
+        var mpc = (float)(getIndexOfTuple(medianPropertyCostSort, 0, sname))*10.0
+        var ppdrr = (float)(getIndexOfTuple(popPerDoctorRatioSort, 0, sname))
+        var ppdr = (float)(getIndexOfTuple(popPerDentistRatioSort, 0, sname))
+        var ppmhr = (float)(getIndexOfTuple(popPerMentalHealthRatioSort, 0, sname))
+        var pohr = (float)(getIndexOfTuple(popOtherHealthRatioSort, 0, sname))
+        var vc = (float)(getIndexOfTuple(violentCrimeSort, 0, sname))
+        var hcc = (float)(getIndexOfTuple(healthCareCostSort, 0, sname))
+        var ea = (float)(getIndexOfTuple(exerciseAccessSort, 0, sname))
+        var fhi = (float)(getIndexOfTuple(foodHealthIndexSort, 0, sname))
+        var p = (float)(getIndexOfTuple(pollutionSort, 0, sname))
+        var sg = (float)(getIndexOfTuple(socialGroupSort, 0, sname))
+        var ds = (float)(getIndexOfTuple(diabeticScreeningSort, 0, sname))
+        var ms = (float)(getIndexOfTuple(mammogramScreeningSort, 0, sname))
+        var hi = (float)(getIndexOfTuple(housingIssuesSort, 0, sname))
+        var wv = (float)(getIndexOfTuple(waterViolationsSort, 0, sname))
+        var mc = (float)(getIndexOfTuple(meanCommuteSort, 0, sname))
+        var fi = (float)(getIndexOfTuple(foodInsecuritySort, 0, sname))
+        var lfa = (float)(getIndexOfTuple(limitedFoodAccessSort, 0, sname))
+        var ur = (float)(getIndexOfTuple(unemploymentRateSort, 0, sname))
+        var ppt = (float)(getIndexOfTuple(propertyTaxSort, 0, sname))
+        var ph = (float)(getIndexOfTuple(popHealthSort, 0, sname))
+        var st = (float)(getIndexOfTuple(salesTaxSort, 0, sname))
+        var it = (float)(getIndexOfTuple(incomeTaxSort, 0, sname))
+        state.rankAvg=(mpc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph+ppt+it+st+t)/(float)(len(states))
+        var t = (float)(getIndexOfTuple(tempSort, 0, sname))*10.0
+        state.percentMatch = ((float)(len(avgIncomeSort)) - state.rankAvg) / (float)(len(avgIncomeSort)) * 100.0
+        toSort.append(state)
+    }
+                primaryCityList = sorted(toSort, key=lambda s: s.rankAvg)
+          //  tc.cities=primaryCityList
+       // else:
+          //  tc.cities={tc}
+
+        });
+}else{
+    countries={} //key: countryname value:object
+    noIncomeList={
+        "ASM":10532,
+        "AND":39700,
+        "VGB":13660, //from 1989; could be ~8915 due to apparent fluctuations from 1989 (being the max gni found) to 2006
+        "JEY":62474,
+        "CUB":7872,
+        "DJI":1880,
+        "FRO":55837,
+        "PYF":19419,
+        "GIB":61700, //gdp per capita (PPP) instead due to lack of gni
+        "GRL":34260,
+        "GUM":24446,
+        "IMN":71761,
+        "PRK":664,
+        "LIE":134479,
+        "MCO":173238,
+        "NCL":34177,
+        "MNP":23047,
+        "SMR":40752,
+        "SYR":1178,
+        "SOM":98,
+        "SXM":66800, //gdp per capita (PPP) instead due to lack of gni
+        "MAF":19300, //gdp per capita (PPP) instead due to lack of gni
+        "VIR":34955,
+        "ALA":46462,
+        "AIA":10951.93,
+        "BES":22667, //http://www.saba-news.com/gdp-increased-in-2015-in-caribbean-netherlands/
+        "COK":6557.68,
+        "FLK":16730.41,
+        "GUF":17767,
+        "GLP":22957,
+        "GGY":55783,
+        "VAT":21198, //gdp per capita (PPP) instead due to lack of gni
+        "MTQ":25244,
+        "MYT":2780,
+        "MSR":8367.72,
+        "NIU":12550.95,
+        "KOS":11050,
+        "REU":22456,
+        "SPM":9368.30,
+        "TWN":25360,
+        "TKL":6275, //gdp per capita (PPP) instead due to lack of gni
+        "WLF":4930.95, //gdp per capita (PPP) instead due to lack of gni
+        "ESH":4930.95 //gdp per capita (PPP) instead due to lack of gni
+    } //not in world bank
+    conversions={}
+    //get country list and initial data
+    /*with urllib.request.urlopen("https://restcountries.eu/rest/v2/all") as url:
+        data = json.loads(url.read().decode())
+//capitalcity, gini, gni, taxrate, housingcost, currency, climate, crimerate, languages, alpha2, alpha3, population, area, lat, lng, flaglink
+        for c in data:
+            name=c["name"]
+            if name!="United States of America" and name!="Antarctica" and name!="Bouvet Island" and name!="British Indian Ocean Territory" and name!="United States Minor Outlying Islands" and name!="Christmas Island" and name!="Cocos (Keeling) Islands" and name!="French Southern Territories" and name!="Heard Island and McDonald Islands" and name!="Norfolk Island" and name!="Pitcairn" and name!="Saint Barthélemy" and name!="Saint Helena, Ascension and Tristan da Cunha" and name!="South Georgia and the South Sandwich Islands" and name!="Svalbard and Jan Mayen" and name!="Korea (Democratic People's Republic of)":
+                alpha2=c["alpha2Code"]
+                alpha3=c["alpha3Code"]
+                capital=c["capital"]
+                population=c["population"]
+                lat=null
+                lng=null
+                if len(c["latlng"])>0:
+                    lat=c["latlng"][0]
+                    lng=c["latlng"][1]
+                area=c["area"]
+                gini=c["gini"]
+                currList=[]
+                for m in c["currencies"]:
+                    currCode=m["code"]
+                    currName=m["name"]
+                    currSymbol=m["symbol"]
+                    currSavings=yourSavings
+                    currIncome=monthlyIncome
+                    //for income check 2016 then 2015 then 2014 to get latest income value
+                    currList.append(Currency(currName, currCode, currSymbol, currIncome, currSavings)) //name, code, symbol, income, savings
+                langList=[]
+                for la in c["languages"]:
+                    langName=la["name"]
+                    langLocal=la["nativeName"]
+                    langList.append(Language(langName, langLocal))
+                flaglink=c["flag"]
+                if area==null:
+                    area=-1.0
+                country=Country(name, capital, gini, null, null, -1.0, currList, null, langList, alpha2, alpha3, population, area, lat, lng, flaglink, null, null, null, null, null, null, null, null, null, null)
+                if country.alpha3 in noIncomeList:
+                    country.gni=(float)(noIncomeList[country.alpha3])
+                else:
+                    incomeUrl="https://api.worldbank.org/countries/"+country.alpha3+"/indicators/NY.GNP.PCAP.PP.CD?format=json&per_page=1000"
+                    with urllib.request.urlopen(incomeUrl) as url2:
+                        data2 = json.loads(url2.read().decode())
+                        for v in data2[1]: //date: returns year string ex. "2018"
+                            if v["value"]!=null:
+                                country.gni=(float)(v["value"])
+                                break
+                incomeLevelUrl="https://api.worldbank.org/v2/country/"+country.alpha3+"?format=json"
+                with urllib.request.urlopen(incomeLevelUrl) as url3:
+                    data3 = json.loads(url3.read().decode())
+                    if len(data3)>1:
+                        if len(data3[1])>0:
+                            country.incomeLevel=data3[1][0]["incomeLevel"]["value"]
+                country.incomeDiff=yearlyIncome-country.gni //can be used to establish an affordability gradient
+                try:
+                    if country.name=="Macedonia (the former Yugoslav Republic of)":
+                        country.name="North Macedonia"
+                    if country.name=="Palestine, State of":
+                        country.name = "Palestine"
+                    //if country.name=="Korea (Democratic People's Republic of)":
+                    //    country.name = "North Korea"
+                    if country.name=="Korea (Republic of)":
+                        country.name = "South Korea"
+                    if country.name=="Tanzania, United Republic of":
+                        country.name="Tanzania"
+                    if country.name=="United Kingdom of Great Britain and Northern Ireland":
+                        country.name="United Kingdom"
+                    if country.name=="Venezuela (Bolivarian Republic of)":
+                        country.name="Venezuela"
+                    if country.name=="Viet Nam":
+                        country.name="Vietnam"
+                    if country.name=="Bolivia (Plurinational State of)":
+                        country.name="Bolivia"
+                    if country.name=="Virgin Islands (British)":
+                        country.name = "British Virgin Islands"
+                    if country.name=="Virgin Islands (U.S.)":
+                        country.name = "U.S. Virgin Islands"
+                    if country.name=="Congo (Democratic Republic of the)":
+                        country.name="Democratic Republic of the Congo"
+                    if country.name=="Iran (Islamic Republic of)":
+                        country.name="Iran"
+                    country.crimeRate=(float)(crimeRates[country.name]["CRIMERATE"])
+                except:
+                    print("Crime: "+country.name)
+                try:
+                    country.taxRates=TaxRates((float)(taxCosts[country.name]["HIGHINCOME"]), (float)(taxCosts[country.name]["LOWINCOME"]), (float)(taxCosts[country.name]["SALES"])) //high, low, sales
+                except:
+                    print("Income: "+country.name)
+                //getting temp data per country
+                try:
+                    tempsManualC={"Åland Islands":5.4,"Bonaire, Sint Eustatius and Saba":27.5,"Curaçao":29.5,"Holy See":14.65,"Republic of Kosovo":9.5,"Saint Martin (French part)":26.5,"Sint Maarten (Dutch part)":26.5,"Saint Pierre and Miquelon":5.06,"South Sudan":29.9}
+                    tempAvgC=0.0
+                    if country.name not in tempsManualC:
+                        tempUrl="http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/2020/2039/"+country.alpha3
+                        with urllib.request.urlopen(tempUrl) as url4:
+                            data4 = json.loads(url4.read().decode())
+                            tempTotal=0.0
+                            tempAdd=0.0
+                            for t in data4:
+                                tempAdd+=t["annualData"][0]
+                                tempTotal+=1.0
+                            tempAvgC=tempTotal/tempAdd
+                    else:
+                        tempAvgC=tempsManualC[country.name]
+                    categ = ""
+                    tempAvgF = (tempAvgC * 9.0 / 5.0) + 32.0
+                    if (float)(math.floor(tempAvgC)) > 18.0:  // "hot" "moderate" "cold"
+                        categ = "hot"
+                    elif (float)(math.floor(tempAvgC)) > 0.0:
+                        categ = "moderate"
+                    else:
+                        categ = "cold"
+                    country.temp = Temperature(tempAvgF, tempAvgC, categ)  // ftemp, ctemp, category,
+                except:
+                    print("Temp: "+country.name)
+                //5 not free, "1 free", "n/a" -freeIndex
+                try:
+                    country.freedomIndex = (float)(freeIndices[country.name]["FREEINDEX"])
+                    country.hdiValue=(float)(hdiValues[country.name]["HDI"])
+                    country.ageExp = (float)(ageValues[country.name]["AGE"])
+                except:
+                    print(country.name)
+                countries[name] = country
+//order shortlist of country choices: PRIMARY SEARCH
+//sort by gini, gni, taxrates(high+low income, sales tax), temp(, crimerate (ctemp, category)
+    ageExpSort = sorted(countries.items(), key=lambda c: (list)(c)[1].ageExp, reverse=True)
+    freedomSort=sorted(countries.items(), key=lambda c:(list)(c)[1].freedomIndex, reverse=True)
+    hdiSort = sorted(countries.items(), key=lambda c: (list)(c)[1].hdiValue, reverse=True)
+    gniSort=sorted(countries.items(), key=lambda c:monthlyIncome-abs((list)(c)[1].incomeDiff), reverse=True)
+    taxHighIncomeSort=sorted(countries.items(), key=lambda c:(list)(c)[1].taxRates.highIncomeTax)
+    taxLowIncomeSort=sorted(countries.items(), key=lambda c:(list)(c)[1].taxRates.lowIncomeTax)
+    salesTaxSort=sorted(countries.items(), key=lambda c:(list)(c)[1].taxRates.salesTax)
+    //areaSort=sorted(countries.items(), key=lambda c: (list)(c)[1].area)
+    tempSort=[]
+    if tempPref=="hot":
+        tempSort=sorted(countries.items(), key=lambda c:(list)(c)[1].temp.cTemp, reverse=True)
+    elif tempPref=="cold":
+        tempSort=sorted(countries.items(), key=lambda c:(list)(c)[1].temp.cTemp)
+    else:
+        tempSort = sorted(countries.items(), key=lambda c: abs(14.9-(list)(c)[1].temp.cTemp)) //avg temp:14.9 C
+    crimeRateSort=sorted(countries.items(), key=lambda c:(list)(c)[1].crimeRate)
+    count=0.0
+    toSort=[]
+    for ctuple in gniSort:
+        iG=count*2.0
+        country=(list)(ctuple)[1]
+        cname=(list)(ctuple)[0]
+        //print(country.name)
+        iTL = (float)(getIndexOfTuple(taxLowIncomeSort, 0, cname))
+        iST = (float)(getIndexOfTuple(salesTaxSort, 0, cname))
+        iTE = (float)(getIndexOfTuple(tempSort, 0, cname))
+        iCR = (float)(getIndexOfTuple(crimeRateSort, 0, cname))
+        iFR = (float)(getIndexOfTuple(freedomSort, 0, cname))
+        iAE = (float)(getIndexOfTuple(ageExpSort, 0, cname))
+        rankAvg=(iG+iTL+iST+iTE+iCR+iFR+iAE)/7.0
+        country.percentMatch=((float)(len(gniSort))-rankAvg)/(float)(len(gniSort))*100
+        country.rankAvg=rankAvg
+        toSort.append(country)
+        count+=1.0
+    primaryCountryList = sorted(toSort, key=lambda c: c.rankAvg)
+    topChoices=[]
+    for x in range(0,choiceCount):
+        housingCostsSorted = sorted(housingCosts, key=lambda x: x["TIME"])
+        housingDataCount = 0
+        for i in housingCostsSorted:
+            if i["LOCATION"] == primaryCountryList[x].alpha3:
+                primaryCountryList[x].housingCost = str(i["Value"])
+                housingDataCount += 1
+                break
+        if housingDataCount==0:
+            primaryCountryList[x].housingCost="N/A"
+        topChoices.append(primaryCountryList[x]) */
+    /*data5=[]
+    with urllib.request.urlopen("https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json") as url:
+        data5 = json.loads(url.read().decode())
+    for tc in topChoices: //getting top choice cities
+        // Aland Islands, Reunion, Ivory Coast, Curacao
+        name=tc.name //to preserve accents
+        if name=="Åland Islands":
+            name="Aland Islands"
+        if name=="Réunion":
+            name="Reunion"
+        if name=="Côte d'Ivoire":
+            name="Ivory Coast"
+        if name=="Curaçao":
+            name="Curacao"
+        if name=="Falkland Islands (Malvinas)":
+            name="Falkland Islands"
+        if name=="Holy See":
+            name="Vatican"
+        if name=="Saint Martin (French part)":
+            tc.name="Saint Martin"
+            name="Saint Martin"
+        if name=="Bonaire, Sint Eustatius and Saba":
+            name="Bonaire, Saint Eustatius and Saba"
+        if name=="North Macedonia":
+            name="Macedonia"
+        if name=="Republic of Kosovo":
+            name="Kosovo"
+        if name=="Sint Maarten (Dutch part)":
+            tc.name="Sint Maarten"
+            name="Sint Maarten"
+        if name=="Palestine":
+            name="Palestinian Territory"
+        if name=="Brunei Darussalam":
+            name="Brunei"
+        if name=="Timor-Leste":
+            name="East Timor"
+        if name=="Micronesia (Federated States of)":
+            tc.name="Federated States of Micronesia"
+            name="Micronesia"
+        if name=="Lao People's Democratic Republic":
+            name="Laos"
+        if name=="Moldova (Republic of)":
+            tc.name="Republic of Moldova"
+            name="Moldova"
+        if name=="Cabo Verde":
+            name="Cape Verde"
+        if name=="Syrian Arab Republic":
+            name="Syria"
+        if name=="Russian Federation":
+            name="Russia"
+        if name=="Congo":
+            name="Republic of the Congo"
+        cityList = sorted(data5, key=lambda x: x["country"] == name, reverse=True) //see city names like D\u00eaq\u00ean
+        first=cityList[0]["country"]
+        cities = []
+        citiesData = []
+        if first != name: //Tokelau
+            col = null
+            cityView2 = tc.capitalCity.encode('utf-8').decode('utf-8', 'ignore').replace(u'’', u"'")
+            cityView = ''.join((c for c in unicodedata.normalize('NFD', cityView2) if unicodedata.category(c) != 'Mn'))
+            firstSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + cityView.replace(" ", "-") + "?USD"
+            data6 = []
+            with urllib.request.urlopen(firstSearch) as urlc:
+                data6 = json.loads(urlc.read().decode())
+            dataCosts = data6["costs"]
+            if len(dataCosts) == 0:
+                secondSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + cityView.replace(" ", "-") + "-" + name.replace(" ", "-") + "?USD"
+                with urllib.request.urlopen(secondSearch) as urlc:
+                    data6 = json.loads(urlc.read().decode())
+                    dataCosts = data6["costs"]
+                    if len(dataCosts) == 0: //cant find data for city
+                        print(name)
+                    else:
+                        col = 0.0
+                        itemCount=0
+                        for item in dataCosts:
+                            if itemCount<10:
+                                try:
+                                    col += (float)(item["cost"])
+                                    itemCount+=1
+                                except:
+                                    pass
+                            else:
+                                break
+            else:
+                col = 0.0
+                itemCount = 0
+                for item in dataCosts:
+                    if itemCount < 5:
+                        try:
+                            col += (float)(item["cost"])
+                            itemCount += 1
+                        except:
+                            pass
+                    else:
+                        break //.encode('utf-8').strip())
+            if col!=null:
+                citiesData.append(City(tc.capitalCity, null, name, col, null, null))
+            else:
+                cities.append(City(tc.capitalCity, null, name, col, null, null))
+        else:
+            cityCount=0
+            while cityList[cityCount]["country"]==first: //null for unknown subcountry
+                subc=cityList[cityCount]["subcountry"]
+                if subc==null:
+                    subc="N/A"
+                col=null
+                cityView2=cityList[cityCount]["name"].encode('utf-8').decode('utf-8', 'ignore').replace(u'’', u"'")
+                cityView = ''.join((c for c in unicodedata.normalize('NFD', cityView2) if unicodedata.category(c) != 'Mn'))
+                print(cityView)
+                firstSearch=firstSearch="https://cost-of-living-api-lqvgibwbps.now.sh/"+cityView.replace(" ","-")+"?USD"
+                data6 = []
+                with urllib.request.urlopen(firstSearch) as urlc:
+                    data6 = json.loads(urlc.read().decode())
+                dataCosts=data6["costs"]
+                if len(dataCosts)==0:
+                    if name=="Vatican":
+                        name="Vatican City"
+                    if name=="Bonaire, Saint Eustatius and Saba":
+                        name="Bonaire"
+                    secondSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + cityView.replace(" ","-") + "-" + name.replace(" ", "-") + "?USD"
+                    with urllib.request.urlopen(secondSearch) as urlc:
+                        data6 = json.loads(urlc.read().decode())
+                        dataCosts = data6["costs"]
+                        if len(dataCosts)==0:
+                            print("failed: "+cityView)
+                        else:
+                            col = 0.0
+                            itemCount = 0
+                            for item in dataCosts:
+                                if itemCount < 5:
+                                    try:
+                                        col += (float)(item["cost"])
+                                        itemCount += 1
+                                    except:
+                                        pass
+                                else:
+                                    break
+                else:
+                    col=0.0
+                    itemCount = 0
+                    for item in dataCosts:
+                        if itemCount < 5:
+                            try:
+                                col += (float)(item["cost"])
+                                itemCount += 1
+                            except:
+                                pass
+                        else:
+                            break
+                if col != null:
+                    citiesData.append(City(tc.capitalCity, null, name, col, null, null))
+                else:
+                    cities.append(City(cityView, subc, name, col, null, null) )
+                cityCount+=1
+        tc.cities=cities
+        tc.citiesData=citiesData
+        tempExtraCities=tc.cities
+        tc.cities=sorted(tc.citiesData, key=lambda c: c.costOfLiving)+tempExtraCities*/
+      }
+x=10
+
+</script>
+</body>
+</html>
