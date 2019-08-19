@@ -110,6 +110,7 @@
               "picture":currUser["picture"],
               "joinDate":currUser["joinDate"],
               "comments":[]
+            })
           }
           else{
             var sRef2 = firebase.database().ref().child("users").child(currUser["id"])//check if user in database
