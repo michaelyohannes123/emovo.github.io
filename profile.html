@@ -79,9 +79,11 @@
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
       }*/
-      function onSignIn(googleUser) {
+      function onSignIn() {
         // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
+        const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+        const profile = googleUser.getBasicProfile();
+        //var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
         console.log('Full Name: ' + profile.getName());
         console.log('Given Name: ' + profile.getGivenName());
