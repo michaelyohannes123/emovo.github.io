@@ -65,14 +65,14 @@
         account = JSON.parse(sessionStorage.getItem('currUser'));
         //make sign out button appear
         console.log(account)
-        document.getElementsByClassName('g-signin2')[0].style.display = "none";
+        //document.getElementsByClassName('g-signin2')[0].style.display = "none";
         document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
         document.getElementById("username").innerHTML="Hi "+currUser["name"]+"!";
         document.getElementById("pic").src=currUser["picture"];
       }else{
         //make sign in button appear
-        document.getElementsByClassName('g-signin2').style.display = "block";
+        //document.getElementsByClassName('g-signin2')[0].style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
       }
