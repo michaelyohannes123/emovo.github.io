@@ -100,9 +100,16 @@
         var sRef = firebase.database().ref().child("users")
         sRef.on("value", function(snapshot, prevChildKey) {
           var snapshotData = snapshot.val();
+          console.log(snapshotData)
           if(snapshotData==null){ //database doesnt exist
             var sRef2 = firebase.database().ref()
             sRef2.child("users").set({})
+            firebase.database().ref().child("users").child(currUser["id"]).set({
+              "id":currUser["id"],
+              "name":currUser["name"],
+              "picture":currUser["picture"],
+              "joinDate":currUser["joinDate"],
+              "comments":[]
           }
           else{
             var sRef2 = firebase.database().ref().child("users").child(currUser["id"])//check if user in database
