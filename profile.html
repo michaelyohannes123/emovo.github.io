@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="328858787046-95fsdbnk5kil4druiacprsubihssktju.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
     <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     .myLink {display: none}
@@ -72,6 +72,7 @@
         document.getElementById("pic").src=currUser["picture"];
       }else{
         //make sign in button appear
+        console.log(document.getElementById('gsignin2'))
         document.getElementById('gsignin2').style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
