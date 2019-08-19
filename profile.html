@@ -104,7 +104,10 @@
           if(snapshotData==null){ //database doesnt exist
             var date = new Date();
             var day = date.getDate();
-            var month = date.toLocaleString('default', { month: 'long'});
+            var months = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"
+            ];
+            var month = months[date.getMonth()];
             var year = date.getFullYear();
             var stDate = month+" "+day+", "+year
             currUser["joinDate"] = stDate;
