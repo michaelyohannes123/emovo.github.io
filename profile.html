@@ -27,8 +27,8 @@
         <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
       </div>
     </div>
-    <!--<div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>-->
-    <div class="mainDiv" style="text-align: center;">
+    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div class="mainDiv" style="text-align: center; position: relative;">
       <div id="userContent" class="w3-row-padding w3-padding-64 w3-container" style="display: none;">
         <div class="w3-content">
           <div class="w3-twothird">
@@ -42,14 +42,6 @@
         </div>
       </div>
       <p></p>
-      <div id="gsignin2" class="btn white darken-4 col s10 m4">
-           <button class="w3-button w3-dark-grey" onclick="onSignIn();" style="display: block; margin: 0 auto;">
-               <div class="left">
-                   <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
-                   Sign in
-               </div>
-           </button>
-      </div>
       <div id="signout" class="btn white darken-4 col s10 m4">
            <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" onclick="signOut();">
                <div class="left">
@@ -67,8 +59,8 @@
           storageBucket: "emovo-1a6a7.appspot.com"
         }
       firebase.initializeApp(config);*/
-      window.onload = function(){
-      var isIn=isLoggedIn();
+      //window.onload = function(){
+      /*var isIn=isLoggedIn();
       console.log(isIn)
       var account={};
       if(isIn==true){
@@ -86,7 +78,7 @@
         document.getElementById('gsignin2').style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
-      }
+      }*/
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
@@ -141,7 +133,7 @@
           document.getElementById("signout").style.display = "none";
         });
       }
-    }
+    //}
     </script>
   </body>
 </html>
