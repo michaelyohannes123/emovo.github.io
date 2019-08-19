@@ -17,9 +17,9 @@
   </head>
   <body class="w3-light-grey">
     <!-- Navigation Bar -->
-    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark" style="display: block; margin: 0 auto;"></div>
+    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <div class="mainDiv" style="text-align: center; display: block; margin: 0 auto;">
-      <div id="userContent" class="w3-row-padding w3-padding-64 w3-container" style="display: none;">
+      <div id="userContent" class="w3-row-padding w3-padding-64 w3-container">
         <div class="w3-content">
           <div class="w3-twothird">
             <h1 id="username"></h1>
@@ -33,7 +33,7 @@
       </div>
       <p></p>
       <div id="signout" class="btn white darken-4 col s10 m4">
-           <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" onclick="signOut();">
+           <button class="w3-button w3-dark-grey" onclick="signOut();">
                <div class="left">
                    <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
                    Sign out
@@ -50,24 +50,22 @@
         }
       firebase.initializeApp(config);*/
       //window.onload = function(){
-      /*var isIn=isLoggedIn();
+      var isIn=isLoggedIn();
       console.log(isIn)
       var account={};
-      if(isIn==true){
+      if(isIn==false){
+        //console.log(document.getElementById('gsignin2'))
+        document.getElementById('gsignin2').style.display = "block";
+        document.getElementById("userContent").style.display = "none";
+        document.getElementById("signout").style.display = "none";
+      }/*else{
         account = JSON.parse(sessionStorage.getItem('currUser'));
-        //make sign out button appear
         console.log(account)
         document.getElementById('gsignin2').style.display = "none";
         document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
         document.getElementById("username").innerHTML="Hi "+currUser["name"]+"!";
         document.getElementById("pic").src=currUser["picture"];
-      }else{
-        //make sign in button appear
-        console.log(document.getElementById('gsignin2'))
-        document.getElementById('gsignin2').style.display = "block";
-        document.getElementById("userContent").style.display = "none";
-        document.getElementById("signout").style.display = "none";
       }*/
       function onSignIn() {
         // Useful data for your client-side scripts:
@@ -124,6 +122,7 @@
           document.getElementById("userContent").style.display = "none";
           document.getElementById("signout").style.display = "none";
         });*/
+        alert("Signing out...")
         document.getElementById('gsignin2').style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
