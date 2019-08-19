@@ -54,22 +54,17 @@
       if(isIn==true){
         account = JSON.parse(sessionStorage.getItem('currUser'));
         //make sign out button appear
-        document.getElementsById("g-signin2").style.display = "none";
-        document.getElementsById("userContent").style.display = "none";
-        document.getElementsById("signout").style.display = "block";
+        document.getElementById("g-signin2").style.display = "none";
+        document.getElementById("userContent").style.display = "none";
+        document.getElementById("signout").style.display = "block";
       }else{
         //make sign in button appear
-        document.getElementsById("g-signin2").style.display = "block";
-        document.getElementsById("userContent").style.display = "block";
-        document.getElementsById("signout").style.display = "none";
+        document.getElementById("g-signin2").style.display = "block";
+        document.getElementById("userContent").style.display = "block";
+        document.getElementById("signout").style.display = "none";
       }
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
-        /*
-        Use the GoogleSignIn.getLastSignedInAccount method to request profile information for the currently signed in user.
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (acct != null) {
-        */
         var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
         console.log('Full Name: ' + profile.getName());
