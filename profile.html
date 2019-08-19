@@ -1,12 +1,68 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
   <head>
+    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="328858787046-95fsdbnk5kil4druiacprsubihssktju.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    .myLink {display: none}
+    </style>
   </head>
-  <body>
+  <body class="w3-light-grey">
+    <!-- Navigation Bar -->
+    <div class="w3-top">
+      <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
+        <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 1</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 2</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 3</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
+      </div>
+    </div>
+    <p></p>
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <!--<div id="signout" class="btn white darken-4 col s10 m4">
+         <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" onclick="signOut();">
+             <div class="left">
+                 <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                 Sign out
+             </div>
+         </button>
+    </div>-->
+    <div id="userContent" class="w3-row-padding w3-padding-64 w3-container" style="display: none;">
+      <div class="w3-content">
+        <div class="w3-twothird">
+          <h1 id="username">username</h1>
+          <a href="profile.html" class="fa fa-user"></a>
+          <p class="w3-text-grey">Recent Searches</p>
+          <p class="w3-text-grey">Our Recommendations</p>
+        </div>
+      </div>
+    </div>
     <script>
+      var isIn=isLoggedIn();
+      var account={};
+      if(isIn==true){
+        account = JSON.parse(sessionStorage.getItem('currUser'));
+        //make sign out button appear
+        document.getElementsByClassName("g-signin2").style.display = "none";
+        document.getElementsById("userContent").style.display = "none";
+        document.getElementsByClassName("signout").style.display = "block";
+      }else{
+        //make sign in button appear
+        document.getElementsByClassName("g-signin2").style.display = "block";
+        document.getElementsById("userContent").style.display = "block";
+        document.getElementsByClassName("signout").style.display = "none";
+      }
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
@@ -16,10 +72,31 @@
         console.log('Family Name: ' + profile.getFamilyName());
         console.log("Image URL: " + profile.getImageUrl());
         console.log("Email: " + profile.getEmail());
-
+        console.log("locale: " + profile.getLocale());
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
+        var currUser = {};
+        currUser["id"] = profile.getId();
+        currUser["name"] = profile.getGivenName(); //first name only
+        currUser["picture"] = profile.getImageUrl();
+        currUser["picture"] = profile.getLocale();
+        sessionStorage.setItem('currUser',JSON.stringify(currUser));
+      }
+      function isLoggedIn()
+      {
+        if(sessionStorage.getItem('currUser') == null){
+          return false;
+        } else {
+          return true;
+        }
+      }
+      function signOut() {
+        sessionStorage.clear();
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log('User signed out.');
+        });
       }
     </script>
   </body>
