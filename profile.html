@@ -34,7 +34,7 @@
         <div class="w3-twothird">
           <h1 id="username"></h1>
           <p id="joinDate"></p>
-          <img id="pic" src="#"> 
+          <img id="pic" src="#">
           <p id="yourSearches" class="w3-text-grey"></p>
           <p id="placeRecs" class="w3-text-grey"></p>
           <p id="commentHistory" class="w3-text-grey"></p>
@@ -59,13 +59,17 @@
         }
       firebase.initializeApp(config);*/
       var isIn=isLoggedIn();
+      console.log(isIn)
       var account={};
       if(isIn==true){
         account = JSON.parse(sessionStorage.getItem('currUser'));
         //make sign out button appear
+        console.log(account)
         document.getElementsByClassName('g-signin2')[0].style.display = "none";
         document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
+        document.getElementById("username").innerHTML="Hi "+currUser["name"]+"!";
+        document.getElementById("pic").src=currUser["picture"];
       }else{
         //make sign in button appear
         document.getElementsByClassName('g-signin2')[0].style.display = "block";
@@ -85,7 +89,7 @@
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
         document.getElementById("username").innerHTML="Hi "+profile.getGivenName()+"!";
-        document.getElementById("pic").src="Hi "+profile.getImageUrl();
+        document.getElementById("pic").src=profile.getImageUrl();
         //firebase retrieval here
         /*
         document.getElementById("joinDate").innerHTML
