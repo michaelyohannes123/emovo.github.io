@@ -54,12 +54,12 @@
       if(isIn==true){
         account = JSON.parse(sessionStorage.getItem('currUser'));
         //make sign out button appear
-        //document.getElementById("gsignin2").style.display = "none";
+        document.getElementsByClassName('g-signin2')[0].style.display = "none";
         document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
       }else{
         //make sign in button appear
-        //document.getElementById("gsignin2").style.display = "block";
+        document.getElementsByClassName('g-signin2')[0].style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
       }
