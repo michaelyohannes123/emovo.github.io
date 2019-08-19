@@ -39,7 +39,7 @@
       </div>
     </div>
     <p></p>
-    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <div id="signout" class="btn white darken-4 col s10 m4">
          <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" onclick="signOut();">
              <div class="left">
@@ -54,12 +54,12 @@
       if(isIn==true){
         account = JSON.parse(sessionStorage.getItem('currUser'));
         //make sign out button appear
-        document.getElementById("gsignin2").style.display = "none";
+        //document.getElementById("gsignin2").style.display = "none";
         document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
       }else{
         //make sign in button appear
-        document.getElementById("gsignin2").style.display = "block";
+        //document.getElementById("gsignin2").style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
       }
