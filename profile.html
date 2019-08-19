@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="328858787046-95fsdbnk5kil4druiacprsubihssktju.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     .myLink {display: none}
@@ -58,6 +58,7 @@
           storageBucket: "emovo-1a6a7.appspot.com"
         }
       firebase.initializeApp(config);*/
+      window.onload = function(){
       var isIn=isLoggedIn();
       console.log(isIn)
       var account={};
@@ -128,6 +129,7 @@
           document.getElementById("signout").style.display = "none";
         });
       }
+    }
     </script>
   </body>
 </html>
