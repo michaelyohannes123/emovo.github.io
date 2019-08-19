@@ -28,16 +28,6 @@
         <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
       </div>
     </div>
-    <p></p>
-    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <div id="signout" class="btn white darken-4 col s10 m4">
-         <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" onclick="signOut();">
-             <div class="left">
-                 <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
-                 Sign out
-             </div>
-         </button>
-    </div>
     <div id="userContent" class="w3-row-padding w3-padding-64 w3-container" style="display: none;">
       <div class="w3-content">
         <div class="w3-twothird">
@@ -48,6 +38,16 @@
         </div>
       </div>
     </div>
+    <p></p>
+    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div id="signout" class="btn white darken-4 col s10 m4">
+         <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" onclick="signOut();">
+             <div class="left">
+                 <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                 Sign out
+             </div>
+         </button>
+    </div>
     <script>
       var isIn=isLoggedIn();
       var account={};
@@ -55,12 +55,12 @@
         account = JSON.parse(sessionStorage.getItem('currUser'));
         //make sign out button appear
         document.getElementById("gsignin2").style.display = "none";
-        document.getElementById("userContent").style.display = "none";
+        document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
       }else{
         //make sign in button appear
         document.getElementById("gsignin2").style.display = "block";
-        document.getElementById("userContent").style.display = "block";
+        document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";
       }
       function onSignIn(googleUser) {
@@ -75,6 +75,7 @@
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
+        document.getElementById("username").innerHTML=profile.getGivenName()
         var currUser = {};
         currUser["id"] = profile.getId();
         currUser["name"] = profile.getGivenName(); //first name only
