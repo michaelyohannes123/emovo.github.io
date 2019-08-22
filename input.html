@@ -56,12 +56,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 <div id="input" style="text-align: center;">
       <h2>Hello!</h2>
       <h3>Search the world with us</h3>
-      <form action="loading.html" method="GET" target="_blank" class="w3-row-padding" style="display: inline-block; text-align:left"><!--margin:0 -16px; -->
+      <form action="loading.html" method="GET" class="w3-row-padding" style="display: inline-block; text-align:left"><!--margin:0 -16px; -->
           <label>Enter your monthly income before taxes (in USD):</label>
           <input class="w3-input w3-border" type="number" style="display: inline-block; align:left" placeholder="Monthly Income ($)" name="mi">
           <p></p>
-          <label>Enter your savings before taxes (in USD)</label>
+          <label>Enter your savings before taxes (in USD):</label>
           <input class="w3-input w3-border" type="number" placeholder="Total Savings ($)" name="ts">
+          <p></p>
+          <label>Enter your age</label>
+          <input class="w3-input w3-border" type="number" placeholder="Age" name="ag">
           <p></p>
           <label>I prefer areas with temperatures that are...</label>
           <div id="tempPref" class="w3-row-padding">
@@ -83,18 +86,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
               <label class="selecting us"for="us"></label>
           </div>
           <br>
-          <button type="submit" class="w3-button w3-red" style="text-align: center;" width="120px" height="120px">Search!</button>
+          <button type="submit" class="w3-button w3-red" width="120px" height="120px">Search!</button>
+          <p id="isSignedIn" style="display: none;">The results of this specific query will be saved to your account because you are logged in.
+            <br>
+          If you wish to NOT save the results of this search, logout <a href="profile.html">here.</a></p>
+          <p id="isNotSignedIn" style="display: none;">The results of this specific query won't be saved to your account because you haven't logged in.
+            <br>
+          If you wish to save the results of this search, login <a href="loading.html">here.</a></p>
       </form>
-</div>
-<p></p>
-<p></p>
-<div id="signIn" class="btn white darken-4 col s10 m4">
-     <button class="w3-button w3-dark-grey" style="display: block; margin: 0 auto;" href="/users/google-oauth/">
-         <div class="left">
-             <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
-             Sign in to save information?
-         </div>
-     </button>
 </div>
 <p></p>
 <p></p>
@@ -102,7 +101,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 <footer class="w3-container w3-center w3-opacity w3-margin-bottom">
   <h5>Find Us On</h5>
   <div class="w3-xlarge w3-padding-16">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <a href="#"><i class="fa fa-facebook-official w3-hover-opacity"></i></b></a>
     <i class="fa fa-instagram w3-hover-opacity"></i>
     <i class="fa fa-snapchat w3-hover-opacity"></i>
     <i class="fa fa-pinterest-p w3-hover-opacity"></i>
@@ -113,6 +112,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 </footer>
 
 <script>
+var isIn=isLoggedIn();
+console.log(isIn)
+var account={};
+if(isIn==false){
+  document.getElementById("isNotSignedIn").style.display = "block";
+}else{
+  document.getElementById("isSignedIn").style.display = "block";
+}
+function isLoggedIn()
+{
+  if(JSON.parse(localStorage.getItem('currUser')) == null){//that means data is stored
+    return false;
+  } else {
+    return true;
+  }
+}
 // Tabs
 /*function openLink(evt, linkName) {
   var i, x, tablinks;
@@ -128,6 +143,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
   evt.currentTarget.className += " w3-red";
 }
 document.getElementsByClassName("tablink")[0].click();*/
+
 </script>
 
 </body>
