@@ -717,7 +717,7 @@ function sendMessage(){
               var snapshotDataC = snapshot.val();
               if(snapshotDataC==null){
                 //firebase.database().ref().child("users").child(currUser["id"]).child("comments").set({})
-                sRef5.child("comments").set({})
+                sRef5.set("comments")
                 sRef5.child("comments").child(uid).set({aComment})
               }else{
                 sRef5.child(uid).set({aComment})
