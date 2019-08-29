@@ -628,6 +628,7 @@ firebase.initializeApp(config);
 
 var currUser=isLoggedIn()
 if(currUser!=null){
+  currUser=JSON.parse(currUser)
   //currUser["id"] =
   //currUser["name"] =
   //currUser["picture"] =
@@ -1015,7 +1016,7 @@ function isLoggedIn()
   if(localStorage.getItem('currUser') == null){
     return null;
   } else {
-    return localStorage.getItem('currUser');
+    return JSON.stringify(localStorage.getItem('currUser'));
   }
 }
 function getComments(snapshotData2){
