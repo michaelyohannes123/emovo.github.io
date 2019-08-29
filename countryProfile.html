@@ -936,9 +936,9 @@ function getFirebaseComments(){
         reply.onclick=function(){
           var rid=this.id.split("-")
           if(getData[parseInt(rid[0])].text.length<=50)
-            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"'"
+            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text+"'"
           else
-            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text.slice(0,50)+"...'"
+            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text.slice(0,50)+"...'"
         }
         var upvote=document.createElement("button")
         upvote.id=i+"-upvote"
@@ -948,26 +948,26 @@ function getFirebaseComments(){
         upvote.onclick=function(){
           var pid=this.id.split("-")
           updownvotes[parseInt(pid[0])]=1
-          getData[parseInt(pid[0])].likes+=1
-          var diff=getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes
+          getData[parseInt(pid[0])].aComment.likes+=1
+          var diff=getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes
           if(diff>=2){
             this.style.background="#CDCDCD"
-            getData[parseInt(pid[0])].likes-=diff
+            getData[parseInt(pid[0])].aComment.likes-=diff
           }else if(diff==1){
             this.style.background="#99badd"
           }else if(diff==0){
             this.style.background="#99badd"
-            getData[parseInt(pid[0])].likes+=1
+            getData[parseInt(pid[0])].aComment.likes+=1
             document.getElementById(pid[0]+"-downvote").style.background="#CDCDCD"
           }
           var gscore=pid[0]+"-score"
-          getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
-          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
-          if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
+          getData[parseInt(pid[0])].aComment.updownDiff=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)
+          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)+""
+          if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes==0)
             document.getElementById(gscore).style="color:grey;"
-          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
+          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes>0)
             document.getElementById(gscore).style="color:green;"
-          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
+          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes<0)
             document.getElementById(gscore).style="color:orange;"
         }
         bottomDiv.appendChild(upvote)
@@ -980,26 +980,26 @@ function getFirebaseComments(){
         downvote.onclick=function(){
           var pid=this.id.split("-")
           updownvotes[parseInt(pid[0])]=-1
-          getData[parseInt(pid[0])].dislikes+=1
-          var diff=getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes
+          getData[parseInt(pid[0])].aComment.dislikes+=1
+          var diff=getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes
           if(diff<=-2){
             this.style.background="#CDCDCD"
-            getData[parseInt(pid[0])].dislikes+=diff
+            getData[parseInt(pid[0])].aComment.dislikes+=diff
           }else if(diff==-1){
             this.style.background="#ED4337"
           }else if(diff==0){
             this.style.background="#ED4337"
-            getData[parseInt(pid[0])].dislikes+=1
+            getData[parseInt(pid[0])].aComment.dislikes+=1
             document.getElementById(pid[0]+"-upvote").style.background="#CDCDCD"
           }
           var gscore=pid[0]+"-score"
-          getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
-          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
-          if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
+          getData[parseInt(pid[0])].aComment.updownDiff=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)
+          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)+""
+          if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes==0)
             document.getElementById(gscore).style="color:grey;"
-          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
+          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes>0)
             document.getElementById(gscore).style="color:green;"
-          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
+          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes<0)
             document.getElementById(gscore).style="color:orange;"
         }
         bottomDiv.appendChild(downvote)
