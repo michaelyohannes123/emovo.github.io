@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <title>W3.CSS Template</title>
+    <title>EMOVO</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -498,7 +498,6 @@ document.getElementById("sname").innerHTML=city.name
 document.getElementById("avgIncome").innerHTML="$"+city.avgIncome.toFixed(2)
 document.getElementById("avgIncomeDiffVal").innerHTML="$"+(localStorage.monthlyIncomeUS*12.0).toFixed(2)
 var avgIncomeDiffStyle="border: none; color:green;"
-document.getElementById("avgIncomeDiff").style=avgIncomeDiffStyle
 var text=""
 var fract=city.avgIncome/(localStorage.monthlyIncomeUS*12.0)
 ////console.log(fract+"")
@@ -522,6 +521,7 @@ else if(fract>=1.25){
   text="Looking at income alone, your economic status is below average"
   avgIncomeDiffStyle="border: none; color:red;"
 }
+document.getElementById("avgIncomeDiff").style=avgIncomeDiffStyle
 document.getElementById("tooltiptextavgIncome").innerHTML=text
 document.getElementById("median").innerHTML="$"+city.medianPropertyCost.toFixed(2)
 city.medianDiff=parseFloat(localStorage.yourSavingsUS) + (parseFloat(localStorage.monthlyIncomeUS*12.0)-city.avgIncome)-city.medianPropertyCost

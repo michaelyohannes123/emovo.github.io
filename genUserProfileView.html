@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>Profile</title>
+    <title>EMOVO</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -35,9 +35,27 @@
       </div>
       <p></p>
     </div>
-    <script>
-      var isIn=isLoggedIn();
-      function isLoggedIn()
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script type="text/javascript">
+    var config = {
+        apiKey: "AIzaSyAeVY1LvG9hNSBYb9_raGpYYDiHIvG3cY8",
+        authDomain: "emovousers.firebaseapp.com",
+        databaseURL: "https://emovousers.firebaseio.com/",
+        storageBucket: "emovousers.appspot.com"
+      }
+    firebase.initializeApp(config);
+    function onSignIn() {
+      var auserID=localStorage.commenterProfileID
+      //grab from firebase
+      var sRef = firebase.database().ref().child("users").child(auserID)
+      sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
+        var snapshotData = snapshot.val();
+        console.log(snapshotData)
+      })
+    }
+    function isLoggedIn()
       {
         if(localStorage.getItem('currUser') == null){
           return false;
