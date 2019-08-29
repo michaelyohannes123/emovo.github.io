@@ -702,7 +702,7 @@ function sendMessage(){
         currUser["joinDate"] = stDate;
         var sRef2 = firebase.database().ref()
         sRef2.child("users").set({})
-        firebase.database().ref().ref("users").child(currUser["id"]).set({
+        firebase.database().ref().child("users").child(currUser["id"]).set({
           "id":currUser["id"],
           "name":currUser["name"],
           "picture":currUser["picture"],
