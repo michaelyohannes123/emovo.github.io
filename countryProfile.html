@@ -711,10 +711,10 @@ function sendMessage(){
               "comments":first
             })
           }else{
-            var sRef5 = firebase.database().ref().child("users").child(currUser["id"]).child("comments").child(uid)
+            var sRef5 = firebase.database().ref().child("users").child(currUser["id"]).child("comments")
             sRef5.on("value", function(snapshot, prevChildKey) {//set it to profile
               var snapshotData = snapshot.val();
-              sRef5.set({aComment})
+              sRef5.child(uid).set({aComment})
               firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
             });
             console.log(snapshotData2)
