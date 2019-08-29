@@ -130,7 +130,7 @@
               "name":currUser["name"],
               "picture":currUser["picture"],
               "joinDate":currUser["joinDate"],
-              "comments":null
+              "comments":{}
             })
           }
           else{
@@ -156,14 +156,14 @@
                   "name":currUser["name"],
                   "picture":currUser["picture"],
                   "joinDate":currUser["joinDate"],
-                  "comments":null
+                  "comments":{}
                 })
                 }else{
                   //console.log(snapshotData2)
                   currUser["joinDate"]=snapshotData2["joinDate"]
                   try{
                   currUser["comments"]=snapshotData2["comments"]
-                  if(currUser["comments"]==null){
+                  if(currUser["comments"]=={}){
                     document.getElementById("commentHistory").innerHTML="No recorded comments yet"
                   }else{
                     //for()
