@@ -656,6 +656,7 @@ function sendMessage(){
     var ptext=document.getElementById("yourComment").value
     try{
       starval=parseInt($("input[name='star']:checked").val())
+      console.log(starval)
       if(isNaN(starval)){
         starval=null
       }
