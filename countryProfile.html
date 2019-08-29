@@ -658,10 +658,10 @@ function sendMessage(){
       starval=parseInt($("input[name='star']:checked").val())
       console.log(starval)
       if(isNaN(starval)){
-        starval=null
+        starval=-1.0
       }
     }catch(err){
-      starval=null
+      starval=-1.0
     }
     var text=ptext
     /*console.log(currUser)
