@@ -715,23 +715,23 @@ function sendMessage(){
             sRef5.on("value", function(snapshot, prevChildKey) {//set it to profile
               var snapshotDataC = snapshot.val();
               if(snapshotDataC==null){
-                firebase.database().ref().child("users").child(currUser["id"]).child("comments").set({})
+                //firebase.database().ref().child("users").child(currUser["id"]).child("comments").set({})
                 sRef5.child(uid).set({aComment})
               }else{
                 sRef5.child(uid).set({aComment})
               }
-            })
-            var sRef6=firebase.database().ref().child("countries")
-            sRef6.on("value", function(snapshot, prevChildKey) {
-              var snapshotDataC = snapshot.val();
-              if(snapshotDataC==null){
-                /*firebase.database().ref().child("countries").set({country.name})
-                firebase.database().ref().child("countries").child(country.name).set("comments")*/
-                firebase.database().ref().child("countries").child(country.name).child("comments").set({uid})
-                firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
-              }else{
-                firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
-              }
+              var sRef6=firebase.database().ref().child("countries")
+              sRef6.on("value", function(snapshot, prevChildKey) {
+                var snapshotDataC2 = snapshot.val();
+                if(snapshotDataC2==null){
+                  /*firebase.database().ref().child("countries").set({country.name})
+                  firebase.database().ref().child("countries").child(country.name).set("comments")
+                  firebase.database().ref().child("countries").child(country.name).child("comments").set({uid})*/
+                  firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
+                }else{
+                  firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
+                }
+              })
             })
             console.log(snapshotData2)
           }
