@@ -56,6 +56,7 @@
     firebase.initializeApp(config);
     document.getElementById("userContent").style.display="none"
     function onSignIn() {
+      document.getElementById("userContent").style.display="block"
       var auserID=localStorage.commenterProfileID
       //console.log(auserID)
       //grab from firebase
