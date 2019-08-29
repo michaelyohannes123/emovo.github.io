@@ -1017,7 +1017,7 @@ function isLoggedIn()
   if(localStorage.getItem('currUser') == null){
     return null;
   } else {
-    return JSON.stringify(localStorage.getItem('currUser'));
+    return localStorage.getItem('currUser');
   }
 }
 function getComments(snapshotData2){
