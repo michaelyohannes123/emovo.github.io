@@ -678,7 +678,17 @@ function sendMessage(){
   var uid=array[0]
   var profileID="user-"+uid
   var aComment=new Comment(text,d.getTime(),country,0,0,uid,profileID,starval,0)
-  firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
+  firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({
+    "text":aComment.text,
+    "date":aComment.date,
+    "place":aComment.place,
+    "likes":aComment.likes,
+    "dislikes":aComment.dislikes,
+    "profileID":aComment.profileID,
+    "profileName":aComment.profileName,
+    "starVal":aComment.starVal,
+    "updownDiff":aComment.updownDiff,
+  })
   //display comment
     var overall=document.getElementById("justSents")
     //overall.appendChild(document.createElement("br"))
@@ -733,7 +743,7 @@ function sendMessage(){
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:orange;"
     var trash=document.createElement("button")
-      trash.id=snapshotData.aComment.profileID+"-trash"
+      trash.id=aComment.profileID+"-trash"
       var ticon=document.createElement("i")
       ticon.className="fa fa-trash-o"
       trash.appendChild(ticon)
@@ -952,11 +962,11 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          console.log(getData[rid[0]])
+          //console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
-            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text+"'"
+            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"'"
           else
-            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text.slice(0,50)+"...'"
+            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text.slice(0,50)+"...'"
         }
         var upvote=document.createElement("button")
         upvote.id=i+"-upvote"
@@ -966,26 +976,26 @@ function getFirebaseComments(){
         upvote.onclick=function(){
           var pid=this.id.split("-")
           updownvotes[parseInt(pid[0])]=1
-          getData[parseInt(pid[0])].aComment.likes+=1
-          var diff=getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes
+          getData[parseInt(pid[0])].likes+=1
+          var diff=getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes
           if(diff>=2){
             this.style.background="#CDCDCD"
-            getData[parseInt(pid[0])].aComment.likes-=diff
+            getData[parseInt(pid[0])].likes-=diff
           }else if(diff==1){
             this.style.background="#99badd"
           }else if(diff==0){
             this.style.background="#99badd"
-            getData[parseInt(pid[0])].aComment.likes+=1
+            getData[parseInt(pid[0])].likes+=1
             document.getElementById(pid[0]+"-downvote").style.background="#CDCDCD"
           }
           var gscore=pid[0]+"-score"
-          getData[parseInt(pid[0])].aComment.updownDiff=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)
-          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)+""
-          if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes==0)
+          getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
+          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+          if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
             document.getElementById(gscore).style="color:grey;"
-          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes>0)
+          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
             document.getElementById(gscore).style="color:green;"
-          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes<0)
+          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
             document.getElementById(gscore).style="color:orange;"
         }
         bottomDiv.appendChild(upvote)
@@ -998,26 +1008,26 @@ function getFirebaseComments(){
         downvote.onclick=function(){
           var pid=this.id.split("-")
           updownvotes[parseInt(pid[0])]=-1
-          getData[parseInt(pid[0])].aComment.dislikes+=1
-          var diff=getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes
+          getData[parseInt(pid[0])].dislikes+=1
+          var diff=getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes
           if(diff<=-2){
             this.style.background="#CDCDCD"
-            getData[parseInt(pid[0])].aComment.dislikes+=diff
+            getData[parseInt(pid[0])].dislikes+=diff
           }else if(diff==-1){
             this.style.background="#ED4337"
           }else if(diff==0){
             this.style.background="#ED4337"
-            getData[parseInt(pid[0])].aComment.dislikes+=1
+            getData[parseInt(pid[0])].dislikes+=1
             document.getElementById(pid[0]+"-upvote").style.background="#CDCDCD"
           }
           var gscore=pid[0]+"-score"
-          getData[parseInt(pid[0])].aComment.updownDiff=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)
-          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes)+""
-          if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes==0)
+          getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
+          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+          if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
             document.getElementById(gscore).style="color:grey;"
-          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes>0)
+          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
             document.getElementById(gscore).style="color:green;"
-          else if(getData[parseInt(pid[0])].aComment.likes-getData[parseInt(pid[0])].aComment.dislikes<0)
+          else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
             document.getElementById(gscore).style="color:orange;"
         }
         bottomDiv.appendChild(downvote)
@@ -1164,7 +1174,7 @@ function leave(){
     console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
-        comment=snapshotData[i].aComment
+        comment=snapshotData[i]
         /*if(editclicks[i]%2==1){
           ref.child(i).set(null) //delete old comment
         }*/
