@@ -864,7 +864,7 @@ function getFirebaseComments(){
         profileImg.id=snapshotData[i].aComment.profileID+"-"+i
         profileImg.onclick=function(){
           localStorage.commenterProfileID=snapshotData[i].aComment.profileID.split("-")[0]
-          window.location.href="genUserProfile.html"
+          window.location.href="genUserProfileView.html"
         }
         profileImg.src=snapshotData[i].aComment.profilePic
         profileImg.style="border-radius: 50%;width:50px;height:50px;"
@@ -1034,7 +1034,7 @@ function getFirebaseComments(){
     if(starRatingCount==0){
       document.getElementById("avgStar").innerHTML=country.name+" has 0 reviews. Be the first!"
     }else{
-      document.getElementById("avgStar").innerHTML="Average location rating of "+totalStars/starRatingCount+" stars with "+starRatingCount+" reviews."
+      document.getElementById("avgStar").innerHTML="Average location rating of "+totalStars/starRatingCount+" stars with "+starRatingCount+" review(s)."
     }
   })
 }
