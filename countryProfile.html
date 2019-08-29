@@ -659,12 +659,12 @@ function sendMessage(){
     }catch(err){
     }
     var text=ptext
-    console.log(currUser)
+    /*console.log(currUser)
     console.log(currUser.id)
     console.log(currUser["id"])
     console.log(currUser.name)
     console.log(currUser["name"])
-    console.log(currUser.picture)
+    console.log(currUser.picture)*/
     var aComment=new Comment(text,d.getTime(),country,0,0,currUser.id,currUser.name,currUser.picture)
     //var profile = auth2.currentUser.get().getBasicProfile();
     /*var search=text.split(" ")
@@ -683,8 +683,8 @@ function sendMessage(){
     var array = new Uint32Array(1);
     window.crypto.getRandomValues(array);
     var uid=array[0]
-    var sRef = firebase.database().ref().ref("users")//send for users to see
-    sRef.child(currUser.id).child("comments").child(uid).set({aComment})
+    //var sRef = //send for users to see
+    firebase.database().ref().child("users").child(currUser.id).child("comments").child(uid).set({aComment})
     firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
     /*sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
       var snapshotData = snapshot.val();
