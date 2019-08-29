@@ -713,6 +713,7 @@ function sendMessage(){
               "comments":first
             })
           }else{
+            sRef2.set(first)
             console.log(snapshotData2)
           }
         })
@@ -747,8 +748,13 @@ function sendMessage(){
       rightDiv.appendChild(commentDiv)
       var bottomDiv=document.createElement("div")
       var bytext="By "
-      if(aComment.starVal!=-1){
-        bytext="(Rated "+aComment.starVal+" stars), By "
+      if(isNaN(aComment.starVal)){}
+      else{
+       if(aComment.starVal!=null){
+        if(aComment.starVal!=-1){
+          bytext="(Rated "+aComment.starVal+" stars), By "
+        }
+       }
       }
       //console.log(bytext)
       bottomDiv.appendChild(document.createTextNode(bytext))
@@ -797,7 +803,7 @@ function sendMessage(){
       document.getElementById("login").style="display:table; margin:0 auto"
       document.getElementById("login").innerHTML="Comment '"+text.slice(0,10)+"...' was added"
   }else{
-    document.getElementById("login").style.display="block"
+    document.getElementById("login").style="display:table; margin:0 auto"
     return;
   }
 }
