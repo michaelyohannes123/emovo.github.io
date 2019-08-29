@@ -10,27 +10,42 @@
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     .myLink {display: none}
     </style>
-  <body class="w3-light-grey">
+  <body class="w3-orange">
     <!-- Navigation Bar -->
     <div class="w3-top">
       <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
-        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-        <a href="#" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-orange" href="javascript:void(0);" onclick="toggle()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <!--<a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>-->
+        <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
         <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 3</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
+        <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
+        <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
+        <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+        <!--<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Sign In</a>-->
+        <a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>
       </div>
     </div>
     <div class="w3-row-padding w3-padding-64 w3-container">
       <div class="w3-content">
         <div class="w3-twothird">
-          <h1>Lorem Ipsum</h1>
-          <h5 class="w3-padding-32">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
-          <p class="w3-text-grey">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
-            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <h1>The Plight of Many Elderly Americans</h1>
+          <h5 class="w3-padding-32">
+          With many elderly Americans in a financial conundrum regarding where to live the rest of the years, it's important that they account for many factors in deciding which country to move to and spend their retirement years.
+  	      EMOVO aims to mitigate the difficulty in deciding the optimal locations to move to through technology. The algorithm finds places for the elderly to live based on collecting and quantifying many
+  		    different data pieces that would have manually taken much time to amass. Aspects such as standard of living and medical infrastructure metrics are absolutely imperative for retirees to know deciding where to retire, and EMOVO aims to provide such important data in the easiest manner possible.
+        </h5>
+          <h1>Sources</h1>
+          <h5 class="w3-padding-32">
+            The World Bank APIs comprised much of the informational nation data pieces, such as ISO codes, languages, currencies, and population. It also was the source national average income values, specifically derived from the GNIs per household (Which was explained <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/378831-why-use-gni-per-capita-to-classify-economies-into">here</a> as being a suitable metric for deteriming the national economic state.
+            The World Bank's Climate Data API was also a source of much of the average temperature data pieces for many of the countries.
+            Geoname world cities package (extracted from datahub.io) was the source of international city data.
+            Numbeo's Cost of Living API was the source of international city affordability metrics.
+            more efficient gni finder. Wikipedia was instrumental for attaining taxation data, life expectancy, for states and nations.
+            Data USA was an integral source for much of US cities and states and their data, and specifically much of the main algorithmic factors.
+            Also, currentresults.com and usclimatedata.com were used to attain state climate data.
+            For international housing costs, nationmaster.com and timeout.com were utilized. Futhermore, Freedom House data used to
+            get nation freedom indices. Structurally, Firebase and w3.css were necessary components in storing data and developing the website respectively.
+          </h5>
         </div>
       </div>
     </div>

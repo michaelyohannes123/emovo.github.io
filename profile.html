@@ -96,7 +96,7 @@
         currUser["id"] = profile.getId();
         currUser["name"] = profile.getGivenName(); //first name only
         currUser["picture"] = profile.getImageUrl();
-        sessionStorage.setItem('currUser',JSON.stringify(currUser));
+        localStorage.setItem('currUser',JSON.stringify(currUser));
         var sRef = firebase.database().ref().child("users")
         sRef.on("value", function(snapshot, prevChildKey) {
           var snapshotData = snapshot.val();
@@ -150,14 +150,14 @@
       }
       function isLoggedIn()
       {
-        if(sessionStorage.getItem('currUser') == null){
-          return false;
-        } else {
-          return true;
-        }
+          if(localStorage.getItem('currUser')!=null){
+            return true;
+          } else {
+            return false;
+          }
       }
       function signOut() {
-        sessionStorage.clear();
+        localStorage.removeItem('currUser')
         document.getElementById('gsignin2').style.display = "block";
         document.getElementById("userContent").style.display = "none";
         document.getElementById("signout").style.display = "none";

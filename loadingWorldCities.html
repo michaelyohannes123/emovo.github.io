@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+      .myLink {display: none}
+      .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+      }
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      </style>
+      <body class="w3-orange">
+        <!-- Navigation Bar -->
+          <p></p>
+          <div class="loader" style="margin-left: auto; margin-right: auto; width: 8em">
+          </div>
+          <p></p>
+          <p id="worldLength" style="text-align:center;"></p>
+          <p id="fact" style="text-align:center;"></p>
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+  <script type="text/javascript">
+      function Currency(name, code, symbol, income, savings) {
+          this.name=name
+          this.code=code
+          this.symbol=symbol
+          this.convertedIncome=income
+          this.convertedSavings=savings
+      }
+      function Language(name, localname) {
+          this.name=name
+          this.localName=localname
+      }
+      function USTaxRates(prop, income, sales) {
+        this.propertyTax=prop
+        this.incomeTax=income
+        this.salesTax=sales
+      }
+      function TaxRates(high, low, sales) {
+        this.highIncomeTax=high
+        this.lowIncomeTax=low
+        this.salesTax=sales
+      }
+      function Temperature(ftemp, ctemp, category) {
+        this.fTemp=ftemp
+        this.cTemp=ctemp
+        this.category=category
+      }
+      function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyList, crimerate, languageList, alpha2, alpha3, population, area, lat, lng, flaglink, incomelevel, incomeDiff, temp, freedom, hdi, age, rankAvg, cities, citiesData, match, comments,tempDiff,housingDiff){
+        this.name=name
+        this.capitalCity=capitalcity
+        this.gini=gini
+        this.gni=gni
+        this.taxRates=taxrates
+        this.housingCost=housingcost
+        this.currencyList=currencyList
+        this.crimeRate=crimerate
+        this.languageList=languageList
+        this.alpha2=alpha2
+        this.alpha3=alpha3
+        this.population=population
+        this.area=area //in billion meters squared
+        this.lat=lat
+        this.lng=lng
+        this.flaglink=flaglink
+        this.incomeLevel=incomelevel
+        this.incomeDiff=incomeDiff
+        this.temp=temp
+        this.freedomIndex=freedom
+        this.hdiValue=hdi
+        this.ageExp=age
+        this.rankAvg=rankAvg
+        this.cities=cities
+        this.citiesData=citiesData
+        this.percentMatch=match
+        this.tempDiff=tempDiff
+        this.housingDiff
+      }
+    function City(name, subcountry, country, costofliving, climate,crimeRate,incomediff,avgIncome,avgCost,avgCostRank){
+      this.name=name
+      this.subcountry=subcountry
+      this.country=country
+      this.costOfLiving=costofliving
+      this.climate=climate
+      this.crimeRate=crimeRate
+      this.incomeDiff=incomediff
+      this.avgIncome=avgIncome
+      this.avgcostOfLiving=avgCost
+      this.avgCostRank=avgCostRank
+    }
+    function getCities(name, capital, poses, json){
+      var ret=[]
+      ret.push([])
+      ret.push([])//first array will have cities with data, 2nd doesnt
+      if(name!="Tokelau"){
+        var d=new Date()
+        var startTime=d.getTime()
+        for(var i in poses){
+            var co=poses[i]
+            var newDate=new Date()
+            //console.log((newDate.getTime()-startTime)+"")
+            if(newDate.getTime()-startTime>=30.0*1000){
+              //console.log("hello")
+              return ret;
+            }
+            //console.log(json[co])
+            var firstSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + json[co].name.replace(" ", "-") + "?USD"
+            $.ajax({
+              url: firstSearch,
+              async: false,
+              dataType: 'json',
+              success: function (jsonfirst) {
+                var j1=0
+                try{
+                j1=jsonfirst.costs.length
+              }catch(err){j1=0}
+                if(j1==0){
+                  var secondSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + json[co].name.replace(" ", "-") + "-" + name.replace(" ", "-") + "?USD"
+                  $.ajax({
+                    url: secondSearch,
+                    async: false,
+                    dataType: 'json',
+                    success: function (jsonsecond) {
+                      var j2=0
+                      try{
+                      j2=jsonsecond.costs.length
+                    }catch(err){j2=0}
+                      if(j2==0){
+                        ret[1].push(new City(json[co].name, json[co].subcountry, currNation, -1.0, null, null,null,null,null,null))
+                        /*{
+                          "name":json[co].name,
+                          "subcountry":json[co].subcountry,
+                          "costofliving":-1.0,
+                          "climate":null,
+                          "crimeRate":null,
+                          "avgIncome":null,
+                          "medicine":null
+                        })*/ //name, subcountry, country, costofliving, climate
+                        //new City(json[co].name,json[co].subcountry,-1.0,null)
+                        //console.log(ret[1])
+                      }else{
+                       var itemCount=0
+                       var col=0.00
+                       for(var item in jsonsecond.costs){
+                        if(itemCount<5){
+                          if(isNaN(parseFloat(jsonsecond.costs[item].cost))){
+                            break
+                          }else{
+                            col+=parseFloat(jsonsecond.costs[item].cost)
+                          }
+                        itemCount++
+                        }else{
+                          break
+                        }
+                      }
+                      if(col==0.00){
+                        ret[1].push(new City(json[co].name, json[co].subcountry, currNation, -1.0, null, null,null,null,null,null))
+                      }else{
+                        ret[0].push(new City(json[co].name, json[co].subcountry, currNation, col, null, null,null,null,null,null))
+                        /*{
+                          "name":json[co].name,
+                          "subcountry":json[co].subcountry,
+                          "costofliving":col,
+                          "climate":null,
+                          "crimeRate":null,
+                          "avgIncome":null,
+                          "medicine":null
+                        })*/
+                      }
+                      }
+                      return true
+                    }
+                  })
+                }else{
+                       var itemCount=0
+                       var col=0.00
+                       for(var item in jsonfirst.costs){
+                        if(itemCount<5){
+                          if(isNaN(parseFloat(jsonfirst.costs[item].cost))){
+                            break
+                          }else{
+                            col+=parseFloat(jsonfirst.costs[item].cost)
+                          }
+                        itemCount++
+                        }else{
+                          break
+                        }
+                      if(col==0.00){
+                        ret[1].push(new City(json[co].name, json[co].subcountry, currNation, -1.0, null, null,null,null,null,null))
+                      }else{
+                        ret[0].push(new City(json[co].name, json[co].subcountry, currNation, col, null, null,null,null,null,null))
+                      }
+                      }
+                      return true
+                }
+              }
+            })
+        }
+      }else{//use capitalcity
+        var firstSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + capital.replace(" ", "-") + "?USD"
+        var capital=currNation.capitalCity
+        $.ajax({
+          url: firstSearch,
+          async: false,
+          dataType: 'json',
+          success: function (jsonfirst) {
+            //console.log(jsonfirst)
+            var j1=0
+            try{
+              j1=jsonfirst.costs.length
+            }catch(err){j1=0}
+            if(j1==0){
+              var secondSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + capital.replace(" ", "-") + "-" + name.replace(" ", "-") + "?USD"
+              $.ajax({
+                url: secondSearch,
+                async: false,
+                dataType: 'json',
+                success: function (jsonsecond) {
+                  var j2=0
+                  try{
+                    j2=jsonsecond.costs.length
+                  }catch(err){j2=0}
+                  if(j2==0){
+                    ret[1].push(new City(capital, "", currNation, -1.0, null, null,null,null,null,null)) //name, subcountry, country, costofliving, climate
+                  }else{
+                   var itemCount=0
+                   var col=0.00
+                   for(var item in jsonsecond.costs){
+                    if(itemCount<5){
+                      if(isNaN(parseFloat(jsonsecond.costs[item].cost))){
+                        break
+                      }else{
+                        col+=parseFloat(jsonsecond.costs[item].cost)
+                      }
+                    itemCount++
+                    }else{
+                      break
+                    }
+                  }
+                  if(col==0.00){
+                    ret[1].push(new City(capital, "", currNation, -1.0, null, null,null,null,null,null))
+                  }else{
+                    ret[0].push(new City(capital, "", currNation, col, null, null,null,null,null,null))
+                  }
+                  }
+                  return true
+                }
+              })
+            }else{
+                   var itemCount=0
+                   var col=0.00
+                   for(var item in jsonfirst.costs){
+                    if(itemCount<5){
+                      if(isNaN(parseFloat(jsonfirst.costs[item].cost))){
+                        break
+                      }else{
+                        col+=parseFloat(jsonfirst.costs[item].cost)
+                      }
+                    itemCount++
+                    }else{
+                      break
+                    }
+                  }
+                  if(col==0.00){
+                    ret[1].push(new City(capital, "", currNation, -1.0, null, null,null,null,null,null))
+                  }else{
+                    ret[0].push(new City(capital, "", currNation, col, null, null,null,null,null,null))
+                  }
+                  }
+                  return true
+            }
+        })
+      }
+      //console.log(ret)
+      return ret
+    }
+    function findOptimalCities(cityData){
+      //console.log("p")
+      //console.log(cityData)
+      if(cityData.length>1){
+        for(var k=0; k<cityData.length; k++){
+          cityData[k].incomeDiff=Math.abs(parseFloat(cityData[k].costOfLiving-(parseFloat(monthlyIncome)/30.42))) //avg number of days in a non leap year month
+          cityData[k].avgcostOfLiving=Math.abs(parseFloat(cityData[k].costOfLiving-(1413.0/30.42)))
+        }
+        cityData.sort(function(s1,s2) {
+          return s1.incomeDiff-s2.incomeDiff
+        });
+      }
+      //console.log("a")
+      //console.log(cityData)
+      return cityData
+    }
+    var config = {
+        apiKey: "AIzaSyBzeDLhTD-SG7CzTr1_AnnsAqyLyIgVVlk",
+        authDomain: "emovosearch.firebaseapp.com",
+        databaseURL: "https://emovosearch.firebaseio.com/",
+        storageBucket: "emovosearch.appspot.com"
+      }
+    firebase.initializeApp(config);
+    var currNation=JSON.parse(localStorage.getItem('currNation'));
+    if(currNation==null){
+      alert("You haven't selected a country.")
+      window.history.back()
+    }
+    var sortedData=null
+    var monthlyIncome=1413.00
+    var yearlyIncome=parseFloat(monthlyIncome*12.0)
+    var yourSavings=228900.0
+    var avgUSSavings=228900.0
+    var savingsDiff=yourSavings-avgUSSavings
+    if(localStorage.monthlyIncomeWorld!=null){
+      monthlyIncome=localStorage.monthlyIncomeWorld
+      yearlyIncome=parseFloat(monthlyIncome*12.0)
+    }
+    onCitySearchClick()
+    function onCitySearchClick(){ //begin a city search, grab city list here and pass it
+      /*var housingList={"Monaco":305.83,"Angola":125.78,"Papua New Guinea":117.22,"Bermuda":109.01,"Singapore":97.81,"Macao":87.38,"Hong Kong":87.38,"Guernsey":84.57,"Qatar":77.25,"Gibraltar":70.16,"Jersey":69.49,"Luxembourg":67.03,"British Virgin Islands":66.25,"Switzerland":66.24,"United Arab Emirates":65.56,"Norway":62.73,"Liberia":61.99,"Isle of Man":59.52,"Australia":58.91,"Cayman Islands":54.19,"Guam":49.22,"Bahamas":48.18,"New Caledonia":47.71,"Vanuatu":46.89,"United Kingdom":45.18,"Iceland":43.63,"New Zealand":43.14,"Ghana":42.67,"Greenland":42.57,"Denmark":42.27,"Netherlands":41.69,"Ireland":40.45,"Bahrain":40.01,"Kuwait":39.77,"Venezuela":38.58,"France":38.49,"Burundi":38.39,"South Korea":38.37,"Seychelles":37.5,"United States":37.45,"Aruba":36.79,"Japan":36.78,"Azerbaijan":36.29,"Belgium":36.2,"Canada":36.05,"Finland":36.05,"Israel":35.77,"Mozambique":35.62,"Lebanon":35.01,"Sweden":34.35,"Austria":33.54,"Gabon":32.79,"Panama":32.76,"Italy":32.14,"Holy See":32.14,"Brunei Darussalam":31.67,"Germany":31.3,"Reunion":31.22,"Maldives":30.71,"Democratic Republic of the Congo":30.27,"Oman":29.96,"Russian Federation":28.45,"Fiji":27.82,"Tuvalu":27.82,"Mauritius":27.8,"Mongolia":27.7,"French Polynesia":27.58,"Faroe Islands":27.44,"Spain":26.95,"Curacao":26.72,"Samoa":26.15,"Tokelau":26.15,"Wallis and Futuna":26.15,"American Samoa":26.15,"Niue":26.15,"Haiti":25.56,"Rwanda":25.3,"Uruguay":24.98,"Zambia":24.61,"Namibia":24.49,"Barbados":24.46,"China":24.34,"Andorra":24.03,"Slovenia":23.26,"Trinidad and Tobago":23.05,"Cameroon":22.87,"Portugal":22.82,"Slovakia":22.39,"Nigeria":22.1,"Brazil":22.07,"Equatorial Guinea":21.96,"Tanzania":21.94,"Kazakhstan":21.88,"Ethiopia":21.82,"Burma":21.48,"Puerto Rico":21.43,"Djibouti":21.32,"Cyprus":21.14,"Zimbabwe":20.68,"Iran":20.3,"Costa Rica":19.77,"Libya":19.74,"Jamaica":19.74,"Taiwan":19.68,"Kenya":19.64,"Poland":19.23,"Estonia":18.91,"Malta":18.86,"Thailand":18.85,"Iraq":18.67,"Czech Republic":18.43,"South Africa":18.15,"Grenada":17.82,"Chile":17.76,"Somalia":17.6,"Argentina":17.58,"Guyana":17.34,"Belarus":17.16,"Latvia":17.12,"Belize":16.99,"Lao People's Democratic Republic":16.33,"Peru":16.2,"Jordan":15.92,"Guatemala":15.92,"Vietnam":15.86,"Dominica":15.69,"Malaysia":15.66,"Saudi Arabia":15.54,"Lithuania":15.5,"Greece":15.3,"Turkmenistan":15,"Suriname":14.97,"Armenia":14.73,"Colombia":14.72,"Uzbekistan":14.49,"Croatia":14.27,"Ecuador":14.16,"Mali":14.02,"Cambodia":13.94,"Swaziland":13.89,"Bolivia":13.69,"Saint Lucia":13.65,"Ukraine":13.6,"Indonesia":13.56,"Botswana":13.56,"Sudan":13.5,"Turkey":13.12,"Uganda":13.03,"Morocco":12.88,"Romania":12.64,"Kyrgyzstan":12.5,"Syrian Arab Republic":12.39,"Dominican Republic":12.37,"Georgia":12.34,"Mexico":12.24,"Honduras":11.92,"Montenegro":11.82,"Malawi":11.7,"Sri Lanka":11.61,"Madagascar":11.4,"Comoros":11.4,"Mayotte":11.4,"Bulgaria":11.4,"Senegal":11.37,"Serbia":11.2,"Albania":11.2,"Paraguay":10.99,"El Salvador":10.97,"Hungary":10.72,"Tunisia":10.11,"Nicaragua":9.8,"Egypt":9.64,"Moldova (Republic of)":9.6,"Afghanistan":9.58,"Algeria":9.14,"North Macedonia":9,"Philippines":8.9,"Bosnia and Herzegovina":8.57,"Cuba":8.32,"India":7.1,"Bangladesh":7,"Yemen":6.34,"Tajikistan":6.14,"Lesotho":5.19,"Pakistan":4.85,"Nepal":3.38,"Gambia":34.8,"Sierra Leone":46.8,"Guinea":30.0,"South Sudan":48.3,"Åland Islands":35.8,"Turks and Caicos Islands":50.0,"Marshall Islands":27.5,"Nauru":27.5,"Mauritania":20.0,"Western Sahara":20.0,"Saint Pierre and Miquelon":83.0,"Niger":17.0,"Anguilla":38.0,"Benin":25.0,"Antigua and Barbuda":28.2,"Saint Martin (French part)":20.3,"Sint Maarten (Dutch part)":20.3,"Togo":13.5,"Curaçao":32.2,"Martinique":35.5,"Réunion":25.0,"Republic of Kosovo":12.9,"Cabo Verde":16.1,"Montserrat":10.5,"Guinea-Bissau":25.0,
+          "Palestine":28.9,"Congo":38.7,"Micronesia (Federated States of)":25.0,"Bhutan":11.6,"Burkina Faso":27.4,"Myanmar":30.6,"Tonga":35.5,"Chad":30.0,"Central African Republic":30.0,
+          "Sao Tome and Principe":7.1,"Saint Vincent and the Grenadines":38.7,"Cook Islands":37.0,"U.S. Virgin Islands":70.0,"Falkland Islands (Malvinas)":25.8,
+          "Palau":43.0,"Guadeloupe":35.8,"Bonaire, Sint Eustatius and Saba":33.9,"Côte d'Ivoire":32.2,"Saint Kitts and Nevis":19.35,"Solomon Islands":38.7,
+          "Timor-Leste":35.5,"Liechtenstein":50.0,"French Guiana":32.2,"Kiribati":18.8,"Eritrea":13.3,"San Marino":23.3,"Northern Mariana Islands":18.9}
+      var worldCitiesData={}
+      for(var y in Object.keys(housingList))
+      {
+        var name=Object.keys(housingList)[y]
+        if (name=="Åland Islands")
+            name="Aland Islands"
+        if (name=="Réunion")
+            name="Reunion"
+        if (name=="Côte d'Ivoire")
+            name="Ivory Coast"
+        if (name=="Curaçao")
+            name="Curacao"
+        if (name=="Falkland Islands (Malvinas)")
+            name="Falkland Islands"
+        if (name=="Holy See")
+            name="Vatican"
+        if (name=="Saint Martin (French part)")
+            name="Saint Martin"
+        if (name=="Bonaire, Sint Eustatius and Saba")
+            name="Bonaire, Saint Eustatius and Saba"
+        if (name=="North Macedonia")
+            name="Macedonia"
+        if (name=="Republic of Kosovo")
+            name="Kosovo"
+        if (name=="Sint Maarten (Dutch part)")
+            name="Sint Maarten"
+        if (name=="Palestine")
+            name="Palestinian Territory"
+        if (name=="Brunei Darussalam")
+            name="Brunei"
+        if (name=="Timor-Leste")
+            name="East Timor"
+        if (name=="Micronesia (Federated States of)")
+            name="Micronesia"
+        if (name=="Lao People's Democratic Republic")
+            name="Laos"
+        if (name=="Moldova (Republic of)")
+            name="Moldova"
+        if (name=="Cabo Verde")
+            name="Cape Verde"
+        if (name=="Syrian Arab Republic")
+            name="Syria"
+        if (name=="Russian Federation")
+            name="Russia"
+        if (name=="Congo")
+            name="Republic of the Congo"
+        if(name=="U.S. Virgin Islands") //for entering in firebase
+            name="US Virgin Islands"
+        worldCitiesData[name]=[]
+      }
+      console.log(worldCitiesData)
+      $.ajax({
+            url: "https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json",
+            async: false,
+            dataType: 'json',
+            success: function (json) {
+              for(var co = 0; co < json.length; co++){
+                  try{
+                  var name2=json[co].country
+                  if(name2=="U.S. Virgin Islands") //for entering in firebase
+                      name2="US Virgin Islands"
+                  worldCitiesData[name2].push(new City(json[co].name, json[co].subcountry, null, null, null, null,null,null))
+                }catch(err){
+                  console.log(co+" "+json[co].country)
+                }
+                }
+              }
+          })
+      //firebase.database().ref("worldCitiesData").child("Botswana").set(worldCitiesData["Botswana"])
+      firebase.database().ref("worldCitiesData").set(worldCitiesData)*/
+      var name=currNation.name
+      if (name=="Åland Islands")
+          name="Aland Islands"
+      if (name=="Réunion")
+          name="Reunion"
+      if (name=="Côte d'Ivoire")
+          name="Ivory Coast"
+      if (name=="Curaçao")
+          name="Curacao"
+      if (name=="Falkland Islands (Malvinas)")
+          name="Falkland Islands"
+      if (name=="Holy See")
+          name="Vatican"
+      if (name=="Saint Martin (French part)")
+          name="Saint Martin"
+      if (name=="Bonaire, Sint Eustatius and Saba")
+          name="Bonaire, Saint Eustatius and Saba"
+      if (name=="North Macedonia")
+          name="Macedonia"
+      if (name=="Republic of Kosovo")
+          name="Kosovo"
+      if (name=="Sint Maarten (Dutch part)")
+          name="Sint Maarten"
+      if (name=="Palestine")
+          name="Palestinian Territory"
+      if (name=="Brunei Darussalam")
+          name="Brunei"
+      if (name=="Timor-Leste")
+          name="East Timor"
+      if (name=="Micronesia (Federated States of)")
+          name="Micronesia"
+      if (name=="Lao People's Democratic Republic")
+          name="Laos"
+      if (name=="Moldova (Republic of)")
+          name="Moldova"
+      if (name=="Cabo Verde")
+          name="Cape Verde"
+      if (name=="Syrian Arab Republic")
+          name="Syria"
+      if (name=="Russian Federation")
+          name="Russia"
+      if (name=="Congo")
+          name="Republic of the Congo"
+      if(name=="U.S. Virgin Islands") //for entering in firebase
+          name="US Virgin Islands"
+      //console.log(name)
+      var sRef = firebase.database().ref("worldCitiesData")
+      sRef.once("value", function(snapshot, prevChildKey) {
+        var snapshotData = snapshot.val()[name]
+        //console.log(snapshotData)
+        var snapLen=0
+        var citiesData=[]
+        var fullDataLen=Object.keys(snapshotData).length
+        var poses=[]
+        var norepeats=[]
+        for(var i=0; i<fullDataLen; i++){
+            var cost=snapshotData[i].costOfLiving
+            if(norepeats.indexOf(snapshotData[i].name)<0){
+              norepeats.push(snapshotData[i].name)
+            }
+            if(cost!=null){
+              snapLen++
+            }else{
+              poses.push(i)
+            }
+        }
+        //console.log(snapLen)
+        //console.log(fullDataLen)
+        if(fullDataLen<=snapLen||poses.length==0){
+          //console.log(snapshotData)
+          citiesData=snapshotData
+          document.getElementById("worldLength").innerHTML="Searching "+norepeats.length+" cities in "+currNation.name+"..."
+          sortedData=findOptimalCities(citiesData)
+        }else{
+          document.getElementById("worldLength").innerHTML="The full extent of "+currNation.name+"'s city data has not fully been added to the database for retrieval yet. Right now a portion of the dataset is being added through you the user being on this loading screen. As a result the rankings may not as fully encapsulate the state as it could. Process will take ~30 seconds and once every data piece is added the wait time will be much shorter. Thanks for your time and patience!"
+          citiesData=getCities(currNation.name,currNation.capitalCity,poses,snapshotData)
+          var restruct=citiesData[0]
+          //console.log(restruct)
+          //console.log(restruct)
+          if(restruct.length>0){
+            sortedData=findOptimalCities(restruct)
+            for(var k in citiesData[1]){
+              sortedData.push(citiesData[1][k])
+              //restruct.push(citiesData[1][k])
+            }
+            //console.log(citiesData)
+            //console.log(restruct)
+           sRef.child(name).set(restruct)
+          }else{
+            sRef.child(name).set(citiesData[1])
+          }
+        }
+        if(sortedData==null){
+          sortedData=snapshotData
+        }else{
+          if(Object.keys(sortedData).length==0){
+            sortedData=snapshotData
+          }
+        }
+        localStorage.currNation=JSON.stringify(currNation)
+        localStorage.sortedCities=JSON.stringify(sortedData)
+        localStorage.citiesPlace="World"
+        window.location.replace("citiesDisplay.html")
+      })
+    }
+  </script>
+</html>

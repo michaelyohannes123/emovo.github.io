@@ -27,24 +27,15 @@
       100% { transform: rotate(360deg); }
     }
     </style>
-  <body class="w3-light-grey">
+  <body class="w3-orange">
     <!-- Navigation Bar -->
-    <div class="w3-top">
-      <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
-        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-        <a href="#" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
-        <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 3</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
-      </div>
       <p></p>
       <div class="loader" style="margin-left: auto; margin-right: auto; width: 8em">
       </div>
       <p></p>
-      <p id="fact" style="text-align:center;">Gact</p>
-    </div>
+      <p id="worldLength" style="text-align:center;"></p>
+      <p id="fact" style="text-align:center;"></p>
+
     <!--<img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Rotating_earth_%28Very_small%29.gif" alt="This is my animated image" height="42" width="42">
     <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Rotating_earth_%28Very_small%29.gif" alt="Loading button" height="120" width="120">
     https://upload.wikimedia.org/wikipedia/commons/4/42/Animated-Flag-USA.gif -->
@@ -56,13 +47,25 @@
 var toParseUrl=window.location.search;
 var arToParse=toParseUrl.split("&")
 var mi=arToParse[0].split("=")
-var monthlyIncome=parseFloat(mi[1]) //in usd, from social security, avg is 1413/month
+var monthlyIncome=mi[1] //in usd, from social security, avg is 1413/month
+if(monthlyIncome.replace(" ","")=="")
+  monthlyIncome=1413.0
+localStorage.monthlyIncomeUS=parseFloat(monthlyIncome)
+localStorage.monthlyIncomeWorld=parseFloat(monthlyIncome)
 var yearlyIncome=parseFloat(monthlyIncome*12.0)
 var ts=arToParse[1].split("=")
-var yourSavings=parseFloat(ts[1])
-var temp=arToParse[2].split("=")
+var yourSavings=ts[1]
+if(yourSavings.replace(" ","")=="")
+  yourSavings=228900.0
+localStorage.yourSavingsUS=parseFloat(yourSavings)
+var ag=arToParse[2].split("=")
+var uage=ag[1]
+if(uage.replace(" ","")=="")
+  uage=65.0
+var userAge=parseFloat(uage)
+var temp=arToParse[3].split("=")
 var tempPref=temp[1] //"hot" "moderate" "cold"
-var stay=arToParse[3].split("=")
+var stay=arToParse[4].split("=")
 var stayInUS=null
 function Currency(name, code, symbol, income, savings) {
     this.name=name
@@ -90,7 +93,7 @@ function Temperature(ftemp, ctemp, category) {
   this.cTemp=ctemp
   this.category=category
 }
-function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyList, crimerate, languageList, alpha2, alpha3, population, area, lat, lng, flaglink, incomelevel, incomeDiff, temp, freedom, hdi, age, rankAvg, cities, citiesData, match){
+function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyList, crimerate, languageList, alpha2, alpha3, population, area, lat, lng, flaglink, incomelevel, incomeDiff, temp, freedom, hdi, age, rankAvg, cities, citiesData, match, comments,tempDiff,housingDiff){
   this.name=name
   this.capitalCity=capitalcity
   this.gini=gini
@@ -117,8 +120,10 @@ function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyLi
   this.cities=cities
   this.citiesData=citiesData
   this.percentMatch=match
+  this.tempDiff=tempDiff
+  this.housingDiff
 }
-function State(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,tr,temp,comments,incomeDiff,medianDiff,tempDiff){
+function State(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,tr,temp,cities,comments,incomeDiff,medianDiff,tempDiff,flaglink){
   this.id=id
   this.name=name
   this.avgIncome=avgincome
@@ -146,11 +151,16 @@ function State(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds
   this.temp=temp //ftemp, ctemp, category
   this.rankAvg=0.0
   this.percentMatch=0.0
-  this.cites=[]
+  this.cites=cities
   this.comments=comments
   this.incomeDiff=incomeDiff
   this.medianDiff=medianDiff
   this.tempDiff=tempDiff
+  this.flaglink=flaglink
+  this.ecRank=0
+  this.chRank=0
+  this.phRank=0
+  this.enRank=0
 }
 function USCity(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,comments,incomeDiff,medianDiff,tempDiff){
   this.id=id
@@ -183,15 +193,59 @@ function USCity(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,d
   this.medianDiff=medianDiff
   this.tempDiff=tempDiff
 }
-function City(name, subcountry, country, costofliving, climate, crimerate){
+function City(name, subcountry, country, costofliving, climate){
   this.name=name
   this.subcountry=subcountry
   this.country=country
   this.costOfLiving=costofliving
   this.climate=climate
-  this.crimeRate=crimerate
 }
-document.getElementById("fact").innerHTML=tempPref
+function getClimateData(tempUrl){
+  var ret=null
+  $.ajax({
+    url: tempUrl,
+    async: false,
+    dataType: 'json',
+    success: function (json) {
+      var tempTotal=0.0
+      var tempAdd=0.0
+      for(var t in json){
+          tempAdd+=json[t].annualData[0]
+          tempTotal+=1.0
+      }
+      var tempAvgC=tempAdd/tempTotal
+      var categ = ""
+      var tempAvgF = (tempAvgC * 9.0 / 5.0) + 32.0
+      if(parseFloat(Math.floor(tempAvgC)) > 18.0)  // "hot" "moderate" "cold"
+          categ = "hot"
+      else if(parseFloat(Math.floor(tempAvgC)) > 0.0)
+          categ = "moderate"
+      else
+          categ = "cold"
+      ret=new Temperature(tempAvgF, tempAvgC, categ)
+      return true
+    }
+  });
+  return ret
+  }
+function getIncomeData(incomeUrl){
+  var ret=null
+  $.ajax({
+    url: incomeUrl,
+    async: false,
+    dataType: "json",
+    success: function (json) {
+      data=json[1]
+      for (var v in data){
+        if(data[v].value!=null){
+              ret=data[v].value
+              return true
+            }
+        }
+    }
+  });
+  return ret
+}
 if(stay[1]=="US"){
   stayInUS=true
 }else{
@@ -207,40 +261,63 @@ var config = {
     storageBucket: "emovo-1a6a7.appspot.com"
   }
 firebase.initializeApp(config);
-  if(stayInUS==true){
+if(stayInUS==true){
+  document.getElementById("worldLength").style.display="none"
   var sRef = firebase.database().ref("states");
   sRef.on("value", function(snapshot, prevChildKey) {
     var snapshotData = snapshot.val();
     var states={}
+    /*var randStateInd=parseInt(Math.random()*Object.keys(snapshotData).length)
+    var coFact=0*/
     for(var st in snapshotData){
       data=snapshotData[st]
+      /*if(randStateInd==coFact){
+        var randFacts=["medianPropertyCost","avgIncome","exerciseAccess","healthCareCost"]//source Data USA
+        var randFactInd=parseInt(Math.random()*randFacts.length)
+        var loadingText=""
+        if(randFactInd==0)
+          loadingText="The median property cost in "+data.name+" is $"+data.medianPropertyCost+" (DataUSA, American Community Survey)"
+        if(randFactInd==1)
+          loadingText="The median household income in "+data.name+" is $"+data.avgIncome+" (DataUSA, American Community Survey)"
+        if(randFactInd==2){
+          var val=parseFloat(data.exerciseAccess)
+          if(val<=1.0)
+            val=val*100.0
+          loadingText=val.toFixed(2)+"% of residents in "+data.name+" are near an exercise source such as a park or recreational facilities (DataUSA, The County Health Rankings & Roadmaps)"
+        }
+        if(randFactInd==3)
+          loadingText="The median property cost in "+snapshotData[randStateInd].name+" is $"+snapshotData[randStateInd].medianPropertyCost+" (DataUSA)"
+        document.getElementById("fact").innerHTML=loadingText
+      }
+      coFact++*/
+      var flaglink="https://www.states101.com/img/flags/png/small/"+data.name.toLowerCase().replace(" ","-")+".png"
       if((data.comments==[] && data.cities==[])||(data.comments==null && data.cities==null)){
       states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
       data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
       data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
       data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-      new Temperature(data.tempf,data.tempc,null),[],[],Math.abs(yearlyIncome - data.avgIncome),Math.abs(yourSavings - data.medianPropertyCost),null)
+      new Temperature(data.tempf,data.tempc,null),[],[],Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
       states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
     }else if(data.comments==[]){
     states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
     data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
     data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
         data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-        new Temperature(data.tempf,data.tempc,null),data.cities,[],Math.abs(yearlyIncome - data.avgIncome),Math.abs(yourSavings - data.medianPropertyCost),null)
+        new Temperature(data.tempf,data.tempc,null),data.cities,[],Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
         states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
       }else if(data.cities==[]){
       states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
       data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
       data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
       data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-      new Temperature(data.tempf,data.tempc,null),[],data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(yourSavings - data.medianPropertyCost),null)
+      new Temperature(data.tempf,data.tempc,null),[],data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
       states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
       }else{
             states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
             data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
           data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
         data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-      new Temperature(data.tempf,data.tempc,null),data.cities,data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(yourSavings - data.medianPropertyCost),null)
+      new Temperature(data.tempf,data.tempc,null),data.cities,data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
       states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
       }
     }
@@ -248,7 +325,6 @@ firebase.initializeApp(config);
       return [key, states[key]];
     });
     items.sort(function(s1,s2) {
-      //console.log(s1[1].incomeDiff)
       return s1[1].incomeDiff-s2[1].incomeDiff
     });
     var avgIncomeSort=items
@@ -433,57 +509,544 @@ firebase.initializeApp(config);
       });
       tempSort=items
     }
-    items = Object.keys(states).map(function(key) {
+    var toSort={}
+    var sCount=0
+    for(var ind in avgIncomeSort){//enables weighting
+      var preins=sCount
+      var ins=sCount*30.0
+      sCount++
+      var found = Object.keys(medianPropertyCostSort).filter(function(key) {
+          return medianPropertyCostSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var prempc=parseFloat(found[0])
+      var mpc=parseFloat(found[0])*30.0
+      found = Object.keys(popPerDoctorRatioSort).filter(function(key) {
+          return popPerDoctorRatioSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ppdrr=parseFloat(found[0])
+      found = Object.keys(popPerDentistRatioSort).filter(function(key) {
+          return popPerDentistRatioSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ppdr=parseFloat(found[0])
+      found = Object.keys(popPerMentalHealthRatioSort).filter(function(key) {
+          return popPerMentalHealthRatioSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ppmhr=parseFloat(found[0])
+      found = Object.keys(popOtherHealthRatioSort).filter(function(key) {
+          return popOtherHealthRatioSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var pohr=parseFloat(found[0])
+      found = Object.keys(violentCrimeSort).filter(function(key) {
+          return violentCrimeSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var vc=parseFloat(found[0])
+      found = Object.keys(healthCareCostSort).filter(function(key) {
+          return healthCareCostSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var hcc=parseFloat(found[0])
+      found = Object.keys(exerciseAccessSort).filter(function(key) {
+          return exerciseAccessSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ea=parseFloat(found[0])
+      found = Object.keys(foodHealthIndexSort).filter(function(key) {
+          return foodHealthIndexSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var fhi=parseFloat(found[0])
+      found = Object.keys(pollutionSort).filter(function(key) {
+          return pollutionSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var p=parseFloat(found[0])
+      found = Object.keys(socialGroupSort).filter(function(key) {
+          return socialGroupSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var sg=parseFloat(found[0])
+      found = Object.keys(diabeticScreeningSort).filter(function(key) {
+          return diabeticScreeningSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ds=parseFloat(found[0])
+      found = Object.keys(mammogramScreeningSort).filter(function(key) {
+          return mammogramScreeningSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ms=parseFloat(found[0])
+      found = Object.keys(housingIssuesSort).filter(function(key) {
+          return housingIssuesSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var hi=parseFloat(found[0])
+      found = Object.keys(waterViolationsSort).filter(function(key) {
+          return waterViolationsSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var wv=parseFloat(found[0])
+      found = Object.keys(meanCommuteSort).filter(function(key) {
+          return meanCommuteSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var mc=parseFloat(found[0])
+      found = Object.keys(foodInsecuritySort).filter(function(key) {
+          return foodInsecuritySort[key][0] == avgIncomeSort[ind][0];
+      })
+      var fi=parseFloat(found[0])
+      found = Object.keys(limitedFoodAccessSort).filter(function(key) {
+          return limitedFoodAccessSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var lfa=parseFloat(found[0])
+      found = Object.keys(unemploymentRateSort).filter(function(key) {
+          return unemploymentRateSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ur=parseFloat(found[0])
+      found = Object.keys(propertyTaxSort).filter(function(key) {
+          return propertyTaxSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ppt=parseFloat(found[0])
+      found = Object.keys(popHealthSort).filter(function(key) {
+          return popHealthSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var ph=parseFloat(found[0])
+      found = Object.keys(salesTaxSort).filter(function(key) {
+          return salesTaxSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var st=parseFloat(found[0])
+      found = Object.keys(incomeTaxSort).filter(function(key) {
+          return incomeTaxSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var it=parseFloat(found[0])
+      found = Object.keys(tempSort).filter(function(key) {
+          return tempSort[key][0] == avgIncomeSort[ind][0];
+      })
+      var pret=parseFloat(found[0])
+      var t=parseFloat(found[0])*30.0
+      var state=avgIncomeSort[ind][1]
+      state.ecRank=(ins+mpc+hcc+ur+st+it+ppt)/7.0
+      state.chRank=(ea+sg+vc+ph+fi+lfa)/6.0
+      state.phRank=(p+fhi+wv+hi+mc+it)/6.0
+      state.enRank=(hcc+ppdrr+ppdr+ppmhr+pohr+ds+ms)/7.0
+      /*
+      document.getElementById("pollution").innerHTML=state.pollution.toFixed(3)+" ppm"
+      document.getElementById("foodHealthIndex").innerHTML=state.foodHealthIndex+""
+      document.getElementById("waterViolations").innerHTML=state.waterViolations+""
+      document.getElementById("housingIssues").innerHTML=state.housingIssues+""
+      document.getElementById("meanCommute").innerHTML=state.meanCommute+""
+      document.getElementById("tempDiff").innerHTML=state.temp.fTemp+" F ("+state.temp.cTemp+" C)"
+
+      document.getElementById("healthCareCost").innerHTML=state.healthCareCost+""
+      document.getElementById("popPerDoctorRatio").innerHTML=state.popPerDoctorRatio+""
+      document.getElementById("popPerDentistRatio").innerHTML=state.popPerDentistRatio+""
+      document.getElementById("popPerMentalHealthRatio").innerHTML=state.popPerMentalHealthRatio+""
+      document.getElementById("popOtherHealthRatio").innerHTML=state.popOtherHealthRatio+""
+      document.getElementById("diabeticScreening").innerHTML=state.diabeticScreening+""
+      document.getElementById("mammogramScreening").innerHTML=state.mammogramScreening+""*/
+
+      prerankAvg=(preins+prempc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph+ppt+it+st+pret)/(parseFloat(avgIncomeSort.length))
+      state.rankAvg=(ins+mpc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph+ppt+it+st+t)/(parseFloat(avgIncomeSort.length))
+      state.percentMatch=((Math.abs(avgIncomeSort.length-state.rankAvg))/(parseFloat(avgIncomeSort.length)))*100.0
+      toSort[state.name]=state
+    }
+    items = Object.keys(toSort).map(function(key) {
       return [key, states[key]];
     });
-    var sCount=0
-    for(var ind in avgIncomeSort){
-      var ins=sCount*30.0
-      var foundKeys = Object.keys(medianPropertyCostSort).filter(function(key) {
-          return medianPropertyCostSort[key] == "Alabama";
-      })
-      console.log(foundKeys)
-      /*var mpc = items.findIndex(function(s) {
-        return s[0] == medianPropertyCostSort[ind][1]
-      })
-      mpc=mpc*10.0
-      var ppdrr = items.findIndex(function(s) {
-        return s[0] == popPerDoctorRatioSort[ind][1]
-      })
-      console.log(ppdrr+"")*/
-      /*var ppdr = (float)(getIndexOfTuple(popPerDentistRatioSort, 0, sname))
-      var ppmhr = (float)(getIndexOfTuple(popPerMentalHealthRatioSort, 0, sname))
-      var pohr = (float)(getIndexOfTuple(popOtherHealthRatioSort, 0, sname))
-      var vc = (float)(getIndexOfTuple(violentCrimeSort, 0, sname))
-      var hcc = (float)(getIndexOfTuple(healthCareCostSort, 0, sname))
-      var ea = (float)(getIndexOfTuple(exerciseAccessSort, 0, sname))
-      var fhi = (float)(getIndexOfTuple(foodHealthIndexSort, 0, sname))
-      var p = (float)(getIndexOfTuple(pollutionSort, 0, sname))
-      var sg = (float)(getIndexOfTuple(socialGroupSort, 0, sname))
-      var ds = (float)(getIndexOfTuple(diabeticScreeningSort, 0, sname))
-      var ms = (float)(getIndexOfTuple(mammogramScreeningSort, 0, sname))
-      var hi = (float)(getIndexOfTuple(housingIssuesSort, 0, sname))
-      var wv = (float)(getIndexOfTuple(waterViolationsSort, 0, sname))
-      var mc = (float)(getIndexOfTuple(meanCommuteSort, 0, sname))
-      var fi = (float)(getIndexOfTuple(foodInsecuritySort, 0, sname))
-      var lfa = (float)(getIndexOfTuple(limitedFoodAccessSort, 0, sname))
-      var ur = (float)(getIndexOfTuple(unemploymentRateSort, 0, sname))
-      var ppt = (float)(getIndexOfTuple(propertyTaxSort, 0, sname))
-      var ph = (float)(getIndexOfTuple(popHealthSort, 0, sname))
-      var st = (float)(getIndexOfTuple(salesTaxSort, 0, sname))
-      var it = (float)(getIndexOfTuple(incomeTaxSort, 0, sname))
-      state.rankAvg=(mpc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph+ppt+it+st+t)/(float)(len(states))
-      var t = (float)(getIndexOfTuple(tempSort, 0, sname))*10.0
-      state.percentMatch = ((float)(len(avgIncomeSort)) - state.rankAvg) / (float)(len(avgIncomeSort)) * 100.0
-      toSort.append(state)*/
+    items.sort(function(s1, s2) {
+      return s1[1].rankAvg-s2[1].rankAvg;
+    });
+    var sortedStates=items
+    var ecRankSort = Object.keys(toSort).map(function(key) {
+      return [key, states[key]];
+    });
+    ecRankSort.sort(function(s1, s2) {
+      return s1[1].ecRank-s2[1].ecRank;
+    });
+    var chRankSort = Object.keys(toSort).map(function(key) {
+      return [key, states[key]];
+    });
+    chRankSort.sort(function(s1, s2) {
+      return s1[1].chRank-s2[1].chRank;
+    });
+    var phRankSort = Object.keys(toSort).map(function(key) {
+      return [key, states[key]];
+    });
+    phRankSort.sort(function(s1, s2) {
+      return s1[1].phRank-s2[1].phRank;
+    });
+    var enRankSort = Object.keys(toSort).map(function(key) {
+      return [key, states[key]];
+    });
+    enRankSort.sort(function(s1, s2) {
+      return s1[1].enRank-s2[1].enRank;
+    });
+    console.log(sortedStates[0][1].ecRank)
+    for(var k=0; k<sortedStates.length; k++){
+      var name=sortedStates[k][1].name
+      console.log(name+" "+ecRankSort)
+      var ec=0
+      var ch=0
+      var ph=0
+      var en=0
+      for(var k2=0; k2<ecRankSort; k2++){
+        if(ecRankSort[k2][0]==name){
+          console.log(name+" "+ecRankSort[k2][0])
+          break
+        }
+        ec++
+      }
+      sortedStates[k][1].ecRank=ec+1
+      for(var k2=0; k2<chRankSort; k2++){
+        if(chRankSort[k2][0]==name)
+          break
+        ch++
+      }
+      sortedStates[k][1].chRank=ch+1
+      for(var k2=0; k2<phRankSort; k2++){
+        if(phRankSort[k2][0]==name)
+          break
+        ph++
+      }
+      sortedStates[k][1].phRank=ph+1
+      for(var k2=0; k2<enRankSort; k2++){
+        if(enRankSort[k2][0]==name)
+          break
+        en++
+      }
+      sortedStates[k][1].enRank=en+1
     }
+    /*console.log(sortedStates)
+    console.log(sortedStates[0][1].name)
+    console.log(sortedStates[0][1].ecRank)
+    console.log(sortedStates[0][1].chRank)
+    console.log(sortedStates[0][1].phRank)
+    console.log(sortedStates[0][1].enRank)*/
+    localStorage.removeItem("sortedStates")
+    localStorage.sortedStates=JSON.stringify(sortedStates)
+    //var t=JSON.parse(localStorage.sortedStates)
+    //console.log(t)
+    //console(t[0][1].name)
+    localStorage.type="state"
+    //console.log(sortedStates)
+    window.location.replace("nationstatesDisplay.html")
   });
 }else{
+  document.getElementById("worldLength").style.display="block"
   var sRef = firebase.database().ref("countries");
   var countriesList={}
+  var countries={}
   sRef.on("value", function(snapshot, prevChildKey) {
-    countriesList = snapshot.val();
-  });
+    countriesList = snapshot.val()//.slice(-50);
+    //console.log(countriesList)
+    document.getElementById("worldLength").innerHTML="Searching "+Object.keys(countriesList).length+" countries..."
+    var coop=0;
+    for(var c in countriesList){
+      var co=countriesList[c]
+      co.name=co.name+""
+      if(c=="US Virgin Islands"){
+        co.name="U.S. Virgin Islands"
+      }
+      if((co.comments==null&&co.cities==null)||(co.comments==[]&&co.cities==[])){
+        countries[co.name]=new Country(co.name,co.capitalCity,co.gini,co.gni,new TaxRates(co.highIncomeTax,co.lowIncomeTax,co.salesTax),
+      co.housingCost,co.currencyList,co.crimeRate,co.languageList,co.alpha2,co.alpha3,co.population,co.area,co.lat,co.lng,
+    co.flaglink,co.incomeLevel,null,co.temp,co.freedomIndex,co.hdiValue,co.ageExp,[],[],0.00,[],null)
+      }else if(co.comments==[]){
+        countries[co.name]=new Country(co.name,co.capitalCity,co.gini,co.gni,new TaxRates(co.highIncomeTax,co.lowIncomeTax,co.salesTax),
+      co.housingCost,co.currencyList,co.crimeRate,co.languageList,co.alpha2,co.alpha3,co.population,co.area,co.lat,co.lng,
+    co.flaglink,co.incomeLevel,null,co.temp,co.freedomIndex,co.hdiValue,co.ageExp,co.cities,co.citiesData,0.00,[],null)
+      }else if(co.cities==[]){
+        countries[co.name]=new Country(co.name,co.capitalCity,co.gini,co.gni,new TaxRates(co.highIncomeTax,co.lowIncomeTax,co.salesTax),
+      co.housingCost,co.currencyList,co.crimeRate,co.languageList,co.alpha2,co.alpha3,co.population,co.area,co.lat,co.lng,
+    co.flaglink,co.incomeLevel,null,co.temp,co.freedomIndex,co.hdiValue,co.ageExp,[],[],0.00,co.comments,null)
+      }else{
+        countries[co.name]=new Country(co.name,co.capitalCity,co.gini,co.gni,new TaxRates(co.highIncomeTax,co.lowIncomeTax,co.salesTax),
+      co.housingCost,co.currencyList,co.crimeRate,co.languageList,co.alpha2,co.alpha3,co.population,co.area,co.lat,co.lng,
+    co.flaglink,co.incomeLevel,null,co.temp,co.freedomIndex,co.hdiValue,co.ageExp,co.cities,co.citiesData,0.00,co.comments,null)
+      }
+      var housingList={"Monaco":305.83,"Angola":125.78,"Papua New Guinea":117.22,"Bermuda":109.01,"Singapore":97.81,"Macao":87.38,"Hong Kong":87.38,"Guernsey":84.57,"Qatar":77.25,"Gibraltar":70.16,"Jersey":69.49,"Luxembourg":67.03,"British Virgin Islands":66.25,"Switzerland":66.24,"United Arab Emirates":65.56,"Norway":62.73,"Liberia":61.99,"Isle of Man":59.52,"Australia":58.91,"Cayman Islands":54.19,"Guam":49.22,"Bahamas":48.18,"New Caledonia":47.71,"Vanuatu":46.89,"United Kingdom":45.18,"Iceland":43.63,"New Zealand":43.14,"Ghana":42.67,"Greenland":42.57,"Denmark":42.27,"Netherlands":41.69,"Ireland":40.45,"Bahrain":40.01,"Kuwait":39.77,"Venezuela":38.58,"France":38.49,"Burundi":38.39,"South Korea":38.37,"Seychelles":37.5,"United States":37.45,"Aruba":36.79,"Japan":36.78,"Azerbaijan":36.29,"Belgium":36.2,"Canada":36.05,"Finland":36.05,"Israel":35.77,"Mozambique":35.62,"Lebanon":35.01,"Sweden":34.35,"Austria":33.54,"Gabon":32.79,"Panama":32.76,"Italy":32.14,"Holy See":32.14,"Brunei Darussalam":31.67,"Germany":31.3,"Reunion":31.22,"Maldives":30.71,"Democratic Republic of the Congo":30.27,"Oman":29.96,"Russian Federation":28.45,"Fiji":27.82,"Tuvalu":27.82,"Mauritius":27.8,"Mongolia":27.7,"French Polynesia":27.58,"Faroe Islands":27.44,"Spain":26.95,"Curacao":26.72,"Samoa":26.15,"Tokelau":26.15,"Wallis and Futuna":26.15,"American Samoa":26.15,"Niue":26.15,"Haiti":25.56,"Rwanda":25.3,"Uruguay":24.98,"Zambia":24.61,"Namibia":24.49,"Barbados":24.46,"China":24.34,"Andorra":24.03,"Slovenia":23.26,"Trinidad and Tobago":23.05,"Cameroon":22.87,"Portugal":22.82,"Slovakia":22.39,"Nigeria":22.1,"Brazil":22.07,"Equatorial Guinea":21.96,"Tanzania":21.94,"Kazakhstan":21.88,"Ethiopia":21.82,"Burma":21.48,"Puerto Rico":21.43,"Djibouti":21.32,"Cyprus":21.14,"Zimbabwe":20.68,"Iran":20.3,"Costa Rica":19.77,"Libya":19.74,"Jamaica":19.74,"Taiwan":19.68,"Kenya":19.64,"Poland":19.23,"Estonia":18.91,"Malta":18.86,"Thailand":18.85,"Iraq":18.67,"Czech Republic":18.43,"South Africa":18.15,"Grenada":17.82,"Chile":17.76,"Somalia":17.6,"Argentina":17.58,"Guyana":17.34,"Belarus":17.16,"Latvia":17.12,"Belize":16.99,"Lao People's Democratic Republic":16.33,"Peru":16.2,"Jordan":15.92,"Guatemala":15.92,"Vietnam":15.86,"Dominica":15.69,"Malaysia":15.66,"Saudi Arabia":15.54,"Lithuania":15.5,"Greece":15.3,"Turkmenistan":15,"Suriname":14.97,"Armenia":14.73,"Colombia":14.72,"Uzbekistan":14.49,"Croatia":14.27,"Ecuador":14.16,"Mali":14.02,"Cambodia":13.94,"Swaziland":13.89,"Bolivia":13.69,"Saint Lucia":13.65,"Ukraine":13.6,"Indonesia":13.56,"Botswana":13.56,"Sudan":13.5,"Turkey":13.12,"Uganda":13.03,"Morocco":12.88,"Romania":12.64,"Kyrgyzstan":12.5,"Syrian Arab Republic":12.39,"Dominican Republic":12.37,"Georgia":12.34,"Mexico":12.24,"Honduras":11.92,"Montenegro":11.82,"Malawi":11.7,"Sri Lanka":11.61,"Madagascar":11.4,"Comoros":11.4,"Mayotte":11.4,"Bulgaria":11.4,"Senegal":11.37,"Serbia":11.2,"Albania":11.2,"Paraguay":10.99,"El Salvador":10.97,"Hungary":10.72,"Tunisia":10.11,"Nicaragua":9.8,"Egypt":9.64,"Moldova (Republic of)":9.6,"Afghanistan":9.58,"Algeria":9.14,"North Macedonia":9,"Philippines":8.9,"Bosnia and Herzegovina":8.57,"Cuba":8.32,"India":7.1,"Bangladesh":7,"Yemen":6.34,"Tajikistan":6.14,"Lesotho":5.19,"Pakistan":4.85,"Nepal":3.38,"Gambia":34.8,"Sierra Leone":46.8,"Guinea":30.0,"South Sudan":48.3,"Åland Islands":35.8,"Turks and Caicos Islands":50.0,"Marshall Islands":27.5,"Nauru":27.5,"Mauritania":20.0,"Western Sahara":20.0,"Saint Pierre and Miquelon":83.0,"Niger":17.0,"Anguilla":38.0,"Benin":25.0,"Antigua and Barbuda":28.2,"Saint Martin (French part)":20.3,"Sint Maarten (Dutch part)":20.3,"Togo":13.5,"Curaçao":32.2,"Martinique":35.5,"Réunion":25.0,"Republic of Kosovo":12.9,"Cabo Verde":16.1,"Montserrat":10.5,"Guinea-Bissau":25.0,
+      "Palestine":28.9,"Congo":38.7,"Micronesia (Federated States of)":25.0,"Bhutan":11.6,"Burkina Faso":27.4,"Myanmar":30.6,"Tonga":35.5,"Chad":30.0,"Central African Republic":30.0,
+      "Sao Tome and Principe":7.1,"Saint Vincent and the Grenadines":38.7,"Cook Islands":37.0,"U.S. Virgin Islands":70.0,"Falkland Islands (Malvinas)":25.8,
+      "Palau":43.0,"Guadeloupe":35.8,"Bonaire, Sint Eustatius and Saba":33.9,"Côte d'Ivoire":32.2,"Saint Kitts and Nevis":19.35,"Solomon Islands":38.7,
+      "Timor-Leste":35.5,"Liechtenstein":50.0,"French Guiana":32.2,"Kiribati":18.8,"Eritrea":13.3,"San Marino":23.3,"Northern Mariana Islands":18.9}
+      //https://www.nationmaster.com/country-info/stats/Cost-of-living/Real-estate-prices/Rent-index#
+      //https://www.expatistan.com/cost-of-living/country/
+      //NYC 31000 per month: https://www.timeout.com/newyork/blog/map-of-average-rent-by-nyc-neighborhood-is-as-depressing-as-youd-expect-082115
+      if(userAge>=78.69){//78.69 avg life expectancy in us
+        countries[co.name].housingDiff=Math.abs(yourSavings-(housingList[co.name]*31.0))
+      }else{
+        countries[co.name].housingDiff=Math.abs(((yourSavings/(78.69-userAge))*12.0)-(housingList[co.name]*31.0))
+      }
+      var noIncomeList={
+              "ASM":10532,
+              "AND":39700,
+              "VGB":13660, //from 1989; could be ~8915 due to apparent fluctuations from 1989 (being the max gni found) to 2006
+              "JEY":62474,
+              "CUB":7872,
+              "DJI":1880,
+              "FRO":55837,
+              "PYF":19419,
+              "GIB":61700, //gdp per capita (PPP) instead due to lack of gni
+              "GRL":34260,
+              "GUM":24446,
+              "IMN":71761,
+              "PRK":664,
+              "LIE":134479,
+              "MCO":173238,
+              "NCL":34177,
+              "MNP":23047,
+              "SMR":40752,
+              "SYR":1178,
+              "SOM":98,
+              "SXM":66800, //gdp per capita (PPP) instead due to lack of gni
+              "MAF":19300, //gdp per capita (PPP) instead due to lack of gni
+              "VIR":34955,
+              "ALA":46462,
+              "AIA":10951.93,
+              "BES":22667, //https://www.saba-news.com/gdp-increased-in-2015-in-caribbean-netherlands/
+              "COK":6557.68,
+              "FLK":16730.41,
+              "GUF":17767,
+              "GLP":22957,
+              "GGY":55783,
+              "VAT":21198, //gdp per capita (PPP) instead due to lack of gni
+              "MTQ":25244,
+              "MYT":2780,
+              "MSR":8367.72,
+              "NIU":12550.95,
+              "KOS":11050,
+              "REU":22456,
+              "SPM":9368.30,
+              "TWN":25360,
+              "TKL":6275, //gdp per capita (PPP) instead due to lack of gni
+              "WLF":4930.95, //gdp per capita (PPP) instead due to lack of gni
+              "ESH":4930.95 //gdp per capita (PPP) instead due to lack of gni
+          } //not in world bank
+      if(countries[co.name].gni!=null)
+      {
+        countries[co.name].gni=parseFloat(countries[co.name].gni)
+      }else{
+        if(countries[co.name].alpha3 in noIncomeList){
+          if(countries[co.name].gni==null||countries[co.name].gni<=0.0){
+            countries[co.name].gni=parseFloat(noIncomeList[countries[co.name].alpha3])
+            firebase.database().ref("countries").child(co.name).child("gni").set(countries[co.name].gni)
+          }
+        }else{
+          if(countries[co.name].gni==null||countries[co.name].gni<=0.0){
+            var incomeUrl="https://api.worldbank.org/countries/"+countries[co.name].alpha3+"/indicators/NY.GNP.PCAP.PP.CD?format=json&per_page=1000"
+            countries[co.name].gni=parseFloat(getIncomeData(incomeUrl))
+            firebase.database().ref("countries").child(co.name).child("gni").set(countries[co.name].gni)
+          }
+        }
+      }
+      //console.log(co.name)
+      countries[co.name].incomeDiff=Math.abs(yearlyIncome-countries[co.name].gni)
+      var tempsManualC={"Åland Islands":5.4,"Bonaire, Sint Eustatius and Saba":27.5,"Curaçao":29.5,"Holy See":14.65,"Republic of Kosovo":9.5,"Saint Martin (French part)":26.5,"Sint Maarten (Dutch part)":26.5,"Saint Pierre and Miquelon":5.06,"South Sudan":29.9}
+      var tempAvgC=0.0
+      if (countries[co.name].name in tempsManualC){
+        if(countries[co.name].temp==null){
+          var tempAvgC=tempsManualC[co.name]
+          var categ = ""
+          var tempAvgF = (tempAvgC * 9.0 / 5.0) + 32.0
+          if(parseFloat(Math.floor(tempAvgC)) > 18.0)  // "hot" "moderate" "cold"
+              categ = "hot"
+          else if(parseFloat(Math.floor(tempAvgC)) > 0.0)
+              categ = "moderate"
+          else
+              categ = "cold"
+          countries[co.name].temp = new Temperature(tempAvgF, tempAvgC, categ)
+          firebase.database().ref("countries").child(co.name).child("temp").set({
+            "cTemp":countries[co.name].temp.cTemp,
+            "fTemp":countries[co.name].temp.fTemp,
+            "category":countries[co.name].temp.category,
+          })
+        }else{
+          countries[co.name].tempDiff=Math.abs(countries[co.name].temp.cTemp-14.9)//avg annual world temp
+        }
+      }else{
+        if(countries[co.name].temp==null){
+          var tempUrl="http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/2020/2039/"+countries[co.name].alpha3
+          countries[co.name].temp=getClimateData(tempUrl)
+          firebase.database().ref("countries").child(co.name).child("temp").set({
+            "cTemp":countries[co.name].temp.cTemp,
+            "fTemp":countries[co.name].temp.fTemp,
+            "category":countries[co.name].temp.category,
+          })
+       }else{
+       countries[co.name].tempDiff=Math.abs(countries[co.name].temp.cTemp-14.9)
+      }
+      //console.log(co.name)
+}
+    }
+    var items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s2[1].ageExp-s1[1].ageExp
+    });
+    var ageExpSort=items
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s2[1].freedomIndex-s1[1].freedomIndex
+    });
+    var freedomSort=items
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s2[1].hdiValue-s1[1].hdiValue
+    });
+    var hdiSort=items
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s1[1].incomeDiff-s2[1].incomeDiff
+    });
+    var gniSort=items
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s1[1].taxRates.highIncomeTax-s2[1].taxRates.highIncomeTax
+    });
+    var taxHighIncomeSort=items //*.5
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s1[1].taxRates.lowIncomeTax-s2[1].taxRates.lowIncomeTax
+    });
+    var taxLowIncomeSort=items //*.5
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s1[1].taxRates.salesTax-s2[1].taxRates.salesTax
+    });
+    var salesTaxSort=items //*.5
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s1[1].crimeRate-s2[1].crimeRate
+    });
+    var crimeRateSort=items
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    items.sort(function(s1,s2) {
+      return s1[1].housingDiff-s2[1].housingDiff
+    });
+    var housingSort=items
+    var tempSort=[]
+    items = Object.keys(countries).map(function(key) {
+      return [key, countries[key]];
+    });
+    if(tempPref=="hot"){
+      items.sort(function(s1,s2) {
+        return s2[1].temp.cTemp-s1[1].temp.cTemp
+      });
+      tempSort=items
+    }else if(tempPref=="cold"){
+        items.sort(function(s1,s2) {
+          return s1[1].temp.cTemp-s2[1].temp.cTemp
+        });
+        tempSort=items
+    }
+    else{
+      items.sort(function(s1,s2) {
+        return s1[1].tempDiff-s2[1].tempDiff
+      });
+      tempSort=items
+    }
+    var toSort={}
+    var cCount=0
+    for(var ind in gniSort){//enables weighting
+      var preinc=cCount
+      var inc=cCount*15.0
+      cCount++
+      var found = Object.keys(ageExpSort).filter(function(key) {
+          return ageExpSort[key][0] == gniSort[ind][0];
+      })
+      var age=parseFloat(found[0])
+      found = Object.keys(freedomSort).filter(function(key) {
+          return freedomSort[key][0] == gniSort[ind][0];
+      })
+      var free=parseFloat(found[0])
+      found = Object.keys(hdiSort).filter(function(key) {
+          return hdiSort[key][0] == gniSort[ind][0];
+      })
+      var hdi=parseFloat(found[0])
+      found = Object.keys(taxHighIncomeSort).filter(function(key) {
+          return taxHighIncomeSort[key][0] == gniSort[ind][0];
+      })
+      var high=parseFloat(found[0])*.7
+      found = Object.keys(taxLowIncomeSort).filter(function(key) {
+          return taxLowIncomeSort[key][0] == gniSort[ind][0];
+      })
+      var low=parseFloat(found[0])*.7
+      found = Object.keys(salesTaxSort).filter(function(key) {
+          return salesTaxSort[key][0] == gniSort[ind][0];
+      })
+      var sales=parseFloat(found[0])*.7
+      found = Object.keys(crimeRateSort).filter(function(key) {
+          return crimeRateSort[key][0] == gniSort[ind][0];
+      })
+      var crime=parseFloat(found[0])
+      found = Object.keys(housingSort).filter(function(key) {
+          return housingSort[key][0] == gniSort[ind][0];
+      })
+      var housing=parseFloat(found[0])
+      found = Object.keys(tempSort).filter(function(key) {
+          return tempSort[key][0] == gniSort[ind][0];
+      })
+      var temp=parseFloat(found[0])
+      var country=gniSort[ind][1]
+      var prerankAvg=(preinc+age+free+hdi+high+low+sales+crime+temp+housing)/(parseFloat(gniSort.length))
+      //console.log(ind+" "+country.name+" "+country.gni)
+      country.rankAvg=(inc+age+free+hdi+high+low+sales+crime+temp+housing)/(parseFloat(gniSort.length))
+      country.percentMatch=((Math.abs(gniSort.length-country.rankAvg))/(parseFloat(gniSort.length)))*100.0
+      /*if(country.gini==null)
+        country.gini=-1.0
+      if(country.incomeLevel==null)
+        country.incomeLevel="Not specified by the World Bank"*/
+      toSort[country.name]=country
+      /*sRef.child(country.name).set(country
+                                        {
+                                          "name":country.name,
+                                          "capitalCity":country.capitalCity,
+                                          "gini":country.gini,
+                                          "gni":country.gni,
+                                          "housingCost":country.housingCost,
+                                          "currencyList":country.currencyList,
+                                          "crimeRate":country.crimeRate,
+                                          "languageList":country.languageList,
+                                          "alpha2":country.alpha2,
+                                          "alpha3":country.alpha3,
+                                          "population":country.population,
+                                          "area":country.area,
+                                          "lat":country.lat,
+                                          "lng":country.lng,
+                                          "flaglink":country.flaglink,
+                                          "incomeLevel":country.incomeLevel,
+                                          "freedomIndex":country.freedomIndex,
+                                          "hdiValue":country.hdiValue,
+                                          "ageExp":country.ageExp,
+                                          "category":country.temp.category,
+                                          "ftemp":country.temp.fTemp,
+                                          "ctemp":country.temp.cTemp,
+                                          "highIncomeTax":country.taxRates.highIncomeTax,
+                                          "lowIncomeTax":country.taxRates.lowIncomeTax,
+                                          "salesTax":country.taxRates.salesTax,
+                                          "comments":[]
+                                        }
+                                    )*/
+    }
+    items = Object.keys(toSort).map(function(key) {
+      return [key, toSort[key]];
+    });
+    items.sort(function(s1, s2) {
+      return s1[1].rankAvg-s2[1].rankAvg;
+    });
+    var sortedCountries=items
+    console.log(sortedCountries)
+    localStorage.removeItem("sortedCountries")
+    localStorage.setItem("type","nation")
+    localStorage.setItem("sortedCountries",JSON.stringify(sortedCountries))
+    window.location.replace("nationstatesDisplay.html")
+  })
 }
 </script>
   </body>

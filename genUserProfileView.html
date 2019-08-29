@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="328858787046-95fsdbnk5kil4druiacprsubihssktju.apps.googleusercontent.com">
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    .myLink {display: none}
+    </style>
+  </head>
+  <body class="w3-light-grey">
+    <!-- Navigation Bar -->
+    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div class="mainDiv" style="text-align: center; display: block; margin: 0 auto;">
+      <div id="userContent" class="w3-row-padding w3-padding-64 w3-container">
+        <div class="w3-content">
+          <div class="w3-twothird">
+            <h1 id="username"></h1>
+            <p id="joinDate"></p>
+            <img id="pic" src="#">
+            <p id="yourSearches" class="w3-text-grey"></p>
+            <p id="placeRecs" class="w3-text-grey"></p>
+            <p id="commentHistory" class="w3-text-grey"></p>
+          </div>
+        </div>
+      </div>
+      <p></p>
+    </div>
+    <script>
+      var isIn=isLoggedIn();
+      function isLoggedIn()
+      {
+        if(localStorage.getItem('currUser') == null){
+          return false;
+        } else {
+          return true;
+        }
+      }
+    </script>
+  </body>
+</html>

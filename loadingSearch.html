@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    .myLink {display: none}
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style>
+  <body class="w3-orange">
+    <!-- Navigation Bar -->
+      <p></p>
+      <div class="loader" style="margin-left: auto; margin-right: auto; width: 8em">
+      </div>
+      <p></p>
+      <p id="worldLength" style="text-align:center;"></p>
+      <p id="fact" style="text-align:center;"></p>
+
+    <!--<img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Rotating_earth_%28Very_small%29.gif" alt="This is my animated image" height="42" width="42">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Rotating_earth_%28Very_small%29.gif" alt="Loading button" height="120" width="120">
+    https://upload.wikimedia.org/wikipedia/commons/4/42/Animated-Flag-USA.gif -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+  var config = {
+      apiKey: "AIzaSyAJD37p9xcHp22p5cnpp3YxHLDQnAuHtKw",
+      authDomain: "emovo-1a6a7.firebaseapp.com",
+      databaseURL: "https://emovo-1a6a7.firebaseio.com/",
+      storageBucket: "emovo-1a6a7.appspot.com"
+    }
+  firebase.initializeApp(config);
+  if(localStorage.searchtype=="state"){
+    var state=localStorage.currStateSearch
+    localStorage.currStateSearch=null
+    var sRef = firebase.database().ref("states");
+    sRef.once("value", function(snapshot, prevChildKey) {
+      var snapshotData = snapshot.val();
+      localStorage.stateSearch=JSON.stringify(snapshotData[state])
+      window.location.replace("usStateProfileSearch.html")
+    })
+  }else if(localStorage.searchtype=="country"){
+     var country=localStorage.worldCountrySearch
+     localStorage.worldCountrySearch=null
+     var sRef = firebase.database().ref("countries");
+     var countriesList={}
+     sRef.once("value", function(snapshot, prevChildKey) {
+       countriesList = snapshot.val()//.s
+       localStorage.nationSearch=JSON.stringify(countriesList[country])
+       window.location.replace("countryProfileSearch.html")
+    })
+  }else if(localStorage.searchtype=="usCity"){
+    var usCity=JSON.parse(localStorage.USCitySearchState)
+    console.log(usCity)
+    usCity["name"]=usCity["name"].normalize("NFD").replace(/[\u0300-\u036f]/g, "")+""
+    console.log(usCity)
+    localStorage.USCitySearch=null
+    var stateName=localStorage.currStateSearch
+    localStorage.currStateSearch=null
+    localStorage.USCityFoundSearch=JSON.stringify(usCity)
+    localStorage.stateSearch=stateName
+    window.location.replace("usCitiesProfileSearch.html")
+  }else if(localStorage.searchtype=="worldCity"){
+    var worldCity=JSON.parse(localStorage.worldCitySearchState)
+    localStorage.worldCitySearchState=null
+    var countryName=localStorage.currNationSearch
+    localStorage.currNationSearch=null
+    //console.log(worldCity)
+    //console.log(countryName)
+    var sRef = firebase.database().ref("countries");
+    var countriesList={}
+    sRef.once("value", function(snapshot, prevChildKey) {
+      countriesList = snapshot.val()//.s
+      worldCity["name"]=worldCity["name"].normalize("NFD").replace(/[\u0300-\u036f]/g, "")+""
+      worldCity["subcountry"]=worldCity["subcountry"].normalize("NFD").replace(/[\u0300-\u036f]/g,"")+""
+      localStorage.worldCitySearch=JSON.stringify(worldCity)
+      //console.log(localStorage.worldCitySearch)
+      localStorage.nationSearch=JSON.stringify(countriesList[countryName])
+      //console.log(worldCity)
+      //console.log(countriesList[countryName])
+      window.location.replace("worldCitiesSearch.html")
+   })
+  }
+</script>
+</body>
+</html>

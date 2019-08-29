@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    /*.place {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      padding: 16px;
+      text-align: center;
+      background-color: #f1f1f1;
+    }*/
+    body {
+    overflow-y: scroll;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+}
+    .places {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: seperate;
+      /*padding-right:4%;*/
+    }
+    .places button {
+      width: 80%;
+      height:10%;
+      margin: 0 auto;
+      border: 10px solid #F0F0F0;
+    }
+    body {
+    width:100%;
+    position: fixed;
+    }
+    .left {
+        display: inline-block;
+        background-color:orange;
+        color:white;
+        position: absolute;
+        height:100%;
+        width:15%;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .right {
+        display: inline-block;
+        position: absolute;
+        text-align: center;
+        right: 0;
+    }
+    .pagination {
+      display: inline-block;
+      margin: 0 auto;
+    }
+    .pagination a {
+      color: black;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+    .pagination a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+.pagination a:hover:not(.active) {background-color: #ddd;}
+    </style>
+  <body class="w3-light-grey">
+    <!-- Navigation Bar GET RID OF W3-TOP TO ENABLE SCROLLBAR-->
+    <div>
+      <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-orange" href="javascript:void(0);" onclick="filter()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-text-orange w3-hover-orange"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
+        <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 1</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 2</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 3</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
+      </div>
+      <div class="right">
+        <p></p>
+          <table id="table" class="places">
+            <select id="pages" name="page" onchange="changePage()">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="Country or State">
+            <br>
+            <p id="pageCount"></p>
+            <br>
+            <h4>Based on the input data, here is a specialized place rankings for you to retire: </h3>
+             <tr>
+                <td>
+             </tr>
+            </table>
+        </div>
+        <!--<div class="left">
+          <div>
+            <p>Attributes you want to sort by:</p>
+            <form action="">
+              <input type="radio" name="sortType" value="curr"> Current<br>
+              <p></p>
+              <input type="radio" name="sortType" value="curr"> curr<br>
+              <p></p>
+              <input type="radio" name="sortType" value="other"> Other
+              <p></p>
+              <button type="submit">Sort</button>
+            </form>
+          </div>
+        </div>-->
+  </body>
+  <script type="text/javascript">
+  var stateCapitals={
+    'Alabama': 'Montgomery',
+    'Alaska': 'Juneau',
+    'Arizona':'Phoenix',
+    'Arkansas':'Little Rock',
+    'California': 'Sacramento',
+    'Colorado':'Denver',
+    'Connecticut':'Hartford',
+    'Delaware':'Dover',
+    'Florida': 'Tallahassee',
+    'Georgia': 'Atlanta',
+    'Hawaii': 'Honolulu',
+    'Idaho': 'Boise',
+    'Illinois': 'Springfield',
+    'Indiana': 'Indianapolis',
+    'Iowa': 'Des Monies',
+    'Kansas': 'Topeka',
+    'Kentucky': 'Frankfort',
+    'Louisiana': 'Baton Rouge',
+    'Maine': 'Augusta',
+    'Maryland': 'Annapolis',
+    'Massachusetts': 'Boston',
+    'Michigan': 'Lansing',
+    'Minnesota': 'St. Paul',
+    'Mississippi': 'Jackson',
+    'Missouri': 'Jefferson City',
+    'Montana': 'Helena',
+    'Nebraska': 'Lincoln',
+    'Nevada': 'Carson City',
+    'New Hampshire': 'Concord',
+    'New Jersey': 'Trenton',
+    'New Mexico': 'Santa Fe',
+    'New York': 'Albany',
+    'North Carolina': 'Raleigh',
+    'North Dakota': 'Bismarck',
+    'Ohio': 'Columbus',
+    'Oklahoma': 'Oklahoma City',
+    'Oregon': 'Salem',
+    'Pennsylvania': 'Harrisburg',
+    'Rhode Island': 'Providence',
+    'South Carolina': 'Columbia',
+    'South Dakota': 'Pierre',
+    'Tennessee': 'Nashville',
+    'Texas': 'Austin',
+    'Utah': 'Salt Lake City',
+    'Vermont': 'Montpelier',
+    'Virginia': 'Richmond',
+    'Washington': 'Olympia',
+    'West Virginia': 'Charleston',
+    'Wisconsin': 'Madison',
+    'Wyoming': 'Cheyenne'
+}
+  function changePage() {
+      var countries=JSON.parse(localStorage.sortedCountries)
+      var pages = document.getElementById("pages");
+      var selectedPage = pages.options[pages.selectedIndex].value;
+      //console.log(selectedPage)
+      var perPage=parseInt(Object.keys(countries).length/6.0)
+      var end=perPage*selectedPage
+      var start=end-perPage
+      //console.log(start)
+      //console.log(end)
+      var table = document.getElementById("table");
+      var btn = table.getElementsByTagName("button");
+      for (i = 0; i < btn.length; i++) {
+          if (i>=start && i<end) {
+              btn[i].style.display = "block";
+          } else {
+              btn[i].style.display = "none";
+          }
+      }
+      /*<select id="pages" name="page" onchange="changePage()">
+          <option value="1" selected="selected">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+      </select>*/
+  }
+  createbtnStates()
+  function createbtnStates() {
+    var size=0
+    if(localStorage.type=="nation"){
+      var countries=JSON.parse(localStorage.sortedCountries)
+      //console.log(countries)
+      var currPage=parseInt(document.getElementById("pages").value) //pages.options[pages.selectedIndex].value
+      var rank=1
+      console.log(currPage+"")
+      var perPage=parseInt(Object.keys(countries).length/6.0)
+      var startC=((currPage-1)*perPage)
+      var endC=startC+perPage
+      document.getElementById("pageCount").innerHTML=perPage+" countries displayed per page (1 of 6 pages)"
+      //console.log(perPage+"")
+      for(var k in countries){//name,rating,flaglink,capitalCity,ratings
+        var btn = document.createElement("BUTTON");
+        btn.className="w3-button w3-orange";
+        btn.style.spacingBorder="2%";
+        btn.id=countries[k][1].name.replace(" ","-")
+        btn.onclick=function(){
+          document.getElementById("input").value=""
+          for(var k2 in countries){
+            if(countries[k2][0]==this.id.replace("-"," ")){
+              localStorage.setItem("nation",JSON.stringify(countries[k2][1]))
+              location.href="countryProfile.html"
+            }
+          }
+        }
+        var img=document.createElement('img');//set right: 0;
+        if(countries[k][1].flaglink!=null){
+          img.src=countries[k][1].flaglink
+        }
+        img.alt="Flag"
+        img.width=100.0
+        img.width=100.0
+        img.title="Flag"
+        btn.appendChild(img)
+        var h = document.createElement("H3");
+        var t = document.createTextNode("#"+rank+": "+countries[k][1].name);
+        h.appendChild(t);
+        btn.appendChild(h);
+        var p = document.createElement("P");
+        t = document.createTextNode("Capital City: "+countries[k][1].capitalCity);
+        p.appendChild(t);
+        btn.appendChild(p);
+        var p2 = document.createElement("P");
+        //t = document.createTextNode("Rating: ");
+        //p2.appendChild(t);
+        btn.appendChild(p2);
+        document.getElementById("table").appendChild(btn);
+        if((rank-1)>=startC && (rank-1)<endC)
+          document.getElementById(btn.id).style.display="block"
+        else
+          document.getElementById(btn.id).style.display="none"
+        rank++
+      }
+    }
+    if(localStorage.type=="state"){
+        var states=JSON.parse(localStorage.sortedStates)
+        //console.log(states[1])//Arkansas, Object
+        document.getElementById("pages").style.display="none"
+        document.getElementById("pageCount").style.display="none"
+        //console.log(states)
+        var rank=1
+        for(var k in states){//name,rating,flaglink,capitalCity,ratings
+          var btn = document.createElement("BUTTON");
+          btn.className="w3-button w3-orange";
+          btn.style.spacingBorder="2%";
+          btn.id=states[k][1].name.replace(" ","-")
+          btn.onclick=function(){
+            document.getElementById("input").value=""
+            for(var k2 in states){
+              if(states[k2][0]==this.id.replace("-"," ")){
+                localStorage.setItem("state",JSON.stringify(states[k2][1]))
+                location.href="usStateProfile.html"
+              }
+            }
+          }
+          var img=document.createElement('img');//set right: 0;
+          if(states[k][1].name!="District of Columbia"){
+            img.src=states[k][1].flaglink
+          }else{
+            img.src="https://www.states101.com/img/flags/png/small/district-of-columbia.png"
+          }
+          img.alt="Flag"
+          img.width=100.0
+          img.width=100.0
+          img.title="Flag"
+          btn.appendChild(img)
+          var h = document.createElement("H3");
+          var t = document.createTextNode("#"+rank+": "+states[k][1].name);
+          h.appendChild(t);
+          btn.appendChild(h);
+          var p = document.createElement("P");
+          if(states[k][1].name!="District of Columbia"){
+            t = document.createTextNode("Capital City: "+stateCapitals[states[k][1].name]);
+          }else{
+            t = document.createTextNode("Capital city of the US");
+          }
+          p.appendChild(t);
+          btn.appendChild(p);
+          var p2 = document.createElement("P");
+          //t = document.createTextNode("Rating: ");
+          //p2.appendChild(t);
+          btn.appendChild(p2);
+          document.getElementById("table").appendChild(btn);
+          rank++
+        }
+    }
+  }
+  function filter() {
+    var input = document.getElementById("input");
+    var fil = input.value.toUpperCase();
+    var table = document.getElementById("table");
+    var btn = table.getElementsByTagName("button");
+    for (i = 0; i < btn.length; i++) {
+        txtValue = btn[i].id.replace("-"," ")
+        console.log(txtValue)
+        if (txtValue.toUpperCase().indexOf(fil) > -1) {
+            btn[i].style.display = "";
+        } else {
+            btn[i].style.display = "none";
+        }
+    }
+}
+  </script>
+</html>

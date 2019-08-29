@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+.myLink {display: none}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+<body class="w3-orange">
+  <!-- Navigation Bar -->
+    <p></p>
+    <div class="loader" style="margin-left: auto; margin-right: auto; width: 8em">
+    </div>
+    <p></p>
+    <p id="worldLength" style="text-align:center;"></p>
+    <p id="fact" style="text-align:center;"></p>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+// Tabs
+/*function openLink(evt, linkName) {
+  var i, x, tablinks;
+  x = document.getElementsByClascName("myLink");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClascName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].clascName = tablinks[i].clascName.replace(" w3-red", "");
+  }
+  document.getElementById(linkName).style.display = "block";
+  evt.currentTarget.clascName += " w3-red";
+}
+document.getElementsByClascName("tablink")[0].click();*/
+function Currency(name, code, symbol, income, savings) {
+    this.name=name
+    this.code=code
+    this.symbol=symbol
+    this.convertedIncome=income
+    this.convertedSavings=savings
+}
+function Language(name, localname) {
+    this.name=name
+    this.localName=localname
+}
+function USTaxRates(prop, income, sales) {
+  this.propertyTax=prop
+  this.incomeTax=income
+  this.salesTax=sales
+}
+function TaxRates(high, low, sales) {
+  this.highIncomeTax=high
+  this.lowIncomeTax=low
+  this.salesTax=sales
+}
+function Temperature(ftemp, ctemp, category) {
+  this.fTemp=ftemp
+  this.cTemp=ctemp
+  this.category=category
+}
+function State(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,tr,temp,cities,comments,incomeDiff,medianDiff,tempDiff,flaglink){
+  this.id=id
+  this.name=name
+  this.avgIncome=avgincome
+  this.medianPropertyCost=mpc
+  this.popPerDoctorRatio = ppdrr
+  this.popPerDentistRatio = ppdr
+  this.popPerMentalHealthRatio = ppmhr
+  this.popOtherHealthRatio = pohr
+  this.healthCareCost = hcc
+  this.violentCrime = vc
+  this.foodHealthIndex = fhi
+  this.exerciseAccess = ea
+  this.pollution = p
+  this.socialGroup = sg  // maximize
+  this.diabeticScreening = ds // maximize
+  this.mammogramScreening = ms  // maximize
+  this.waterViolations = wv
+  this.housingIssues = hi  // %
+  this.meanCommute = mc  // minimize
+  this.foodInsecurity = fi // %
+  this.limitedFoodAccess = lfa  // %
+  this.unemploymentRate = ur // %
+  this.popHealth = ph  // % minimize
+  this.UStaxRates=tr //high, low, sales
+  this.temp=temp //ftemp, ctemp, category
+  this.rankAvg=0.0
+  this.percentMatch=0.0
+  this.cites=cities
+  this.comments=comments
+  this.incomeDiff=incomeDiff
+  this.medianDiff=medianDiff
+  this.tempDiff=tempDiff
+  this.flaglink=flaglink
+  this.ecRank=0
+  this.chRank=0
+  this.phRank=0
+  this.enRank=0
+}
+function USCity(id,name,avgincome,mpc,ppdrr,ppdr,ppmhr,pohr,hcc,vc,fhi,ea,p,sg,ds,ms,wv,hi,mc,fi,lfa,ur,ph,comments,incomeDiff,medianDiff,tempDiff){
+  this.id=id
+  this.name=name
+  this.avgIncome=avgincome
+  this.medianPropertyCost=mpc
+  this.popPerDoctorRatio = ppdrr
+  this.popPerDentistRatio = ppdr
+  this.popPerMentalHealthRatio = ppmhr
+  this.popOtherHealthRatio = pohr
+  this.healthCareCost = hcc
+  this.violentCrime = vc
+  this.foodHealthIndex = fhi
+  this.exerciseAccess = ea
+  this.pollution = p
+  this.socialGroup = sg  // maximize
+  this.diabeticScreening = ds // maximize
+  this.mammogramScreening = ms  // maximize
+  this.waterViolations = wv
+  this.housingIssues = hi  // %
+  this.meanCommute = mc  // minimize
+  this.foodInsecurity = fi // %
+  this.limitedFoodAccess = lfa  // %
+  this.unemploymentRate = ur // %
+  this.popHealth = ph  // % minimize
+  this.rankAvg=0.0
+  this.percentMatch=0.0
+  this.comments=comments
+  this.incomeDiff=incomeDiff
+  this.medianDiff=medianDiff
+  this.tempDiff=tempDiff
+}
+function getCities(currState,citiesUrl,startIndex){
+  var ret={}
+  //document.getElementById("fact").style.display="none"
+  $.ajax({
+    url: citiesUrl,
+    async: false,
+    dataType: 'json',
+    success: function (json) {
+      //document.getElementById("worldLength").innerHTML="Searching "+Object.keys(json.data).length+" cities in "+currState.name+"..."
+      //console.log(json.data)
+      //console.log(currState.avgIncome+"")
+      var keysData=Object.keys(json.data)
+      var d=new Date();
+      var startTime=d.getTime()
+      for(var index=startIndex; index<keysData.length; index++){
+        var newDate=new Date();
+        console.log((newDate.getTime()-startTime)+"")
+        if(newDate.getTime()-startTime>=20.0*1000){
+          //console.log("hello")
+          return true;
+        }
+        var c=json.data[keysData[index]]
+        //set cities to state level data by default
+        var cId=c[0]
+        var cName=c[1]
+        var city=new USCity(cId,cName,currState.avgIncome,currState.medianPropertyCost,currState.popPerDoctorRatio,currState.popPerDentistRatio,
+        currState.popPerMentalHealthRatio,currState.popOtherHealthRatio,currState.healthCareCost,currState.violentCrime,currState.foodHealthIndex,currState.exerciseAccess,currState.pollution,
+        currState.socialGroup,currState.diabeticScreening,currState.mammogramScreening,currState.waterViolations,currState.housingIssues,currState.meanCommute,
+        currState.foodInsecurity,currState.limitedFoodAccess,currState.unemploymentRate,currState.popHealth,null,null,[],null,null,null)
+        //console.log(city)
+        var avgIncome=0.0
+        var medianPropertyCost=0.0
+        var popPerDoctorRatio=0.0
+        var popPerDentistRatio=0.0
+        var popPerMentalHealthRatio = 0.0
+        var popOtherHealthRatio=0.0
+        var healthCareCost=0.0
+        var violentCrime=0.0
+        var foodHealthIndex=0.0
+        var exerciseAccess=0.0
+        var pollution=0.0
+        var socialGroup=0.0  //maximize
+        var diabeticScreening=0.0 //maximize
+        var mammogramScreening=0.0 //maximize
+        var waterViolations=0.0
+        var housingIssues=0.0 //%
+        var meanCommute=0.0 //minimize
+        var foodInsecurity=0.0 //%
+        var limitedFoodAccess=0.0 //%
+        var unemploymentRate=0.0 //%
+        var popHealth=0.0 //% minimize
+        var incomeUrl="https://api.datausa.io/api/join/?required=income&show=geo&geo="+cId
+        var data = null
+        var countyUrl = "https://api.datausa.io/attrs/geo/" + cId + "/parents/"
+        var countyId=""
+        $.ajax({
+          url: countyUrl,
+          async: false,
+          dataType: "json",
+          success: function (d0) {
+          data=d0.data
+          try{
+          countyId=data[2][0]
+          }catch(err){
+            countyId=currState.id
+          }
+          $.ajax({
+            url: incomeUrl,
+            async: false,
+            dataType: "json",
+            success: function (d1) {
+              data=d1.data
+              var size=0.0
+              for(i in data){
+                  if (data[i][2]!=null){
+                      size+=1.0
+                      avgIncome += data[i][2]
+                    }
+          }
+          //console.log(avgIncome+"")
+          if(size==0.0){
+            incomeUrl="https://api.datausa.io/api/join/?required=income&show=geo&geo="+countyId
+            $.ajax({
+              url: incomeUrl,
+              async: false,
+              dataType: 'json',
+              success: function (jsond) {
+                for(var i in jsond.data){
+                  if (jsond.data[i][2]!=null){
+                    size+=1.0
+                    avgIncome += jsond.data[i][2]
+                  }
+                }
+                if(size>0.0){
+                  avgIncome = avgIncome / size
+                  city.avgIncome=avgIncome
+                }
+                return true
+              }
+            });
+          }else{
+            avgIncome = avgIncome / size
+            city.avgIncome=avgIncome
+          }
+          var medianPropUrl="https://api.datausa.io/api/join/?required=median_property_value&show=geo&geo="+cId
+          $.ajax({
+            url: medianPropUrl,
+            async: false,
+            dataType: "json",
+            success: function (d2) {
+            data=d2.data
+            var size=0.0
+            for(i in data){
+                if (data[i][0]!=null){
+                    size+=1.0
+                    medianPropertyCost += data[i][0]
+                  }
+            }
+            if(size==0.0){
+              medianPropUrl="https://api.datausa.io/api/join/?required=median_property_value&show=geo&geo="+countyId
+              $.ajax({
+                url: medianPropUrl,
+                async: false,
+                dataType: 'json',
+                success: function (jsond) {
+                  for(var i in jsond.data){
+                    if (jsond.data[i][0]!=null){
+                      size+=1.0
+                      medianPropertyCost += jsond.data[i][0]
+                    }
+                  }
+                  if(size>0.0){
+                    medianPropertyCost = medianPropertyCost / size
+                    city.medianPropertyCost=medianPropertyCost
+                  }
+                  //return true
+                }
+              });
+            }else{
+              medianPropertyCost = medianPropertyCost / size
+              city.medianPropertyCost=medianPropertyCost
+            }
+            var doctorRatioUrl = "https://api.datausa.io/api/join/?required=primary_care_physicians&show=geo&geo=" + cId
+            $.ajax({
+              url: doctorRatioUrl,
+              async: false,
+              dataType: "json",
+              success: function (d3) {
+              data=d3.data
+              var size=0.0
+              for(i in data){
+                  if (data[i][0]!=null){
+                      size+=1.0
+                      popPerDoctorRatio += data[i][0]
+                    }
+              }
+              if(size==0.0){
+                doctorRatioUrl = "https://api.datausa.io/api/join/?required=primary_care_physicians&show=geo&geo="+countyId
+                $.ajax({
+                  url: doctorRatioUrl,
+                  async: false,
+                  dataType: 'json',
+                  success: function (jsond) {
+                    for(var i in jsond.data){
+                      if (jsond.data[i][0]!=null){
+                        size+=1.0
+                        popPerDoctorRatio += jsond.data[i][0]
+                      }
+                    }
+                    if(size>0.0){
+                      popPerDoctorRatio = popPerDoctorRatio / size
+                      city.popPerDoctorRatio=popPerDoctorRatio
+                    }
+                    //return true
+                  }
+                });
+              }else{
+                popPerDoctorRatio = popPerDoctorRatio / size
+                city.popPerDoctorRatio=popPerDoctorRatio
+              }
+              var dentistRatioUrl = "https://api.datausa.io/api/join/?required=dentists&show=geo&geo=" + cId
+              $.ajax({
+                url: dentistRatioUrl,
+                async: false,
+                dataType: "json",
+                success: function (d4) {
+                data=d4.data
+                var size=0.0
+                for(i in data){
+                    if (data[i][0]!=null){
+                        size+=1.0
+                        popPerDentistRatio += data[i][0]
+                      }
+                }
+                if(size==0.0){
+                  dentistRatioUrl = "https://api.datausa.io/api/join/?required=dentists&show=geo&geo="+countyId
+                  $.ajax({
+                    url: dentistRatioUrl,
+                    async: false,
+                    dataType: 'json',
+                    success: function (jsond) {
+                      for(var i in jsond.data){
+                        if (jsond.data[i][0]!=null){
+                          size+=1.0
+                          popPerDentistRatio += jsond.data[i][0]
+                        }
+                      }
+                      if(size>0.0){
+                        popPerDentistRatio = popPerDentistRatio / size
+                        city.popPerDentistRatio=popPerDentistRatio
+                      }
+                      //return true
+                    }
+                  });
+                }else{
+                  popPerDentistRatio = popPerDentistRatio / size
+                  city.popPerDentistRatio=popPerDentistRatio
+                }
+                var mentalHealthRatioUrl = "https://api.datausa.io/api/join/?required=mental_health_providers&show=geo&geo=" + cId
+                $.ajax({
+                  url: mentalHealthRatioUrl,
+                  async: false,
+                  dataType: "json",
+                  success: function (d5) {
+                  data=d5.data
+                  var size=0.0
+                  for(i in data){
+                      if (data[i][0]!=null){
+                          size+=1.0
+                          popPerMentalHealthRatio += data[i][0]
+                        }
+                  }
+                  if(size==0.0){
+                    mentalHealthRatioUrl = "https://api.datausa.io/api/join/?required=mental_health_providers&show=geo&geo="+countyId
+                    $.ajax({
+                      url: mentalHealthRatioUrl,
+                      async: false,
+                      dataType: 'json',
+                      success: function (jsond) {
+                        for(var i in jsond.data){
+                          if (jsond.data[i][0]!=null){
+                            size+=1.0
+                            popPerMentalHealthRatio += jsond.data[i][0]
+                          }
+                        }
+                        if(size>0.0){
+                          popPerMentalHealthRatio = popPerMentalHealthRatio / size
+                          city.popPerMentalHealthRatio=popPerMentalHealthRatio
+                        }
+                        //return true
+                      }
+                    });
+                  }else{
+                    popPerMentalHealthRatio = popPerMentalHealthRatio / size
+                    city.popPerMentalHealthRatio=popPerMentalHealthRatio
+                  }
+                  var otherProviderUrl = "https://api.datausa.io/api/join/?required=other_primary_care_providers&show=geo&geo=" + cId
+                  $.ajax({
+                    url: otherProviderUrl,
+                    async: false,
+                    dataType: "json",
+                    success: function (d6) {
+                    data=d6.data
+                    var size=0.0
+                    for(i in data){
+                        if (data[i][0]!=null){
+                            size+=1.0
+                            popOtherHealthRatio += data[i][0]
+                          }
+                    }
+                    if(size==0.0){
+                      otherProviderUrl = "https://api.datausa.io/api/join/?required=other_primary_care_providers&show=geo&geo="+countyId
+                      $.ajax({
+                        url: otherProviderUrl,
+                        async: false,
+                        dataType: 'json',
+                        success: function (jsond) {
+                          for(var i in jsond.data){
+                            if (jsond.data[i][0]!=null){
+                              size+=1.0
+                              popOtherHealthRatio += jsond.data[i][0]
+                            }
+                          }
+                          if(size>0.0){
+                            popOtherHealthRatio = popOtherHealthRatio / size
+                            city.popOtherHealthRatio=popOtherHealthRatio
+                          }
+                          //return true
+                        }
+                      });
+                    }else{
+                      popOtherHealthRatio = popOtherHealthRatio / size
+                      city.popOtherHealthRatio=popOtherHealthRatio
+                    }
+                    var healthCareCostUrl = "https://api.datausa.io/api/join/?required=health_care_costs&show=geo&geo=" + cId
+                    $.ajax({
+                      url: healthCareCostUrl,
+                      async: false,
+                      dataType: "json",
+                      success: function (d7) {
+                      data=d7.data
+                      var size=0.0
+                      for(i in data){
+                          if (data[i][0]!=null){
+                              size+=1.0
+                              healthCareCost += data[i][0]
+                            }
+                      }
+                      if(size==0.0){
+                        healthCareCostUrl = "https://api.datausa.io/api/join/?required=health_care_costs&show=geo&geo="+countyId
+                        $.ajax({
+                          url: healthCareCostUrl,
+                          async: false,
+                          dataType: 'json',
+                          success: function (jsond) {
+                            for(var i in jsond.data){
+                              if (jsond.data[i][0]!=null){
+                                size+=1.0
+                                healthCareCost += jsond.data[i][0]
+                              }
+                            }
+                            if(size>0.0){
+                              healthCareCost = healthCareCost / size
+                              city.healthCareCost=healthCareCost
+                            }
+                            //return true
+                          }
+                        });
+                      }else{
+                        healthCareCost = healthCareCost / size
+                        city.healthCareCost=healthCareCost
+                      }
+                      var violentCrimeUrl = "https://api.datausa.io/api/join/?required=violent_crime&show=geo&geo=" + cId
+                      $.ajax({
+                        url: violentCrimeUrl,
+                        async: false,
+                        dataType: "json",
+                        success: function (d8) {
+                        data=d8.data
+                        var size=0.0
+                        for(i in data){
+                            if (data[i][2]!=null){
+                                size+=1.0
+                                violentCrime += data[i][2]
+                              }
+                        }
+                        if(size==0.0){
+                          violentCrimeUrl = "https://api.datausa.io/api/join/?required=violent_crime&show=geo&geo="+countyId
+                          $.ajax({
+                            url: violentCrimeUrl,
+                            async: false,
+                            dataType: 'json',
+                            success: function (jsond) {
+                              for(var i in jsond.data){
+                                if (jsond.data[i][2]!=null){
+                                  size+=1.0
+                                  violentCrime += jsond.data[i][2]
+                                }
+                              }
+                              if(size>0.0){
+                                violentCrime = violentCrime / size
+                                city.violentCrime=violentCrime
+                              }
+                              //return true
+                            }
+                          });
+                        }else{
+                          violentCrime = violentCrime / size
+                          city.violentCrime=violentCrime
+                        }
+                        var foodHealthUrl = "https://api.datausa.io/api/join/?required=food_environment_index&show=geo&geo=" + cId
+                        $.ajax({
+                          url: foodHealthUrl,
+                          async: false,
+                          dataType: "json",
+                          success: function (d9) {
+                          data=d9.data
+                          var size=0.0
+                          for(i in data){
+                              if (data[i][1]!=null){
+                                  size+=1.0
+                                  foodHealthIndex += data[i][1]
+                                }
+                          }
+                          if(size==0.0){
+                            foodHealthUrl = "https://api.datausa.io/api/join/?required=food_environment_index&show=geo&geo="+countyId
+                            $.ajax({
+                              url: foodHealthUrl,
+                              async: false,
+                              dataType: 'json',
+                              success: function (jsond) {
+                                for(var i in jsond.data){
+                                  if (jsond.data[i][1]!=null){
+                                    size+=1.0
+                                    foodHealthIndex += jsond.data[i][1]
+                                  }
+                                }
+                                if(size>0.0){
+                                  foodHealthIndex = foodHealthIndex / size
+                                  city.foodHealthIndex=foodHealthIndex
+                                }
+                                //return true
+                              }
+                            });
+                          }else{
+                            foodHealthIndex = foodHealthIndex / size
+                            city.foodHealthIndex=foodHealthIndex
+                          }
+                          var exerciseAccessUrl = "https://api.datausa.io/api/join/?required=access_to_exercise_opportunities&show=geo&geo=" + cId
+                          $.ajax({
+                            url: exerciseAccessUrl,
+                            async: false,
+                            dataType: "json",
+                            success: function (d10) {
+                            data=d10.data
+                            var size=0.0
+                            for(i in data){
+                                if (data[i][0]!=null){
+                                    size+=1.0
+                                    exerciseAccess += data[i][0]
+                                  }
+                            }
+                            if(size==0.0){
+                              exerciseAccessUrl = "https://api.datausa.io/api/join/?required=access_to_exercise_opportunities&show=geo&geo="+countyId
+                              $.ajax({
+                                url: exerciseAccessUrl,
+                                async: false,
+                                dataType: 'json',
+                                success: function (jsond) {
+                                  for(var i in jsond.data){
+                                    if (jsond.data[i][0]!=null){
+                                      size+=1.0
+                                      exerciseAccess += jsond.data[i][0]
+                                    }
+                                  }
+                                  if(size>0.0){
+                                    exerciseAccess = exerciseAccess / size
+                                    city.exerciseAccess=exerciseAccess
+                                  }
+                                  //return true
+                                }
+                              });
+                            }else{
+                              exerciseAccess = exerciseAccess / size
+                              city.exerciseAccess=exerciseAccess
+                            }
+                            var pollutionUrl = "https://api.datausa.io/api/join/?required=polution_ppm&show=geo&geo=" + cId
+                            $.ajax({
+                              url: pollutionUrl,
+                              async: false,
+                              dataType: "json",
+                              success: function (d11) {
+                              data=d11.data
+                              var size=0.0
+                              for(i in data){
+                                  if (data[i][0]!=null){
+                                      size+=1.0
+                                      pollution += data[i][0]
+                                    }
+                              }
+                              if(size==0.0){
+                                pollutionUrl = "https://api.datausa.io/api/join/?required=polution_ppm&show=geo&geo="+countyId
+                                $.ajax({
+                                  url: pollutionUrl,
+                                  async: false,
+                                  dataType: 'json',
+                                  success: function (jsond) {
+                                    for(var i in jsond.data){
+                                      if (jsond.data[i][0]!=null){
+                                        size+=1.0
+                                        pollution += jsond.data[i][0]
+                                      }
+                                    }
+                                    if(size>0.0){
+                                      pollution = pollution / size
+                                      city.pollution=pollution
+                                    }
+                                    //return true
+                                  }
+                                });
+                              }else{
+                                pollution = pollution / size
+                                city.pollution=pollution
+                              }
+                              var socialGroupUrl = "https://api.datausa.io/api/join/?required=social_associations&show=geo&geo=" + cId
+                              $.ajax({
+                                url: socialGroupUrl,
+                                async: false,
+                                dataType: "json",
+                                success: function (d12) {
+                                data=d12.data
+                                var size=0.0
+                                for(i in data){
+                                    if (data[i][0]!=null){
+                                        size+=1.0
+                                        socialGroup += data[i][0]
+                                      }
+                                }
+                                if(size==0.0){
+                                  socialGroupUrl = "https://api.datausa.io/api/join/?required=social_associations&show=geo&geo="+countyId
+                                  $.ajax({
+                                    url: socialGroupUrl,
+                                    async: false,
+                                    dataType: 'json',
+                                    success: function (jsond) {
+                                      for(var i in jsond.data){
+                                        if (jsond.data[i][0]!=null){
+                                          size+=1.0
+                                          socialGroup += jsond.data[i][0]
+                                        }
+                                      }
+                                      if(size>0.0){
+                                        socialGroup = socialGroup / size
+                                        city.socialGroup=socialGroup
+                                      }
+                                      //return true
+                                    }
+                                  });
+                                }else{
+                                  socialGroup = socialGroup / size
+                                  city.socialGroup=socialGroup
+                                }
+                                var diabeticScreeningUrl = "https://api.datausa.io/api/join/?required=diabetic_screening&show=geo&geo=" + cId
+                                $.ajax({
+                                  url: diabeticScreeningUrl,
+                                  async: false,
+                                  dataType: "json",
+                                  success: function (d13) {
+                                  data=d13.data
+                                  var size=0.0
+                                  for(i in data){
+                                      if (data[i][0]!=null){
+                                          size+=1.0
+                                          diabeticScreening += data[i][0]
+                                        }
+                                  }
+                                  if(size==0.0){
+                                    diabeticScreeningUrl = "https://api.datausa.io/api/join/?required=diabetic_screening&show=geo&geo="+countyId
+                                    $.ajax({
+                                      url: diabeticScreeningUrl,
+                                      async: false,
+                                      dataType: 'json',
+                                      success: function (jsond) {
+                                        for(var i in jsond.data){
+                                          if (jsond.data[i][0]!=null){
+                                            size+=1.0
+                                            diabeticScreening += jsond.data[i][0]
+                                          }
+                                        }
+                                        if(size>0.0){
+                                          diabeticScreening = diabeticScreening / size
+                                          city.diabeticScreening=diabeticScreening
+                                        }
+                                        //return true
+                                      }
+                                    });
+                                  }else{
+                                    diabeticScreening = diabeticScreening / size
+                                    city.diabeticScreening=diabeticScreening
+                                  }
+                                  var mammogramScreeningUrl = "https://api.datausa.io/api/join/?required=mammography_screening&show=geo&geo=" + cId
+                                  $.ajax({
+                                    url: mammogramScreeningUrl,
+                                    async: false,
+                                    dataType: "json",
+                                    success: function (d14) {
+                                    data=d14.data
+                                    var size=0.0
+                                    for(i in data){
+                                        if (data[i][0]!=null){
+                                            size+=1.0
+                                            mammogramScreening += data[i][0]
+                                          }
+                                    }
+                                    if(size==0.0){
+                                      mammogramScreeningUrl = "https://api.datausa.io/api/join/?required=mammography_screening&show=geo&geo="+countyId
+                                      $.ajax({
+                                        url: mammogramScreeningUrl,
+                                        async: false,
+                                        dataType: 'json',
+                                        success: function (jsond) {
+                                          for(var i in jsond.data){
+                                            if (jsond.data[i][0]!=null){
+                                              size+=1.0
+                                              mammogramScreening += jsond.data[i][0]
+                                            }
+                                          }
+                                          if(size>0.0){
+                                            mammogramScreening = mammogramScreening / size
+                                            city.mammogramScreening=mammogramScreening
+                                          }
+                                          //return true
+                                        }
+                                      });
+                                    }else{
+                                      mammogramScreening = mammogramScreening / size
+                                      city.mammogramScreening=mammogramScreening
+                                    }
+                                    var waterViolationsUrl = "https://api.datausa.io/api/join/?required=drinking_water_violations&show=geo&geo=" + cId
+                                    $.ajax({
+                                      url: waterViolationsUrl,
+                                      async: false,
+                                      dataType: "json",
+                                      success: function (d15) {
+                                      data=d15.data
+                                      var size=0.0
+                                      for(i in data){
+                                          if (data[i][0]!=null){
+                                              size+=1.0
+                                              waterViolations += data[i][0]
+                                            }
+                                      }
+                                      if(size==0.0){
+                                        waterViolationsUrl = "https://api.datausa.io/api/join/?required=drinking_water_violations&show=geo&geo="+countyId
+                                        $.ajax({
+                                          url: waterViolationsUrl,
+                                          async: false,
+                                          dataType: 'json',
+                                          success: function (jsond) {
+                                            for(var i in jsond.data){
+                                              if (jsond.data[i][0]!=null){
+                                                size+=1.0
+                                                waterViolations += jsond.data[i][0]
+                                              }
+                                            }
+                                            if(size>0.0){
+                                              waterViolations = waterViolations / size
+                                              city.waterViolationsg=waterViolations
+                                            }
+                                            //return true
+                                          }
+                                        });
+                                      }else{
+                                        waterViolations = waterViolations / size
+                                        city.waterViolationsg=waterViolations
+                                      }
+                                      var housingIssuesUrl = "https://api.datausa.io/api/join/?required=severe_housing_problems&show=geo&geo=" + cId
+                                      $.ajax({
+                                        url: housingIssuesUrl,
+                                        async: false,
+                                        dataType: "json",
+                                        success: function (d16) {
+                                        data=d16.data
+                                        var size=0.0
+                                        for(i in data){
+                                            if (data[i][0]!=null){
+                                                size+=1.0
+                                                housingIssues += data[i][0]
+                                              }
+                                        }
+                                        if(size==0.0){
+                                          housingIssuesUrl = "https://api.datausa.io/api/join/?required=severe_housing_problems&show=geo&geo="+countyId
+                                          $.ajax({
+                                            url: housingIssuesUrl,
+                                            async: false,
+                                            dataType: 'json',
+                                            success: function (jsond) {
+                                              for(var i in jsond.data){
+                                                if (jsond.data[i][0]!=null){
+                                                  size+=1.0
+                                                  housingIssues += jsond.data[i][0]
+                                                }
+                                              }
+                                              if(size>0.0){
+                                                housingIssues = housingIssues / size
+                                                city.housingIssues=housingIssues
+                                              }
+                                              //return true
+                                            }
+                                          });
+                                        }else{
+                                          housingIssues = housingIssues / size
+                                          city.housingIssues=housingIssues
+                                        }
+                                        var meanCommuteUrl = "https://api.datausa.io/api/join/?required=mean_commute_minutes&show=geo&geo=" + cId
+                                        $.ajax({
+                                          url: meanCommuteUrl,
+                                          async: false,
+                                          dataType: "json",
+                                          success: function (d17) {
+                                          data=d17.data
+                                          size=0.0
+                                          for(i in data){
+                                              if (data[i][0]!=null){
+                                                  size+=1.0
+                                                  meanCommute += data[i][0]
+                                                }
+                                          }
+                                          if(size==0.0){
+                                            meanCommuteUrl = "https://api.datausa.io/api/join/?required=mean_commute_minutes&show=geo&geo=" +countyId
+                                            $.ajax({
+                                              url: meanCommuteUrl,
+                                              async: false,
+                                              dataType: 'json',
+                                              success: function (jsond) {
+                                                for(var i in jsond.data){
+                                                  if (jsond.data[i][0]!=null){
+                                                    size+=1.0
+                                                    meanCommute += jsond.data[i][0]
+                                                  }
+                                                }
+                                                if(size>0.0){
+                                                  meanCommute = meanCommute / size
+                                                  city.meanCommute=meanCommute
+                                                }
+                                                //return true
+                                              }
+                                            });
+                                          }else{
+                                            meanCommute = meanCommute / size
+                                            city.meanCommute=meanCommute
+                                          }
+                                          var foodInsecurityUrl = "https://api.datausa.io/api/join/?required=food_insecurity&show=geo&geo=" + cId
+                                          $.ajax({
+                                            url: foodInsecurityUrl,
+                                            async: false,
+                                            dataType: "json",
+                                            success: function (d18) {
+                                            data=d18.data
+                                            size=0.0
+                                            for(i in data){
+                                                if (data[i][0]!=null){
+                                                    size+=1.0
+                                                    foodInsecurity += data[i][0]
+                                                  }
+                                            }
+                                            if(size==0.0){
+                                              foodInsecurityUrl = "https://api.datausa.io/api/join/?required=food_insecurity&show=geo&geo=" +countyId
+                                              $.ajax({
+                                                url: foodInsecurityUrl,
+                                                async: false,
+                                                dataType: 'json',
+                                                success: function (jsond) {
+                                                  for(var i in jsond.data){
+                                                    if (jsond.data[i][0]!=null){
+                                                      size+=1.0
+                                                      foodInsecurity += jsond.data[i][0]
+                                                    }
+                                                  }
+                                                  if(size>0.0){
+                                                    foodInsecurity = foodInsecurity / size
+                                                    city.foodInsecurity=foodInsecurity
+                                                  }
+                                                  //return true
+                                                }
+                                              });
+                                            }else{
+                                              foodInsecurity = foodInsecurity / size
+                                              city.foodInsecurity=foodInsecurity
+                                            }
+                                            var limitedFoodAccessUrl = "https://api.datausa.io/api/join/?required=limited_access_to_healthy_foods&show=geo&geo=" + cId
+                                            $.ajax({
+                                              url: limitedFoodAccessUrl,
+                                              async: false,
+                                              dataType: "json",
+                                              success: function (d19) {
+                                              data=d19.data
+                                              size=0.0
+                                              for(i in data){
+                                                  if (data[i][1]!=null){
+                                                      size+=1.0
+                                                      limitedFoodAccess += data[i][1]
+                                                    }
+                                              }
+                                              if(size==0.0){
+                                                limitedFoodAccessUrl = "https://api.datausa.io/api/join/?required=limited_access_to_healthy_foods&show=geo&geo=" +countyId
+                                                $.ajax({
+                                                  url: limitedFoodAccessUrl,
+                                                  async: false,
+                                                  dataType: 'json',
+                                                  success: function (jsond) {
+                                                    for(var i in jsond.data){
+                                                      if (jsond.data[i][1]!=null){
+                                                        size+=1.0
+                                                        limitedFoodAccess += jsond.data[i][1]
+                                                      }
+                                                    }
+                                                    if(size>0.0){
+                                                      limitedFoodAccess = limitedFoodAccess / size
+                                                      city.limitedFoodAccess=limitedFoodAccess
+                                                    }
+                                                    //return true
+                                                  }
+                                                });
+                                              }else{
+                                                limitedFoodAccess = limitedFoodAccess / size
+                                                city.limitedFoodAccess=limitedFoodAccess
+                                              }
+                                              var unemploymentRateUrl = "https://api.datausa.io/api/join/?required=unemployment&show=geo&geo=" + cId
+                                              $.ajax({
+                                                url: unemploymentRateUrl,
+                                                async: false,
+                                                dataType: "json",
+                                                success: function (d20) {
+                                                data=d20.data
+                                                size=0.0
+                                                for(i in data){
+                                                    if (data[i][2]!=null){
+                                                        size+=1.0
+                                                        unemploymentRate += data[i][2]
+                                                      }
+                                                }
+                                                if(size==0.0){
+                                                  unemploymentRateUrl = "https://api.datausa.io/api/join/?required=unemployment&show=geo&geo=" +countyId
+                                                  $.ajax({
+                                                    url: unemploymentRateUrl,
+                                                    async: false,
+                                                    dataType: 'json',
+                                                    success: function (jsond) {
+                                                      for(var i in jsond.data){
+                                                        if (jsond.data[i][2]!=null){
+                                                          size+=1.0
+                                                          unemploymentRate += jsond.data[i][2]
+                                                        }
+                                                      }
+                                                      if(size>0.0){
+                                                        unemploymentRate =unemploymentRate / size
+                                                        city.unemploymentRate=unemploymentRate
+                                                      }
+                                                      //return true
+                                                    }
+                                                  });
+                                                }else{
+                                                  unemploymentRate =unemploymentRate / size
+                                                  city.unemploymentRate=unemploymentRate
+                                                }
+                                                var popHealthUrl = "https://api.datausa.io/api/join/?required=poor_or_fair_health&show=geo&geo=" + cId
+                                                $.ajax({
+                                                  url: popHealthUrl,
+                                                  async: false,
+                                                  dataType: "json",
+                                                  success: function (d21) {
+                                                  data=d21.data
+                                                  size=0.0
+                                                  for(i in data){
+                                                      if (data[i][1]!=null){
+                                                          size+=1.0
+                                                          popHealth += data[i][1]
+                                                        }
+                                                  }
+                                                  if(size==0.0){
+                                                    popHealthUrl = "https://api.datausa.io/api/join/?required=poor_or_fair_health&show=geo&geo=" +countyId
+                                                    $.ajax({
+                                                      url: popHealthUrl,
+                                                      async: false,
+                                                      dataType: 'json',
+                                                      success: function (jsond) {
+                                                        for(var i in jsond.data){
+                                                          if (jsond.data[i][1]!=null){
+                                                            size+=1.0
+                                                            popHealth += jsond.data[i][1]
+                                                          }
+                                                        }
+                                                        if(size>0.0){
+                                                          popHealth =popHealth / size
+                                                          city.popHealth=popHealth
+                                                        }
+                                                        //return true
+                                                      }
+                                                    });
+                                                  }else{
+                                                    popHealth =popHealth / size
+                                                    city.popHealth=popHealth
+                                                  }
+                                                  ret[city.name]=city
+                                                      /*{
+                                                        "id":city.id,
+                                                        "name":city.name,
+                                                        "avgIncome":city.avgIncome,
+                                                        "medianPropertyCost":city.medianPropertyCost,
+                                                        "popPerDoctorRatio":city.popPerDoctorRatio,
+                                                        "popPerDentistRatio":city.popPerDentistRatio,
+                                                        "popPerMentalHealthRatio":city.popPerMentalHealthRatio,
+                                                        "popOtherHealthRatio":city.popOtherHealthRatio,
+                                                        "violentCrime":city.violentCrime,
+                                                        "healthCareCost":city.healthCareCost,
+                                                        "foodHealthIndex":city.foodHealthIndex,
+                                                        "exerciseAccess":city.exerciseAccess,
+                                                        "socialGroup":city.socialGroup,
+                                                        "pollution":city.pollution,
+                                                        "mammogramScreening":city.mammogramScreening,
+                                                        "diabeticScreening":city.diabeticScreening,
+                                                        "waterViolations":city.waterViolations,
+                                                        "meanCommute":city.meanCommute,
+                                                        "housingIssues":city.housingIssues,
+                                                        "foodInsecurity":city.foodInsecurity,
+                                                        "unemploymentRate":city.unemploymentRate,
+                                                        "limitedFoodAccess":city.limitedFoodAccess,
+                                                        "comments":[]
+                                                        "popHealth":city.popHealth,
+                                                      }*/
+                                                      console.log(ret[city.name])
+                                                    }
+                                                });
+                                              }
+                                              });
+                                            }
+                                            });
+                                          }
+                                          });
+                                        }
+                                        });
+                                      }
+                                      });
+                                    }
+                                    });
+                                  }
+                                  });
+                                }
+                                });
+                              }
+                              });
+                            }
+                            });
+                          }
+                          });
+                        }
+                        });
+                      }
+                      });
+                    }
+                    });
+                  }
+                  });
+                }
+                });
+              }
+              });
+            }
+            });
+          }
+          });
+        }
+        });
+      }
+       });
+      }
+      return true
+    }
+  });
+  return ret
+}
+function findOptimalCities(citiesData){
+  for(var c in citiesData){
+    citiesData[c].medianDiff=Math.abs(yourSavings - citiesData[c].incomeDiff-citiesData[c].medianPropertyCost)
+    citiesData[c].incomeDiff=Math.abs(yearlyIncome - citiesData[c].avgIncome)
+  }
+  var items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1,s2) {
+    return s1[1].incomeDiff-s2[1].incomeDiff
+  });
+  var avgIncomeSort=items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1,s2) {
+    return s1[1].medianDiff-s2[1].medianDiff;
+  });
+  var medianPropertyCostSort=items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].popPerDoctorRatio - s2[1].popPerDoctorRatio;
+  });
+  var popPerDoctorRatioSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].popPerDentistRatio - s2[1].popPerDentistRatio;
+  });
+  var popPerDentistRatioSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].popPerMentalHealthRatio - s2[1].popPerMentalHealthRatio;
+  });
+  var popPerMentalHealthRatioSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].popOtherHealthRatio - s2[1].popOtherHealthRatio;
+  });
+  var popOtherHealthRatioSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].violentCrime - s2[1].violentCrime;
+  });
+  var violentCrimeSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].healthCareCost - s2[1].healthCareCost;
+  });
+  var healthCareCostSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s2[1].exerciseAccess - s1[1].exerciseAccess;
+  });
+  var exerciseAccessSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s2[1].socialGroup - s1[1].socialGroup;
+  });
+  var socialGroupSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].pollution- s2[1].pollution;
+  });
+  var pollutionSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s2[1].foodHealthIndex- s1[1].foodHealthIndex;
+  });
+  var foodHealthIndexSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s2[1].diabeticScreening- s1[1].diabeticScreening;
+  });
+  var diabeticScreeningSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s2[1].mammogramScreening- s1[1].mammogramScreening;
+  });
+  var mammogramScreeningSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].waterViolations- s2[1].waterViolations;
+  });
+  var waterViolationsSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].meanCommute- s2[1].meanCommute;
+  });
+  var meanCommuteSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].housingIssues- s2[1].housingIssues;
+  });
+  var housingIssuesSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].foodInsecurity- s2[1].foodInsecurity;
+  });
+  var foodInsecuritySort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].limitedFoodAccess- s2[1].limitedFoodAccess;
+  });
+  var limitedFoodAccessSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].unemploymentRate- s2[1].unemploymentRate;
+  });
+  var unemploymentRateSort = items
+  items = Object.keys(citiesData).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  items.sort(function(s1, s2) {
+    return s1[1].popHealth- s2[1].popHealth;
+  });
+  var popHealthSort = items
+  var toSort={}
+  var sCount=0
+  for(var ind in avgIncomeSort){//enables weighting
+    var preins=sCount
+    var ins=sCount*30.0
+    sCount++
+    var found = Object.keys(medianPropertyCostSort).filter(function(key) {
+        return medianPropertyCostSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var prempc=parseFloat(found[0])
+    var mpc=parseFloat(found[0])*10.0
+    found = Object.keys(popPerDoctorRatioSort).filter(function(key) {
+        return popPerDoctorRatioSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ppdrr=parseFloat(found[0])
+    found = Object.keys(popPerDentistRatioSort).filter(function(key) {
+        return popPerDentistRatioSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ppdr=parseFloat(found[0])
+    found = Object.keys(popPerMentalHealthRatioSort).filter(function(key) {
+        return popPerMentalHealthRatioSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ppmhr=parseFloat(found[0])
+    found = Object.keys(popOtherHealthRatioSort).filter(function(key) {
+        return popOtherHealthRatioSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var pohr=parseFloat(found[0])
+    found = Object.keys(violentCrimeSort).filter(function(key) {
+        return violentCrimeSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var vc=parseFloat(found[0])
+    found = Object.keys(healthCareCostSort).filter(function(key) {
+        return healthCareCostSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var hcc=parseFloat(found[0])
+    found = Object.keys(exerciseAccessSort).filter(function(key) {
+        return exerciseAccessSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ea=parseFloat(found[0])
+    found = Object.keys(foodHealthIndexSort).filter(function(key) {
+        return foodHealthIndexSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var fhi=parseFloat(found[0])
+    found = Object.keys(pollutionSort).filter(function(key) {
+        return pollutionSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var p=parseFloat(found[0])
+    found = Object.keys(socialGroupSort).filter(function(key) {
+        return socialGroupSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var sg=parseFloat(found[0])
+    found = Object.keys(diabeticScreeningSort).filter(function(key) {
+        return diabeticScreeningSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ds=parseFloat(found[0])
+    found = Object.keys(mammogramScreeningSort).filter(function(key) {
+        return mammogramScreeningSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ms=parseFloat(found[0])
+    found = Object.keys(housingIssuesSort).filter(function(key) {
+        return housingIssuesSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var hi=parseFloat(found[0])
+    found = Object.keys(waterViolationsSort).filter(function(key) {
+        return waterViolationsSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var wv=parseFloat(found[0])
+    found = Object.keys(meanCommuteSort).filter(function(key) {
+        return meanCommuteSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var mc=parseFloat(found[0])
+    found = Object.keys(foodInsecuritySort).filter(function(key) {
+        return foodInsecuritySort[key][0] == avgIncomeSort[ind][0];
+    })
+    var fi=parseFloat(found[0])
+    found = Object.keys(limitedFoodAccessSort).filter(function(key) {
+        return limitedFoodAccessSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var lfa=parseFloat(found[0])
+    found = Object.keys(unemploymentRateSort).filter(function(key) {
+        return unemploymentRateSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ur=parseFloat(found[0])
+    found = Object.keys(popHealthSort).filter(function(key) {
+        return popHealthSort[key][0] == avgIncomeSort[ind][0];
+    })
+    var ph=parseFloat(found[0])
+    var city=avgIncomeSort[ind][1]
+    prerankAvg=(preins+prempc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph)/(parseFloat(avgIncomeSort.length))
+    city.rankAvg=(ins+mpc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph)/(parseFloat(avgIncomeSort.length))
+    console.log(city.rankAvg+"")
+    city.percentMatch=((Math.abs(avgIncomeSort.length-city.rankAvg))/(parseFloat(avgIncomeSort.length)))*100.0
+    toSort[city.name]=city
+  }
+  items = Object.keys(toSort).map(function(key) {
+    return [key, citiesData[key]];
+  });
+  console.log(items)
+  items.sort(function(s1, s2) {
+    return s1[1].rankAvg-s2[1].rankAvg;
+  });
+  var sortedCities=items
+  //console.log(sortedCities)
+  return sortedCities
+}
+var currState=JSON.parse(localStorage.getItem('currState'))
+console.log(currState)
+if(currState==null){
+  alert("You haven't selected a state.")
+  window.history.back()
+}
+var config = {
+    apiKey: "AIzaSyBzeDLhTD-SG7CzTr1_AnnsAqyLyIgVVlk",
+    authDomain: "emovosearch.firebaseapp.com",
+    databaseURL: "https://emovosearch.firebaseio.com/",
+    storageBucket: "emovosearch.appspot.com"
+  }
+firebase.initializeApp(config);
+var sortedData=null
+var monthlyIncome=1413.00
+var yearlyIncome=parseFloat(monthlyIncome*12.0)
+var yourSavings=228900.0
+var avgUSSavings=228900.0 //The conditional mean savings is $228,900; Transamerica reports the estimated median savings for sixtysomethings is $172,000
+var savingsDiff=yourSavings-avgUSSavings
+if(localStorage.monthlyIncomeUS!=null){
+  monthlyIncome=localStorage.monthlyIncomeUS
+  yearlyIncome=parseFloat(monthlyIncome*12.0)
+}
+if(localStorage.yourSavingsUS!=null){
+  yourSavings=localStorage.yourSavingsUS
+  avgUSSavings=228900.0 //The conditional mean savings is $228,900; Transamerica reports the estimated median savings for sixtysomethings is $172,000
+  savingsDiff=yourSavings-avgUSSavings
+}
+//make sure account for us virgin islands
+var sRef = firebase.database().ref(currState.name)
+sRef.once("value", function(snapshot, prevChildKey) {
+  var snapshotData = snapshot.val()
+  var snapLen=0
+  if(snapshotData!=null){
+    snapLen=Object.keys(snapshotData).length
+  }
+  var citiesData={}
+  var citiesUrl ="https://api.datausa.io/attrs/geo/"+currState.id+"/children/?sumlevel=160" //"http://api.datausa.io/attrs/geo/"+currState.id+"/children/?sumlevel=160"
+  console.log(citiesUrl)
+  var fullDataLen=0
+  $.ajax({
+      url: citiesUrl,
+      async: false,
+      dataType: 'json',
+      success: function (json) {
+        console.log("len")
+        console.log(json.data)
+        fullDataLen=Object.keys(json.data).length
+  }})
+  console.log(fullDataLen)
+  if(fullDataLen<=snapLen){//all data added to database
+    console.log(snapshotData)
+    citiesData=snapshotData
+    document.getElementById("worldLength").innerHTML="Searching "+snapLen+" cities in "+currState.name+"..."
+    //default data
+    sortedData=findOptimalCities(citiesData)
+    //send to citiesDisplay
+  }else{
+    document.getElementById("worldLength").innerHTML="The full extent of "+currState.name+"'s city data ("+fullDataLen+" cities) has not fully been added to the database for retrieval yet. Right now a portion of the dataset is being added through you the user being on this loading screen. As a result the rankings may not as fully encapsulate the state as it could. Process will take ~30 seconds and once every data piece is added the wait time will be much shorter. Thanks for your time and patience!"
+    if(snapshotData!=null){
+      citiesData=getCities(currState, citiesUrl,snapLen) //return dictionary of key:city name, val:usCity obj
+      for(var sd in snapshotData){
+        citiesData[sd]=snapshotData[sd]
+      }
+      sortedData=findOptimalCities(citiesData)
+      console.log(sortedData)
+    }else{
+      citiesData=getCities(currState, citiesUrl,0) //return dictionary of key:city name, val:usCity obj
+      sortedData=findOptimalCities(citiesData)
+      console.log(sortedData)
+    }
+    var tempData={}
+    for(var t in citiesData){
+      var pr=citiesData[t]
+      t=t.replace(".","")//Keys must be non-empty strings and can't contain ".", "#", "$",
+      t=t.replace("#","")
+      t=t.replace("$","")
+      tempData[t]=pr
+    }
+    citiesData=tempData
+    sRef.set(citiesData)
+  }
+  localStorage.currState=JSON.stringify(currState)
+  localStorage.sortedCities=JSON.stringify(sortedData)
+  localStorage.citiesPlace="US"
+  window.location.replace("citiesDisplay.html")
+})
+</script>
+
+</body>
+</html>

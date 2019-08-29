@@ -3,6 +3,8 @@
 <title>W3.CSS Template</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-signin-scope" content="profile email">
+<meta name="google-signin-client_id" content="328858787046-95fsdbnk5kil4druiacprsubihssktju.apps.googleusercontent.com">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,10 +18,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
             appearance:none;
 }
 .world{
-  background-image:url(http://www.pngall.com/wp-content/uploads/2016/06/Earth-Free-Download-PNG.png);
+  background-image:url(http://www.pngall.com/wp-content/uploads/2016/06/Earth-PNG-Pic.png);
 }
 .us{
-  background-image:url(https://upload.wikimedia.org/wikipedia/commons/8/88/United-states_flag_icon_round.svg);
+  background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/United-states_flag_icon_round.svg/768px-United-states_flag_icon_round.svg.png);
 }
 .scopeChoice input:active +.selecting{opacity: .9;}
 .scopeChoice input:checked +.selecting{
@@ -32,7 +34,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     background-size:contain;
     background-repeat:no-repeat;
     display:inline-block;
-    width:75px;height:65px;
+    width:100px;height:100px;
     -webkit-transition: all 100ms ease-in;
        -moz-transition: all 100ms ease-in;
             transition: all 100ms ease-in;
@@ -46,7 +48,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
             filter: brightness(1.2) grayscale(.5) opacity(.9);
 }
 </style>
-<body class="w3-light-grey">
+<body class="w3-orange">
 <!-- Navigation Bar -->
 <div class="w3-bar w3-white w3-border-bottom w3-xlarge">
   <a href="#" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
@@ -57,14 +59,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <h2>Hello!</h2>
       <h3>Search the world with us</h3>
       <form action="loading.html" method="GET" class="w3-row-padding" style="display: inline-block; text-align:left"><!--margin:0 -16px; -->
-          <label>Enter your monthly income before taxes (in USD):</label>
+          <label>Enter your monthly income before taxes (in USD, no $ in input):</label>
           <input class="w3-input w3-border" type="number" style="display: inline-block; align:left" placeholder="Monthly Income ($)" name="mi">
           <p></p>
-          <label>Enter your savings before taxes (in USD):</label>
+          <label>Enter your savings before taxes (in USD, no $ in input):</label>
           <input class="w3-input w3-border" type="number" placeholder="Total Savings ($)" name="ts">
           <p></p>
           <label>Enter your age</label>
-          <input class="w3-input w3-border" type="number" placeholder="Age" name="ag">
+          <input class="w3-input w3-border" type="number" placeholder="Age" name="ag" onchange="handleAgeChange(this)">
           <p></p>
           <label>I prefer areas with temperatures that are...</label>
           <div id="tempPref" class="w3-row-padding">
@@ -80,19 +82,32 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
           <div class="scopeChoice">
               <label>Do you plan to live in the US or abroad?</label>
               <p></p>
-              <input id="world" type="radio" name="stayInUS" value="World" />
+              <input id="world" type="radio" name="stayInUS" value="World" checked/>
               <label class="selecting world" for="world"></label>
               <input id="us" type="radio" name="stayInUS" value="US" />
               <label class="selecting us"for="us"></label>
           </div>
           <br>
-          <button type="submit" class="w3-button w3-red" width="120px" height="120px">Search!</button>
-          <p id="isSignedIn" style="display: none;">The results of this specific query will be saved to your account because you are logged in.
+          <button type="submit" class="w3-button w3-black" width="120px" height="120px">Search!</button>
+          <p id="isSignedIn" style="display: none;">NOTE: Since you are logged in on Google the search results will be stored to your account. <br>
+            Click the sign out button if you wish to sign out and not have the data saved.
             <br>
           If you wish to NOT save the results of this search, logout <a href="profile.html">here.</a></p>
-          <p id="isNotSignedIn" style="display: none;">The results of this specific query won't be saved to your account because you haven't logged in.
+          <p id="isNotSignedIn" style="display: none;">NOTE: The results of this specific query won't be saved to your account because you haven't logged in.
             <br>
-          If you wish to save the results of this search, login <a href="loading.html">here.</a></p>
+          If you wish to save the results of this search, click the sign in button below:</a></p>
+          <p></p>
+          <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+          <div id="signout" class="btn white darken-4 col s10 m4">
+               <button class="w3-button w3-dark-grey" onclick="signOut();">
+                   <div class="left">
+                       <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                       Sign out
+                   </div>
+               </button>
+          </div>
+          <p></p>
+          <p>Click <a href="profile.html">here</a> to learn about how the algorithm works.</p>
       </form>
 </div>
 <p></p>
@@ -110,23 +125,61 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
   </div>
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
 </footer>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
 var isIn=isLoggedIn();
 console.log(isIn)
 var account={};
 if(isIn==false){
-  document.getElementById("isNotSignedIn").style.display = "block";
+  document.getElementById("gsignin2").style = "display: block;";
+  document.getElementById("signout").style = "display: none;";
+  document.getElementById("isNotSignedIn").style = "display: block;";
+  document.getElementById("isSignedIn").style = "display: none;";
 }else{
-  document.getElementById("isSignedIn").style.display = "block";
+  document.getElementById("signout").style = "display: block;";
+  document.getElementById("gsignin2").style = "display: none;";
+  document.getElementById("isNotSignedIn").style = "display: none;";
+  document.getElementById("isSignedIn").style = "display: block;";
+}
+function onSignIn() {
+  // Useful data for your client-side scripts:
+  const googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+  const profile = googleUser.getBasicProfile();
+  document.getElementById('gsignin2').style.display = "none";
+  document.getElementById("signout").style.display = "block";
+  var currUser={};
+  currUser["id"] = profile.getId();
+  currUser["name"] = profile.getGivenName(); //first name only
+  currUser["picture"] = profile.getImageUrl();
+  localStorage.setItem('currUser',JSON.stringify(currUser));
+  isIn=isLoggedIn();
+  if(isIn==false){
+    document.getElementById("isNotSignedIn").style.display = "block";
+  }else{
+    document.getElementById("isSignedIn").style.display = "block";
+  }
+}
+function handleAgeChange(input){
+  if(input.value>130)
+    input.value=130
+  if(input.value<14)
+    input.value=14
 }
 function isLoggedIn()
 {
-  if(JSON.parse(localStorage.getItem('currUser')) == null){//that means data is stored
-    return false;
-  } else {
-    return true;
-  }
+    if(localStorage.getItem('currUser')!=null){
+      return true;
+    } else {
+      return false;
+    }
+}
+function signOut() {
+  localStorage.removeItem('currUser')
+  document.getElementById('gsignin2').style.display = "block";
+  document.getElementById("userContent").style.display = "none";
+  document.getElementById("signout").style.display = "none";
+  location.href="https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://emovo.github.io/"
 }
 // Tabs
 /*function openLink(evt, linkName) {

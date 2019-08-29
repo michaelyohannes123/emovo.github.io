@@ -8,27 +8,383 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    html {
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: scroll;
+    }
+    label, input,button {
+        display: block;
+    }
+    button {
+        margin-bottom: 2%;
+    }
+    /*the container must be positioned relative:*/
+    .autocomplete {
+      position: relative;
+      display: inline-block;
+    }
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      left:50%;
+      /*top: 30%;
+      left: 0;
+      right: 0;*/
+    }
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    .autocomplete-items div:hover {
+      background-color: #e9e9e9;
+    }
+
+    .autocomplete-active {
+      background-color: DodgerBlue !important;
+      color: #ffffff;
+    }
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 50px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 8px solid #3498db;
+      width: 20px;
+      height: 20px;
+      -webkit-animation: spin 1s linear infinite; /* Safari */
+      animation: spin 1s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
     </style>
-  <body class="w3-light-grey">
-    <!-- Navigation Bar -->
-    <div class="w3-top">
-      <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
-        <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-        <a href="#" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
-        <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 3</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
-      </div>
-      <div class="searchbox">
-        <form action="/action_page.php" target="_blank">
-          <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Name" required name="Name"></p>
-          <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Email" required name="Email"></p>
-          <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Message" required name="Message"></p>
-          <p><button class="w3-bar-item w3-button w3-left w3-padding-large w3-hover-red w3-text-grey" type="submit"><i class="fa fa-search"></i></button></p>
-          <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-red w3-text-grey"><i class="fa fa-search"></i></a>-->
-        </form>
-      </div>
-  </body>
+    </head>
+<body class="w3-orange">
+<div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
+          <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+          <a href="#" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>
+          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 1</a>
+          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 2</a>
+          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 3</a>
+          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Link 4</a>
+</div>
+<h3>Enter Country or US State:</h3>
+<div class="searchbox">
+<form autocomplete="on" onsubmit="return false;" method="post">
+  <p id="found"></p>
+  <label>
+    <button class="w3-button w3-black w3-left w3-padding-large w3-hover-grey w3-text-white" type="submit" onclick="onSearchClick();"><i class="fa fa-search"></i> Search</button>
+    <div id="load" class="loader"></div>
+  </label>
+  <p></p>
+  <label>
+    <input id="myInput" class="w3-input w3-padding-16 w3-border" style="text-align: center" type="text" name="NationState" placeholder="Country or US State">
+  </label>
+</form>
+</div>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal();">&times;</span>
+    <h4>Specific City?</h4>
+    <p>Do you wish to search for a specific city in this place? If so search in the textbox below. If not, click skip.</p>
+    <form autocomplete="on" onsubmit="return false;" method="post">
+      <label>
+        <div>
+          <button class="w3-button w3-red w3-left w3-padding-large w3-hover-red w3-text-white" type="submit" onclick="findCity();"><i class="fa fa-search"></i></button>
+          <button class="w3-button w3-red w3-right w3-padding-large w3-hover-red w3-text-white" type="submit" onclick="skip();">Skip</button>
+        </div>
+      </label>
+      <p></p>
+      <label>
+        <input id="myModalInput" class="w3-input w3-padding-16 w3-border" style="text-align: center;" type="text" name="NationState" placeholder="City">
+      </label>
+    </form>
+  </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script>
+document.getElementById("load").style.display="none"
+function autocomplete(inp, arr) {
+  var currentFocus;
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      this.parentNode.appendChild(a);
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          b = document.createElement("DIV");
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          b.addEventListener("click", function(e) {
+              inp.value = this.getElementsByTagName("input")[0].value;
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        currentFocus++;
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        currentFocus--;
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        e.preventDefault();
+        if (currentFocus > -1) {
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    if (!x) return false;
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+}
+
+/*An array containing all the country names in the world:*/
+var housingList={"Monaco":305.83,"Angola":125.78,"Papua New Guinea":117.22,"Bermuda":109.01,"Singapore":97.81,"Macao":87.38,"Hong Kong":87.38,"Guernsey":84.57,"Qatar":77.25,"Gibraltar":70.16,"Jersey":69.49,"Luxembourg":67.03,"British Virgin Islands":66.25,"Switzerland":66.24,"United Arab Emirates":65.56,"Norway":62.73,"Liberia":61.99,"Isle of Man":59.52,"Australia":58.91,"Cayman Islands":54.19,"Guam":49.22,"Bahamas":48.18,"New Caledonia":47.71,"Vanuatu":46.89,"United Kingdom":45.18,"Iceland":43.63,"New Zealand":43.14,"Ghana":42.67,"Greenland":42.57,"Denmark":42.27,"Netherlands":41.69,"Ireland":40.45,"Bahrain":40.01,"Kuwait":39.77,"Venezuela":38.58,"France":38.49,"Burundi":38.39,"South Korea":38.37,"Seychelles":37.5,"United States":37.45,"Aruba":36.79,"Japan":36.78,"Azerbaijan":36.29,"Belgium":36.2,"Canada":36.05,"Finland":36.05,"Israel":35.77,"Mozambique":35.62,"Lebanon":35.01,"Sweden":34.35,"Austria":33.54,"Gabon":32.79,"Panama":32.76,"Italy":32.14,"Holy See":32.14,"Brunei Darussalam":31.67,"Germany":31.3,"Reunion":31.22,"Maldives":30.71,"Democratic Republic of the Congo":30.27,"Oman":29.96,"Russian Federation":28.45,"Fiji":27.82,"Tuvalu":27.82,"Mauritius":27.8,"Mongolia":27.7,"French Polynesia":27.58,"Faroe Islands":27.44,"Spain":26.95,"Curacao":26.72,"Samoa":26.15,"Tokelau":26.15,"Wallis and Futuna":26.15,"American Samoa":26.15,"Niue":26.15,"Haiti":25.56,"Rwanda":25.3,"Uruguay":24.98,"Zambia":24.61,"Namibia":24.49,"Barbados":24.46,"China":24.34,"Andorra":24.03,"Slovenia":23.26,"Trinidad and Tobago":23.05,"Cameroon":22.87,"Portugal":22.82,"Slovakia":22.39,"Nigeria":22.1,"Brazil":22.07,"Equatorial Guinea":21.96,"Tanzania":21.94,"Kazakhstan":21.88,"Ethiopia":21.82,"Burma":21.48,"Puerto Rico":21.43,"Djibouti":21.32,"Cyprus":21.14,"Zimbabwe":20.68,"Iran":20.3,"Costa Rica":19.77,"Libya":19.74,"Jamaica":19.74,"Taiwan":19.68,"Kenya":19.64,"Poland":19.23,"Estonia":18.91,"Malta":18.86,"Thailand":18.85,"Iraq":18.67,"Czech Republic":18.43,"South Africa":18.15,"Grenada":17.82,"Chile":17.76,"Somalia":17.6,"Argentina":17.58,"Guyana":17.34,"Belarus":17.16,"Latvia":17.12,"Belize":16.99,"Lao People's Democratic Republic":16.33,"Peru":16.2,"Jordan":15.92,"Guatemala":15.92,"Vietnam":15.86,"Dominica":15.69,"Malaysia":15.66,"Saudi Arabia":15.54,"Lithuania":15.5,"Greece":15.3,"Turkmenistan":15,"Suriname":14.97,"Armenia":14.73,"Colombia":14.72,"Uzbekistan":14.49,"Croatia":14.27,"Ecuador":14.16,"Mali":14.02,"Cambodia":13.94,"Swaziland":13.89,"Bolivia":13.69,"Saint Lucia":13.65,"Ukraine":13.6,"Indonesia":13.56,"Botswana":13.56,"Sudan":13.5,"Turkey":13.12,"Uganda":13.03,"Morocco":12.88,"Romania":12.64,"Kyrgyzstan":12.5,"Syrian Arab Republic":12.39,"Dominican Republic":12.37,"Georgia":12.34,"Mexico":12.24,"Honduras":11.92,"Montenegro":11.82,"Malawi":11.7,"Sri Lanka":11.61,"Madagascar":11.4,"Comoros":11.4,"Mayotte":11.4,"Bulgaria":11.4,"Senegal":11.37,"Serbia":11.2,"Albania":11.2,"Paraguay":10.99,"El Salvador":10.97,"Hungary":10.72,"Tunisia":10.11,"Nicaragua":9.8,"Egypt":9.64,"Moldova (Republic of)":9.6,"Afghanistan":9.58,"Algeria":9.14,"North Macedonia":9,"Philippines":8.9,"Bosnia and Herzegovina":8.57,"Cuba":8.32,"India":7.1,"Bangladesh":7,"Yemen":6.34,"Tajikistan":6.14,"Lesotho":5.19,"Pakistan":4.85,"Nepal":3.38,"Gambia":34.8,"Sierra Leone":46.8,"Guinea":30.0,"South Sudan":48.3,"Åland Islands":35.8,"Turks and Caicos Islands":50.0,"Marshall Islands":27.5,"Nauru":27.5,"Mauritania":20.0,"Western Sahara":20.0,"Saint Pierre and Miquelon":83.0,"Niger":17.0,"Anguilla":38.0,"Benin":25.0,"Antigua and Barbuda":28.2,"Saint Martin (French part)":20.3,"Sint Maarten (Dutch part)":20.3,"Togo":13.5,"Curaçao":32.2,"Martinique":35.5,"Réunion":25.0,"Republic of Kosovo":12.9,"Cabo Verde":16.1,"Montserrat":10.5,"Guinea-Bissau":25.0,
+"Palestine":28.9,"Congo":38.7,"Micronesia (Federated States of)":25.0,"Bhutan":11.6,"Burkina Faso":27.4,"Myanmar":30.6,"Tonga":35.5,"Chad":30.0,"Central African Republic":30.0,
+"Sao Tome and Principe":7.1,"Saint Vincent and the Grenadines":38.7,"Cook Islands":37.0,"U.S. Virgin Islands":70.0,"Falkland Islands (Malvinas)":25.8,
+"Palau":43.0,"Guadeloupe":35.8,"Bonaire, Sint Eustatius and Saba":33.9,"Côte d'Ivoire":32.2,"Saint Kitts and Nevis":19.35,"Solomon Islands":38.7,
+"Timor-Leste":35.5,"Liechtenstein":50.0,"French Guiana":32.2,"Kiribati":18.8,"Eritrea":13.3,"San Marino":23.3,"Northern Mariana Islands":18.9}
+var data=[]
+var dict={}
+document.getElementById("found").style.display="none"
+for(var c in housingList){
+  data.push(c)
+  dict[c]=-1.0
+}
+var states=['Texas', 'Pennsylvania', 'South Carolina', 'New Hampshire', 'Kansas', 'Hawaii', 'Idaho', 'Montana', 'New Mexico', 'New York', 'North Dakota', 'Oregon', 'Iowa', 'Michigan', 'Ohio', 'Georgia', 'Colorado', 'Florida', 'Maryland', 'Vermont', 'Washington', 'Arizona', 'Indiana', 'Kentucky', 'Louisiana', 'Maine', 'Minnesota', 'Missouri', 'Nebraska', 'Rhode Island', 'Tennessee', 'Virginia', 'Wisconsin', 'Wyoming', 'Oklahoma', 'Alaska', 'Delaware', 'Nevada', 'Arkansas', 'Illinois', 'California', 'District of Columbia', 'Connecticut', 'North Carolina', 'Massachusetts', 'West Virginia', 'Utah', 'Alabama', 'Mississippi', 'New Jersey', 'South Dakota']
+for(var s in states){
+  data.push(states[s])
+  dict[states[s]]=-1.0
+}
+document.getElementById("myInput").value=""
+document.getElementById("myModalInput").value=""
+var config = {
+    apiKey: "AIzaSyBzeDLhTD-SG7CzTr1_AnnsAqyLyIgVVlk",
+    authDomain: "emovosearch.firebaseapp.com",
+    databaseURL: "https://emovosearch.firebaseio.com/",
+    storageBucket: "emovosearch.appspot.com"
+  }
+firebase.initializeApp(config);
+var citiesDataList={}
+autocomplete(document.getElementById("myInput"), data);
+var citiesList=[]
+var choice=""
+function onSearchClick(){ //begin a city search, grab city list here and pass it
+  document.getElementById("load").style.display="block"
+  choice=document.getElementById("myInput").value
+  if(dict[choice]!=null){
+      document.getElementById("found").style.display="none"
+      if(states.indexOf(choice)>-1){
+        var sRef = firebase.database().ref(choice);
+        sRef.on("value", function(snapshot, prevChildKey) {
+          var snapshotData = snapshot.val()
+          //console.log(snapshotData)
+          if(snapshotData==null){
+            skip()
+          }else{
+            if(snapshotData.length==0)
+              skip()
+            for(var s in snapshotData){
+              citiesDataList[snapshotData[s].name]=snapshotData[s]
+              citiesList.push(snapshotData[s].name)
+            }
+            console.log(citiesList)
+            autocomplete(document.getElementById("myModalInput"), citiesList);
+            localStorage.setItem('currStateSearch',choice); //make it a state object
+            localStorage.setItem('currUSCitiesSearch',snapshotData);
+            document.getElementById("load").style.display="none"
+            document.getElementById("myModal").style.display = "block";
+            window.onclick = function(event) {
+              if (event.target == document.getElementById("myModal")) {
+                document.getElementById("myModal").style.display = "none";
+              }
+            }
+          }
+        })
+      }else{
+        var name=choice
+        if (name=="Åland Islands")
+            name="Aland Islands"
+        if (name=="Réunion")
+            name="Reunion"
+        if (name=="Côte d'Ivoire")
+            name="Ivory Coast"
+        if (name=="Curaçao")
+            name="Curacao"
+        if (name=="Falkland Islands (Malvinas)")
+            name="Falkland Islands"
+        if (name=="Holy See")
+            name="Vatican"
+        if (name=="Saint Martin (French part)")
+            name="Saint Martin"
+        if (name=="Bonaire, Sint Eustatius and Saba")
+            name="Bonaire, Saint Eustatius and Saba"
+        if (name=="North Macedonia")
+            name="Macedonia"
+        if (name=="Republic of Kosovo")
+            name="Kosovo"
+        if (name=="Sint Maarten (Dutch part)")
+            name="Sint Maarten"
+        if (name=="Palestine")
+            name="Palestinian Territory"
+        if (name=="Brunei Darussalam")
+            name="Brunei"
+        if (name=="Timor-Leste")
+            name="East Timor"
+        if (name=="Micronesia (Federated States of)")
+            name="Micronesia"
+        if (name=="Lao People's Democratic Republic")
+            name="Laos"
+        if (name=="Moldova (Republic of)")
+            name="Moldova"
+        if (name=="Cabo Verde")
+            name="Cape Verde"
+        if (name=="Syrian Arab Republic")
+            name="Syria"
+        if (name=="Russian Federation")
+            name="Russia"
+        if (name=="Congo")
+            name="Republic of the Congo"
+        if(name=="U.S. Virgin Islands")
+            name="US Virgin Islands"
+        var sRef=firebase.database().ref("worldCitiesData")
+        sRef.once("value", function(snapshot, prevChildKey) {
+          var snapshotData = snapshot.val()[name]
+          //console.log(snapshotData)
+          for(var s in snapshotData){
+            citiesList.push(snapshotData[s].name)
+            citiesDataList[snapshotData[s].name]=snapshotData[s]
+          }
+          console.log(citiesList)
+          autocomplete(document.getElementById("myModalInput"), citiesList)
+          localStorage.setItem('currNationSearch',choice) //make it a state object
+          localStorage.setItem('currWorldCitiesSearch',snapshotData)
+          document.getElementById("myModal").style.display = "block"
+          document.getElementById("load").style.display="none"
+          window.onclick = function(event) {
+            if (event.target == document.getElementById("myModal")) {
+              document.getElementById("myModal").style.display = "none"
+            }
+          }
+        })
+      }
+    }else{
+      document.getElementById("found").style.display="block"
+      document.getElementById("found").innerHTML="'"+choice+"' not found. Make sure that you type a value that appears in autocomplete search."
+    }
+}
+function findCity()
+{
+  var choicec=document.getElementById("myModalInput").value
+  //console.log(choicec)
+  //console.log(citiesList)
+  if(citiesList.indexOf(choicec)>-1){
+    var city=citiesDataList[choicec]
+    if(states.indexOf(choice)>-1){
+      localStorage.USCitySearchState=JSON.stringify(city)
+      localStorage.searchtype="usCity"
+    }else{
+      localStorage.worldCitySearchState=JSON.stringify(city)
+      localStorage.searchtype="worldCity"
+    }
+    window.location.replace("loadingSearch.html")//to get state or country
+  }
+}
+function skip(){
+  document.getElementById("load").style.display="none"
+  if(states.indexOf(choice)>-1){
+    localStorage.setItem('USStateSearch',choice);
+    localStorage.searchtype="state"
+  }else{
+    localStorage.setItem('worldCountrySearch',choice);
+    localStorage.searchtype="country"
+  }
+  window.location.replace("loadingSearch.html")
+}
+function closeModal(){
+  document.getElementById("myModal").style.display = "none";
+}
+</script>
+</body>
 </html>
