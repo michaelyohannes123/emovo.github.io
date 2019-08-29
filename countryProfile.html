@@ -9,20 +9,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body class="w3-light-grey">
-     <!--<div>
+     <div>
        <button onclick="home()" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></button>
        <button onclick="about()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</button>
        <button onclick="contact()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</button>
        <button onclick="search()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</button>
-       <button onclick="profile()" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></button>
-     </div>-->
-  <div>
-     <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
-     <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
-     <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
-     <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
-     <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
-  </div>
+       <!--<button onclick="profile()" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></button>-->
+     </div>
       <div class="w3-orange">
         <img id="flaglink" src="#" width="200px"><!--have it to the left with basic facts about area-->
         <h3 id="sname">State name (Capital: )</h3>
@@ -408,7 +401,7 @@ input.star:checked ~ label.star:before {
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 <script type="text/javascript">
-/*function home(){
+function home(){
   leave()
   window.location.replace("index.html")
 }
@@ -424,7 +417,7 @@ function search(){
   leave()
   window.location.replace("search.html")
 }
-function profile(){
+/*function profile(){
   leave()
   window.location.replace("profile.html")
 }*/
@@ -887,8 +880,8 @@ function getFirebaseComments(){
         if(i<=9){
           overall.appendChild(document.createElement("br"))
         }
-        if(snapshotData[i].starVal!=-1.0){
-          totalStars+=parseFloat(snapshotData[i].starVal)
+        if(snapshotData[i].aComment.starVal!=-1.0){
+          totalStars+=parseFloat(snapshotData[i].aComment.starVal)
           starRatingCount+=1.0
         }
         updownvotes[i]=0
@@ -898,7 +891,7 @@ function getFirebaseComments(){
         var leftpicDiv=document.createElement("div")
         leftpicDiv.className="left-pic"
         var profileImg=document.createElement("img")
-        profileImg.id=snapshotData[i].profileID+"-"+i
+        profileImg.id=snapshotData[i].aComment.profileID+"-"+i
         profileImg.src="https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png"
         profileImg.style="border-radius: 50%;width:50px;height:50px;"
         leftpicDiv.appendChild(profileImg)
@@ -907,13 +900,13 @@ function getFirebaseComments(){
         rightDiv.className="right"
         var commentDiv=document.createElement("div")
         commentDiv.className="comment-body"
-        commentDiv.appendChild(document.createTextNode(snapshotData[i].text))
+        commentDiv.appendChild(document.createTextNode(snapshotData[i].aComment.text))
         rightDiv.appendChild(commentDiv)
         var bottomDiv=document.createElement("div")
         bottomDiv.appendChild(document.createTextNode("By "))
-        var lt = document.createTextNode(snapshotData[i].profileName);
+        var lt = document.createTextNode(snapshotData[i].aComment.profileName);
         bottomDiv.appendChild(lt)
-        var date = new Date(snapshotData[i].date);
+        var date = new Date(snapshotData[i].aComment.date);
         var day = date.getDate();
         var months = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"
@@ -924,12 +917,12 @@ function getFirebaseComments(){
         bottomDiv.appendChild(document.createTextNode(", "+stDate+", ")) //bottomDiv
         var score=document.createElement("span")
         score.id=i+"-score"
-        score.innerHTML=(snapshotData[i].likes-snapshotData[i].dislikes)+""
-        if(snapshotData[i].likes-snapshotData[i].dislikes==0)
+        score.innerHTML=(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes)+""
+        if(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes==0)
           score.style="color:grey;"
-        else if(snapshotData[i].likes-snapshotData[i].dislikes>0)
+        else if(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes>0)
           score.style="color:green;"
-        else if(snapshotData[i].likes-snapshotData[i].dislikes<0)
+        else if(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes<0)
           score.style="color:orange;"
         bottomDiv.appendChild(score)
         bottomDiv.appendChild(document.createTextNode(", "))
