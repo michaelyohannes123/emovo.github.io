@@ -537,7 +537,7 @@ var housingList={"Monaco":305.83,"Angola":125.78,"Papua New Guinea":117.22,"Berm
 "Palau":43.0,"Guadeloupe":35.8,"Bonaire, Sint Eustatius and Saba":33.9,"Côte d'Ivoire":32.2,"Saint Kitts and Nevis":19.35,"Solomon Islands":38.7,
 "Timor-Leste":35.5,"Liechtenstein":50.0,"French Guiana":32.2,"Kiribati":18.8,"Eritrea":13.3,"San Marino":23.3,"Northern Mariana Islands":18.9}
 
-document.getElementById("median").innerHTML="~ $"+(housingList[country.name]*31.0).toFixed(2)
+document.getElementById("median").innerHTML="$"+(housingList[country.name]*31.0).toFixed(2)
 /*document.getElementById("medianDiffVal").innerHTML="$"+country.housingDiff.toFixed(2)
 var avgIncomeDiffStyle="border: none; color:green;"
 document.getElementById("medianDiff").style=avgIncomeDiffStyle
@@ -907,7 +907,7 @@ function getFirebaseComments(){
         ricon.className="fa fa-reply"
         reply.appendChild(ricon)
         reply.style="w3-button"
-        if(currUser==null)//  make IT NOT
+        if(currUser!=null)
         {
           reply.onclick=function(){
             var rid=this.id.split("-")
