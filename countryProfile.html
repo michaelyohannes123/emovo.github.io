@@ -684,8 +684,6 @@ function sendMessage(){
     window.crypto.getRandomValues(array);
     var uid=array[0]
     //var sRef = //send for users to see
-    var first={}
-    first[currUser.id]=aComment
     /*var sRef = firebase.database().ref().child("users")
     sRef.on("value", function(snapshot, prevChildKey) {
       var snapshotData = snapshot.val();*/
@@ -713,13 +711,13 @@ function sendMessage(){
               "comments":first
             })
           }else{
-            sRef2.set(first)
+            sRef2.set({aComment})
             console.log(snapshotData2)
           }
         })
     //})
     //firebase.database().ref().child("users").child(currUser.id).child("comments").child(uid).set({aComment})
-    //firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
+    firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
     /*sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
       var snapshotData = snapshot.val();
 
