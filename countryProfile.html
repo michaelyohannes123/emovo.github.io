@@ -732,6 +732,23 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:orange;"
+    var trash=document.createElement("button")
+      trash.id=snapshotData.aComment.profileID+"-trash"
+      var ticon=document.createElement("i")
+      ticon.className="fa fa-trash-o"
+      trash.appendChild(ticon)
+      deleteclicks[snapshotData2[i]]=0
+      trash.onclick=function(){
+        var tid=this.id.split("-")
+        deleteclicks[tid[0]]+=1
+        if(deleteclicks[tid[0]]%2==1){
+          this.style.background="#90EE90"
+        }else{
+          this.style.background="#CDCDCD"
+        }
+      }
+      trash.style="w3-button"
+    bottomDiv.appendChild(trash)
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -1150,10 +1167,10 @@ function leave(){
         comment=snapshotData[i].aComment
         /*if(editclicks[i]%2==1){
           ref.child(i).set(null) //delete old comment
-        }
-        else if(deleteclicks[i]%2==1){
-          ref.child(i).set(null) //delete this comment
         }*/
+        if(deleteclicks[i]%2==1){
+          ref.child(i).set(null) //delete this comment
+        }
         if(updownvotes[i]==1){
           comment.likes+=1
         }else if(updownvotes[i]==-1){
