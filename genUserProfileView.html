@@ -37,8 +37,6 @@
             <h1 id="username"></h1>
             <p id="joinDate"></p>
             <img id="pic" src="#">
-            <p id="yourSearches" class="w3-text-grey"></p>
-            <p id="placeRecs" class="w3-text-grey"></p>
             <p id="commentHistory" class="w3-text-grey"></p>
           </div>
         </div>
@@ -59,12 +57,25 @@
     document.getElementById("userContent").style.display="none"
     function onSignIn() {
       var auserID=localStorage.commenterProfileID
-      console.log(auserID)
+      //console.log(auserID)
       //grab from firebase
-      var sRef = firebase.database().ref().child("users").child(auserID)
+      var sRef = firebase.database().ref().child("users")
       sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
         var snapshotData = snapshot.val();
-        console.log(snapshotData)
+        //console.log(snapshotData)
+        for(var c in snapshotData){
+          if(auserID==snapshotData[c].id){
+            document.getElementById("username").innerHTML=snapshotData[c].name
+            document.getElementById("joinDate").innerHTML=snapshotData[c].joinDate
+            document.getElementById("pic").innerHTML=snapshotData[c].picture
+            var ctext=""
+            for(var i in cs){
+              var ac=cs[i].aComment
+              ctext=ctext+ac.place.name+": '"+ac.text+"', "
+            }
+            document.getElementById("commentHistory").innerHTML=ctext
+          }
+        }
       })
     }
     function isLoggedIn()

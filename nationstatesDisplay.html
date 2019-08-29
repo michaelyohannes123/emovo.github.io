@@ -210,7 +210,7 @@
       //console.log(countries)
       var currPage=parseInt(document.getElementById("pages").value) //pages.options[pages.selectedIndex].value
       var rank=1
-      console.log(currPage+"")
+      //console.log(currPage+"")
       var perPage=parseInt(Object.keys(countries).length/6.0)
       var startC=((currPage-1)*perPage)
       var endC=startC+perPage
@@ -319,7 +319,7 @@
     var btn = table.getElementsByTagName("button");
     for (i = 0; i < btn.length; i++) {
         txtValue = btn[i].id.replace("-"," ")
-        console.log(txtValue)
+        //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             btn[i].style.display = "";
         } else {
