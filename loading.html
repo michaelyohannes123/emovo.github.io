@@ -303,21 +303,21 @@ if(stayInUS==true){
     data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
     data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
         data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-        new Temperature(data.tempf,data.tempc,null),data.cities,[],Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
+        new Temperature(data.tempf,data.tempc,null),data.cities,[],Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavings) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
         states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
       }else if(data.cities==[]){
       states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
       data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
       data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
       data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-      new Temperature(data.tempf,data.tempc,null),[],data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
+      new Temperature(data.tempf,data.tempc,null),[],data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavings) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
       states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
       }else{
             states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
             data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
           data.socialGroup,data.diabeticScreening,data.mammogramScreening,data.waterViolations,data.housingIssues,data.meanCommute,
         data.foodInsecurity,data.limitedFoodAccess,data.unemploymentRate,data.popHealth,new USTaxRates(data.propertytax,data.incometax,data.salestax),
-      new Temperature(data.tempf,data.tempc,null),data.cities,data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavingsUS) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
+      new Temperature(data.tempf,data.tempc,null),data.cities,data.comments,Math.abs(yearlyIncome - data.avgIncome),Math.abs(parseFloat(yourSavings) + (parseFloat(yearlyIncome)-parseFloat(data.avgIncome))-data.medianPropertyCost),null,flaglink)
       states[data.name].tempDiff=Math.abs(states[data.name].temp.cTemp- 11.96)
       }
     }
