@@ -134,8 +134,8 @@
             })
           }
           else{
-            var sRef2 = firebase.database().ref().child("users").child(currUser["id"])//check if user in database
-            sRef2.on("value", function(snapshot2, prevChildKey) {
+            var sRefC = firebase.database().ref().child("users").child(currUser["id"])//check if user in database
+            sRefC.on("value", function(snapshot2, prevChildKey) {
               var snapshotData2 = snapshot2.val();
               if(snapshotData2==null){ //user not there
                 var sRef3 = firebase.database().ref()

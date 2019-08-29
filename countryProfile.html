@@ -9,15 +9,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body class="w3-light-grey">
-     <div>
+     <!--<div>
        <button onclick="home()" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></button>
-       <!--<a href="home()" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
        <button onclick="about()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</button>
        <button onclick="contact()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</button>
        <button onclick="search()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</button>
-       <!--<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Sign In</a>-->
        <button onclick="profile()" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></button>
-      </div>
+     </div>-->
+  <div>
+     <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
+     <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
+     <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
+     <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+  </div>
       <div class="w3-orange">
         <img id="flaglink" src="#" width="200px"><!--have it to the left with basic facts about area-->
         <h3 id="sname">State name (Capital: )</h3>
@@ -175,7 +179,7 @@
      <br>
      <p id="login" style="display:table; margin: 0 auto;">You must be logged in to rate and comment</p>
      <br>
-     <div class="userReply">
+     <!--<div class="userReply">
        <p style="margin: auto;">How would you rate the place in terms of livability, especially in regards to retirees (1-5 stars)? Explain in the comment box below if you wish to futher elaborate to inform other users.</p>
        <p></p>
            <form id="starsRating" style="display: inline-block;">
@@ -215,7 +219,6 @@
         <div>
           <select id="commentFilter">
             <option value="keywords" selected="selected">Keywords</option>
-            <!--<option value="mostLiked">Most liked</option>-->
             <option value="commenter">Commenter</option>
             <option value="replies">Replies to you</option>
           </select>
@@ -224,7 +227,7 @@
    </div>
    <div id="updownSort">
 
-   </div>
+   </div>-->
 </body>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
@@ -404,7 +407,7 @@ input.star:checked ~ label.star:before {
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 <script type="text/javascript">
-function home(){
+/*function home(){
   leave()
   window.location.replace("index.html")
 }
@@ -423,7 +426,7 @@ function search(){
 function profile(){
   leave()
   window.location.replace("profile.html")
-}
+}*/
 function Currency(name, code, symbol, income, savings) {
     this.name=name
     this.code=code
@@ -618,7 +621,7 @@ if(parseFloat(country.temp.cTemp-14.9)>5.0){
 document.getElementById("tempDiff").style=tempDiffStyle
 document.getElementById("tooltiptexttempDiff").style.display="none"
 
-var config = {
+/*var config = {
     apiKey: "AIzaSyAeVY1LvG9hNSBYb9_raGpYYDiHIvG3cY8",
     authDomain: "emovousers.firebaseapp.com",
     databaseURL: "https://emovousers.firebaseio.com/",
@@ -664,34 +667,12 @@ function sendMessage(){
       starval=-1.0
     }
     var text=ptext
-    /*console.log(currUser)
-    console.log(currUser.id)
-    console.log(currUser["id"])
-    console.log(currUser.name)
-    console.log(currUser["name"])
-    console.log(currUser.picture)*/
     var aComment=new Comment(text,d.getTime(),country,0,0,currUser.id,currUser.name,currUser.picture,starval,0)
     //var profile = auth2.currentUser.get().getBasicProfile();
-    /*var search=text.split(" ")
-    for(var t in search){
-      for(var k in cursewords){
-        if(k in t){
-          var rep=""
-          for(var i=0;i<t.length;i++){
-            rep+="*"
-          }
-          t=rep
-        }
-      }
-    }
-    text=' '.join(search)*/
     var array = new Uint32Array(1);
     window.crypto.getRandomValues(array);
     var uid=array[0]
     //var sRef = //send for users to see
-    /*var sRef = firebase.database().ref().child("users")
-    sRef.on("value", function(snapshot, prevChildKey) {
-      var snapshotData = snapshot.val();*/
       //console.log(snapshotData)
         var sRef2 = firebase.database().ref().child("users").child(currUser["id"])//check if user in database
         sRef2.on("value", function(snapshot2, prevChildKey) {
@@ -722,19 +703,6 @@ function sendMessage(){
               var snapshotDataC = snapshot.val();
               sRef5.set({aComment})
               firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
-              /*if(snapshotDataC==null){
-                //firebase.database().ref().child("users").child(currUser["id"]).child("comments").set({})
-                //sRef5.set("comments")
-                sRef5.set({aComment})
-              }else{
-                sRef5.set({aComment})
-              }*/
-              /*firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
-              var sRef6=firebase.database().ref().child("countries")
-              sRef6.on("value", function(snapshot, prevChildKey) {
-                var snapshotDataC2 = snapshot.val();
-                firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
-              })*/
             })
             //console.log(snapshotData2)
           }
@@ -742,11 +710,6 @@ function sendMessage(){
     //})
     //firebase.database().ref().child("users").child(currUser.id).child("comments").child(uid).set({aComment})
     firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
-    /*sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
-      var snapshotData = snapshot.val();
-
-      //})
-    });*/
     //display comment
       var overall=document.getElementById("justSents")
       //overall.appendChild(document.createElement("br"))
@@ -804,21 +767,6 @@ function sendMessage(){
       else if(aComment.likes-aComment.dislikes<0)
         score.style="color:orange;"
       bottomDiv.appendChild(score)
-      /*var share=document.createElement("button")
-      var sicon=document.createElement("i")
-      sicon.className="fa fa-share-alt"
-      share.appendChild(sicon)
-      share.style="w3-button"
-      share.onclick=function(){
-        document.getElementById("myModal").style.display = "block";
-        document.getElementById("modalText").innerHTML=this.innerHTML;
-        window.onclick = function(event) {
-          if (event.target == document.getElementById("myModal")) {
-            document.getElementById("myModal").style.display = "none";
-          }
-        }
-      }
-      bottomDiv.appendChild(share)*/
       rightDiv.appendChild(bottomDiv)
       urdiv.appendChild(rightDiv)
       overall.appendChild(urdiv)
@@ -843,9 +791,6 @@ function getFirebaseComments(){
       getData=snapshotData
       var commentCount=0
       for(var i in snapshotData){
-        /*console.log(snapshotData[i])
-        console.log(snapshotData[i].aComment)
-        console.log(snapshotData[i].aComment.text)*/
         var overall=document.getElementById("commentSpace")
         if(i<=9){
           overall.appendChild(document.createElement("br"))
@@ -1018,9 +963,7 @@ function getFirebaseComments(){
             bottomDiv.appendChild(trash)
           }
           bottomDiv.appendChild(reply)
-        }/*else{
-          bottomDiv.appendChild(reply)
-        }*/
+        }
         rightDiv.appendChild(bottomDiv)
         urdiv.appendChild(rightDiv)
         if(commentCount>9){
@@ -1064,9 +1007,9 @@ function leave(){
       }
     }
   })
-}
+}*/
 function onCitySearchClick(){ //begin a city search, grab city list here and pass it
-  leave()
+  //leave()
   localStorage.setItem('currNation',JSON.stringify(country)) //make it a country object
   location.href="loadingWorldCities.html"
 }
@@ -1083,6 +1026,7 @@ function isLoggedIn()
     return JSON.parse(localStorage.getItem('currUser'));
   }
 }
+/*
 function getComments(snapshotData2){
   var totalStars=0.0
   var starRatingCount=0.0
@@ -1259,9 +1203,7 @@ function getComments(snapshotData2){
         trash.style="w3-button"
         bottomDiv.appendChild(trash)
       }
-    }/*else{
-      bottomDiv.appendChild(reply)
-    }*/
+    }
     bottomDiv.appendChild(reply)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -1335,25 +1277,7 @@ function filter() {
             coms[i].style.display = "none";
         }
     }
-  }  /*else if(choice=="mostLiked"){
-      var items = Object.keys(getData).map(function(key) {
-        return [key, getData[key]];
-      });
-      console.log(items)
-      items.sort(function(s1,s2) {
-        var s1diff=s1[1].aComment.likes-s1[1].aComment.dislikes
-        var s2diff=s2[1].aComment.likes-s2[1].aComment.dislikes
-        return s2diff-s1diff
-      });
-      console.log(items)
-      document.getElementById("commentSpace").style.display="none"
-      getComments(items)
-    }*/
-  /*
-  <option value="mostLiked">Most liked</option>
-  <option value="commenter">Commenter</option>
-  <option value="replies">Replies to you</option>
-  */
-}
+  }
+}*/
 </script>
 </html>
