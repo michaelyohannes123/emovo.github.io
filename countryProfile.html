@@ -718,7 +718,7 @@ function sendMessage(){
               if(snapshotDataC==null){
                 //firebase.database().ref().child("users").child(currUser["id"]).child("comments").set({})
                 sRef5.set("comments")
-                sRef5.child("comments").child(uid).set({aComment})
+                sRef5.child("comments").set({uid:aComment})
               }else{
                 sRef5.child(uid).set({aComment})
               }
@@ -729,7 +729,7 @@ function sendMessage(){
                 firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
               })*/
             })
-            console.log(snapshotData2)
+            //console.log(snapshotData2)
           }
         })
     //})
