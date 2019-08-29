@@ -871,13 +871,14 @@ var getData=null
 var deleteclicks={}
 var editclicks={}
 var updownvotes={}
+getFirebaseComments()
 function getFirebaseComments(){
   var totalStars=0.0
   var starRatingCount=0.0
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    console.log(snapshotData)
+    //console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
