@@ -711,7 +711,7 @@ function sendMessage(){
               "comments":first
             })
           }else{
-            firebase.database().ref().child("users").child(currUser["id"]).set({aComment})
+            firebase.database().ref().child("users").child(currUser["id"]).set(aComment)
             console.log(snapshotData2)
           }
         })
