@@ -880,8 +880,8 @@ function getFirebaseComments(){
         if(i<=9){
           overall.appendChild(document.createElement("br"))
         }
-        if(snapshotData[i].aComment.starVal!=-1.0){
-          totalStars+=parseFloat(snapshotData[i].aComment.starVal)
+        if(snapshotData[i].starVal!=-1.0){
+          totalStars+=parseFloat(snapshotData[i].starVal)
           starRatingCount+=1.0
         }
         updownvotes[i]=0
@@ -891,7 +891,7 @@ function getFirebaseComments(){
         var leftpicDiv=document.createElement("div")
         leftpicDiv.className="left-pic"
         var profileImg=document.createElement("img")
-        profileImg.id=snapshotData[i].aComment.profileID+"-"+i
+        profileImg.id=snapshotData[i].profileID+"-"+i
         profileImg.src="https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png"
         profileImg.style="border-radius: 50%;width:50px;height:50px;"
         leftpicDiv.appendChild(profileImg)
@@ -900,13 +900,13 @@ function getFirebaseComments(){
         rightDiv.className="right"
         var commentDiv=document.createElement("div")
         commentDiv.className="comment-body"
-        commentDiv.appendChild(document.createTextNode(snapshotData[i].aComment.text))
+        commentDiv.appendChild(document.createTextNode(snapshotData[i].text))
         rightDiv.appendChild(commentDiv)
         var bottomDiv=document.createElement("div")
         bottomDiv.appendChild(document.createTextNode("By "))
-        var lt = document.createTextNode(snapshotData[i].aComment.profileName);
+        var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
-        var date = new Date(snapshotData[i].aComment.date);
+        var date = new Date(snapshotData[i].date);
         var day = date.getDate();
         var months = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"
@@ -917,12 +917,12 @@ function getFirebaseComments(){
         bottomDiv.appendChild(document.createTextNode(", "+stDate+", ")) //bottomDiv
         var score=document.createElement("span")
         score.id=i+"-score"
-        score.innerHTML=(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes)+""
-        if(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes==0)
+        score.innerHTML=(snapshotData[i].likes-snapshotData[i].dislikes)+""
+        if(snapshotData[i].likes-snapshotData[i].dislikes==0)
           score.style="color:grey;"
-        else if(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes>0)
+        else if(snapshotData[i].likes-snapshotData[i].dislikes>0)
           score.style="color:green;"
-        else if(snapshotData[i].aComment.likes-snapshotData[i].aComment.dislikes<0)
+        else if(snapshotData[i].likes-snapshotData[i].dislikes<0)
           score.style="color:orange;"
         bottomDiv.appendChild(score)
         bottomDiv.appendChild(document.createTextNode(", "))
@@ -935,7 +935,8 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          if(getData[parseInt(rid[0])].text.length<=50)
+          console.log(getData[rid[0]])
+          if(getData[rid[0]].text.length<=50)
             document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text+"'"
           else
             document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text.slice(0,50)+"...'"
@@ -1140,21 +1141,19 @@ function getFirebaseComments(){
 }
 function leave(){
   //check getData
-  var deleteclicks={}
-  var editclicks={}
-  var updownvotes={}
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
+    console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i].aComment
-        if(editclicks[i]%2==1){
+        /*if(editclicks[i]%2==1){
           ref.child(i).set(null) //delete old comment
         }
         else if(deleteclicks[i]%2==1){
           ref.child(i).set(null) //delete this comment
-        }
+        }*/
         if(updownvotes[i]==1){
           comment.likes+=1
         }else if(updownvotes[i]==-1){
