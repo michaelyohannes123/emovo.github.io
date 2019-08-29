@@ -711,17 +711,19 @@ function sendMessage(){
               "comments":first
             })
           }else{
-            var sRef5 = firebase.database().ref().child("users").child(currUser["id"]).child("comments")
-            console.log(aComment.text)
+            var sRef5 = firebase.database().ref().child("users").child(currUser["id"]).child("comments").child(uid)
+            console.log(aComment.starVal)
             sRef5.on("value", function(snapshot, prevChildKey) {//set it to profile
               var snapshotDataC = snapshot.val();
-              if(snapshotDataC==null){
+              sRef5.set({aComment})
+              firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
+              /*if(snapshotDataC==null){
                 //firebase.database().ref().child("users").child(currUser["id"]).child("comments").set({})
                 //sRef5.set("comments")
                 sRef5.set({aComment})
               }else{
                 sRef5.set({aComment})
-              }
+              }*/
               /*firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
               var sRef6=firebase.database().ref().child("countries")
               sRef6.on("value", function(snapshot, prevChildKey) {
