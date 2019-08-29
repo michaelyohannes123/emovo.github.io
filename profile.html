@@ -37,8 +37,8 @@
             <h1 id="username"></h1>
             <p id="joinDate"></p>
             <img id="pic" src="#">
-            <p id="yourSearches" class="w3-text-grey"></p>
-            <p id="placeRecs" class="w3-text-grey"></p>
+            <!--<p id="yourSearches" class="w3-text-grey"></p>
+            <p id="placeRecs" class="w3-text-grey"></p>-->
             <p id="commentHistory" class="w3-text-grey"></p>
           </div>
         </div>
@@ -62,7 +62,7 @@
         }
       firebase.initializeApp(config);
       var isIn=isLoggedIn();
-      console.log(isIn)
+      //console.log(isIn)
       var account={};
       if(isIn==false){
         document.getElementById('gsignin2').style.display = "block";
@@ -84,8 +84,8 @@
         document.getElementById('gsignin2').style.display = "none";
         document.getElementById("userContent").style.display = "block";
         document.getElementById("signout").style.display = "block";
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
+        //var id_token = googleUser.getAuthResponse().id_token;
+        //console.log("ID Token: " + id_token);
         document.getElementById("username").innerHTML="Hi "+profile.getGivenName()+"!";
         document.getElementById("pic").src=profile.getImageUrl();
         //firebase retrieval here
@@ -121,6 +121,8 @@
             var year = date.getFullYear();
             var stDate = month+" "+day+", "+year
             currUser["joinDate"] = stDate;
+            document.getElementById("joinDate").innerHTML="Join Date: "+currUser["joinDate"]
+            document.getElementById("commentHistory").innerHTML="No recorded comments yet"
             var sRef2 = firebase.database().ref()
             sRef2.child("users").set({})
             firebase.database().ref().child("users").child(currUser["id"]).set({
@@ -146,7 +148,9 @@
                 var year = date.getFullYear();
                 var stDate = month+" "+day+", "+year
                 currUser["joinDate"] = stDate;
-                console.log(month);
+                document.getElementById("joinDate").innerHTML="Join Date: "+currUser["joinDate"]
+                document.getElementById("commentHistory").innerHTML="No recorded comments yet"
+                //console.log(month);
                 sRef3.child("users").set({
                   "id":currUser["id"],
                   "name":currUser["name"],
@@ -154,11 +158,23 @@
                   "joinDate":currUser["joinDate"],
                   "comments":null
                 })
-              }else{
-                console.log(snapshotData2)
-              }
-            })
-          }
+                }else{
+                  //console.log(snapshotData2)
+                  currUser["joinDate"]=snapshotData2["joinDate"]
+                  try{
+                  currUser["comments"]=snapshotData2["comments"]
+                  if(currUser["comments"]==null){
+                    document.getElementById("commentHistory").innerHTML="No recorded comments yet"
+                  }else{
+                    //for()
+                  }
+                  }catch(err){
+                    document.getElementById("commentHistory").innerHTML="No recorded comments yet"
+                  }
+                  document.getElementById("joinDate").innerHTML="Join Date: "+currUser["joinDate"]
+                }
+              })
+            }
         })
       }
       function isLoggedIn()
