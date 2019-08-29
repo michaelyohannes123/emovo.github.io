@@ -9,13 +9,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body class="w3-light-grey">
-     <div>
+  <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-orange" href="javascript:void(0);" onclick="toggle()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
+    <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
+    <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
+    <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+    <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
+  </div>
+     <!--<div>
        <button onclick="home()" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></button>
        <button onclick="about()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</button>
        <button onclick="contact()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</button>
        <button onclick="search()" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</button>
-       <!--<button onclick="profile()" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></button>-->
-     </div>
+    </div>-->
       <div class="w3-orange">
         <img id="flaglink" src="#" width="200px"><!--have it to the left with basic facts about area-->
         <h3 id="sname">State name (Capital: )</h3>
@@ -401,7 +408,7 @@ input.star:checked ~ label.star:before {
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 <script type="text/javascript">
-function home(){
+/*function home(){
   leave()
   window.location.replace("index.html")
 }
@@ -416,7 +423,7 @@ function contact(){
 function search(){
   leave()
   window.location.replace("search.html")
-}
+}*/
 /*function profile(){
   leave()
   window.location.replace("profile.html")
@@ -719,11 +726,11 @@ function sendMessage(){
     }
     //console.log(bytext)
     bottomDiv.appendChild(document.createTextNode(bytext))
-    var n = document.createElement('a');
+    //var n = document.createElement('a');
     var lt = document.createTextNode(profileID);
-    n.appendChild(lt)
-    n.href = "profile.html";
-    bottomDiv.appendChild(n)
+    //n.appendChild(lt)
+    //n.href = "profile.html";
+    bottomDiv.appendChild(lt)
     var date = new Date(aComment.date);
     var day = date.getDate();
     var months = ["January", "February", "March", "April", "May", "June",
@@ -756,6 +763,7 @@ function sendMessage(){
         }else{
           this.style.background="#CDCDCD"
         }
+        leave()
       }
       trash.style="w3-button"
     bottomDiv.appendChild(trash)
@@ -964,9 +972,9 @@ function getFirebaseComments(){
           var rid=this.id.split("-")
           //console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
-            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"'"
+            document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
           else
-            document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text.slice(0,50)+"...'"
+            document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text.slice(0,50)+"...':"
         }
         var upvote=document.createElement("button")
         upvote.id=i+"-upvote"
@@ -997,6 +1005,7 @@ function getFirebaseComments(){
             document.getElementById(gscore).style="color:green;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
             document.getElementById(gscore).style="color:orange;"
+          leave()
         }
         bottomDiv.appendChild(upvote)
         var downvote=document.createElement("button")
@@ -1029,6 +1038,7 @@ function getFirebaseComments(){
             document.getElementById(gscore).style="color:green;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
             document.getElementById(gscore).style="color:orange;"
+          leave()
         }
         bottomDiv.appendChild(downvote)
         bottomDiv.appendChild(reply)
