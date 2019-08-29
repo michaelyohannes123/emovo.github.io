@@ -867,7 +867,7 @@ function getFirebaseComments(){
           window.location.href="genUserProfile.html"
         }
         profileImg.src=snapshotData[i].aComment.profilePic
-        profileImg.style="border-radius: 50%;width:70px;height:70px;"
+        profileImg.style="border-radius: 50%;width:50px;height:50px;"
         leftpicDiv.appendChild(profileImg)
         urdiv.appendChild(leftpicDiv)
         var rightDiv=document.createElement("div")
@@ -1017,10 +1017,10 @@ function getFirebaseComments(){
             trash.style="w3-button"
             bottomDiv.appendChild(trash)
           }
+          bottomDiv.appendChild(reply)
         }/*else{
           bottomDiv.appendChild(reply)
         }*/
-        bottomDiv.appendChild(reply)
         rightDiv.appendChild(bottomDiv)
         urdiv.appendChild(rightDiv)
         if(commentCount>9){
