@@ -59,6 +59,7 @@
     document.getElementById("userContent").style.display="none"
     function onSignIn() {
       var auserID=localStorage.commenterProfileID
+      console.log(auserID)
       //grab from firebase
       var sRef = firebase.database().ref().child("users").child(auserID)
       sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
