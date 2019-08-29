@@ -877,6 +877,7 @@ function getFirebaseComments(){
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
+    console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
@@ -1008,6 +1009,14 @@ function getFirebaseComments(){
             document.getElementById(gscore).style="color:orange;"
         }
         bottomDiv.appendChild(downvote)
+        bottomDiv.appendChild(reply)
+        rightDiv.appendChild(bottomDiv)
+        urdiv.appendChild(rightDiv)
+        if(commentCount>9){
+          urdiv.style="display:none;"
+        }
+        commentCount++
+        overall.appendChild(urdiv)
         /*if(currUser!=null)
         {
           reply.onclick=function(){
@@ -1120,14 +1129,8 @@ function getFirebaseComments(){
           }
           bottomDiv.appendChild(reply)
         }*/
-        bottomDiv.appendChild(reply)
-        rightDiv.appendChild(bottomDiv)
-        urdiv.appendChild(rightDiv)
-        if(commentCount>9){
-          urdiv.style="display:none;"
-        }
-        commentCount++
-        overall.appendChild(urdiv)
+
+
         //document.body.appendChild(document.createElement("br"))
       }
     }
