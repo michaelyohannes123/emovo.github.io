@@ -633,7 +633,7 @@ if(currUser!=null){
   //currUser["picture"] =
   //document.getElementById("displayButton").style="display: none;"
   document.getElementById("login").style="display: none;"
-  document.getElementById("profileImg").src=currUser["picture"]
+  document.getElementById("profileImg").src=currUser.picture
 }
 function Comment(t,d,p,li,di,id,na,pi,sv,ud){
   this.text=t
@@ -659,10 +659,10 @@ function sendMessage(){
     }
     var text=ptext
     console.log(currUser)
-    console.log(currUser["id"])
-    console.log(currUser["name"])
-    console.log(currUser["picture"])
-    var aComment=new Comment(text,d.getTime(),country,0,0,currUser["id"],currUser["name"],currUser["picture"])
+    console.log(currUser.id)
+    console.log(currUser.name)
+    console.log(currUser.picture)
+    var aComment=new Comment(text,d.getTime(),country,0,0,currUser.id,currUser.name,currUser.picture)
     //var profile = auth2.currentUser.get().getBasicProfile();
     /*var search=text.split(" ")
     for(var t in search){
@@ -681,11 +681,10 @@ function sendMessage(){
     window.crypto.getRandomValues(array);
     var uid=array[0]
     var sRef = firebase.database().ref().ref("users")//send for users to see
-    sRef.child(currUser["id"]).child("comments").child(uid).set({aComment})
+    sRef.child(currUser.id).child("comments").child(uid).set({aComment})
     firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
     /*sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
       var snapshotData = snapshot.val();
-
 
       //})
     });*/
@@ -700,7 +699,7 @@ function sendMessage(){
       profileImg.onclick=function(){
         window.location.href="profile.html"
       }
-      profileImg.src=currUser["picture"]
+      profileImg.src=currUser.picture
       profileImg.style="border-radius: 50%;width:70px;height:70px;"
       imageLink.appendChild(profileImg)
       urdiv.appendChild(leftpicDiv)
@@ -718,7 +717,7 @@ function sendMessage(){
       //console.log(bytext)
       bottomDiv.appendChild(document.createTextNode(bytext))
       var n = document.createElement('a');
-      var lt = document.createTextNode(currUser["name"]);
+      var lt = document.createTextNode(currUser.name);
       n.appendChild(lt)
       n.href = "profile.html";
       bottomDiv.appendChild(n)
@@ -852,7 +851,7 @@ function getFirebaseComments(){
             else
               document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text.slice(0,50)+"...'"
           }
-          if(currUser["id"]==snapshotData[i].aComment.profileID){
+          if(currUser.id==snapshotData[i].aComment.profileID){
             var upvote=document.createElement("button")
             upvote.id=i+"-upvote"
             var uicon=document.createElement("i")
@@ -1157,7 +1156,7 @@ function getComments(snapshotData2){
         else
           document.getElementById("yourComment").value="Reply to: "+getData[parseInt(rid[0])].aComment.profileName+"'s comment '"+getData[parseInt(rid[0])].aComment.text.slice(0,50)+"...'"
       }
-      if(currUser["id"]==snapshotData.aComment.profileID){
+      if(currUser.id==snapshotData.aComment.profileID){
         var edit=document.createElement("button")
         edit.id=snapshotData.aComment.profileID+"-edit"
         var eicon=document.createElement("i")
@@ -1259,7 +1258,7 @@ function filter() {
   else if(choice=="replies"){
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
-    var pfil="Reply to: "+"Michael"+"'s"//currUser
+    var pfil="Reply to: "+currUser.name+"'s"
     var fil=pfil.toUpperCase()
     console.log(coms)
     for (i = 0; i < coms.length; i++) {
