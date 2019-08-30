@@ -215,11 +215,12 @@
     <div id="commentSpace">
       <div class="container" style="margin:0 auto">
         <div>
-          <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="Country or State">
+          <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="Type keywords">
         </div>
         <div>
-          <select id="commentFilter">
+          <select id="commentFilter" onchange="filter()">
             <option value="keywords" selected="selected">Keywords</option>
+            <option value="likes">Likes</option>
             <!--<option value="commenter">Commenter</option>
             <option value="replies">Replies to you</option>-->
           </select>
@@ -705,7 +706,7 @@ function sendMessage(){
     leftpicDiv.className="left-pic"
     var profileImg=document.createElement("img")
     profileImg.src="https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png"
-    profileImg.style="border-radius: 50%;width:70px;height:70px;"
+    profileImg.style="border-radius:50%;width:70px;height:70px;"
     leftpicDiv.appendChild(profileImg)
     urdiv.appendChild(leftpicDiv)
     var rightDiv=document.createElement("div")
@@ -934,6 +935,7 @@ function getFirebaseComments(){
         var rightDiv=document.createElement("div")
         rightDiv.className="right"
         var commentDiv=document.createElement("div")
+        commentDiv.id=snapshotData[i].profileID+"-commentDiv"
         commentDiv.className="comment-body"
         commentDiv.appendChild(document.createTextNode(snapshotData[i].text))
         rightDiv.appendChild(commentDiv)
@@ -949,7 +951,9 @@ function getFirebaseComments(){
         var month = months[date.getMonth()];
         var year = date.getFullYear();
         var stDate = month+" "+day+", "+year
-        bottomDiv.appendChild(document.createTextNode(", "+stDate+", ")) //bottomDiv
+        var datediv=document.createTextNode(", "+stDate+", ")
+        datediv.id=snapshotData[i].profileID+"-dateDiv"
+        bottomDiv.appendChild(datediv) //bottomDiv
         var score=document.createElement("span")
         score.id=i+"-score"
         score.innerHTML=(snapshotData[i].likes-snapshotData[i].dislikes)+""
@@ -1181,7 +1185,7 @@ function leave(){
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    console.log(snapshotData)
+    //console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i]
@@ -1413,20 +1417,8 @@ function filter() {
   var fil = input.value.toUpperCase();
   var choice=document.getElementById("commentFilter").value
   if(choice=="keywords"){
-    var commentSpace = document.getElementById("commentSpace");
-    var coms = commentSpace.getElementsByClassName("comment-body");
-    //console.log(coms)
-    for (i = 0; i < coms.length; i++) {
-        txtValue = coms[i].innerHTML
-        //console.log(txtValue)
-        if (txtValue.toUpperCase().indexOf(fil) > -1) {
-            coms[i].style.display = "";
-        } else {
-            coms[i].style.display = "none";
-        }
-    }
-  }
-  if(choice=="keywords"){
+    document.getElementById("input").style.display="block"
+    document.getElementById("updownSort").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
     var fil = input.value.toUpperCase();
@@ -1437,25 +1429,179 @@ function filter() {
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
-            coms[i].style.display = "none";
+            //commentDiv.id=snapshotData[i].profileID+"-commentDiv"
+            //urdiv.id=i+"-comment"
+            var theid=coms[i].id.split("-")
+            var urcommentid=theid[0]+"-comment"
+            document.getElementById(urcommentid).style.display="none";
         }
     }
-  }else if(choice=="commenter"){
+  }else if(choice=="likes"){
+    document.getElementById("input").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
-    var coms = commentSpace.getElementsByTagName("a");
-    var fil = input.value.toUpperCase();
+    var coms = commentSpace.getElementsByTagName("span");
+    var gscore=pid[0]+"-score"
+    var scoresDict={}
     //console.log(coms)
     for (i = 0; i < coms.length; i++) {
-        txtValue = coms[i].innerHTML
-        //console.log(txtValue)
-        if (txtValue.toUpperCase().indexOf(fil) > -1) {
-            coms[i].style.display = "";
-        } else {
-            coms[i].style.display = "none";
-        }
+      var theid=coms[i].id.split("-")
+      var gscoreid=theid[0]+"-score"
+      var val=parseInt(document.getElementById(gscoreid).innerHTML)
+      var dateid=theid+"-dateDiv"
+      var key=theid[0]+"-"+document.getElementById(dateid).innerHTML
+      scoresDict[key]=val
     }
+    document.getElementById(urcommentid).style.display="none";
+    var orderedScores = Object.keys(scoresDict).map(function(key) {
+      return [key, dict[key]];
+    });
+    orderedScores.sort(function(first, second) {
+      return second[1] - first[1];
+    });
+    var commentCount=0
+    for(var ky in orderedScores){
+      var overall=document.getElementById("updownSort")
+      if(i<=9){
+        overall.appendChild(document.createElement("br"))
+      }
+      var parse=ky.split("-")
+      var likedislikeval=orderedScores[ky]//like-dislike
+      var i=parse[0]//id
+      var dateval=parse[1]//date
+      var pretextid=i+"-commentDiv" //text
+      var precommentid=i+"-comment"
+      var text=document.getElementById(pretextid).innerHTML
+      document.getElementById(precommentid).style.display="none"
+      updownvotes[i]=0
+      var urdiv = document.createElement("div")
+      urdiv.id=i+"-comment"
+      urdiv.className="userReply"
+      var leftpicDiv=document.createElement("div")
+      leftpicDiv.className="left-pic"
+      var profileImg=document.createElement("img")
+      //profileImg.id=snapshotData[i].profileID+"-"+i
+      profileImg.src="https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png"
+      profileImg.style="border-radius: 50%;width:50px;height:50px;"
+      leftpicDiv.appendChild(profileImg)
+      urdiv.appendChild(leftpicDiv)
+      var rightDiv=document.createElement("div")
+      rightDiv.className="right"
+      var commentDiv=document.createElement("div")
+      commentDiv.id=i+"-commentDiv"
+      commentDiv.className="comment-body"
+      commentDiv.appendChild(document.createTextNode(text))
+      rightDiv.appendChild(commentDiv)
+      var bottomDiv=document.createElement("div")
+      bottomDiv.appendChild(document.createTextNode("By "))
+      var pname="user-"+i
+      var lt = document.createTextNode(pname);
+      bottomDiv.appendChild(lt)
+      var datediv=document.createTextNode(dateval)
+      datediv.id=i+"-dateDiv"
+      bottomDiv.appendChild(datediv) //bottomDiv
+      var score=document.createElement("span")
+      score.id=i+"-score"
+      score.innerHTML=likedislikeval+""
+      if(parseInt(likedislikeval)==0)
+        score.style="color:grey;"
+      else if(parseInt(likedislikeval)>0)
+        score.style="color:green;"
+      else if(parseInt(likedislikeval)<0)
+        score.style="color:orange;"
+      bottomDiv.appendChild(score)
+      bottomDiv.appendChild(document.createTextNode(", "))
+      //check if if(currUser["jd"]) exists
+      var reply=document.createElement("button")
+      reply.id=i+"-reply"
+      var ricon=document.createElement("i")
+      ricon.className="fa fa-reply"
+      reply.appendChild(ricon)
+      reply.style="w3-button"
+      reply.onclick=function(){
+        var rid=this.id.split("-")
+        //console.log(getData[rid[0]])
+        if(getData[rid[0]].text.length<=50)
+          document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
+        else
+          document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text.slice(0,50)+"...':"
+      }
+      var upvote=document.createElement("button")
+      upvote.id=i+"-upvote"
+      var uicon=document.createElement("i")
+      uicon.className="fa fa-thumbs-up"
+      upvote.appendChild(uicon)
+      upvote.onclick=function(){
+        var pid=this.id.split("-")
+        updownvotes[parseInt(pid[0])]=1
+        getData[parseInt(pid[0])].likes+=1
+        var diff=getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes
+        if(diff>=2){
+          this.style.background="#CDCDCD"
+          getData[parseInt(pid[0])].likes-=diff
+        }else if(diff==1){
+          this.style.background="#99badd"
+        }else if(diff==0){
+          this.style.background="#99badd"
+          getData[parseInt(pid[0])].likes+=1
+          document.getElementById(pid[0]+"-downvote").style.background="#CDCDCD"
+        }
+        var gscore=pid[0]+"-score"
+        getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
+        document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+        if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
+          document.getElementById(gscore).style="color:grey;"
+        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
+          document.getElementById(gscore).style="color:green;"
+        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
+          document.getElementById(gscore).style="color:orange;"
+        leave()
+      }
+      bottomDiv.appendChild(upvote)
+      var downvote=document.createElement("button")
+      downvote.id=i+"-downvote"
+      var dicon=document.createElement("i")
+      dicon.className="fa fa-thumbs-down"
+      downvote.appendChild(dicon)
+      downvote.style="w3-button"
+      downvote.onclick=function(){
+        var pid=this.id.split("-")
+        updownvotes[parseInt(pid[0])]=-1
+        getData[parseInt(pid[0])].dislikes+=1
+        var diff=getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes
+        if(diff<=-2){
+          this.style.background="#CDCDCD"
+          getData[parseInt(pid[0])].dislikes+=diff
+        }else if(diff==-1){
+          this.style.background="#ED4337"
+        }else if(diff==0){
+          this.style.background="#ED4337"
+          getData[parseInt(pid[0])].dislikes+=1
+          document.getElementById(pid[0]+"-upvote").style.background="#CDCDCD"
+        }
+        var gscore=pid[0]+"-score"
+        getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
+        document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+        if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
+          document.getElementById(gscore).style="color:grey;"
+        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
+          document.getElementById(gscore).style="color:green;"
+        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
+          document.getElementById(gscore).style="color:orange;"
+        leave()
+      }
+      bottomDiv.appendChild(downvote)
+      bottomDiv.appendChild(reply)
+      rightDiv.appendChild(bottomDiv)
+      urdiv.appendChild(rightDiv)
+      if(commentCount>9){
+        urdiv.style="display:none;"
+      }
+      commentCount++
+      overall.appendChild(urdiv)
+    }
+    document.getElementById("commentSpace").style.display="none"
   }
-  else if(choice=="replies"){
+  /*else if(choice=="replies"){
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
     var pfil="Reply to: "+currUser.name+"'s"
@@ -1470,7 +1616,7 @@ function filter() {
             coms[i].style.display = "none";
         }
     }
-  }
+  }*/
 }
 </script>
 </html>
