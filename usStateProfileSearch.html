@@ -615,19 +615,19 @@ var stateTemps={"Alabama":{"TEMPF":"62.8","TEMPC":"17.1"},"Alaska":{"TEMPF":"26.
 var cTemp=parseFloat(stateTemps[state.name]["TEMPC"])
 var fTemp=parseFloat(stateTemps[state.name]["TEMPF"])
 document.getElementById("temp").innerHTML=cTemp.toFixed(1)+" degrees celsius, ("+fTemp.toFixed(1)+" degrees farenheit)"
-document.getElementById("tempDiffVal").innerHTML=Math.abs((cTemp-11.96)).toFixed(1)+" degrees celsius, ("+((Math.abs(cTemp-11.96) * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit)"
+document.getElementById("tempDiffVal").innerHTML=Math.abs((cTemp-11.96)).toFixed(1)+" degrees celsius"
 var tempDiffStyle="border: none;"
 text=""
 if((cTemp-11.96)>0.0){
-  document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" ABOVE national average"
+  document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" above national average of"+((11.96 * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit"
 }else if((cTemp-11.96)<0.0){
-    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" BELOW national average"
+    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" below national average of"+((11.96 * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit"
 }else{
-    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" (equal to national average)"
+    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" equal to national average of"+((11.96 * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit"
 }
 if((cTemp-11.96)>5.0){
   //text="Hotter average temp"
-  tempDiffStyle="border: none; color:red;"
+  tempDiffStyle="border: none; color:#8b0000;"
 }else if((cTemp-11.96)<-5.0){
   //text="Colder than average"
   tempDiffStyle="border: none; color:blue;"

@@ -40,7 +40,7 @@
       </div>
       <div style="display:table; margin:0 auto;">
              <button onclick="onCitySearchClick()" style="float: left;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
-             <button onclick="location.href='search.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
+             <!--<button onclick="location.href='search.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>-->
       </div>
       <br>
       <!--<div class="right-text">
@@ -577,19 +577,19 @@ document.getElementById("ageExp").innerHTML=parseFloat(country.ageExp).toFixed(1
 if(country.temp.fTemp==null)
   country.temp.fTemp=(country.temp.cTemp * 9.0 / 5.0) + 32.0
 document.getElementById("temp").innerHTML=parseFloat(country.temp.cTemp).toFixed(1)+" degrees celsius, ("+parseFloat(country.temp.fTemp).toFixed(1)+" degrees farenheit)"
-document.getElementById("tempDiffVal").innerHTML=Math.abs(parseFloat(country.temp.cTemp)-14.9).toFixed(1)+" degrees celsius, ("+((Math.abs(parseFloat(country.temp.cTemp)-14.9) * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit)"
+document.getElementById("tempDiffVal").innerHTML=Math.abs(parseFloat(country.temp.cTemp)-14.9).toFixed(1)+" degrees celsius"
 var tempDiffStyle="border: none;"
 text=""
 if(parseFloat(country.temp.cTemp)-14.9>0.0){
-  document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" ABOVE world average"
+  document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" above world average of "+((14.9 * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit"
 }else if(parseFloat(country.temp.cTemp)-14.9<0.0){
-    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" BELOW world average"
+    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" below world average of "+((14.9 * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit"
 }else{
-    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" (equal to world average)"
+    document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" equal to world average of "+((14.9 * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit"
 }
 if(parseFloat(country.temp.cTemp-14.9)>5.0){
   //text="Hotter average temp"
-  tempDiffStyle="border: none; color:red;"
+  tempDiffStyle="border: none; color:#8b0000;"
 }else if(parseFloat(country.temp.cTemp-14.9)<-5.0){
   //text="Colder than average"
   tempDiffStyle="border: none; color:blue;"
