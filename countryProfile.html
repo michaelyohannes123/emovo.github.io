@@ -738,9 +738,9 @@ function sendMessage(){
     var months = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
-    var month = months[date.getMonth()];
-    var year = date.getFullYear();
-    var stDate = month+" "+day+", "+year
+    var month = date.getMonth()//months[date.getMonth()];
+    var year = date.getFullYear().toString().substr(-2);
+    var stDate = month+"/"+day+"/"+year
     bottomDiv.appendChild(document.createTextNode(", "+stDate+", "))
     var score=document.createElement("span")
     score.id="score"
@@ -960,9 +960,9 @@ function getFirebaseComments(){
         var months = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"
         ];
-        var month = months[date.getMonth()];
-        var year = date.getFullYear();
-        var stDate = month+" "+day+", "+year
+        var month = date.getMonth()//months[date.getMonth()];
+        var year = date.getFullYear().toString().substr(-2);
+        var stDate = month+"/"+day+"/"+year
         var datediv=document.createTextNode(", "+stDate+", ")
         datediv.id=i+"-dateDiv"
         bottomDiv.appendChild(datediv) //bottomDiv
@@ -1433,12 +1433,13 @@ function filter() {
     document.getElementById("updownSort").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
-    var fil = input.value.toUpperCase();
+    var fil = input.value;
+    console.log(fil)
     //console.log(coms)
     for (i = 0; i < coms.length; i++) {
         txtValue = coms[i].innerHTML
         //console.log(txtValue)
-        if (txtValue.toUpperCase().indexOf(fil) > -1) {
+        if (txtValue.indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
             //commentDiv.id=snapshotData[i].profileID+"-commentDiv"
@@ -1463,15 +1464,15 @@ function filter() {
       var months = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
-      var month = months[date.getMonth()];
-      var year = date.getFullYear();
-      var stDate = month+" "+day+", "+year
+      var month = date.getMonth()//months[date.getMonth()];
+      var year = date.getFullYear().toString().substr(-2);
+      var stDate = month+"/"+day+"/"+year
       var dateadd=", "+stDate+", "
       var key=theid[0]+"-"+dateadd
       scoresDict[key]=val
     }
     var orderedScores = Object.keys(scoresDict).map(function(key) {
-      return [key, dict[key]];
+      return [key, scoresDict[key]];
     });
     orderedScores.sort(function(first, second) {
       return second[1] - first[1];
