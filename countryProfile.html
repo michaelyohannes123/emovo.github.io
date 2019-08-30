@@ -214,12 +214,12 @@
     <div style="margin-left:-8px;margin-right:-8px"><hr style="color:Black;background-color:Black;border:0;width:100%;height:1px;" /></div>
     <div id="commentSpace">
       <div class="container" style="margin:0 auto">
-        <div>
+        <!--<div>
           <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="Type keywords">
-        </div>
+        </div>-->
         <div>
           <select id="commentFilter" onchange="filter()">
-            <option value="keywords" selected="selected">Keywords</option>
+            <option value="Newest" selected="selected">Keywords</option>
             <option value="likes">Likes</option>
             <!--<option value="commenter">Commenter</option>
             <option value="replies">Replies to you</option>-->
@@ -884,7 +884,7 @@ var getData=null
 var deleteclicks={}
 var editclicks={}
 var updownvotes={}
-document.getElementById("input").style.display="none"
+//document.getElementById("input").style.display="none"
 document.getElementById("commentFilter").style.display="none"
 getFirebaseComments()
 function getFirebaseComments(){
@@ -1049,7 +1049,7 @@ function getFirebaseComments(){
         }
         commentCount++
         overall.appendChild(urdiv)
-        document.getElementById("input").style.display="block"
+        //document.getElementById("input").style.display="block"
         document.getElementById("commentFilter").style.display="block"
         /*if(currUser!=null)
         {
@@ -1414,7 +1414,7 @@ function filter() {
   var input = document.getElementById("input");
   var fil = input.value.toUpperCase();
   var choice=document.getElementById("commentFilter").value
-  if(choice=="keywords"){
+  /*if(choice=="keywords"){
     document.getElementById("input").style.display="block"
     document.getElementById("updownSort").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
@@ -1435,7 +1435,8 @@ function filter() {
             document.getElementById(urcommentid).style.display="none";
         }
     }
-  }else if(choice=="likes"){
+  }*/
+  if(choice=="likes"){
     document.getElementById("input").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByTagName("span");
