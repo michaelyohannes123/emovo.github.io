@@ -886,7 +886,7 @@ var editclicks={}
 var updownvotes={}
 //document.getElementById("input").style.display="none"
 document.getElementById("commentFilter").style.display="none"
-getFirebaseComments()
+window.onload=getFirebaseComments()
 function getFirebaseComments(){
   var totalStars=0.0
   var starRatingCount=0.0
@@ -1411,8 +1411,8 @@ function getComments(snapshotData2){
   }
 }*/
 function filter() {
-  var input = document.getElementById("input");
-  var fil = input.value.toUpperCase();
+  //var input = document.getElementById("input");
+  //var fil = input.value.toUpperCase();
   var choice=document.getElementById("commentFilter").value
   /*if(choice=="keywords"){
     document.getElementById("input").style.display="block"
