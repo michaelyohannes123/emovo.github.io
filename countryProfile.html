@@ -219,7 +219,7 @@
         </div>-->
         <div>
           <select id="commentFilter" onchange="filter()">
-            <option value="Newest" selected="selected">Keywords</option>
+            <option value="Newest" selected="selected">Newest</option>
             <option value="likes">Likes</option>
             <!--<option value="commenter">Commenter</option>
             <option value="replies">Replies to you</option>-->
@@ -1436,8 +1436,12 @@ function filter() {
         }
     }
   }*/
-  if(choice=="likes"){
-    document.getElementById("input").style.display="none"
+  if(choice=="Newest"){
+    document.getElementById("commentSpace").style.display="block"
+    document.getElementById("updownSort").style.display="none"
+  }
+  else if(choice=="likes"){
+    //document.getElementById("input").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByTagName("span");
     var scoresDict={}
