@@ -740,7 +740,7 @@ function sendMessage(){
     ];
     var month = date.getMonth()//months[date.getMonth()];
     var year = date.getFullYear().toString().substr(-2);
-    var stDate = month+"/"+day+"/"+year
+    var stDate = (month+1)+"/"+day+"/"+year
     bottomDiv.appendChild(document.createTextNode(", "+stDate+", "))
     var score=document.createElement("span")
     score.id="score"
@@ -946,7 +946,7 @@ function getFirebaseComments(){
         ];
         var month = date.getMonth()//months[date.getMonth()];
         var year = date.getFullYear().toString().substr(-2);
-        var stDate = month+"/"+day+"/"+year
+        var stDate = (month+1)+"/"+day+"/"+year
         var datediv=document.createTextNode(", "+stDate+", ")
         datediv.id=i+"-dateDiv"
         bottomDiv.appendChild(datediv) //bottomDiv
@@ -1457,7 +1457,7 @@ function filter() {
       ];
       var month = date.getMonth()//months[date.getMonth()];
       var year = date.getFullYear().toString().substr(-2);
-      var stDate = month+"/"+day+"/"+year
+      var stDate = (month+1)+"/"+day+"/"+year
       var dateadd=", "+stDate+", "
       var key=theid[0]+"-"+dateadd
       scoresDict[key]=val
@@ -1469,13 +1469,14 @@ function filter() {
       return second[1] - first[1];
     });
     var commentCount=0
-    //console.log(orderedScores)
+    console.log(orderedScores)
     for(var ky in Object.keys(orderedScores)){
       var overall=document.getElementById("updownSort")
       if(i<=9){
         overall.appendChild(document.createElement("br"))
       }
       var parse=Object.keys(orderedScores)[ky].split("-")
+      console.log(parse)
       var likedislikeval=orderedScores[ky]//like-dislike
       var i=parse[0]//id
       var dateval=parse[1]//date
