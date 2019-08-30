@@ -750,7 +750,7 @@ function sendMessage(){
     else if(aComment.likes-aComment.dislikes>0)
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
-      score.style="color:orange;"
+      score.style="color:red;"
     var trash=document.createElement("button")
       trash.id=aComment.profileID+"-trash"
       var ticon=document.createElement("i")
@@ -902,6 +902,8 @@ var getData=null
 var deleteclicks={}
 var editclicks={}
 var updownvotes={}
+document.getElementById("input").style.display="none"
+document.getElementById("commentFilter").style.display="none"
 getFirebaseComments()
 function getFirebaseComments(){
   var totalStars=0.0
@@ -974,7 +976,7 @@ function getFirebaseComments(){
         else if(snapshotData[i].likes-snapshotData[i].dislikes>0)
           score.style="color:green;"
         else if(snapshotData[i].likes-snapshotData[i].dislikes<0)
-          score.style="color:orange;"
+          score.style="color:red;"
         bottomDiv.appendChild(score)
         bottomDiv.appendChild(document.createTextNode(", "))
         //check if if(currUser["jd"]) exists
@@ -1020,7 +1022,7 @@ function getFirebaseComments(){
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
             document.getElementById(gscore).style="color:green;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-            document.getElementById(gscore).style="color:orange;"
+            document.getElementById(gscore).style="color:red;"
           leave()
         }
         bottomDiv.appendChild(upvote)
@@ -1053,7 +1055,7 @@ function getFirebaseComments(){
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
             document.getElementById(gscore).style="color:green;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-            document.getElementById(gscore).style="color:orange;"
+            document.getElementById(gscore).style="color:red;"
           leave()
         }
         bottomDiv.appendChild(downvote)
@@ -1065,6 +1067,8 @@ function getFirebaseComments(){
         }
         commentCount++
         overall.appendChild(urdiv)
+        document.getElementById("input").style.display="block"
+        document.getElementById("commentFilter").style.display="block"
         /*if(currUser!=null)
         {
           reply.onclick=function(){
@@ -1434,17 +1438,17 @@ function filter() {
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
     var fil = input.value;
-    console.log(fil)
+    //console.log(fil)
     //console.log(coms)
     for (i = 0; i < coms.length; i++) {
-        txtValue = coms[i].innerHTML
+        var theid=coms[i].id.split("-")
+        txtValue = getData[parseInt(theid)].text
         //console.log(txtValue)
         if (txtValue.indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
             //commentDiv.id=snapshotData[i].profileID+"-commentDiv"
             //urdiv.id=i+"-comment"
-            var theid=coms[i].id.split("-")
             var urcommentid=theid[0]+"-comment"
             document.getElementById(urcommentid).style.display="none";
         }
@@ -1478,7 +1482,7 @@ function filter() {
       return second[1] - first[1];
     });
     var commentCount=0
-    console.log(orderedScores)
+    //console.log(orderedScores)
     for(var ky in orderedScores){
       var overall=document.getElementById("updownSort")
       if(i<=9){
@@ -1490,7 +1494,9 @@ function filter() {
       var dateval=parse[1]//date
       var pretextid=i+"-commentDiv" //text
       var precommentid=i+"-comment"
-      var text=document.getElementById(pretextid).innerHTML
+      console.log(precommentid)
+      console.log(document.getElementById(precommentid))
+      var text=getData[i]["text"]
       document.getElementById(precommentid).style.display="none"
       updownvotes[i]=0
       var urdiv = document.createElement("div")
@@ -1527,7 +1533,7 @@ function filter() {
       else if(parseInt(likedislikeval)>0)
         score.style="color:green;"
       else if(parseInt(likedislikeval)<0)
-        score.style="color:orange;"
+        score.style="color:red;"
       bottomDiv.appendChild(score)
       bottomDiv.appendChild(document.createTextNode(", "))
       //check if if(currUser["jd"]) exists
@@ -1573,7 +1579,7 @@ function filter() {
         else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
           document.getElementById(gscore).style="color:green;"
         else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-          document.getElementById(gscore).style="color:orange;"
+          document.getElementById(gscore).style="color:red;"
         leave()
       }
       bottomDiv.appendChild(upvote)
@@ -1606,7 +1612,7 @@ function filter() {
         else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
           document.getElementById(gscore).style="color:green;"
         else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-          document.getElementById(gscore).style="color:orange;"
+          document.getElementById(gscore).style="color:red;"
         leave()
       }
       bottomDiv.appendChild(downvote)
