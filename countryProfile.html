@@ -940,7 +940,17 @@ function getFirebaseComments(){
         commentDiv.appendChild(document.createTextNode(snapshotData[i].text))
         rightDiv.appendChild(commentDiv)
         var bottomDiv=document.createElement("div")
-        bottomDiv.appendChild(document.createTextNode("By "))
+        var bytext="By "
+        if(isNaN(aComment.starVal)){}
+        else{
+         if(aComment.starVal!=null){
+          if(aComment.starVal!=-1.0){
+            bytext="(Rated "+snapshotData[i].starVal+" stars), By "
+          }
+         }
+        }
+        //console.log(bytext)
+        bottomDiv.appendChild(document.createTextNode(bytext))
         var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
         var date = new Date(snapshotData[i].date);
@@ -952,7 +962,7 @@ function getFirebaseComments(){
         var year = date.getFullYear();
         var stDate = month+" "+day+", "+year
         var datediv=document.createTextNode(", "+stDate+", ")
-        datediv.id=snapshotData[i].profileID+"-dateDiv"
+        datediv.id=i+"-dateDiv"
         bottomDiv.appendChild(datediv) //bottomDiv
         var score=document.createElement("span")
         score.id=i+"-score"
