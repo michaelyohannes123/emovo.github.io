@@ -35,7 +35,7 @@
       </div>
       <div style="display:table; margin:0 auto;">
              <button onclick="onCitySearchClick()" style="float: left;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
-             <button onclick="input.html" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
+             <button onclick="location.href='input.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
       </div>
       <br>
       <!--<div class="right-text">
@@ -507,7 +507,7 @@ var stateCapitals={
 var state=JSON.parse(localStorage.getItem("state"))
 document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=best-places-to-live-in-"+state.name.replace(" "+"-")+"&autoplay=1"
 //document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=living-in-"+state.name.replace(" "+"-")+"&autoplay=1"
-//console.log(state)
+////console.log(state)
 document.getElementById("starsRating").reset()
 if(state.name!="District of Columbia"){
     document.getElementById("flaglink").src=state.flaglink
@@ -524,7 +524,7 @@ document.getElementById("avgIncomeDiffVal").innerHTML="$"+(localStorage.monthlyI
 var avgIncomeDiffStyle="border: none; color:green;"
 var text=""
 var fract=state.avgIncome/(localStorage.monthlyIncomeUS*12.0)
-//console.log(fract+"")
+////console.log(fract+"")
 if(fract<.25){
   text="Looking at income alone, your economic status is very above average"
   avgIncomeDiffStyle="border: none; color:green;"
@@ -559,17 +559,13 @@ else if(state.medianDiff>=state.medianPropertyCost/12.0){
   text+=", housing is affordable"
   medianDiffStyle="border: none; color:green;"
 }
-else if(state.medianDiff>=0.0){
+else if(state.medianDiff>=-state.medianPropertyCost/12.0){
   text+=", housing is somewhat average"
   medianDiffStyle="border: none; color:orange;"
 }
-else if(state.medianDiff<=-state.medianPropertyCost/6.0){
-  text+=", housing is not affordable"
+else if(state.medianDiff<-state.medianPropertyCost/12.0){
+  text+=", housing is not too affordable"
   medianDiffStyle="border: none; color:red;"
-}
-else if(state.medianDiff<=-state.medianPropertyCost/12.0){
-    text+=", housing is not very affordable"
-    medianDiffStyle="border: none; color:red;"
 }
 document.getElementById("medianDiffVal").innerHTML=text//"$"+state.medianDiff.toFixed(2)
 document.getElementById("medianDiff").style=medianDiffStyle
@@ -653,7 +649,7 @@ function sendMessage(){
   var ptext=document.getElementById("yourComment").value
   try{
     starval=parseInt($("input[name='star']:checked").val())
-    //console.log(starval)
+    ////console.log(starval)
     if(isNaN(starval)){
       starval=-1.0
     }
@@ -707,7 +703,7 @@ function sendMessage(){
       }
      }
     }
-    //console.log(bytext)
+    ////console.log(bytext)
     bottomDiv.appendChild(document.createTextNode(bytext))
     //var n = document.createElement('a');
     var lt = document.createTextNode(profileID);
@@ -732,7 +728,7 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:red;"
-    //console.log("complete")
+    ////console.log("complete")
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -751,7 +747,7 @@ function getFirebaseComments(){
   var ref=firebase.database().ref().child("states").child(state.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
@@ -793,7 +789,7 @@ function getFirebaseComments(){
           }
          }
         }
-        //console.log(bytext)
+        ////console.log(bytext)
         bottomDiv.appendChild(document.createTextNode(bytext))
         var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
@@ -828,7 +824,7 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          //console.log(getData[rid[0]])
+          ////console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
             document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
           else
@@ -926,7 +922,7 @@ function leave(){
   var ref=firebase.database().ref().child("states").child(state.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i]

@@ -266,8 +266,9 @@ function onSearchClick(){ //begin a city search, grab city list here and pass it
           if(snapshotData==null){
             skip()
           }else{
-            if(snapshotData.length==0)
+            if(snapshotData.length==0){
               skip()
+            }
             for(var s in snapshotData){
               citiesDataList[snapshotData[s].name]=snapshotData[s]
               citiesList.push(snapshotData[s].name)
@@ -377,7 +378,7 @@ function findCity()
 function skip(){
   document.getElementById("load").style.display="none"
   if(states.indexOf(choice)>-1){
-    localStorage.setItem('USStateSearch',choice);
+    localStorage.setItem('currStateSearch',choice);
     localStorage.searchtype="state"
   }else{
     localStorage.setItem('worldCountrySearch',choice);

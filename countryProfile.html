@@ -45,7 +45,7 @@
       </div>
       <div style="display:table; margin:0 auto;">
              <button onclick="onCitySearchClick()" style="float: left;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
-             <button onclick="input.html" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
+             <button onclick="location.href='input.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
       </div>
       <br>
       <!--<div class="right-text">
@@ -489,7 +489,7 @@ function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyLi
 var country=JSON.parse(localStorage.getItem("nation"))
 document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list="+country.name.replace(" "+"-")+"-country&autoplay=1"
 //document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=living-in-"+country.name.replace(" "+"-")+"&autoplay=1"
-//console.log(country)
+////console.log(country)
 document.getElementById("starsRating").reset()
 document.getElementById("flaglink").src=country.flaglink
 document.getElementById("sname").innerHTML=country.name
@@ -672,7 +672,7 @@ function sendMessage(){
   var ptext=document.getElementById("yourComment").value
   try{
     starval=parseInt($("input[name='star']:checked").val())
-    //console.log(starval)
+    ////console.log(starval)
     if(isNaN(starval)){
       starval=-1.0
     }
@@ -726,7 +726,7 @@ function sendMessage(){
       }
      }
     }
-    //console.log(bytext)
+    ////console.log(bytext)
     bottomDiv.appendChild(document.createTextNode(bytext))
     //var n = document.createElement('a');
     var lt = document.createTextNode(profileID);
@@ -751,7 +751,7 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:red;"
-    //console.log("complete")
+    ////console.log("complete")
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -762,7 +762,7 @@ function sendMessage(){
     var ptext=document.getElementById("yourComment").value
     try{
       starval=parseInt($("input[name='star']:checked").val())
-      console.log(starval)
+      //console.log(starval)
       if(isNaN(starval)){
         starval=-1.0
       }
@@ -776,7 +776,7 @@ function sendMessage(){
     window.crypto.getRandomValues(array);
     var uid=array[0]
     //var sRef = //send for users to see
-      //console.log(snapshotData)
+      ////console.log(snapshotData)
         var sRef2 = firebase.database().ref().child("users").child(currUser["id"])//check if user in database
         sRef2.on("value", function(snapshot2, prevChildKey) {
           var snapshotData2 = snapshot2.val();
@@ -791,7 +791,7 @@ function sendMessage(){
             var year = date.getFullYear();
             var stDate = month+" "+day+", "+year
             currUser["joinDate"] = stDate;
-            //console.log(month);
+            ////console.log(month);
             sRef3.child("users").child(currUser["id"]).set({
               "id":currUser["id"],
               "name":currUser["name"],
@@ -801,13 +801,13 @@ function sendMessage(){
             })
           }else{
             var sRef5 = firebase.database().ref().child("users").child(currUser["id"]).child("comments").child(uid)
-            console.log(aComment.starVal)
+            //console.log(aComment.starVal)
             sRef5.on("value", function(snapshot, prevChildKey) {//set it to profile
               var snapshotDataC = snapshot.val();
               sRef5.set({aComment})
               firebase.database().ref().child("countries").child(country.name).child("comments").child(uid).set({aComment})
             })
-            //console.log(snapshotData2)
+            ////console.log(snapshotData2)
           }
         })
     //})
@@ -844,7 +844,7 @@ function sendMessage(){
         }
        }
       }
-      //console.log(bytext)
+      ////console.log(bytext)
       bottomDiv.appendChild(document.createTextNode(bytext))
       var n = document.createElement('a');
       var lt = document.createTextNode(currUser.name);
@@ -893,7 +893,7 @@ function getFirebaseComments(){
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
@@ -935,7 +935,7 @@ function getFirebaseComments(){
           }
          }
         }
-        //console.log(bytext)
+        ////console.log(bytext)
         bottomDiv.appendChild(document.createTextNode(bytext))
         var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
@@ -970,7 +970,7 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          //console.log(getData[rid[0]])
+          ////console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
             document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
           else
@@ -1185,7 +1185,7 @@ function leave(){
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i]
@@ -1422,12 +1422,12 @@ function getComments(snapshotData2){
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
     var fil = input.value;
-    //console.log(fil)
-    //console.log(coms)
+    ////console.log(fil)
+    ////console.log(coms)
     for (i = 0; i < coms.length; i++) {
         var theid=coms[i].id.split("-")
         txtValue = getData[parseInt(theid)].text
-        //console.log(txtValue)
+        ////console.log(txtValue)
         if (txtValue.indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
@@ -1447,7 +1447,7 @@ function getComments(snapshotData2){
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByTagName("span");
     var scoresDict={}
-    //console.log(coms)
+    ////console.log(coms)
     for (i = 0; i < coms.length; i++) {
       var theid=coms[i].id.split("-")
       var gscoreid=theid[0]+"-score"
@@ -1477,16 +1477,16 @@ function getComments(snapshotData2){
         overall.appendChild(document.createElement("br"))
       }
       var parse=Object.keys(orderedScores)[ky]
-      console.log(parse)
-      console.log(parse[ky])
+      //console.log(parse)
+      //console.log(parse[ky])
       var likedislikeval=parse[ky][1]//like-dislike
       var i=parse[ky][0].split("-")[0]//id
-      console.log(i)
+      //console.log(i)
       var dateval=parse[ky][0].split("-")[1]//date
       var pretextid=i+"-commentDiv" //text
       var precommentid=i+"-comment"
-      console.log(precommentid)
-      console.log(document.getElementById(precommentid))
+      //console.log(precommentid)
+      //console.log(document.getElementById(precommentid))
       var text=getData[i]["text"]
       document.getElementById(precommentid).style.display="none"
       updownvotes[i]=0
@@ -1536,7 +1536,7 @@ function getComments(snapshotData2){
       reply.style="w3-button"
       reply.onclick=function(){
         var rid=this.id.split("-")
-        //console.log(getData[rid[0]])
+        ////console.log(getData[rid[0]])
         if(getData[rid[0]].text.length<=50)
           document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
         else
@@ -1613,10 +1613,10 @@ function getComments(snapshotData2){
     var coms = commentSpace.getElementsByClassName("comment-body");
     var pfil="Reply to: "+currUser.name+"'s"
     var fil=pfil.toUpperCase()
-    //console.log(coms)
+    ////console.log(coms)
     for (i = 0; i < coms.length; i++) {
         txtValue = coms[i].innerHTML
-        //console.log(txtValue)
+        ////console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {

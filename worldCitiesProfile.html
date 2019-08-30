@@ -27,9 +27,6 @@
           Data regarding worldwide cities is pretty sparse, so it is especicially important that residents or those knowledgeable of the area post in the comments and review to provide a helpful view of this city to others! Conversely, be sure to look in the comments for more specific details from those who lived there. if you wish to re-enter data click the "Input New Data" button below.
         </p>
       </div>
-      <div style="display:table; margin:0 auto;">
-             <button onclick="back()" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
-      </div>
       <br>
       <div style="display:table; margin: auto;">
         <p>Featured Location Video</p>
@@ -381,7 +378,7 @@ function sendMessage(){
   var ptext=document.getElementById("yourComment").value
   try{
     starval=parseInt($("input[name='star']:checked").val())
-    //console.log(starval)
+    ////console.log(starval)
     if(isNaN(starval)){
       starval=-1.0
     }
@@ -435,7 +432,7 @@ function sendMessage(){
       }
      }
     }
-    //console.log(bytext)
+    ////console.log(bytext)
     bottomDiv.appendChild(document.createTextNode(bytext))
     //var n = document.createElement('a');
     var lt = document.createTextNode(profileID);
@@ -460,7 +457,7 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:red;"
-    //console.log("complete")
+    ////console.log("complete")
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -481,7 +478,7 @@ function getFirebaseComments(){
   var ref=firebase.database().ref().child("worldCities").child(city.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
@@ -523,7 +520,7 @@ function getFirebaseComments(){
           }
          }
         }
-        //console.log(bytext)
+        ////console.log(bytext)
         bottomDiv.appendChild(document.createTextNode(bytext))
         var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
@@ -558,7 +555,7 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          //console.log(getData[rid[0]])
+          ////console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
             document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
           else
@@ -656,7 +653,7 @@ function leave(){
   var ref=firebase.database().ref().child("worldCities").child(city.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i]
@@ -885,10 +882,10 @@ function filter() {
   if(choice=="keywords"){
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
-    console.log(coms)
+    //console.log(coms)
     for (i = 0; i < coms.length; i++) {
         txtValue = coms[i].innerHTML
-        console.log(txtValue)
+        //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
@@ -900,10 +897,10 @@ function filter() {
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
     var fil = input.value.toUpperCase();
-    console.log(coms)
+    //console.log(coms)
     for (i = 0; i < coms.length; i++) {
         txtValue = coms[i].innerHTML
-        console.log(txtValue)
+        //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
@@ -914,10 +911,10 @@ function filter() {
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByTagName("a");
     var fil = input.value.toUpperCase();
-    console.log(coms)
+    //console.log(coms)
     for (i = 0; i < coms.length; i++) {
         txtValue = coms[i].innerHTML
-        console.log(txtValue)
+        //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
@@ -930,10 +927,10 @@ function filter() {
     var coms = commentSpace.getElementsByClassName("comment-body");
     var pfil="Reply to: "+"Michael"+"'s"//currUser
     var fil=pfil.toUpperCase()
-    console.log(coms)
+    //console.log(coms)
     for (i = 0; i < coms.length; i++) {
         txtValue = coms[i].innerHTML
-        console.log(txtValue)
+        //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             coms[i].style.display = "";
         } else {
@@ -944,13 +941,13 @@ function filter() {
       var items = Object.keys(getData).map(function(key) {
         return [key, getData[key]];
       });
-      console.log(items)
+      //console.log(items)
       items.sort(function(s1,s2) {
         var s1diff=s1[1].aComment.likes-s1[1].aComment.dislikes
         var s2diff=s2[1].aComment.likes-s2[1].aComment.dislikes
         return s2diff-s1diff
       });
-      console.log(items)
+      //console.log(items)
       document.getElementById("commentSpace").style.display="none"
       getComments(items)
     }*/

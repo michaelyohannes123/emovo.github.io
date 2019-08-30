@@ -133,7 +133,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
 /*var isIn=isLoggedIn();
-console.log(isIn)
+//console.log(isIn)
 var account={};
 if(isIn==false){
   document.getElementById("gsignin2").style = "display: block;";
@@ -166,7 +166,7 @@ function onSignIn() {
   var sRef = firebase.database().ref().child("users")
   sRef.on("value", function(snapshot, prevChildKey) {
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData==null){ //database doesnt exist
       var date = new Date();
       var day = date.getDate();
@@ -206,7 +206,7 @@ function onSignIn() {
           currUser["joinDate"] = stDate;
           document.getElementById("joinDate").innerHTML="Join Date: "+currUser["joinDate"]
           document.getElementById("commentHistory").innerHTML="No recorded comments yet"
-          //console.log(month);
+          ////console.log(month);
           sRef3.child("users").set({
             "id":currUser["id"],
             "name":currUser["name"],

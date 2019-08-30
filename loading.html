@@ -670,17 +670,17 @@ if(stayInUS==true){
     enRankSort.sort(function(s1, s2) {
       return s1[1].enRank-s2[1].enRank;
     });
-    console.log(sortedStates[0][1].ecRank)
+    //console.log(sortedStates[0][1].ecRank)
     for(var k=0; k<sortedStates.length; k++){
       var name=sortedStates[k][1].name
-      console.log(name+" "+ecRankSort)
+      //console.log(name+" "+ecRankSort)
       var ec=0
       var ch=0
       var ph=0
       var en=0
       for(var k2=0; k2<ecRankSort; k2++){
         if(ecRankSort[k2][0]==name){
-          console.log(name+" "+ecRankSort[k2][0])
+          //console.log(name+" "+ecRankSort[k2][0])
           break
         }
         ec++
@@ -705,19 +705,19 @@ if(stayInUS==true){
       }
       sortedStates[k][1].enRank=en+1
     }
-    /*console.log(sortedStates)
-    console.log(sortedStates[0][1].name)
-    console.log(sortedStates[0][1].ecRank)
-    console.log(sortedStates[0][1].chRank)
-    console.log(sortedStates[0][1].phRank)
-    console.log(sortedStates[0][1].enRank)*/
+    /*//console.log(sortedStates)
+    //console.log(sortedStates[0][1].name)
+    //console.log(sortedStates[0][1].ecRank)
+    //console.log(sortedStates[0][1].chRank)
+    //console.log(sortedStates[0][1].phRank)
+    //console.log(sortedStates[0][1].enRank)*/
     localStorage.removeItem("sortedStates")
     localStorage.sortedStates=JSON.stringify(sortedStates)
     //var t=JSON.parse(localStorage.sortedStates)
-    //console.log(t)
+    ////console.log(t)
     //console(t[0][1].name)
     localStorage.type="state"
-    //console.log(sortedStates)
+    ////console.log(sortedStates)
     window.location.replace("nationstatesDisplay.html")
   });
 }else{
@@ -727,7 +727,7 @@ if(stayInUS==true){
   var countries={}
   sRef.on("value", function(snapshot, prevChildKey) {
     countriesList = snapshot.val()//.slice(-50);
-    //console.log(countriesList)
+    ////console.log(countriesList)
     document.getElementById("worldLength").innerHTML="Searching "+Object.keys(countriesList).length+" countries..."
     var coop=0;
     for(var c in countriesList){
@@ -828,7 +828,7 @@ if(stayInUS==true){
           }
         }
       }
-      //console.log(co.name)
+      ////console.log(co.name)
       countries[co.name].incomeDiff=Math.abs(yearlyIncome-countries[co.name].gni)
       var tempsManualC={"Åland Islands":5.4,"Bonaire, Sint Eustatius and Saba":27.5,"Curaçao":29.5,"Holy See":14.65,"Republic of Kosovo":9.5,"Saint Martin (French part)":26.5,"Sint Maarten (Dutch part)":26.5,"Saint Pierre and Miquelon":5.06,"South Sudan":29.9}
       var tempAvgC=0.0
@@ -864,7 +864,7 @@ if(stayInUS==true){
        }else{
        countries[co.name].tempDiff=Math.abs(countries[co.name].temp.cTemp-14.9)
       }
-      //console.log(co.name)
+      ////console.log(co.name)
 }
     }
     var items = Object.keys(countries).map(function(key) {
@@ -995,7 +995,7 @@ if(stayInUS==true){
       var temp=parseFloat(found[0])
       var country=gniSort[ind][1]
       var prerankAvg=(preinc+age+free+hdi+high+low+sales+crime+temp+housing)/(parseFloat(gniSort.length))
-      //console.log(ind+" "+country.name+" "+country.gni)
+      ////console.log(ind+" "+country.name+" "+country.gni)
       country.rankAvg=(inc+age+free+hdi+high+low+sales+crime+temp+housing)/(parseFloat(gniSort.length))
       country.percentMatch=((Math.abs(gniSort.length-country.rankAvg))/(parseFloat(gniSort.length)))*100.0
       /*if(country.gini==null)
@@ -1041,7 +1041,7 @@ if(stayInUS==true){
       return s1[1].rankAvg-s2[1].rankAvg;
     });
     var sortedCountries=items
-    console.log(sortedCountries)
+    //console.log(sortedCountries)
     localStorage.removeItem("sortedCountries")
     localStorage.setItem("type","nation")
     localStorage.setItem("sortedCountries",JSON.stringify(sortedCountries))

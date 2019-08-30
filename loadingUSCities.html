@@ -160,16 +160,16 @@ function getCities(currState,citiesUrl,startIndex){
     dataType: 'json',
     success: function (json) {
       //document.getElementById("worldLength").innerHTML="Searching "+Object.keys(json.data).length+" cities in "+currState.name+"..."
-      //console.log(json.data)
-      //console.log(currState.avgIncome+"")
+      ////console.log(json.data)
+      ////console.log(currState.avgIncome+"")
       var keysData=Object.keys(json.data)
       var d=new Date();
       var startTime=d.getTime()
       for(var index=startIndex; index<keysData.length; index++){
         var newDate=new Date();
-        console.log((newDate.getTime()-startTime)+"")
+        //console.log((newDate.getTime()-startTime)+"")
         if(newDate.getTime()-startTime>=20.0*1000){
-          //console.log("hello")
+          ////console.log("hello")
           return true;
         }
         var c=json.data[keysData[index]]
@@ -180,7 +180,7 @@ function getCities(currState,citiesUrl,startIndex){
         currState.popPerMentalHealthRatio,currState.popOtherHealthRatio,currState.healthCareCost,currState.violentCrime,currState.foodHealthIndex,currState.exerciseAccess,currState.pollution,
         currState.socialGroup,currState.diabeticScreening,currState.mammogramScreening,currState.waterViolations,currState.housingIssues,currState.meanCommute,
         currState.foodInsecurity,currState.limitedFoodAccess,currState.unemploymentRate,currState.popHealth,null,null,[],null,null,null)
-        //console.log(city)
+        ////console.log(city)
         var avgIncome=0.0
         var medianPropertyCost=0.0
         var popPerDoctorRatio=0.0
@@ -230,7 +230,7 @@ function getCities(currState,citiesUrl,startIndex){
                       avgIncome += data[i][2]
                     }
           }
-          //console.log(avgIncome+"")
+          ////console.log(avgIncome+"")
           if(size==0.0){
             incomeUrl="https://api.datausa.io/api/join/?required=income&show=geo&geo="+countyId
             $.ajax({
@@ -1042,7 +1042,7 @@ function getCities(currState,citiesUrl,startIndex){
                                                         "comments":[]
                                                         "popHealth":city.popHealth,
                                                       }*/
-                                                      console.log(ret[city.name])
+                                                      //console.log(ret[city.name])
                                                     }
                                                 });
                                               }
@@ -1335,23 +1335,23 @@ function findOptimalCities(citiesData){
     var city=avgIncomeSort[ind][1]
     prerankAvg=(preins+prempc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph)/(parseFloat(avgIncomeSort.length))
     city.rankAvg=(ins+mpc + ppdrr + ppdr + ppmhr + pohr + hcc + vc + fhi + ea + p + sg + ds + ms + wv+hi+mc+fi+lfa+ur+ph)/(parseFloat(avgIncomeSort.length))
-    console.log(city.rankAvg+"")
+    ////console.log(city.rankAvg+"")
     city.percentMatch=((Math.abs(avgIncomeSort.length-city.rankAvg))/(parseFloat(avgIncomeSort.length)))*100.0
     toSort[city.name]=city
   }
   items = Object.keys(toSort).map(function(key) {
     return [key, citiesData[key]];
   });
-  console.log(items)
+  ////console.log(items)
   items.sort(function(s1, s2) {
     return s1[1].rankAvg-s2[1].rankAvg;
   });
   var sortedCities=items
-  //console.log(sortedCities)
+  ////console.log(sortedCities)
   return sortedCities
 }
 var currState=JSON.parse(localStorage.getItem('currState'))
-console.log(currState)
+////console.log(currState)
 if(currState==null){
   alert("You haven't selected a state.")
   window.history.back()
@@ -1380,6 +1380,7 @@ if(localStorage.yourSavingsUS!=null){
 }
 //make sure account for us virgin islands
 var sRef = firebase.database().ref(currState.name)
+document.getElementById("worldLength").innerHTML="Unpacking "+currState.name+" cities data (city count varies based on consistent updates). As a result, rankings may not as fully encapsulate the state as best as it could. Thanks for your patience!"
 sRef.once("value", function(snapshot, prevChildKey) {
   var snapshotData = snapshot.val()
   var snapLen=0
@@ -1388,20 +1389,20 @@ sRef.once("value", function(snapshot, prevChildKey) {
   }
   var citiesData={}
   var citiesUrl ="https://api.datausa.io/attrs/geo/"+currState.id+"/children/?sumlevel=160" //"http://api.datausa.io/attrs/geo/"+currState.id+"/children/?sumlevel=160"
-  console.log(citiesUrl)
+  //console.log(citiesUrl)
   var fullDataLen=0
   $.ajax({
       url: citiesUrl,
       async: false,
       dataType: 'json',
       success: function (json) {
-        console.log("len")
-        console.log(json.data)
+        //console.log("len")
+        //console.log(json.data)
         fullDataLen=Object.keys(json.data).length
   }})
-  console.log(fullDataLen)
+  //console.log(fullDataLen)
   if(fullDataLen<=snapLen){//all data added to database
-    console.log(snapshotData)
+    //console.log(snapshotData)
     citiesData=snapshotData
     document.getElementById("worldLength").innerHTML="Searching "+snapLen+" cities in "+currState.name+"..."
     //default data
@@ -1415,11 +1416,11 @@ sRef.once("value", function(snapshot, prevChildKey) {
         citiesData[sd]=snapshotData[sd]
       }
       sortedData=findOptimalCities(citiesData)
-      console.log(sortedData)
+      //console.log(sortedData)
     }else{
       citiesData=getCities(currState, citiesUrl,0) //return dictionary of key:city name, val:usCity obj
       sortedData=findOptimalCities(citiesData)
-      console.log(sortedData)
+      //console.log(sortedData)
     }
     var tempData={}
     for(var t in citiesData){

@@ -40,7 +40,7 @@
       </div>
       <div style="display:table; margin:0 auto;">
              <button onclick="onCitySearchClick()" style="float: left;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
-             <button onclick="search.html" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
+             <button onclick="location.href='search.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
       </div>
       <br>
       <!--<div class="right-text">
@@ -462,7 +462,7 @@ function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyLi
 var country=JSON.parse(localStorage.getItem("nationSearch"))
 document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list="+country.name.replace(" "+"-")+"-country&autoplay=1"
 //document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=living-in-"+country.name.replace(" "+"-")+"&autoplay=1"
-//console.log(country)
+////console.log(country)
 document.getElementById("starsRating").reset()
 document.getElementById("flaglink").src=country.flaglink
 document.getElementById("sname").innerHTML=country.name
@@ -524,7 +524,7 @@ document.getElementById("median").innerHTML="$"+(housingList[country.name]*31.0)
 var avgIncomeDiffStyle="border: none; color:green;"
 document.getElementById("medianDiff").style=avgIncomeDiffStyle
 document.getElementById("tooltiptextmedianDiff").innerHTML="Better than average"*/
-console.log(country)
+//console.log(country)
 if(isNaN(country.taxRates)){
   if(isNaN(country.highIncomeTax)){
     document.getElementById("higherIncomeTax").style.display="none"
@@ -626,7 +626,7 @@ function sendMessage(){
   var ptext=document.getElementById("yourComment").value
   try{
     starval=parseInt($("input[name='star']:checked").val())
-    //console.log(starval)
+    ////console.log(starval)
     if(isNaN(starval)){
       starval=-1.0
     }
@@ -680,7 +680,7 @@ function sendMessage(){
       }
      }
     }
-    //console.log(bytext)
+    ////console.log(bytext)
     bottomDiv.appendChild(document.createTextNode(bytext))
     //var n = document.createElement('a');
     var lt = document.createTextNode(profileID);
@@ -705,7 +705,7 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:red;"
-    //console.log("complete")
+    ////console.log("complete")
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -724,7 +724,7 @@ function getFirebaseComments(){
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
@@ -766,7 +766,7 @@ function getFirebaseComments(){
           }
          }
         }
-        //console.log(bytext)
+        ////console.log(bytext)
         bottomDiv.appendChild(document.createTextNode(bytext))
         var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
@@ -801,7 +801,7 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          //console.log(getData[rid[0]])
+          ////console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
             document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
           else
@@ -899,7 +899,7 @@ function leave(){
   var ref=firebase.database().ref().child("countries").child(country.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i]

@@ -36,7 +36,7 @@
       </div>
       <div style="display:table; margin:0 auto;">
              <button onclick="onCitySearchClick()" style="float: left;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
-             <button onclick="search.html" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
+             <button onclick="location.href='search.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
       </div>
       <br>
       <!--<div class="right-text">
@@ -502,15 +502,18 @@ var stateCapitals={
   'Wisconsin': 'Madison',
   'Wyoming': 'Cheyenne'
 }
+var statePropertyTaxes={"Hawaii":{"PROPERTY":0.27},"Alabama":{"PROPERTY":0.42},"Louisiana":{"PROPERTY":0.52},"Colorado":{"PROPERTY":0.55},"District of Columbia":{"PROPERTY":0.55},"Delaware":{"PROPERTY":0.56},"South Carolina":{"PROPERTY":0.57},"West Virginia":{"PROPERTY":0.59},"Wyoming":{"PROPERTY":0.61},"Arkansas":{"PROPERTY":0.63},"Utah":{"PROPERTY":0.66},"Nevada":{"PROPERTY":0.69},"Arizona":{"PROPERTY":0.72},"Tennessee":{"PROPERTY":0.74},"Idaho":{"PROPERTY":0.75},"California":{"PROPERTY":0.77},"New Mexico":{"PROPERTY":0.78},"Virginia":{"PROPERTY":0.8},"Mississippi":{"PROPERTY":0.8},"Montana":{"PROPERTY":0.84},"North Carolina":{"PROPERTY":0.86},"Kentucky":{"PROPERTY":0.86},"Indiana":{"PROPERTY":0.87},"Oklahoma":{"PROPERTY":0.9},"Georgia":{"PROPERTY":0.91},"Florida":{"PROPERTY":0.98},"Missouri":{"PROPERTY":0.99},"North Dakota":{"PROPERTY":1.01},"Washington":{"PROPERTY":1.03},"Oregon":{"PROPERTY":1.04},"Maryland":{"PROPERTY":1.1},"Minnesota":{"PROPERTY":1.15},"Alaska":{"PROPERTY":1.19},"Massachusetts":{"PROPERTY":1.22},"South Dakota":{"PROPERTY":1.32},"Maine":{"PROPERTY":1.35},"Kansas":{"PROPERTY":1.4},"Iowa":{"PROPERTY":1.53},"Ohio":{"PROPERTY":1.57},"Pennsylvania":{"PROPERTY":1.58},"Michigan":{"PROPERTY":1.64},"Rhode Island":{"PROPERTY":1.66},"New York":{"PROPERTY":1.68},"Nebraska":{"PROPERTY":1.8},"Texas":{"PROPERTY":1.83},"Vermont":{"PROPERTY":1.83},"Wisconsin":{"PROPERTY":1.94},"Connecticut":{"PROPERTY":2.07},"New Hampshire":{"PROPERTY":2.2},"Illinois":{"PROPERTY":2.31},"New Jersey":{"PROPERTY":2.44}}
+var stateSalesTaxes={"Alabama":{"SALES":8.75},"Alaska":{"SALES":3.5},"Arizona":{"SALES":8.1625},"Arkansas":{"SALES":9.0625},"California":{"SALES":8.75},"Colorado":{"SALES":6.45},"Connecticut":{"SALES":6.35},"Delaware":{"SALES":0},"District of Columbia":{"SALES":5.75},"Florida":{"SALES":6.75},"Georgia":{"SALES":6},"Guam":{"SALES":4},"Hawaii":{"SALES":4.439},"Idaho":{"SALES":7.25},"Illinois":{"SALES":8.25},"Indiana":{"SALES":7},"Iowa":{"SALES":6.5},"Kansas":{"SALES":9},"Kentucky":{"SALES":6},"Louisiana":{"SALES":7.949999999999999},"Maine":{"SALES":5.5},"Maryland":{"SALES":6},"Massachusetts":{"SALES":6.25},"Michigan":{"SALES":6},"Minnesota":{"SALES":7.375},"Mississippi":{"SALES":7.125},"Missouri":{"SALES":7.5375},"Montana":{"SALES":0},"Nebraska":{"SALES":6.5},"Nevada":{"SALES":7.55},"New Hampshire":{"SALES":0},"New Jersey":{"SALES":9.625},"New Mexico":{"SALES":6.9065},"New York":{"SALES":6.4375},"North Carolina":{"SALES":6.125},"North Dakota":{"SALES":6.5},"Ohio":{"SALES":6.875},"Oklahoma":{"SALES":7.75},"Oregon":{"SALES":0},"Pennsylvania":{"SALES":7},"Puerto Rico":{"SALES":11},"Rhode Island":{"SALES":7},"South Carolina":{"SALES":7.5},"South Dakota":{"SALES":5},"Tennessee":{"SALES":8.375},"Texas":{"SALES":7.25},"Utah":{"SALES":7.15},"Vermont":{"SALES":6.5},"Virginia":{"SALES":5.65},"Washington":{"SALES":8.45},"West Virginia":{"SALES":6.5},"Wisconsin":{"SALES":5.875},"Wyoming":{"SALES":5}}
+var stateIncomeTaxes={"Alabama":3.5,"Alaska":0,"Arizona":3.565,"Arkansas":3.9000000000000004,"California":7.15,"Colorado":4.63,"Connecticut":4.995,"Delaware":4.4,"Florida":0,"Georgia":3.4,"Hawaii":6.2,"Idaho":4.0275,"Illinois":4.95,"Indiana":3.23,"Iowa":4.67,"Kansas":4.4,"Kentucky":4,"Louisiana":4,"Maine":6.475,"Maryland":3.875,"Massachusetts":5.1,"Michigan":4.25,"Minnesota":7.6,"Mississippi":4,"Missouri":3.7,"Montana":3.95,"Nebraska":4.65,"Nevada":0,"New Hampshire":5,"New Jersey":6.075,"New Mexico":3.3000000000000003,"New York":6.41,"North Carolina":5.25,"North Dakota":2,"Ohio":2.746,"Oklahoma":2.75,"Oregon":7.45,"Pennsylvania":3.07,"Rhode Island":4.87,"South Carolina":4.05,"South Dakota":0,"Tennessee":2,"Texas":0,"Utah":4.95,"Vermont":6.25,"Virginia":3.875,"Washington":0,"West Virginia":4.75,"Wisconsin":5.825,"Wyoming":0,"District of Columbia":6.475}
 //document.getElementById("myModal").style="display:none;"
 var state=JSON.parse(localStorage.getItem("stateSearch"))
 
 document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=best-places-to-live-in-"+state.name.replace(" "+"-")+"&autoplay=1"
 //document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=living-in-"+state.name.replace(" "+"-")+"&autoplay=1"
-//console.log(state)
+////console.log(state)
 document.getElementById("starsRating").reset()
 if(state.name!="District of Columbia"){
-    document.getElementById("flaglink").src=state.flaglink
+    document.getElementById("flaglink").src="https://www.states101.com/img/flags/png/small/"+state.name.toLowerCase().replace(" ","-")+".png"
     document.getElementById("capital").innerHTML="Capital City: "+stateCapitals[state.name]
 }
 else{
@@ -528,7 +531,7 @@ var avgIncomeDiffStyle="border: none; color:green;"
 document.getElementById("avgIncomeDiff").style=avgIncomeDiffStyle
 var text=""
 var fract=state.avgIncome/(localStorage.monthlyIncomeUS*12.0)
-//console.log(fract+"")
+////console.log(fract+"")
 if(fract<.25){
   text="Looking at income alone, your economic status is very above average"
   avgIncomeDiffStyle="border: none; color:green;"
@@ -553,7 +556,7 @@ document.getElementById("tooltiptextavgIncome").innerHTML=text*/
 document.getElementById("median").innerHTML="$"+state.medianPropertyCost.toFixed(2)
 /*if(state.medianDiff==null){
   state.medianDiff=parseFloat(localStorage.yourSavingsUS) + ((parseFloat(localStorage.monthlyIncomeUS*12.0))-state.avgIncome)-state.medianPropertyCost
-  //console.log(state.medianDiff+"")
+  ////console.log(state.medianDiff+"")
 }
 var medianDiffStyle="border: none;"
 text="Based on your savings of $"+parseFloat(localStorage.yourSavingsUS).toFixed(2)+" and income"
@@ -605,27 +608,27 @@ document.getElementById("diabeticScreening").innerHTML=(state.diabeticScreening*
 document.getElementById("mammogramScreening").innerHTML=(state.mammogramScreening*100.0).toFixed(2)+"%"
 document.getElementById("unemploymentRate").innerHTML=(state.unemploymentRate*100.0).toFixed(2)+"%"
 
-document.getElementById("incomeTax").innerHTML=state.UStaxRates.incomeTax+"%"
-document.getElementById("propertyTax").innerHTML=state.UStaxRates.propertyTax+"%"
-document.getElementById("salesTax").innerHTML=state.UStaxRates.salesTax+"%"
-
-if(state.temp.fTemp==null)
-  state.temp.fTemp=(state.temp.cTemp * 9.0 / 5.0) + 32.0
-document.getElementById("temp").innerHTML=state.temp.cTemp.toFixed(1)+" degrees celsius, ("+state.temp.fTemp.toFixed(1)+" degrees farenheit)"
-document.getElementById("tempDiffVal").innerHTML=Math.abs((state.temp.cTemp-11.96)).toFixed(1)+" degrees celsius, ("+((Math.abs(state.temp.cTemp-11.96) * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit)"
+document.getElementById("incomeTax").innerHTML=stateIncomeTaxes[state.name]+"%"
+document.getElementById("propertyTax").innerHTML=statePropertyTaxes[state.name]["PROPERTY"]+"%"
+document.getElementById("salesTax").innerHTML=stateSalesTaxes[state.name]["SALES"]+"%"
+var stateTemps={"Alabama":{"TEMPF":"62.8","TEMPC":"17.1"},"Alaska":{"TEMPF":"26.6","TEMPC":"-3.0"},"Arizona":{"TEMPF":"60.3","TEMPC":"15.7"},"Arkansas":{"TEMPF":"60.4","TEMPC":"15.8"},"California":{"TEMPF":"59.4","TEMPC":"15.2"},"Colorado":{"TEMPF":"45.1","TEMPC":"7.3"},"Connecticut":{"TEMPF":"49.0","TEMPC":"9.4"},"Delaware":{"TEMPF":"55.3","TEMPC":"12.9"},"Florida":{"TEMPF":"70.7","TEMPC":"21.5"},"Georgia":{"TEMPF":"63.5","TEMPC":"17.5"},"Hawaii":{"TEMPF":"70.0","TEMPC":"21.1"},"Idaho":{"TEMPF":"44.4","TEMPC":"6.9"},"Illinois":{"TEMPF":"51.8","TEMPC":"11.0"},"Indiana":{"TEMPF":"51.7","TEMPC":"10.9"},"Iowa":{"TEMPF":"47.8","TEMPC":"8.8"},"Kansas":{"TEMPF":"54.3","TEMPC":"12.4"},"Kentucky":{"TEMPF":"55.6","TEMPC":"13.1"},"Louisiana":{"TEMPF":"66.4","TEMPC":"19.1"},"Maine":{"TEMPF":"41.0","TEMPC":"5.0"},"Maryland":{"TEMPF":"54.2","TEMPC":"12.3"},"Massachusetts":{"TEMPF":"47.9","TEMPC":"8.8"},"Michigan":{"TEMPF":"44.4","TEMPC":"6.9"},"Minnesota":{"TEMPF":"41.2","TEMPC":"5.1"},"Mississippi":{"TEMPF":"63.4","TEMPC":"17.4"},"Missouri":{"TEMPF":"54.5","TEMPC":"12.5"},"Montana":{"TEMPF":"42.7","TEMPC":"5.9"},"Nebraska":{"TEMPF":"48.8","TEMPC":"9.3"},"Nevada":{"TEMPF":"49.9","TEMPC":"9.9"},"New Hampshire":{"TEMPF":"43.8","TEMPC":"6.6"},"New Jersey":{"TEMPF":"52.7","TEMPC":"11.5"},"New Mexico":{"TEMPF":"53.4","TEMPC":"11.9"},"New York":{"TEMPF":"45.4","TEMPC":"7.4"},"North Carolina":{"TEMPF":"59.0","TEMPC":"15.0"},"North Dakota":{"TEMPF":"40.4","TEMPC":"4.7"},"Ohio":{"TEMPF":"50.7","TEMPC":"10.4"},"Oklahoma":{"TEMPF":"59.6","TEMPC":"15.3"},"Oregon":{"TEMPF":"48.4","TEMPC":"9.1"},"Pennsylvania":{"TEMPF":"48.8","TEMPC":"9.3"},"Rhode Island":{"TEMPF":"50.1","TEMPC":"10.1"},"South Carolina":{"TEMPF":"62.4","TEMPC":"16.9"},"South Dakota":{"TEMPF":"45.2","TEMPC":"7.3"},"Tennessee":{"TEMPF":"57.6","TEMPC":"14.2"},"Texas":{"TEMPF":"64.8","TEMPC":"18.2"},"Utah":{"TEMPF":"48.6","TEMPC":"9.2"},"Vermont":{"TEMPF":"42.9","TEMPC":"6.1"},"Virginia":{"TEMPF":"55.1","TEMPC":"12.8"},"Washington":{"TEMPF":"48.3","TEMPC":"9.1"},"West Virginia":{"TEMPF":"51.8","TEMPC":"11.0"},"Wisconsin":{"TEMPF":"43.1","TEMPC":"6.2"},"Wyoming":{"TEMPF":"42.0","TEMPC":"5.6"}, "District of Columbia":{"TEMPF":"55.7","TEMPC":"13.166667"}}
+var cTemp=parseFloat(stateTemps[state.name]["TEMPC"])
+var fTemp=parseFloat(stateTemps[state.name]["TEMPF"])
+document.getElementById("temp").innerHTML=cTemp.toFixed(1)+" degrees celsius, ("+fTemp.toFixed(1)+" degrees farenheit)"
+document.getElementById("tempDiffVal").innerHTML=Math.abs((cTemp-11.96)).toFixed(1)+" degrees celsius, ("+((Math.abs(cTemp-11.96) * 9.0 / 5.0) + 32.0).toFixed(1)+" degrees farenheit)"
 var tempDiffStyle="border: none;"
 text=""
-if((state.temp.cTemp-11.96)>0.0){
+if((cTemp-11.96)>0.0){
   document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" ABOVE national average"
-}else if((state.temp.cTemp-11.96)<0.0){
+}else if((cTemp-11.96)<0.0){
     document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" BELOW national average"
 }else{
     document.getElementById("tempDiffVal").innerHTML=document.getElementById("tempDiffVal").innerHTML+" (equal to national average)"
 }
-if((state.temp.cTemp-11.96)>5.0){
+if((cTemp-11.96)>5.0){
   //text="Hotter average temp"
   tempDiffStyle="border: none; color:red;"
-}else if((state.temp.cTemp-11.96)<-5.0){
+}else if((cTemp-11.96)<-5.0){
   //text="Colder than average"
   tempDiffStyle="border: none; color:blue;"
 }else{
@@ -662,7 +665,7 @@ function sendMessage(){
   var ptext=document.getElementById("yourComment").value
   try{
     starval=parseInt($("input[name='star']:checked").val())
-    //console.log(starval)
+    ////console.log(starval)
     if(isNaN(starval)){
       starval=-1.0
     }
@@ -716,7 +719,7 @@ function sendMessage(){
       }
      }
     }
-    //console.log(bytext)
+    ////console.log(bytext)
     bottomDiv.appendChild(document.createTextNode(bytext))
     //var n = document.createElement('a');
     var lt = document.createTextNode(profileID);
@@ -741,7 +744,7 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:red;"
-    //console.log("complete")
+    ////console.log("complete")
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
@@ -758,7 +761,7 @@ function getFirebaseComments(){
   var ref=firebase.database().ref().child("states").child(state.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       getData=snapshotData
       var commentCount=0
@@ -800,7 +803,7 @@ function getFirebaseComments(){
           }
          }
         }
-        //console.log(bytext)
+        ////console.log(bytext)
         bottomDiv.appendChild(document.createTextNode(bytext))
         var lt = document.createTextNode(snapshotData[i].profileName);
         bottomDiv.appendChild(lt)
@@ -835,7 +838,7 @@ function getFirebaseComments(){
         reply.style="w3-button"
         reply.onclick=function(){
           var rid=this.id.split("-")
-          //console.log(getData[rid[0]])
+          ////console.log(getData[rid[0]])
           if(getData[rid[0]].text.length<=50)
             document.getElementById("yourComment").value="Reply to "+getData[parseInt(rid[0])].profileName+"'s comment '"+getData[parseInt(rid[0])].text+"':"
           else
@@ -933,7 +936,7 @@ function leave(){
   var ref=firebase.database().ref().child("states").child(state.name).child("comments")
   ref.on("value", function(snapshot, prevChildKey) {//set it to profile
     var snapshotData = snapshot.val();
-    //console.log(snapshotData)
+    ////console.log(snapshotData)
     if(snapshotData!=null){
       for(var i in snapshotData){
         comment=snapshotData[i]
