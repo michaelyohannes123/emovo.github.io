@@ -1469,17 +1469,15 @@ function filter() {
       return second[1] - first[1];
     });
     var commentCount=0
-    console.log(orderedScores)
     for(var ky in Object.keys(orderedScores)){
       var overall=document.getElementById("updownSort")
       if(i<=9){
         overall.appendChild(document.createElement("br"))
       }
       var parse=Object.keys(orderedScores)[ky].split("-")
-      console.log(parse)
-      var likedislikeval=orderedScores[ky]//like-dislike
-      var i=parse[0]//id
-      var dateval=parse[1]//date
+      var likedislikeval=parse[ky][1]//like-dislike
+      var i=parse[ky][0].split("-")[0]//id
+      var dateval=parse[1].split("-")[1]//date
       var pretextid=i+"-commentDiv" //text
       var precommentid=i+"-comment"
       console.log(precommentid)
