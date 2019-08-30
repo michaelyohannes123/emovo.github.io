@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>EMOVO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="328858787046-95fsdbnk5kil4druiacprsubihssktju.apps.googleusercontent.com">
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    .myLink {display: none}
+    </style>
+  </head>
+  <body class="w3-light-grey">
+    <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-orange" href="javascript:void(0);" onclick="toggle()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <!--<a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>-->
+      <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
+      <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
+      <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
+      <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+      <!--<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Sign In</a>-->
+      <a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>
+    </div>
+    <div id="gsignin2" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div class="mainDiv" style="text-align: center; display: block; margin: 0 auto;">
+      <div id="userContent" class="w3-row-padding w3-padding-64 w3-container">
+        <div class="w3-content">
+          <div class="w3-twothird">
+            <h1 id="username"></h1>
+            <p id="joinDate"></p>
+            <img id="pic" src="#">
+            <p id="commentHistory" class="w3-text-grey"></p>
+          </div>
+        </div>
+      </div>
+      <p></p>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script type="text/javascript">
+    var config = {
+        apiKey: "AIzaSyAeVY1LvG9hNSBYb9_raGpYYDiHIvG3cY8",
+        authDomain: "emovousers.firebaseapp.com",
+        databaseURL: "https://emovousers.firebaseio.com/",
+        storageBucket: "emovousers.appspot.com"
+      }
+    firebase.initializeApp(config);
+    document.getElementById("userContent").style.display="none"
+    function onSignIn() {
+      document.getElementById("userContent").style.display="block"
+      var auserID=localStorage.commenterProfileID
+      //console.log(auserID)
+      //grab from firebase
+      var sRef = firebase.database().ref().child("users")
+      sRef.on("value", function(snapshot, prevChildKey) {//set it to profile
+        var snapshotData = snapshot.val();
+        //console.log(snapshotData)
+        for(var c in snapshotData){
+          if(auserID==snapshotData[c].id){
+            document.getElementById("username").innerHTML=snapshotData[c].name
+            document.getElementById("joinDate").innerHTML=snapshotData[c].joinDate
+            document.getElementById("pic").innerHTML=snapshotData[c].picture
+            var ctext=""
+            for(var i in cs){
+              var ac=cs[i].aComment
+              ctext=ctext+ac.place.name+": '"+ac.text+"', "
+            }
+            document.getElementById("commentHistory").innerHTML=ctext
+          }
+        }
+      })
+    }
+    function isLoggedIn()
+      {
+        if(localStorage.getItem('currUser') == null){
+          return false;
+        } else {
+          return true;
+        }
+      }
+    </script>
+  </body>
+</html>
