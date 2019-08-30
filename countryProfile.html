@@ -768,7 +768,7 @@ function sendMessage(){
         leave()
       }
       trash.style="w3-button"
-    console.log("complete")
+    //console.log("complete")
     bottomDiv.appendChild(trash)
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
@@ -1483,12 +1483,12 @@ function filter() {
     });
     var commentCount=0
     //console.log(orderedScores)
-    for(var ky in orderedScores){
+    for(var ky in Object.keys(orderedScores)){
       var overall=document.getElementById("updownSort")
       if(i<=9){
         overall.appendChild(document.createElement("br"))
       }
-      var parse=ky.split("-")
+      var parse=Object.keys(orderedScores)[ky].split("-")
       var likedislikeval=orderedScores[ky]//like-dislike
       var i=parse[0]//id
       var dateval=parse[1]//date
