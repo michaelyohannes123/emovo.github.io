@@ -217,14 +217,14 @@
         <!--<div>
           <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="Type keywords">
         </div>-->
-        <div>
+        <!--<div>
           <select id="commentFilter" onchange="filter()">
             <option value="Newest" selected="selected">Newest</option>
             <option value="likes">Likes</option>
-            <!--<option value="commenter">Commenter</option>
-            <option value="replies">Replies to you</option>-->
+            <option value="commenter">Commenter</option>
+            <option value="replies">Replies to you</option>
           </select>
-        </div>
+        </div>-->
      </div>
    </div>
    <div id="updownSort">
@@ -999,12 +999,13 @@ function getFirebaseComments(){
           var gscore=pid[0]+"-score"
           getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
           document.getElementById(gscore).innerHTML="liked"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
-          if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
+          document.getElementById(gscore).style="color:green;"
+          /*if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
             document.getElementById(gscore).style="color:grey;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
             document.getElementById(gscore).style="color:green;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-            document.getElementById(gscore).style="color:red;"
+            document.getElementById(gscore).style="color:red;"*/
           leave()
         }
         bottomDiv.appendChild(upvote)
@@ -1032,12 +1033,13 @@ function getFirebaseComments(){
           var gscore=pid[0]+"-score"
           getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
           document.getElementById(gscore).innerHTML="downvoted"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
-          if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
+          document.getElementById(gscore).style="color:red;"
+          /*if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
             document.getElementById(gscore).style="color:grey;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
             document.getElementById(gscore).style="color:green;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-            document.getElementById(gscore).style="color:red;"
+            document.getElementById(gscore).style="color:red;"*/
           leave()
         }
         bottomDiv.appendChild(downvote)
@@ -1410,10 +1412,10 @@ function getComments(snapshotData2){
     //document.body.appendChild(document.createElement("br"))
   }
 }*/
-function filter() {
+/*function filter() {
   //var input = document.getElementById("input");
   //var fil = input.value.toUpperCase();
-  var choice=document.getElementById("commentFilter").value
+  var choice=document.getElementById("commentFilter").value*/
   /*if(choice=="keywords"){
     document.getElementById("input").style.display="block"
     document.getElementById("updownSort").style.display="none"
@@ -1436,11 +1438,11 @@ function filter() {
         }
     }
   }*/
-  if(choice=="Newest"){
+  /*if(choice=="Newest"){
     document.getElementById("commentSpace").style.display="block"
     document.getElementById("updownSort").style.display="none"
-  }
-  else if(choice=="likes"){
+  }*/
+  /*else if(choice=="likes"){
     //document.getElementById("input").style.display="none"
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByTagName("span");
@@ -1563,12 +1565,7 @@ function filter() {
         var gscore=pid[0]+"-score"
         getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
         document.getElementById(gscore).innerHTML="liked"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
-        if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
-          document.getElementById(gscore).style="color:grey;"
-        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
-          document.getElementById(gscore).style="color:green;"
-        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-          document.getElementById(gscore).style="color:red;"
+        document.getElementById(gscore).style="color:green;"
         leave()
       }
       bottomDiv.appendChild(upvote)
@@ -1596,12 +1593,7 @@ function filter() {
         var gscore=pid[0]+"-score"
         getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
         document.getElementById(gscore).innerHTML="downvoted"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
-        if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
-          document.getElementById(gscore).style="color:grey;"
-        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
-          document.getElementById(gscore).style="color:green;"
-        else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes<0)
-          document.getElementById(gscore).style="color:red;"
+        document.getElementById(gscore).style="color:red;"
         leave()
       }
       bottomDiv.appendChild(downvote)
@@ -1615,7 +1607,7 @@ function filter() {
       overall.appendChild(urdiv)
     }
     document.getElementById("commentSpace").style.display="none"
-  }
+  }*/
   /*else if(choice=="replies"){
     var commentSpace = document.getElementById("commentSpace");
     var coms = commentSpace.getElementsByClassName("comment-body");
@@ -1631,7 +1623,7 @@ function filter() {
             coms[i].style.display = "none";
         }
     }
-  }*/
-}
+  }
+}*/
 </script>
 </html>
