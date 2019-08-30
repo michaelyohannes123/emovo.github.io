@@ -751,25 +751,7 @@ function sendMessage(){
       score.style="color:green;"
     else if(aComment.likes-aComment.dislikes<0)
       score.style="color:red;"
-    var trash=document.createElement("button")
-      trash.id=aComment.profileID+"-trash"
-      var ticon=document.createElement("i")
-      ticon.className="fa fa-trash-o"
-      trash.appendChild(ticon)
-      deleteclicks[aComment.profileID]=0
-      trash.onclick=function(){
-        var tid=this.id.split("-")
-        deleteclicks[tid[0]]+=1
-        if(deleteclicks[tid[0]]%2==1){
-          this.style.background="#90EE90"
-        }else{
-          this.style.background="#CDCDCD"
-        }
-        leave()
-      }
-      trash.style="w3-button"
     //console.log("complete")
-    bottomDiv.appendChild(trash)
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
     urdiv.appendChild(rightDiv)
