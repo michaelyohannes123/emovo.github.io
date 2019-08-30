@@ -1446,7 +1446,9 @@ function filter() {
       var theid=coms[i].id.split("-")
       var gscoreid=theid[0]+"-score"
       var val=parseInt(document.getElementById(gscoreid).innerHTML)
+      console.log(val+"")
       var dateid=theid[0]+"-dateDiv"
+      console.log(dateid)
       var key=theid[0]+"-"+document.getElementById(dateid).innerHTML
       scoresDict[key]=val
     }
