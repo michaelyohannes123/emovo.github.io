@@ -178,7 +178,7 @@
         </iframe>
       </div>
      <br>
-     <!--<p id="login" style="display:table; margin: 0 auto;">You must be logged in to rate and comment</p>-->
+     <p id="login" style="display:table; margin: 0 auto;"></p>
      <br>
      <div class="userReply">
        <p style="margin: auto;">How would you rate the place in terms of livability, especially in regards to retirees (1-5 stars)? Explain in the comment box below if you wish to futher elaborate to inform other users.</p>
@@ -698,6 +698,7 @@ function sendMessage(){
     "updownDiff":aComment.updownDiff
   })
   //display comment
+  document.getElementById("login").innerHTML="Comment '"+text.slice(0,10)+"...' was added"
     var overall=document.getElementById("justSents")
     //overall.appendChild(document.createElement("br"))
     var urdiv = document.createElement("div")
@@ -767,6 +768,7 @@ function sendMessage(){
         leave()
       }
       trash.style="w3-button"
+    console.log("complete")
     bottomDiv.appendChild(trash)
     bottomDiv.appendChild(score)
     rightDiv.appendChild(bottomDiv)
@@ -1468,7 +1470,6 @@ function filter() {
       var key=theid[0]+"-"+dateadd
       scoresDict[key]=val
     }
-    document.getElementById(urcommentid).style.display="none";
     var orderedScores = Object.keys(scoresDict).map(function(key) {
       return [key, dict[key]];
     });
