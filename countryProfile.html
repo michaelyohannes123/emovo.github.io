@@ -945,7 +945,7 @@ function getFirebaseComments(){
         else{
          if(snapshotData[i].starVal!=null){
           if(snapshotData[i].starVal!=-1.0){
-            bytext="(Rated "+snapshotData[i].starVal+" stars), By "
+            bytext="("+snapshotData[i].starVal+" stars), By "
           }
          }
         }
@@ -1456,10 +1456,16 @@ function filter() {
       var theid=coms[i].id.split("-")
       var gscoreid=theid[0]+"-score"
       var val=parseInt(document.getElementById(gscoreid).innerHTML)
-      console.log(val+"")
-      var dateid=theid[0]+"-dateDiv"
-      console.log(getData[theid[0]])
-      var key=theid[0]+"-"+document.getElementById(dateid).innerHTML
+      var date = new Date(parseInt(getData[theid[0]]["date"]));
+      var day = date.getDate();
+      var months = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      var month = months[date.getMonth()];
+      var year = date.getFullYear();
+      var stDate = month+" "+day+", "+year
+      var dateadd=", "+stDate+", "
+      var key=theid[0]+"-"+dateadd
       scoresDict[key]=val
     }
     document.getElementById(urcommentid).style.display="none";
