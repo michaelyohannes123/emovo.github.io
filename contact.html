@@ -18,6 +18,13 @@
       <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
       <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
     </div>
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+      <a href="index.html" class="w3-bar-item w3-button w3-padding-large">EMOVO</a>
+      <a href="about.html" class="w3-bar-item w3-button w3-padding-large">About</a>
+      <a href="contact.html" class="w3-bar-item w3-button w3-padding-large">Contact</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-padding-large">Search</a>
+      <!--<a href="profile.html" class="w3-bar-item w3-button w3-padding-large">Your Profile</a>-->
+    </div>
     <div class="w3-container">
       <h2>Contact</h2>
       <h5>Any questions or recommendations? Feel free to email me!</h5>
@@ -27,5 +34,15 @@
 
       <!--<p><button onclick="location.href='mailto:redsealabs@gmail.com';" class="w3-button w3-black w3-padding-large">Send Email Now?</button></p>-->
     </div>
+    <script>
+    function toggle() {
+      var x = document.getElementById("navDemo");
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+    </script>
   </body>
 </html>
