@@ -941,10 +941,10 @@ function getFirebaseComments(){
         rightDiv.appendChild(commentDiv)
         var bottomDiv=document.createElement("div")
         var bytext="By "
-        if(isNaN(aComment.starVal)){}
+        if(isNaN(snapshotData[i].starVal)){}
         else{
-         if(aComment.starVal!=null){
-          if(aComment.starVal!=-1.0){
+         if(snapshotData[i].starVal!=null){
+          if(snapshotData[i].starVal!=-1.0){
             bytext="(Rated "+snapshotData[i].starVal+" stars), By "
           }
          }
