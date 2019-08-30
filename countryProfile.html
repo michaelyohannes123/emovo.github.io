@@ -756,7 +756,7 @@ function sendMessage(){
       var ticon=document.createElement("i")
       ticon.className="fa fa-trash-o"
       trash.appendChild(ticon)
-      deleteclicks[snapshotData2[i]]=0
+      deleteclicks[aComment.profileID]=0
       trash.onclick=function(){
         var tid=this.id.split("-")
         deleteclicks[tid[0]]+=1
