@@ -998,7 +998,7 @@ function getFirebaseComments(){
           }
           var gscore=pid[0]+"-score"
           getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
-          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+          document.getElementById(gscore).innerHTML="liked"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
           if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
             document.getElementById(gscore).style="color:grey;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
@@ -1031,7 +1031,7 @@ function getFirebaseComments(){
           }
           var gscore=pid[0]+"-score"
           getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
-          document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+          document.getElementById(gscore).innerHTML="downvoted"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
           if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
             document.getElementById(gscore).style="color:grey;"
           else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
@@ -1474,9 +1474,12 @@ function filter() {
       if(i<=9){
         overall.appendChild(document.createElement("br"))
       }
-      var parse=Object.keys(orderedScores)[ky].split("-")
+      var parse=Object.keys(orderedScores)[ky]
+      console.log(parse)
+      console.log(parse[ky])
       var likedislikeval=parse[ky][1]//like-dislike
       var i=parse[ky][0].split("-")[0]//id
+      console.log(i)
       var dateval=parse[ky][0].split("-")[1]//date
       var pretextid=i+"-commentDiv" //text
       var precommentid=i+"-comment"
@@ -1559,7 +1562,7 @@ function filter() {
         }
         var gscore=pid[0]+"-score"
         getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
-        document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+        document.getElementById(gscore).innerHTML="liked"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
         if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
           document.getElementById(gscore).style="color:grey;"
         else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
@@ -1592,7 +1595,7 @@ function filter() {
         }
         var gscore=pid[0]+"-score"
         getData[parseInt(pid[0])].updownDiff=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)
-        document.getElementById(gscore).innerHTML=(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
+        document.getElementById(gscore).innerHTML="downvoted"//(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes)+""
         if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes==0)
           document.getElementById(gscore).style="color:grey;"
         else if(getData[parseInt(pid[0])].likes-getData[parseInt(pid[0])].dislikes>0)
