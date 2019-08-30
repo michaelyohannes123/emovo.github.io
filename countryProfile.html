@@ -1477,7 +1477,7 @@ function filter() {
       var parse=Object.keys(orderedScores)[ky].split("-")
       var likedislikeval=parse[ky][1]//like-dislike
       var i=parse[ky][0].split("-")[0]//id
-      var dateval=parse[1].split("-")[1]//date
+      var dateval=parse[ky][0].split("-")[1]//date
       var pretextid=i+"-commentDiv" //text
       var precommentid=i+"-comment"
       console.log(precommentid)
