@@ -309,7 +309,7 @@
       var currNation=JSON.parse(localStorage.currNation)
       document.getElementById("image").src=currNation.flaglink
       document.getElementById("title").innerHTML="City Affordability Rankings for You (ranked places have a stored cost of living metric)"
-      for(var k in cities){//name,rating,flaglink,capitalCity,ratings
+      for(var k=0; k<cities.length; k++){//name,rating,flaglink,capitalCity,ratings
         if(citynames.indexOf(cities[k].name)<0){
           citynames.push(cities[k].name)
           var btn = document.createElement("BUTTON");
@@ -330,11 +330,15 @@
           }
           var h = document.createElement("H3");
           var t=null
-          if(parseFloat(cities[k].costOfLiving)==-1.0)
+          if(isNaN(cities[k].costOfLiving)||cities[k].costOfLiving==null){
             t = document.createTextNode(cities[k].name);
-          else{
-            t = document.createTextNode("#"+datarank+": "+cities[k].name);
-            datarank++
+          }else{
+            if(parseFloat(cities[k].costOfLiving)>0.0)
+              t = document.createTextNode(cities[k].name);
+            else{
+              t = document.createTextNode("#"+datarank+": "+cities[k].name);
+              datarank++
+            }
           }
           h.appendChild(t);
           btn.appendChild(h);

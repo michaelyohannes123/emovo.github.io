@@ -133,7 +133,7 @@
                 var j1=0
                 try{
                 j1=jsonfirst.costs.length
-              }catch(err){j1=0}
+                }catch(err){j1=0}
                 if(j1==0){
                   var secondSearch = "https://cost-of-living-api-lqvgibwbps.now.sh/" + json[co].name.replace(" ", "-") + "-" + name.replace(" ", "-") + "?USD"
                   $.ajax({
@@ -335,12 +335,12 @@
     document.getElementById("worldLength").innerHTML="Unpacking cities data (city count varies based on consistent updates and the size of the nation). As a result, rankings may not as fully encapsulate the state as best as it could. Thanks for your patience!"
     onCitySearchClick()
     function onCitySearchClick(){ //begin a city search, grab city list here and pass it
-      /*var housingList={"Monaco":305.83,"Angola":125.78,"Papua New Guinea":117.22,"Bermuda":109.01,"Singapore":97.81,"Macao":87.38,"Hong Kong":87.38,"Guernsey":84.57,"Qatar":77.25,"Gibraltar":70.16,"Jersey":69.49,"Luxembourg":67.03,"British Virgin Islands":66.25,"Switzerland":66.24,"United Arab Emirates":65.56,"Norway":62.73,"Liberia":61.99,"Isle of Man":59.52,"Australia":58.91,"Cayman Islands":54.19,"Guam":49.22,"Bahamas":48.18,"New Caledonia":47.71,"Vanuatu":46.89,"United Kingdom":45.18,"Iceland":43.63,"New Zealand":43.14,"Ghana":42.67,"Greenland":42.57,"Denmark":42.27,"Netherlands":41.69,"Ireland":40.45,"Bahrain":40.01,"Kuwait":39.77,"Venezuela":38.58,"France":38.49,"Burundi":38.39,"South Korea":38.37,"Seychelles":37.5,"United States":37.45,"Aruba":36.79,"Japan":36.78,"Azerbaijan":36.29,"Belgium":36.2,"Canada":36.05,"Finland":36.05,"Israel":35.77,"Mozambique":35.62,"Lebanon":35.01,"Sweden":34.35,"Austria":33.54,"Gabon":32.79,"Panama":32.76,"Italy":32.14,"Holy See":32.14,"Brunei Darussalam":31.67,"Germany":31.3,"Reunion":31.22,"Maldives":30.71,"Democratic Republic of the Congo":30.27,"Oman":29.96,"Russian Federation":28.45,"Fiji":27.82,"Tuvalu":27.82,"Mauritius":27.8,"Mongolia":27.7,"French Polynesia":27.58,"Faroe Islands":27.44,"Spain":26.95,"Curacao":26.72,"Samoa":26.15,"Tokelau":26.15,"Wallis and Futuna":26.15,"American Samoa":26.15,"Niue":26.15,"Haiti":25.56,"Rwanda":25.3,"Uruguay":24.98,"Zambia":24.61,"Namibia":24.49,"Barbados":24.46,"China":24.34,"Andorra":24.03,"Slovenia":23.26,"Trinidad and Tobago":23.05,"Cameroon":22.87,"Portugal":22.82,"Slovakia":22.39,"Nigeria":22.1,"Brazil":22.07,"Equatorial Guinea":21.96,"Tanzania":21.94,"Kazakhstan":21.88,"Ethiopia":21.82,"Burma":21.48,"Puerto Rico":21.43,"Djibouti":21.32,"Cyprus":21.14,"Zimbabwe":20.68,"Iran":20.3,"Costa Rica":19.77,"Libya":19.74,"Jamaica":19.74,"Taiwan":19.68,"Kenya":19.64,"Poland":19.23,"Estonia":18.91,"Malta":18.86,"Thailand":18.85,"Iraq":18.67,"Czech Republic":18.43,"South Africa":18.15,"Grenada":17.82,"Chile":17.76,"Somalia":17.6,"Argentina":17.58,"Guyana":17.34,"Belarus":17.16,"Latvia":17.12,"Belize":16.99,"Lao People's Democratic Republic":16.33,"Peru":16.2,"Jordan":15.92,"Guatemala":15.92,"Vietnam":15.86,"Dominica":15.69,"Malaysia":15.66,"Saudi Arabia":15.54,"Lithuania":15.5,"Greece":15.3,"Turkmenistan":15,"Suriname":14.97,"Armenia":14.73,"Colombia":14.72,"Uzbekistan":14.49,"Croatia":14.27,"Ecuador":14.16,"Mali":14.02,"Cambodia":13.94,"Swaziland":13.89,"Bolivia":13.69,"Saint Lucia":13.65,"Ukraine":13.6,"Indonesia":13.56,"Botswana":13.56,"Sudan":13.5,"Turkey":13.12,"Uganda":13.03,"Morocco":12.88,"Romania":12.64,"Kyrgyzstan":12.5,"Syrian Arab Republic":12.39,"Dominican Republic":12.37,"Georgia":12.34,"Mexico":12.24,"Honduras":11.92,"Montenegro":11.82,"Malawi":11.7,"Sri Lanka":11.61,"Madagascar":11.4,"Comoros":11.4,"Mayotte":11.4,"Bulgaria":11.4,"Senegal":11.37,"Serbia":11.2,"Albania":11.2,"Paraguay":10.99,"El Salvador":10.97,"Hungary":10.72,"Tunisia":10.11,"Nicaragua":9.8,"Egypt":9.64,"Moldova (Republic of)":9.6,"Afghanistan":9.58,"Algeria":9.14,"North Macedonia":9,"Philippines":8.9,"Bosnia and Herzegovina":8.57,"Cuba":8.32,"India":7.1,"Bangladesh":7,"Yemen":6.34,"Tajikistan":6.14,"Lesotho":5.19,"Pakistan":4.85,"Nepal":3.38,"Gambia":34.8,"Sierra Leone":46.8,"Guinea":30.0,"South Sudan":48.3,"Åland Islands":35.8,"Turks and Caicos Islands":50.0,"Marshall Islands":27.5,"Nauru":27.5,"Mauritania":20.0,"Western Sahara":20.0,"Saint Pierre and Miquelon":83.0,"Niger":17.0,"Anguilla":38.0,"Benin":25.0,"Antigua and Barbuda":28.2,"Saint Martin (French part)":20.3,"Sint Maarten (Dutch part)":20.3,"Togo":13.5,"Curaçao":32.2,"Martinique":35.5,"Réunion":25.0,"Republic of Kosovo":12.9,"Cabo Verde":16.1,"Montserrat":10.5,"Guinea-Bissau":25.0,
+      var housingList={"Monaco":305.83,"Angola":125.78,"Papua New Guinea":117.22,"Bermuda":109.01,"Singapore":97.81,"Macao":87.38,"Hong Kong":87.38,"Guernsey":84.57,"Qatar":77.25,"Gibraltar":70.16,"Jersey":69.49,"Luxembourg":67.03,"British Virgin Islands":66.25,"Switzerland":66.24,"United Arab Emirates":65.56,"Norway":62.73,"Liberia":61.99,"Isle of Man":59.52,"Australia":58.91,"Cayman Islands":54.19,"Guam":49.22,"Bahamas":48.18,"New Caledonia":47.71,"Vanuatu":46.89,"United Kingdom":45.18,"Iceland":43.63,"New Zealand":43.14,"Ghana":42.67,"Greenland":42.57,"Denmark":42.27,"Netherlands":41.69,"Ireland":40.45,"Bahrain":40.01,"Kuwait":39.77,"Venezuela":38.58,"France":38.49,"Burundi":38.39,"South Korea":38.37,"Seychelles":37.5,"United States":37.45,"Aruba":36.79,"Japan":36.78,"Azerbaijan":36.29,"Belgium":36.2,"Canada":36.05,"Finland":36.05,"Israel":35.77,"Mozambique":35.62,"Lebanon":35.01,"Sweden":34.35,"Austria":33.54,"Gabon":32.79,"Panama":32.76,"Italy":32.14,"Holy See":32.14,"Brunei Darussalam":31.67,"Germany":31.3,"Reunion":31.22,"Maldives":30.71,"Democratic Republic of the Congo":30.27,"Oman":29.96,"Russian Federation":28.45,"Fiji":27.82,"Tuvalu":27.82,"Mauritius":27.8,"Mongolia":27.7,"French Polynesia":27.58,"Faroe Islands":27.44,"Spain":26.95,"Curacao":26.72,"Samoa":26.15,"Tokelau":26.15,"Wallis and Futuna":26.15,"American Samoa":26.15,"Niue":26.15,"Haiti":25.56,"Rwanda":25.3,"Uruguay":24.98,"Zambia":24.61,"Namibia":24.49,"Barbados":24.46,"China":24.34,"Andorra":24.03,"Slovenia":23.26,"Trinidad and Tobago":23.05,"Cameroon":22.87,"Portugal":22.82,"Slovakia":22.39,"Nigeria":22.1,"Brazil":22.07,"Equatorial Guinea":21.96,"Tanzania":21.94,"Kazakhstan":21.88,"Ethiopia":21.82,"Burma":21.48,"Puerto Rico":21.43,"Djibouti":21.32,"Cyprus":21.14,"Zimbabwe":20.68,"Iran":20.3,"Costa Rica":19.77,"Libya":19.74,"Jamaica":19.74,"Taiwan":19.68,"Kenya":19.64,"Poland":19.23,"Estonia":18.91,"Malta":18.86,"Thailand":18.85,"Iraq":18.67,"Czech Republic":18.43,"South Africa":18.15,"Grenada":17.82,"Chile":17.76,"Somalia":17.6,"Argentina":17.58,"Guyana":17.34,"Belarus":17.16,"Latvia":17.12,"Belize":16.99,"Lao People's Democratic Republic":16.33,"Peru":16.2,"Jordan":15.92,"Guatemala":15.92,"Vietnam":15.86,"Dominica":15.69,"Malaysia":15.66,"Saudi Arabia":15.54,"Lithuania":15.5,"Greece":15.3,"Turkmenistan":15,"Suriname":14.97,"Armenia":14.73,"Colombia":14.72,"Uzbekistan":14.49,"Croatia":14.27,"Ecuador":14.16,"Mali":14.02,"Cambodia":13.94,"Swaziland":13.89,"Bolivia":13.69,"Saint Lucia":13.65,"Ukraine":13.6,"Indonesia":13.56,"Botswana":13.56,"Sudan":13.5,"Turkey":13.12,"Uganda":13.03,"Morocco":12.88,"Romania":12.64,"Kyrgyzstan":12.5,"Syrian Arab Republic":12.39,"Dominican Republic":12.37,"Georgia":12.34,"Mexico":12.24,"Honduras":11.92,"Montenegro":11.82,"Malawi":11.7,"Sri Lanka":11.61,"Madagascar":11.4,"Comoros":11.4,"Mayotte":11.4,"Bulgaria":11.4,"Senegal":11.37,"Serbia":11.2,"Albania":11.2,"Paraguay":10.99,"El Salvador":10.97,"Hungary":10.72,"Tunisia":10.11,"Nicaragua":9.8,"Egypt":9.64,"Moldova (Republic of)":9.6,"Afghanistan":9.58,"Algeria":9.14,"North Macedonia":9,"Philippines":8.9,"Bosnia and Herzegovina":8.57,"Cuba":8.32,"India":7.1,"Bangladesh":7,"Yemen":6.34,"Tajikistan":6.14,"Lesotho":5.19,"Pakistan":4.85,"Nepal":3.38,"Gambia":34.8,"Sierra Leone":46.8,"Guinea":30.0,"South Sudan":48.3,"Åland Islands":35.8,"Turks and Caicos Islands":50.0,"Marshall Islands":27.5,"Nauru":27.5,"Mauritania":20.0,"Western Sahara":20.0,"Saint Pierre and Miquelon":83.0,"Niger":17.0,"Anguilla":38.0,"Benin":25.0,"Antigua and Barbuda":28.2,"Saint Martin (French part)":20.3,"Sint Maarten (Dutch part)":20.3,"Togo":13.5,"Curaçao":32.2,"Martinique":35.5,"Réunion":25.0,"Republic of Kosovo":12.9,"Cabo Verde":16.1,"Montserrat":10.5,"Guinea-Bissau":25.0,
           "Palestine":28.9,"Congo":38.7,"Micronesia (Federated States of)":25.0,"Bhutan":11.6,"Burkina Faso":27.4,"Myanmar":30.6,"Tonga":35.5,"Chad":30.0,"Central African Republic":30.0,
           "Sao Tome and Principe":7.1,"Saint Vincent and the Grenadines":38.7,"Cook Islands":37.0,"U.S. Virgin Islands":70.0,"Falkland Islands (Malvinas)":25.8,
           "Palau":43.0,"Guadeloupe":35.8,"Bonaire, Sint Eustatius and Saba":33.9,"Côte d'Ivoire":32.2,"Saint Kitts and Nevis":19.35,"Solomon Islands":38.7,
           "Timor-Leste":35.5,"Liechtenstein":50.0,"French Guiana":32.2,"Kiribati":18.8,"Eritrea":13.3,"San Marino":23.3,"Northern Mariana Islands":18.9}
-      var worldCitiesData={}
+      /*var worldCitiesData={}
       for(var y in Object.keys(housingList))
       {
         var name=Object.keys(housingList)[y]
@@ -401,15 +401,15 @@
                   var name2=json[co].country
                   if(name2=="U.S. Virgin Islands") //for entering in firebase
                       name2="US Virgin Islands"
-                  worldCitiesData[name2].push(new City(json[co].name, json[co].subcountry, null, null, null, null,null,null))
+                  worldCitiesData[name2].push(new City(json[co].name, json[co].subcountry, null, null, null, null,null,null,null,null))
                 }catch(err){
                   console.log(co+" "+json[co].country)
                 }
                 }
               }
           })
-      //firebase.database().ref("worldCitiesData").child("Botswana").set(worldCitiesData["Botswana"])
       firebase.database().ref("worldCitiesData").set(worldCitiesData)*/
+      //firebase.database().ref("worldCitiesData").child("United Kingdom").set(worldCitiesData["United Kingdom"])
       var name=currNation.name
       if (name=="Åland Islands")
           name="Aland Islands"
@@ -465,19 +465,23 @@
         var fullDataLen=Object.keys(snapshotData).length
         var poses=[]
         var norepeats=[]
+        var restruct=[]
         for(var i=0; i<fullDataLen; i++){
             var cost=snapshotData[i].costOfLiving
             if(norepeats.indexOf(snapshotData[i].name)<0){
               norepeats.push(snapshotData[i].name)
             }
             if(cost!=null){
+              restruct.push(snapshotData[i])
               snapLen++
-            }else{
+            }
+            if(isNaN(cost) || cost==null){
               poses.push(i)
             }
         }
-        //console.log(snapLen)
-        //console.log(fullDataLen)
+        console.log(snapLen)
+        console.log(poses.length)
+        console.log(fullDataLen)
         if(fullDataLen<=snapLen||poses.length==0){
           //console.log(snapshotData)
           citiesData=snapshotData
@@ -486,20 +490,40 @@
         }else{
           document.getElementById("worldLength").innerHTML="The full extent of "+currNation.name+"'s city data has not fully been added to the database for retrieval yet. Right now a portion of the dataset is being added through you the user being on this loading screen. As a result the rankings may not as fully encapsulate the state as it could. Process will take ~30 seconds and once every data piece is added the wait time will be much shorter. Thanks for your time and patience!"
           citiesData=getCities(currNation.name,currNation.capitalCity,poses,snapshotData)
-          var restruct=citiesData[0]
-          //console.log(restruct)
-          //console.log(restruct)
-          if(restruct.length>0){
-            sortedData=findOptimalCities(restruct)
-            for(var k in citiesData[1]){
-              sortedData.push(citiesData[1][k])
-              //restruct.push(citiesData[1][k])
+          var restructnew=citiesData[0]
+          if(restructnew.length>0){
+            sortedData=findOptimalCities(restructnew)
+            restructnew=sortedData.concat(citiesData[1])
+            restructnames={}
+            console.log(restructnames)
+            for(var k2=0; k2<restructnew.length; k2++){
+              if(Object.keys(restructnames).indexOf(restructnew[k2].name)<0){
+                restruct.push(new City(restructnew[k2].name, restructnew[k2].subcountry, currNation, null, null, null,null,null,null,null))
+                restructnames[restructnew[k2].name]=1.0
+              }
+              else{
+                var rpos=Object.keys(restructnames).indexOf(restructnew[k2].name)
+                restruct[rpos].costOfLiving+=restructnew[k2].costOfLiving
+                restructnames[restructnew[k2].name]+=1.0
+              }
             }
-            //console.log(citiesData)
-            //console.log(restruct)
+            console.log(restruct)
+            for(var t=0; t<Object.keys(restructnames).length; t++)
+            {
+              var rn=Object.keys(restructnames)
+              restruct[t].costOfLiving=restruct[t].costOfLiving/restructnames[rn[t]]
+            }
+            console.log(restruct)
+            for(var k2pos=0; k2pos<poses.length; k2pos++){
+              if(Object.keys(restructnames).indexOf(snapshotData[poses[k2pos]].name)<0){
+                restruct.push(new City(snapshotData[poses[k2pos]].name, snapshotData[poses[k2pos]].subcountry, currNation, null, null, null,null,null,null,null))
+              }else{
+                console.log(snapshotData[poses[k2pos]].name)
+              }
+            }
+            console.log(restruct)
+            sortedData=restruct
            sRef.child(name).set(restruct)
-          }else{
-            sRef.child(name).set(citiesData[1])
           }
         }
         if(sortedData==null){
@@ -509,8 +533,26 @@
             sortedData=snapshotData
           }
         }
+        sortedDatanew=[]
+        for(var x=0; x<sortedData.length; x++){
+          if(isNaN(sortedData[x].costOfLiving)||sortedData[x].costOfLiving==null){}
+          else{
+            if(parseFloat(sortedData[x].costOfLiving)>0.0)
+              sortedDatanew.push(sortedData[x])
+          }
+        }
+        for(var x=0; x<sortedData.length; x++){
+          if(isNaN(sortedData[x].costOfLiving)||sortedData[x].costOfLiving==null){
+            sortedDatanew.push(sortedData[x])
+          }
+          else{
+            if(parseFloat(sortedData[x].costOfLiving)<=0.0)
+              sortedDatanew.push(sortedData[x])
+          }
+        }
+        console.log(sortedDatanew)
         localStorage.currNation=JSON.stringify(currNation)
-        localStorage.sortedCities=JSON.stringify(sortedData)
+        localStorage.sortedCities=JSON.stringify(sortedDatanew)
         localStorage.citiesPlace="World"
         window.location.replace("citiesDisplay.html")
       })
