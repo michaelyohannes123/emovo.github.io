@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>EMOVO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+<body>
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
+      <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-orange" href="javascript:void(0);" onclick="toggle()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
+      <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
+      <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+      <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
+    </div>
+
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+      <a href="index.html" class="w3-bar-item w3-button w3-padding-large">EMOVO</a>
+      <a href="about.html" class="w3-bar-item w3-button w3-padding-large">About</a>
+      <a href="contact.html" class="w3-bar-item w3-button w3-padding-large">Contact</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-padding-large">Search</a>
+      <!--<a href="profile.html" class="w3-bar-item w3-button w3-padding-large">Your Profile</a>-->
+    </div>
+  </div>
+  <!--
+budget___
+location preference (specific state or any)__
+
+Square footage preference? MLPFAH
+
+Buying?
+Any home type  MLPAH
+Renting? MRPAH
+if error:
+{
+  "quandl_error": {
+    "code": "QECx02",
+    "message": "You have submitted an incorrect Quandl code. Please check your Quandl codes and try again."
+  }
+}
+  -->
+  <div class="w3-orange">
+    <p>Enter the following information to search for the optimal places to live in the US based on housing costs</p>
+    <p>* means required.</p>
+    <form>
+      Budget? *<br>
+      <input type="text" name="budget" id="budget" value="">
+    </form>
+    <p>State Preference?</p>
+    <select class="options" name="options">
+    </select>
+    <form>
+      Which housing purchase method do you prefer? *<br>
+      <input type="radio" name="colors" id="rent">Renting<br>
+      <input type="radio" name="colors" id="buy">Buying
+    </form>
+    <form>
+      Square Footage Preference (leave blank to ignore)?<br>
+      <input type="text" name="sqft" id="sqft" value=""><br>
+    </form>
+    <button type="button" name="button" onclick="search()">Search</button>
+  </div>
+</body>
+<script type="text/javascript">
+  var options=["Any - Any",
+                "AK - Alaska",
+                "AL - Alabama",
+                "AR - Arkansas",
+                "AS - American Samoa",
+                "AZ - Arizona",
+                "CA - California",
+                "CO - Colorado",
+                "CT - Connecticut",
+                "DC - District of Columbia",
+                "DE - Delaware",
+                "FL - Florida",
+                "GA - Georgia",
+                "GU - Guam",
+                "HI - Hawaii",
+                "IA - Iowa",
+                "ID - Idaho",
+                "IL - Illinois",
+                "IN - Indiana",
+                "KS - Kansas",
+                "KY - Kentucky",
+                "LA - Louisiana",
+                "MA - Massachusetts",
+                "MD - Maryland",
+                "ME - Maine",
+                "MI - Michigan",
+                "MN - Minnesota",
+                "MO - Missouri",
+                "MS - Mississippi",
+                "MT - Montana",
+                "NC - North Carolina",
+                "ND - North Dakota",
+                "NE - Nebraska",
+                "NH - New Hampshire",
+                "NJ - New Jersey",
+                "NM - New Mexico",
+                "NV - Nevada",
+                "NY - New York",
+                "OH - Ohio",
+                "OK - Oklahoma",
+                "OR - Oregon",
+                "PA - Pennsylvania",
+                "PR - Puerto Rico",
+                "RI - Rhode Island",
+                "SC - South Carolina",
+                "SD - South Dakota",
+                "TN - Tennessee",
+                "TX - Texas",
+                "UT - Utah",
+                "VA - Virginia",
+                "VI - Virgin Islands",
+                "VT - Vermont",
+                "WA - Washington",
+                "WI - Wisconsin",
+                "WV - West Virginia",
+                "WY - Wyoming"]
+  var select = document.getElementById("options");
+  for(var i = 0; i < options.length; i++) {
+      var pair = options[i].split(" - ");
+      var el = document.createElement("options");
+      //.selected = true
+      el.textContent = pair[1];
+      el.value = pair[0];
+      select.appendChild(el);
+  }​
+</script>
+</html>
