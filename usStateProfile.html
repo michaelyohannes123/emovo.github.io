@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="emovo.png">
 <body class="w3-light-grey">
      <div>
        <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
@@ -13,14 +14,18 @@
          <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
          <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
          <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
-         <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+         <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">World Search</a>
+         <a href="housing.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">US Housing</a>
          <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
        </div>
+
+       <!-- Navbar on small screens -->
        <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
          <a href="index.html" class="w3-bar-item w3-button w3-padding-large">EMOVO</a>
          <a href="about.html" class="w3-bar-item w3-button w3-padding-large">About</a>
          <a href="contact.html" class="w3-bar-item w3-button w3-padding-large">Contact</a>
-         <a href="search.html" class="w3-bar-item w3-button w3-padding-large">Search</a>
+         <a href="search.html" class="w3-bar-item w3-button w3-padding-large">World Search</a>
+         <a href="housing.html" class="w3-bar-item w3-button w3-padding-large">US Housing</a>
          <!--<a href="profile.html" class="w3-bar-item w3-button w3-padding-large">Your Profile</a>-->
        </div>
       </div>
@@ -37,12 +42,12 @@
           Weaker Points:
           <br>-->
           The data was compiled from numerous sources as explained <a href="about.html">here</a>. If you find any major errors, please send me an email through <a href="contact.html">here</a>.
-          Post in the comments to provide a helpful view of this state to others! Conversely, be sure to look in the comments for more specific details from those who lived there. To find the best cities in the state, click the "Optimized City Search" button, or if you wish to re-enter data click the "Input New Data" button below.
+          Post in the comments to provide a helpful view of this state to others! Conversely, be sure to look in the comments for more specific details from those who lived there.
         </p>
       </div>
       <div style="display:table; margin:0 auto;">
-             <button onclick="onCitySearchClick()" style="float: left;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
-             <button onclick="location.href='input.html'" style="float: right;border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
+             <button id="citysearch" onclick="onCitySearchClick()" style="border: 2px solid #E8E8E8;" class="w3-button w3-orange">Optimized City Search</button>
+             <button onclick="location.href='input.html'" style="border: 2px solid #E8E8E8;" class="w3-button w3-orange">Input New Data</button>
       </div>
       <br>
       <!--<div class="right-text">
@@ -958,9 +963,14 @@ function leave(){
   })
 }
 function onCitySearchClick(){ //begin a city search, grab city list here and pass it
-  leave()
-  localStorage.setItem('currState',JSON.stringify(state)) //make it a state object
-  location.href="loadingUSCities.html"
+  var current=["Delaware","Illinois","Iowa","Kansas","Kentucky","Louisiana","Massachusetts","Missouri","New Mexico","Texas","Utah","Virginia","West Virginia"]
+  if(current.includes(state["name"].trim()) === true){
+    leave()
+    localStorage.setItem('currState',JSON.stringify(state)) //make it a state object
+    location.href="loadingUSCities.html"
+  }else{
+    document.getElementById("citysearch").innerHTML="Coming soon";
+  }
 }
 $(window).scroll(function() {
   if($(window).scrollTop() == $(document).height() - $(window).height()) {
