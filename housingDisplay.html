@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="emovo.png">
     <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
     /*.place {
@@ -76,21 +75,20 @@
     <!-- Navigation Bar GET RID OF W3-TOP TO ENABLE SCROLLBAR-->
     <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-orange" href="javascript:void(0);" onclick="toggle()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+      <!--<a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><i class="fa fa-map-marker w3-margin-right"></i>Logo</b></a>-->
       <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
+      <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>-->
       <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
       <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
-      <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">World Search</a>
-      <a href="housing.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">US Housing</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+      <!--<a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Sign In</a>-->
       <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
     </div>
-
-    <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
       <a href="index.html" class="w3-bar-item w3-button w3-padding-large">EMOVO</a>
       <a href="about.html" class="w3-bar-item w3-button w3-padding-large">About</a>
       <a href="contact.html" class="w3-bar-item w3-button w3-padding-large">Contact</a>
-      <a href="search.html" class="w3-bar-item w3-button w3-padding-large">World Search</a>
-      <a href="housing.html" class="w3-bar-item w3-button w3-padding-large">US Housing</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-padding-large">Search</a>
       <!--<a href="profile.html" class="w3-bar-item w3-button w3-padding-large">Your Profile</a>-->
     </div>
       <div class="right">
@@ -104,12 +102,11 @@
                 <option value="5">5</option>
                 <option value="6">6</option>-->
             </select>
-            <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="Country or State">
+            <input type="text" id="input" onkeyup="filter()" placeholder="Search" title="City">
             <br>
             <p id="pageCount"></p>
             <br>
-            <h3 id="title">Our Specialized Place Rankings for You to Retire</h3>
-            <img id="image" src="#" width="100px" height="100px" alt="Flag">
+            <h3 id="title">US Cities Found</h3>
             <!--<ul id="myUL">
               <input type="text" id="input" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
               -<li><a href="#">Adele</a></li>
@@ -151,58 +148,6 @@
       x.className = x.className.replace(" w3-show", "");
     }
   }
-  var stateCapitals={
-    'Alabama': 'Montgomery',
-    'Alaska': 'Juneau',
-    'Arizona':'Phoenix',
-    'Arkansas':'Little Rock',
-    'California': 'Sacramento',
-    'Colorado':'Denver',
-    'Connecticut':'Hartford',
-    'Delaware':'Dover',
-    'Florida': 'Tallahassee',
-    'Georgia': 'Atlanta',
-    'Hawaii': 'Honolulu',
-    'Idaho': 'Boise',
-    'Illinois': 'Springfield',
-    'Indiana': 'Indianapolis',
-    'Iowa': 'Des Monies',
-    'Kansas': 'Topeka',
-    'Kentucky': 'Frankfort',
-    'Louisiana': 'Baton Rouge',
-    'Maine': 'Augusta',
-    'Maryland': 'Annapolis',
-    'Massachusetts': 'Boston',
-    'Michigan': 'Lansing',
-    'Minnesota': 'St. Paul',
-    'Mississippi': 'Jackson',
-    'Missouri': 'Jefferson City',
-    'Montana': 'Helena',
-    'Nebraska': 'Lincoln',
-    'Nevada': 'Carson City',
-    'New Hampshire': 'Concord',
-    'New Jersey': 'Trenton',
-    'New Mexico': 'Santa Fe',
-    'New York': 'Albany',
-    'North Carolina': 'Raleigh',
-    'North Dakota': 'Bismarck',
-    'Ohio': 'Columbus',
-    'Oklahoma': 'Oklahoma City',
-    'Oregon': 'Salem',
-    'Pennsylvania': 'Harrisburg',
-    'Rhode Island': 'Providence',
-    'South Carolina': 'Columbia',
-    'South Dakota': 'Pierre',
-    'Tennessee': 'Nashville',
-    'Texas': 'Austin',
-    'Utah': 'Salt Lake City',
-    'Vermont': 'Montpelier',
-    'Virginia': 'Richmond',
-    'Washington': 'Olympia',
-    'West Virginia': 'Charleston',
-    'Wisconsin': 'Madison',
-    'Wyoming': 'Cheyenne'
-}
   function changePage() {
       var pages = document.getElementById("pages");
       var selectedPage = pages.options[pages.selectedIndex].value;
@@ -237,20 +182,14 @@
           <option value="6">6</option>
       </select>*/
   }
-  var currPlace=null
-  //console.log(localStorage.sortedCities)
-  var cities=JSON.parse(localStorage.sortedCities)
-  if(localStorage.citiesPlace=="US"){
-    currPlace=JSON.parse(localStorage.currState)
-  }else{
-    currPlace=JSON.parse(localStorage.currNation)
-  }
   createbtnStates()
   function createbtnStates() {
       var size=0
-      //console.log(cities)
+      var names=JSON.parse(localStorage.names);
+      var codes=JSON.parse(localStorage.codes);
+      document.getElementById("title").innerHTML="US Cities ("+names.length+" found)"
       var rank=1
-      var pageCount=parseInt(Object.keys(cities).length / 50)+1 //max 50 per page
+      var pageCount=parseInt(Object.keys(codes).length / 50)+1 //max 50 per page
       //console.log(pageCount+"")
       for(var k=1; k<pageCount; k++){
         var option=document.createElement("option");
@@ -259,116 +198,42 @@
         document.getElementById("pages").appendChild(option);
       }
       if(pageCount>1)
-        document.getElementById("pageCount").innerHTML="(1 of "+pageCount+" pages)"
+        document.getElementById("pageCount").innerHTML="(1 of "+pageCount+" pages)";
       else
-        document.getElementById("pageCount").innerHTML="(1 of "+pageCount+" page)"
-      //console.log(perPage+"")
-      //console.log(localStorage.citiesPlace)
-      if(localStorage.citiesPlace=="US"){
-        document.getElementById("image").style.display="none"
-        document.getElementById("title").innerHTML="Specialized City Rankings for You"
-        for(var k in cities){//name,rating,flaglink,capitalCity,ratings
+        document.getElementById("pageCount").innerHTML="(1 of "+pageCount+" page)";
+      for(var k=0; k<codes.length; k++){//name,rating,flaglink,capitalCity,ratings
           var btn = document.createElement("BUTTON");
           btn.className="w3-button w3-orange";
           btn.style.spacingBorder="2%";
-          btn.id=cities[k][1].name.replace(" ","-")
+          btn.id=names[k];
           btn.onclick=function(){
-            document.getElementById("input").value=""
-            for(var k2 in cities){
-              if(cities[k2][0]==this.id.replace("-"," ")){
-                localStorage.citiesPlace="US"
-                localStorage.setItem("usCity",JSON.stringify(cities[k2][1]))
-                localStorage.currStateCity=JSON.stringify(currPlace)
-                location.href="usCitiesProfile.html"
+            document.getElementById("input").value="";
+            for(var k2=0; k2<names.length; k2++){
+              if(names[k2]==this.id){
+                  localStorage.name=JSON.stringify(names[k2]);
+                  localStorage.code=JSON.stringify(codes[k2]);
+                  location.href="housingProfile.html";
               }
             }
           }
           var h = document.createElement("H3");
-          var t = document.createTextNode("#"+rank+": "+cities[k][1].name);
+          var t=null;
+          t = document.createTextNode(names[k]);
           h.appendChild(t);
           btn.appendChild(h);
-          var p = document.createElement("P");
-          if(localStorage.citiesPlace!="US"){
-              try{
-                t = document.createTextNode(cities[k][1].subcountry);
-                p.appendChild(t);
-              }catch(err){}
-          }
-          btn.appendChild(p);
-          var p2 = document.createElement("P");
-          //t = document.createTextNode("Rating: ");
-          //p2.appendChild(t);
-          btn.appendChild(p2);
           document.getElementById("table").appendChild(btn);
           if(rank>50)
-            document.getElementById(btn.id).style.display="none"
-          rank++
-    }
-  }else{
-      var datarank=1
-      var citynames=[]
-    //  document.getElementById("sorting").style.display="none"
-      var currNation=JSON.parse(localStorage.currNation)
-      document.getElementById("image").src=currNation.flaglink
-      document.getElementById("title").innerHTML="City Affordability Rankings for You (ranked places have a stored cost of living metric)"
-      for(var k=0; k<cities.length; k++){//name,rating,flaglink,capitalCity,ratings
-        if(citynames.indexOf(cities[k].name)<0){
-          citynames.push(cities[k].name)
-          var btn = document.createElement("BUTTON");
-          btn.className="w3-button w3-orange";
-          btn.style.spacingBorder="2%";
-          btn.id=cities[k].name.replace(" ","-")
-          btn.onclick=function(){
-            //console.log(this.id.replace("-"," "))
-            //console.log(cities)
-            document.getElementById("input").value=""
-            for(var k2 in cities){
-              if(cities[k2].name==this.id.replace("-"," ")){
-                  localStorage.setItem("currNation",JSON.stringify(currNation))
-                  localStorage.setItem("worldCity",JSON.stringify(cities[k2]))
-                  location.href="worldCitiesProfile.html"
-              }
-            }
-          }
-          var h = document.createElement("H3");
-          var t=null
-          if(isNaN(cities[k].costOfLiving)||cities[k].costOfLiving==null){
-            t = document.createTextNode(cities[k].name);
-          }else{
-            if(parseFloat(cities[k].costOfLiving)>0.0)
-              t = document.createTextNode(cities[k].name);
-            else{
-              t = document.createTextNode("#"+datarank+": "+cities[k].name);
-              datarank++
-            }
-          }
-          h.appendChild(t);
-          btn.appendChild(h);
-          var p = document.createElement("P");
-          try{
-                t = document.createTextNode(cities[k].subcountry);
-                p.appendChild(t);
-          }catch(err){}
-          btn.appendChild(p);
-          var p2 = document.createElement("P");
-          //t = document.createTextNode("Rating: ");
-          //p2.appendChild(t);
-          btn.appendChild(p2);
-          document.getElementById("table").appendChild(btn);
-          if(rank>50)
-            document.getElementById(btn.id).style.display="none"
-          rank++
+            document.getElementById(btn.id).style.display="none";
+          rank++;
       }
     }
-  }
-  }
   function filter() {
     var input = document.getElementById("input");
     var fil = input.value.toUpperCase();
     var table = document.getElementById("table");
     var btn = table.getElementsByTagName("button");
     for (i = 0; i < btn.length; i++) {
-        txtValue = btn[i].id.replace("-"," ")
+        txtValue = btn[i].id;
         //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(fil) > -1) {
             btn[i].style.display = "";

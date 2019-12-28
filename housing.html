@@ -7,12 +7,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" href="emovo.png">
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 .fa-anchor,.fa-coffee {font-size:200px}
 </style>
-<body>
+<body class="w3-orange">
   <!-- Navbar -->
   <div class="w3-top">
     <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
@@ -20,7 +20,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <a href="index.html" class="w3-bar-item w3-button w3-text-orange w3-hide-small w3-padding-large w3-hover-orange"><b><img src="emovo.png" width="25px" height="25px" alt="EMOVO"></img></b></a>
       <a href="about.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">About</a>
       <a href="contact.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Contact</a>
-      <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">Search</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">World Search</a>
+      <a href="housing.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-orange">US Housing</a>
       <!--<a href="profile.html" class="w3-bar-item w3-button w3-right w3-hide-small w3-padding-large w3-hover-orange w3-text-grey"><i class="fa fa-user"></i>  Your Profile</b></a>-->
     </div>
 
@@ -29,47 +30,41 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       <a href="index.html" class="w3-bar-item w3-button w3-padding-large">EMOVO</a>
       <a href="about.html" class="w3-bar-item w3-button w3-padding-large">About</a>
       <a href="contact.html" class="w3-bar-item w3-button w3-padding-large">Contact</a>
-      <a href="search.html" class="w3-bar-item w3-button w3-padding-large">Search</a>
+      <a href="search.html" class="w3-bar-item w3-button w3-padding-large">World Search</a>
+      <a href="housing.html" class="w3-bar-item w3-button w3-padding-large">US Housing</a>
       <!--<a href="profile.html" class="w3-bar-item w3-button w3-padding-large">Your Profile</a>-->
     </div>
   </div>
-  <!--
-budget___
-location preference (specific state or any)__
-
-Square footage preference? MLPFAH
-
-Buying?
-Any home type  MLPAH
-Renting? MRPAH
-if error:
-{
-  "quandl_error": {
-    "code": "QECx02",
-    "message": "You have submitted an incorrect Quandl code. Please check your Quandl codes and try again."
-  }
-}
-  -->
-  <div class="w3-orange">
-    <p>Enter the following information to search for the optimal places to live in the US based on housing costs</p>
-    <p>* means required.</p>
-    <form>
-      Budget? *<br>
-      <input type="text" name="budget" id="budget" value="">
+  <br>
+  <div id="input" style="text-align: center;">
+    <br>
+    <h2>Hello!</h2>
+    <h3>Search for optimal housing locations in the US</h3>
+    <p>Enter the following information to search for the optimal places to live in the US based on housing costs. <br>
+    * means required.</p>
+    <form action="loadingHousing.html" method="GET" class="w3-row-padding" style="display: inline-block; text-align:left">
+        <label>Budget? ($) *</label>
+          <input type="number" name="budget" id="budget" value="" required>
+        <br>
+        <br>
+        <label>State Preference:</label>
+        <select id="state" name="state">
+          </select>
+        <br>
+        <br>
+        <div class="method">
+          <label>Which housing purchase method do you prefer? *</label><br>
+          <input type="radio" name="choice" value="buy" checked> Buying<br>
+          <input type="radio" name="choice" value="rent"> Renting
+        </div>
+        <br>
+        <div class="sqftp">
+          <label>Square Footage Preference: (leave blank to ignore)</label>
+          <input type="number" name="sqft" id="sqft" value="">
+        </div>
+        <br>
+        <button type="submit" class="w3-button w3-black" width="120px" height="120px">Search</button>
     </form>
-    <p>State Preference?</p>
-    <select class="options" name="options">
-    </select>
-    <form>
-      Which housing purchase method do you prefer? *<br>
-      <input type="radio" name="colors" id="rent">Renting<br>
-      <input type="radio" name="colors" id="buy">Buying
-    </form>
-    <form>
-      Square Footage Preference (leave blank to ignore)?<br>
-      <input type="text" name="sqft" id="sqft" value=""><br>
-    </form>
-    <button type="button" name="button" onclick="search()">Search</button>
   </div>
 </body>
 <script type="text/javascript">
@@ -129,14 +124,19 @@ if error:
                 "WI - Wisconsin",
                 "WV - West Virginia",
                 "WY - Wyoming"]
-  var select = document.getElementById("options");
+
+  var select = document.getElementById("state");
   for(var i = 0; i < options.length; i++) {
       var pair = options[i].split(" - ");
-      var el = document.createElement("options");
-      //.selected = true
+      var el = document.createElement("option");
+      if(i==0){
+        el.selected=true;
+      }else {
+        el.selected=false;
+      }
       el.textContent = pair[1];
       el.value = pair[0];
       select.appendChild(el);
-  }​
+  }
 </script>
 </html>

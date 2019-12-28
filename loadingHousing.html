@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <title>EMOVO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="emovo.png">
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+    .myLink {display: none}
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style>
+  <body class="w3-orange">
+    <!-- Navigation Bar -->
+      <p></p>
+      <div class="loader" style="margin-left: auto; margin-right: auto; width: 8em">
+      </div>
+      <p></p>
+      <p id="worldLength" style="text-align:center;"></p>
+      <p id="fact" style="text-align:center;"></p>
+
+    <!--<img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Rotating_earth_%28Very_small%29.gif" alt="This is my animated image" height="42" width="42">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Rotating_earth_%28Very_small%29.gif" alt="Loading button" height="120" width="120">
+    https://upload.wikimedia.org/wikipedia/commons/4/42/Animated-Flag-USA.gif -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+var toParseUrl=window.location.search.split("?");
+var arToParse=toParseUrl[1].split("&");
+var bu=arToParse[0].split("=");
+localStorage.budget=parseFloat(bu[1]);
+var pl=arToParse[1].split("="); //"Any" or acronym
+localStorage.place=pl[1];
+var op=arToParse[2].split("=");
+localStorage.options=op[1]; //"buy" or "rent"
+var sq=arToParse[3].split("=");
+if(sq[1] === "" || sq[1] === undefined || sq[1] === NaN){
+  localStorage.sqft=-1.0;
+}else{
+  localStorage.sqft=parseFloat(sq[1]);
+}
+var acat="C";
+var uscities=[];
+var xmlhttp;
+if (window.XMLHttpRequest) {
+   xmlhttp = new XMLHttpRequest();
+}
+else {
+   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+}
+xmlhttp.onreadystatechange = function () {
+           if (xmlhttp.readyState == 4) {
+             var lines = xmlhttp.responseText;
+             uscities=lines.split("\n")
+             var purchases={};
+             var sqfts={};
+             /*
+             Zillow home value index : median Zestimate valuation for a given geographic area on a given day.
+             if buying and no square foot
+             C10001_ZHVIAH	Zillow Home Value Index (City): Zillow Home Value Index - All Homes - Clinton, Vermillion, IN
+
+             if buying and square foot
+             C10001_MVALFAH	Zillow Home Value Index (City): Median Value Per Square Foot
+
+             if rent selected and no square foot
+             C10001_ZRIAH	Zillow Home Value Index (City): Zillow Rental Index - All Homes - Clinton, Vermillion, IN
+
+             if square foot and rent selected
+             C10001_ZRIFAH	Zillow Home Value Index (City): Zillow Rental Index Per Square Foot - All Homes - Clinton, Vermillion, IN
+
+             */
+             var count=0;
+             var codes=[];
+             var names=[];
+             document.getElementById("fact").innerHTML="Searching...";
+             if(localStorage.place !== "Any"){
+               document.getElementById("fact").innerHTML="Finding cities in the state of "+localStorage.place+"...";
+               for(var k=0; k<uscities.length; k++){//uscities.length
+                 var i=uscities[k].split(" ");
+                 var code=i[0].split("Zillow");
+                 if(i[i.length-1].trim() === localStorage.place.trim()){
+                   var c=code[0].trim();
+                   var cc=c.split("_")[1].trim();
+                   if(localStorage.sqft === -1.0 && localStorage.options === "buy"){
+                     if(cc === "ZHVIAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       var f=st.split(" ").reverse().join(" ").trim();
+                       names.push(f);
+                     }
+                   }
+                   if(localStorage.sqft !== -1.0 && localStorage.options === "buy"){
+                     if(cc === "MVALFAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       var f=st.split(" ").reverse().join(" ").trim();
+                       names.push(f);
+                     }
+                   }
+                   if(localStorage.sqft === -1.0 && localStorage.options === "rent"){
+                     if(cc === "ZRIAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       var f=st.split(" ").reverse().join(" ").trim();
+                       names.push(f);
+                     }
+                   }
+                   if(localStorage.sqft !== -1.0 && localStorage.options === "rent"){
+                     if(cc === "ZRIFAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       var f=st.split(" ").reverse().join(" ").trim();
+                       names.push(f);
+                     }
+                   }
+                 }
+               }
+               console.log(codes);
+               console.log(names);
+               localStorage.codes=JSON.stringify(codes);
+               localStorage.names=JSON.stringify(names);
+               location.href="housingDisplay.html";
+             }else{
+               document.getElementById("fact").innerHTML="Finding cities in the entire United States (loading may take a bit)...";
+               for(var k=0; k<uscities.length; k++){//uscities.length
+                 var i=uscities[k].split(" ");
+                 var code=i[0].split("Zillow");
+                   var c=code[0].trim();
+                   var cc=c.split("_")[1].trim();
+                   if(localStorage.sqft === -1.0 && localStorage.options === "buy"){
+                     if(cc === "ZHVIAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       names.push(st.split(" ").reverse().join(" ").trim());
+                     }
+                   }
+                   if(localStorage.sqft !== -1.0 && localStorage.options === "buy"){
+                     if(cc === "MVALFAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       names.push(st.split(" ").reverse().join(" ").trim());
+                     }
+                   }
+                   if(localStorage.sqft === -1.0 && localStorage.options === "rent"){
+                     if(cc === "ZRIAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       names.push(st.split(" ").reverse().join(" ").trim());
+                     }
+                   }
+                   if(localStorage.sqft !== -1.0 && localStorage.options === "rent"){
+                     if(cc === "ZRIFAH"){
+                       codes.push(c);
+                       var st="";
+                       for(var v=i.length-1; v>=0; v--){
+                         if(i[v] === "-"){
+                           break;
+                         }else{
+                           st += i[v]+" ";
+                         }
+                       }
+                       names.push(st.split(" ").reverse().join(" ").trim());
+                     }
+                   }
+                 }
+                 console.log(codes);
+                 console.log(names);
+                 localStorage.codes=JSON.stringify(codes);
+                 localStorage.names=JSON.stringify(names);
+                 location.href="housingDisplay.html";
+               }
+             }
+       }
+xmlhttp.open("GET", "t.txt", true);
+xmlhttp.send();
+function readData(url, state){
+  var httpRequest = new XMLHttpRequest();
+  try{
+       $.ajax({
+         url: url,
+         async: true,
+         dataType: 'json',
+         success: function (json) {
+           return json["dataset"]["data"][0]; //latest data ["2019-01-31", 265200.0]
+         }
+       });
+  }
+  catch (error){
+    return false;
+  }
+}
+</script>
+  </body>
+</html>
