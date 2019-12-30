@@ -288,7 +288,10 @@ var url="https://www.quandl.com/api/v3/datasets/ZILLOW/"+code+"?column_index=1&a
 console.log(url);
 var array=readData(url);//[["2019-01-31", 3.258064516129]. string]
 try{
-  var m=parseFloat(array[0][1])*1000.0;
+  var call=code.split("_")[1];
+  var m=parseFloat(array[0][1]);;
+  if(call !== "MVALFAH"){
+  	m=m*1000.0;}
   document.getElementById("data").innerHTML=array[1]+": $"+m.toFixed(2)+" (Data from "+array[0][0]+")";
 }catch(error){
   document.getElementById("data").innerHTML="Data retrieval error. Apologies for the issue.";
