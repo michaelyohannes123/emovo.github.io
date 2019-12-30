@@ -49,6 +49,7 @@ var bu=arToParse[0].split("=");
 localStorage.budget=parseFloat(bu[1]);
 var pl=arToParse[1].split("="); //"Any" or acronym
 localStorage.place=pl[1];
+document.getElementById("fact").innerHTML="Finding cities in "+place+"...";
 var op=arToParse[2].split("=");
 localStorage.options=op[1]; //"buy" or "rent"
 var sq=arToParse[3].split("=");
