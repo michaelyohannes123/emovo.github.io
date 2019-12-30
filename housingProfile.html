@@ -292,7 +292,7 @@ try{
   var m=parseFloat(array[0][1]);;
   if(call !== "MVALFAH"){
   	m=m*1000.0;}
-  if(localStorage.sqft === -1.0){
+  if(localStorage.sqft == -1.0){
   	document.getElementById("data").innerHTML=array[1]+": $"+m.toFixed(2)+" (Data from "+array[0][0]+")";
   }else{
 	var n=m*localStorage.sqft;
