@@ -295,8 +295,8 @@ try{
   if(localStorage.sqft === -1.0){
   	document.getElementById("data").innerHTML=array[1]+": $"+m.toFixed(2)+" (Data from "+array[0][0]+")";
   }else{
-	m=m*localStorage.sqft;
-	document.getElementById("data").innerHTML=array[1]+": $"+m.toFixed(2)+", with total cost given your square feet preference of "+localStorage.sqft+", costs $"+m.toFixed(2)+"(Data from "+array[0][0]+")";
+	var n=m*localStorage.sqft;
+	document.getElementById("data").innerHTML=array[1]+": $"+m.toFixed(2)+", with total cost given your square feet preference of "+localStorage.sqft+" being $"+n.toFixed(2)+"(Data from "+array[0][0]+")";
   }
 }catch(error){
   document.getElementById("data").innerHTML="Data retrieval error. Apologies for the issue.";
