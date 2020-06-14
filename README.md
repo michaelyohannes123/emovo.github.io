@@ -1,3 +1,2 @@
 # emovo.github.io
-Made by Michael Yohannes
-
+Email me at redsealab@gmail.com if there's any questions about the website.
