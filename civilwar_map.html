@@ -186,8 +186,8 @@
         <p id='facts'></p>
         <p id='outcome'></p>
         <iframe id='iframe' width='400' height='300' src='#' style='display:none;'></iframe>
-        <br>
-        <button id='get_relics' class='button' onclick="getRelics()">See Relics</button>
+        <!--<br>
+        <button id='get_relics' class='button' onclick="getRelics()">See Relics</button>-->
         <br>
         <button id='fly_to_next' class='button' onclick="nextBattle()">Go to next battle</button>
       </div>
@@ -293,9 +293,10 @@ let map = new mapboxgl.Map({
   style: 'mapbox://styles/redsealabs/ckd85s84z082g1imwmyy87qfi',
   center: [0, 0], 
   interactive: true,
-  //pitch: 60, // pitch in degrees
-  //bearing: -60, // bearing in degrees
-  minZoom: 2, //zoom: 3
+  //perhaps have the a button that lets users shift pitch and bearing
+  //pitch: 30, // pitch in degrees
+  //bearing: -30, // bearing in degrees
+  minZoom: 3, 
   maxZoom: 15
 });
 map.flyTo({
@@ -623,7 +624,6 @@ function getHomefront(){
   document.getElementById('loading').style.display = 'block';
   $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(newspapers_url) + '&callback=?', function(data){
     //move point along a line: https://docs.mapbox.com/mapbox-gl-js/example/animate-point-along-route/
-    //e.target.style.backgroundImage = 'url(http://placekitten.com/g/50/50)';
     //e.stopPropagation();
     //console.log(e.target.style.backgroundImage);
     //pull up relevant youtube video
@@ -768,7 +768,7 @@ function getMaps(){
 }
 
 function getRelics(){
-  document.getElementById('get_relics').style.display = 'none';
+  //document.getElementById('get_relics').style.display = 'none';
   document.getElementById('image').style.display = 'none';
   getHomefront();
 }
@@ -781,7 +781,7 @@ function setMarkerName(e) {
 }
 
 function loadBattle(){
-  document.getElementById('get_relics').style.display = 'block';
+  //document.getElementById('get_relics').style.display = 'block';
   let newspapers = [];
   let maps = [];
   //library of congress api
