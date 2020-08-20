@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <title>War Map</title>
+  <meta charset='UTF-8'> 
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+  <meta name='Set-Cookie' content='HttpOnly;Secure;SameSite=None'/>
+  <script src='morsecode.js'></script>
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway'/>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: 'Rye', cursive;}
+    body{ 
+      margin: 0; 
+      padding: 0; 
+      background-color: #d9d1ba; 
+      color: black;
+      background-image: url('images/morse.jpg');
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    .button{
+      font-family: 'Rye', cursive;
+      border: 2px solid #ceb793;
+      border-radius: 15%;
+      background-color: antiquewhite;
+      color: black;
+    }
+    .letter{
+      background-image: url('images/oldpaper.jpg');
+      /*background-color: rgb(223, 173, 107);*/
+      position: absolute;
+      text-align: center;
+      width: 60%;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    .morse {
+      width: 80%;
+      color:black;
+      background-color: #c7a575;
+      font-family: 'Rye', cursive;
+    }
+    /*input[type="text"]{
+      font-family: 'Rye', cursive;
+    }*/
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 7%;
+      display: flex;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .active {
+      background-color: #4CAF50;
+    }
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+
+  </style>
+  <body>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="civilwar_map.html">War Map</a></li>
+      <li><a href="troops.html">Troop Statistics</a></li>
+    </ul>
+    <br>
+    <div class="letter">
+      <h1 id="title">Morse Code</h1>
+      <p>Morse code served an integral part in the war ....</p>
+      <p>Enter international morse code (using "-" (or "_") and ".") or text and see it convert as you type.</p>
+      <!--<input type="text" id="input" name="input">-->
+      <textarea id="input" name="input" class="morse" cols="40" rows="6" placeholder="Enter morse or text" tabindex="0"></textarea>
+      <br>
+      <br>
+      <textarea id="result" name="result" class="morse" cols="40" rows="6" placeholder="Output" tabindex="0" readonly></textarea>
+      <!--<label id="result" style="font-size:2em;">
+        <input type="text" name="result" readonly>
+      </label>-->
+      <br>
+      <br>
+      <!--<button id="sound_button" class='button' onclick='recite()'>Sound out morse code</button>
+      <br>-->
+      <button id="copy_button" class='button' onclick='copy()'>Copy Output</button>
+      <br>
+      <br>
+      <!--<audio id="dash-audio" controls>
+        <source src="dash.mp3" type="audio/mpeg">
+      </audio>      
+      <audio id="dot-audio" controls>
+        <source src="dot.mp3" type="audio/mpeg">
+      </audio>-->
+
+    </div>
+  </body>
+  <script>
+    let isMorse = true;
+    let inputHandler = function(e) {
+      document.getElementById("copy_button").innerText = "Copy Output";
+      let curr_text = e.target.value.toLowerCase().split(' ');
+      isMorse = true;
+      for(let i = 0; i < curr_text.length; i++){
+        let c = reverse_morse_code_table_dash[curr_text[i]];
+        if(c === undefined && curr_text[i] !== '/' && curr_text[i] !== ''){
+          if(reverse_morse_code_table[curr_text[i]] === undefined){
+            isMorse = false;
+            break;
+          }
+        }
+      }
+      let result = [];
+      /*if(isMorse === true){
+        curr_text = e.target.value.toLowerCase().split(' / ');
+      }*/
+      /*
+              if(isMorse === true){
+          t = curr_text[i].split(' ');
+        }
+            }else{
+              array1 = reverse_morse_code_table_dash;
+              array2 = reverse_morse_code_table;
+            }
+      */
+      if(isMorse === true){
+        curr_text = e.target.value.toLowerCase().split(' / ');
+        //document.getElementById('sound_button').style.display = 'none';
+        for(let i = 0; i < curr_text.length; i++){
+          let und = false;
+          let word = '';
+          if(curr_text[i] !== ''){
+            let letters = curr_text[i].split(' ');
+            //.... ..  / -.. --- --. 
+            //console.log("letters: ")
+            //console.log(letters)
+            for(let j = 0; j < letters.length; j++){
+              //console.log("cij: ")
+              //console.log(letters[j])
+              if(letters[j].length > 0){
+                let c = reverse_morse_code_table_dash[letters[j]];
+                if(c === undefined){
+                  if(reverse_morse_code_table[letters[j]] === undefined){
+                    //console.log("reverse: " + letters[j] + ",c: " + c)
+                    document.getElementById('result').innerHTML = 'Unrecognized "' + letters[j] + '"';
+                    und = true;
+                    break;
+                  }else{
+                    //console.log("text: " + letters[j] +",c: "+c)
+                    c = reverse_morse_code_table[letters[j]];
+                    word = word + c;
+                  }
+                }else{
+                  //console.log("text: " + letters[j] +",c: "+c)
+                  word = word + c;
+                }
+              }
+            }
+            if(und === false){
+              result.push(word);
+            }
+          }
+          //console.log("result: ")
+          //console.log(result)
+          let converted = '';
+          for(let j = 0; j < result.length - 1; j++){
+            if(result[j] !== ' '){                
+              converted = converted + result[j] + ' '; 
+            }else{
+              converted = converted + ' ';
+            }
+          }
+          if(result.length > 0 && result[result.length - 1] !== ' '){           
+            converted = converted + result[result.length - 1];
+          }
+          if(converted !== undefined){
+            //console.log(converted)
+            document.getElementById('result').innerHTML = converted;
+          }
+        }
+      }
+      //console.log(curr_text)
+      //console.log(isMorse)
+      if(isMorse === false){
+        //document.getElementById('sound_button').style.display = 'block';
+        for(let i = 0; i < curr_text.length; i++){
+          let und = false;
+          let word = '';
+          if(curr_text[i] !== ''){
+            for(let j = 0; j < curr_text[i].length; j++){
+              let c = morse_code_table_dash[curr_text[i][j]];
+              if(c === undefined){
+                if(morse_code_table[curr_text[i][j]] === undefined){
+                  document.getElementById('result').innerHTML = 'Unrecognized "' + curr_text[i][j] + '"';
+                  und = true;
+                  break;
+                }else{
+                  c = morse_code_table[curr_text[i][j]];
+                }
+              }
+              word = word + c + ' ';
+            }
+            if(und === false){
+              result.push(word);
+            }
+          }else{
+            result.push(' ');
+          }
+          let converted = '';
+          for(let j = 0; j < result.length - 1; j++){
+            if(result[j] !== ' '){                
+              converted = converted + result[j] + ' / '; 
+            }else{
+              converted = converted + ' / ';
+            }
+          }
+          if(result[result.length - 1] !== ' '){                
+            converted = converted + result[result.length - 1];
+          }
+          //console.log("converted: " + converted)
+          document.getElementById('result').innerHTML = converted;
+        }
+      }
+    }
+    
+    document.getElementById('input').addEventListener('input', inputHandler);
+
+    function copy(){
+      let textArea = document.createElement("textarea");
+      textArea.value = document.getElementById('result').innerHTML;
+      
+      /*textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.position = "fixed";*/
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        let successful = document.execCommand('copy');
+        let msg = successful ? 'successful' : 'unsuccessful';
+        //console.log('Fallback: Copying text command was ' + msg);
+        document.getElementById("copy_button").innerText = "Copied!";
+      }catch(error) {
+        navigator.clipboard.writeText(document.getElementById('result').innerHTML).then(function() {
+          //console.log('Async: Copying to clipboard was successful!');
+          document.getElementById("copy_button").innerText = "Copied!"; 
+        }, function(err) {
+          document.getElementById("copy_button").innerText = "Copy Failed!";
+          //console.error('Async: Could not copy text: ', err);
+        });
+      }
+      document.body.removeChild(textArea);
+    }            
+    /*function recite(){
+      let morse = document.getElementById("result").innerHTML;
+      let mo = morse.split(' / ');
+      for(let i = 0; i < mo.length; i < i++){
+        if(mo[i] !== ''){
+          let mr = mo[i].split(' ');
+          console.log(mr)
+          for(let j = 0; j < mr.length; j++){ //letter
+            if(mr[j] !== ''){
+              for(let k = 0; k < mr[j].length; k++){ //individ parts that make up a letter
+                if(mr[j][k] === '-' || mr[j][k] === '_'){
+                  document.getElementById("dash-audio").play();
+                }
+                if(mr[j][k] === '.'){
+                  document.getElementById("dot-audio").play();
+                }
+                console.log(mr[j][k])
+              } 
+            }
+            if(j < mr.length - 2){
+              document.getElementById("dot-audio").volume = 0;
+              let count = 0;
+              while(count < 3){
+                document.getElementById("dot-audio").play();
+                count++;
+              }
+              console.log("small pause: 3 dots")
+            }
+          }
+          if(i < mo.length - 1){
+            document.getElementById("dot-audio").volume = 0;
+            let count = 0;
+            while(count < 7){
+              document.getElementById("dot-audio").play();
+              count++;
+            }
+            console.log("pause - 7 dots")
+          }
+        }
+      }
+    }*/
+  </script>
+</html>

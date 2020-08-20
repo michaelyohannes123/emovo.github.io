@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <title>War Map</title>
+  <meta charset='UTF-8'> 
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+  <meta name='Set-Cookie' content='HttpOnly;Secure;SameSite=None'/>
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <!--<script src="https://d3js.org/d3.v3.min.js"></script>-->
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&display=swap">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway'/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap">
+
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: 'Rye', cursive;}
+    /*font-family: 'Raleway', Arial, Helvetica, sans-serif*/
+    body{ 
+      margin: 0; 
+      padding: 0; 
+      background-color: #d9d1ba; 
+      color: black;
+      overflow: hidden;
+    }
+    /* http://jsfiddle.net/hashem/n3rspnbh/
+       http://jsfiddle.net/CH9K8/
+    */
+    /*.overall{
+      width: 99.8%;
+      height: 500px;
+      overflow: hidden; 
+    }
+    .general_info{
+      width: 70%;
+      height: 70%;
+      display: none;
+      border: 1px solid antiquewhite;
+    }*/
+    .button{
+      font-family: 'Rye', cursive;
+      border: 2px solid #ceb793;
+      border-radius: 15%;
+      background-color: antiquewhite;
+      color: black;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 7%;
+      display: flex;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .active {
+      background-color: #4CAF50;
+    }
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+    .text_div{
+      -webkit-animation: blink 1s;
+      -webkit-animation-iteration-count: 1;
+      -moz-animation: blink 1s;
+      -moz-animation-iteration-count: 1;
+      -o-animation: blink 1s;
+      -o-animation-iteration-count: 1;
+
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -50px;
+      margin-left: -100px;
+      text-align: center;
+    }
+    .quote{
+      font-size: 200%;
+      color: antiquewhite; 
+      font-family: 'Satisfy', cursive;
+    }
+    @-webkit-keyframes blink {
+      0% {
+        filter: invert(100);
+    }
+    25% {
+        filter: invert(75);
+    }
+    50% {
+      filter: invert(50);
+    }
+    75% {
+      filter: invert(25);
+    }
+    100% {
+      filter: invert(0);
+    }
+    }
+    @-moz-keyframes blink {
+    0% {
+        filter: invert(100);
+    }
+    25% {
+        filter: invert(75);
+    }
+    50% {
+      filter: invert(50);
+    }
+    75% {
+      filter: invert(25);
+    }
+    100% {
+      filter: invert(0);
+    }
+    }
+    @-o-keyframes blink {
+    0% {
+        filter: invert(100);
+    }
+    25% {
+        filter: invert(75);
+    }
+    50% {
+      filter: invert(50);
+    }
+    75% {
+      filter: invert(25);
+    }
+    100% {
+      filter: invert(0);
+    }
+    }
+    img{
+      min-width: 100vw;
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+    }
+
+    .background_img{
+      -webkit-animation: blink 1s;
+      -webkit-animation-iteration-count: 1;
+      -moz-animation: blink 1s;
+      -moz-animation-iteration-count: 1;
+      -o-animation: blink 1s;
+      -o-animation-iteration-count: 1;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+      bottom: 10px;
+      right: 50px;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .slide{
+      animation-timing-function: linear; 
+    }
+    /* Next & previous buttons */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: gold;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    path.slice{
+      stroke-width:2px;
+    }
+
+    polyline{
+      opacity: .3;
+      stroke: black;
+      stroke-width: 2px;
+      fill: none;
+    }
+
+
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      text-align: center;
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    /* Modal Content/Box */
+    .modal-content {
+      /*position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;*/
+
+      background-color: antiquewhite;
+      text-align: center;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+      overflow: auto; /* Enable scroll if needed */
+    }
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /*.soldier_image{
+      width: 50%;
+      height: 50%;
+      top: 25%;
+      margin: 0 auto;
+      position: relative;
+
+      background: url('images/union_soldier.jpg'); 
+      background-size: contain; 
+      background-position: center;      
+      background-repeat: no-repeat;
+    }*/
+
+    /* pie charts */
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    path.slice{
+      stroke-width:2px;
+    }
+
+    polyline{
+      opacity: .3;
+      stroke: black;
+      stroke-width: 2px;
+      fill: none;
+    }
+
+  /* pay bar graph */
+    .axis {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .bar {
+      fill: #85bb65;
+    }
+
+    .bar:hover {
+      fill: #a1cb88;
+    }
+
+    div.tooltip {	
+      position: absolute;			
+      text-align: center;								
+      background: antiquewhite;	
+      border-radius: 8px;			
+    }
+
+    .box{
+      position: relative;
+    }
+    .box a{
+      display: block;      
+      position: absolute;
+    }
+
+    .letter{
+      position: fixed; /* Stay in place */
+      width: 15%;
+      height: 15%;
+      text-align: center;
+      float: left;
+      display: none; 
+      z-index: 5;
+      left: 2%;
+      top: 30%;
+      background: antiquewhite;	
+    }
+
+  </style>
+  <body>
+      <!--<div class='timeline_buttons space_out' style='color:antiquewhite;'>
+        <h3 id='year_text'></h3> -->
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="civilwar_map.html">War Map</a></li>
+      <li><a href="morse.html">Morse Code</a></li>
+    </ul>
+
+    <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow-->
+    <!--class="slide fade"-->
+    <div id="background_image" class="background_img" style="filter: brightness(70%);">
+      <img src="images/ironworks.jpg">
+    </div>
+    <div id="background_image" class="background_img" style="filter: brightness(65%);">
+      <img src="images/union.jpg"/>
+    </div>
+    <div id="background_image" class="background_img" style="filter: brightness(80%);">
+      <img src="images/soldiers.jpg"> <!--style="width:100%; height:100%; filter: brightness(80%);"-->
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+    <!--resources of each sides: camp.jpg, professions: trenches.jpg-->
+    <div id='data_modal' class='modal'>  
+      <div id='intro' class='modal-content'>
+        <span id='data_close' class='close' style="float: right;">&times;</span>
+        <p id='intro_text'>The Union had a significant resources advantage over the Confederacy.</p>
+        <p id='intro_long_text'>Data Source: Historical Statistics of the United States</p>
+        <p>Legend: Union - blue, Confederate - gray</p>
+        <br>
+        <div id="chart" style="margin: auto; width: 40%;"></div>
+        <select id="data_select" name="data">
+          <option value="Population" selected>Population</option>
+          <option value="Manufactured goods">Manufactured goods</option>
+          <option value="Exports">Exports</option>
+          <option value="Merchant Ships">Merchant Ships</option>
+          <option value="Railroads">Railroads</option>
+          <option value="Grain production">Grain production</option>
+          <option value="Total farms">Total farms</option>
+          <option value="Iron production">Iron production</option>
+          <option value="Banking capital">Banking capital</option>
+        </select>
+        <img id="data_select_image" src="images/camp.jpg" 
+          style="display: none; object-fit: fill; min-width: 10%; width: 40%; height: 30%;"></img>
+        <p id="data_select_text"></p>
+      </div>
+    </div>
+    <div id="explain_div" class="letter" 
+      style="display: none; width: 25%; height: 50%; border-radius: 4%; background-image: url('oldpaper.jpg');">
+      <span id='explain_close' class='close' style="float: right;">&times;</span>
+      <h3 id="explain_title"></h3>
+      <!--<img id="explain_image" src="images/union_soldier.jpg" alt="Explain aspect image" 
+        style="object-fit: fill; min-width: 10%; width: 40%; height: 100%;"></img>-->
+      <p id="explain_text">text here, relevant image above</p>
+    </div>
+    <!--uniform: union.jpg, casualties: wounded.jpg -->
+    <div id='uniform_modal' class='modal'> 
+      <div class='modal-content'>
+        <span id='uniform_close' class='close' style="float: right;">&times;</span>
+        <p id='uniform_text'>Civil War uniforms often varied greatly </p>
+        <p id='uniform_long_text'>Hover over the infantry soldier to see more information on his uniforms.</p>
+        <!-- Hover over certain parts of the soldier to see general characteristics about Springfield Model 1855 width="25px" height="50px"-->
+        <select id="uniforms" name="uniforms">
+          <option value="union_soldier" selected>Union Soldier</option>
+          <option value="confederate_soldier">Confederate Soldier</option>
+        </select>
+        <br>
+        <br>
+        <!--facial hair: https://prologue.blogs.archives.gov/2014/08/25/civil-war-fashion-a-facial-hair-frenzy/-->
+        <div class="box">
+          <img id="union_soldier_image" src="images/union_soldier.jpg" alt="Union soldier" 
+            style="object-fit: fill; min-width: 10%; width: 40%; height: 40%;"></img>
+          <a style="top: 0; left: 2%; width: 40%; height: 10%;"
+            onmouseover="showUniformItem('bayonet')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 10%; left: 40%; width: 9%; height: 14%;"
+            onmouseover="showUniformItem('union_gun')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 19%; left: 51%; width: 4%; height: 4%;"
+            onmouseover="showUniformItem('union_hat')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 27%; left: 51%; width: 4%; height: 3%;"
+            onmouseover="showUniformItem('facial_hair')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 26%; left: 42%; width: 8%; height: 6%;"
+            onmouseover="showUniformItem('knapsack')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 33%; left: 44%; width: 2%; height: 16%;"
+            onmouseover="showUniformItem('backpack')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 32%; left: 46%; width: 10%; height: 16%;"
+            onmouseover="showUniformItem('union_jacket')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 63%; left: 48%; width: 10%; height: 32%;"
+            onmouseover="showUniformItem('union_pants')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 33%; left: 59%; width: 12%; height: 16%;"
+            onmouseover="showUniformItem('union_gun')" onmouseout="showUniformItem('')"></a>
+        </div>
+        <div class="box">
+          <img id="confederate_soldier_image" src="images/confederate_soldier.jpg" alt="CSA soldier" 
+            style="object-fit: fill; min-width: 10%; width: 40%; height: 40%; display: none;"></img>
+          <a style="top: 5%; left: 42%; width: 20%; height: 12%;"
+            onmouseover="showUniformItem('confed_hat')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 22%; left: 49%; width: 7%; height: 4%;"
+            onmouseover="showUniformItem('facial_hair')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 28%; left: 42%; width: 20%; height: 25%;"
+            onmouseover="showUniformItem('confed_jacket')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 56%; left: 41%; width: 5%; height: 25%;"
+            onmouseover="showUniformItem('knife')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 14%; left: 38%; width: 3%; height: 57%;"
+            onmouseover="showUniformItem('confed_gun')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 58%; left: 53%; width: 6%; height: 12%;"
+            onmouseover="showUniformItem('pistol')" onmouseout="showUniformItem('')"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--pay: soldiers.jpg, demographics: family.jpg-->
+    <div id='pay_modal' class='modal' > 
+      <div id='pay' class='modal-content'>
+        <span id='pay_close' class='close' style="float: right;">&times;</span>
+        <p id='pay_text'></p>
+        <p id='pay_long_text'></p>
+        <select id="salary_view" name="salary_view">
+          <option value="Confederate" selected>Confederacy</option>
+          <option value="Union">Union</option>
+        </select>
+        <div id="pay_chart"></div>
+        <p>It's important to note that the salary allocation was based on the assumption 
+          that soldiers were paid when they were supposed to. However, oftentimes due to the 
+          intensity of combat and logistical challenges brought about by the sheer size of the forces, 
+          payday was often not sent to the troops until much later than assigned, if they were lucky.</p>
+      </div>
+    </div>
+
+    <div class="text_div">
+      <div id="quote_text" class="quote">Caption Text</div>
+      <div id="stat" class="quote">hi</div>
+      <button id="see_data" class="button" onclick="openDataModal()">See Data</button>
+      <button id="see_uniforms" class="button" onclick="openUniformModal()">See Uniforms</button>
+      <button id="see_pay" class="button" onclick="openPayModal()">See Pay</button>
+    </div>
+    <div class="tooltip">About
+      <span id="image_about" class="tooltiptext">
+        The image is of Tredegar Ironworks, which was a Confederate factory in Richmond. 
+        It's strategic importance, especially with the resource disadvantage they had, 
+        was one of the driving factors behind Richmond becoming the capital.
+      </span>
+    </div>
+    <script>
+/*
+was pay top heavy or equally distributed
+https://www.statista.com/statistics/239383/total-military-personnel-of-the-us-army-by-grade/ 
+graph this ^ see equation, assume it to be the case for the civil war troops and apply the pay grade there
+private: 100175, 23.47
+corporal: 115358, 27.037
+sergeant: 74144, 17.377
+1st sergeant: 37786, 8.856
+Quartermaster Sergeant: 11661, 2.733
+sergeant major: 3799, 0.89
+Second Lieutenant: 8779, 2.058
+First Lieutenant: 13686, 3.208
+Captain: 30065, 7.0465
+Major: 16881, 3.9565
+Lieutenant Colonel: 9564, 2.2416
+Colonel: 4403, 1.03195
+Brigadier General: 168, 0.03938	
+Major General: 140, 0.0328
+Lieutenant General: 45, 0.010547
+General: 14, 0.00328
+
+426668
+
+0.0033 + 0.011 + 0.033 + 0.0394 + 1.032 + 2.242 + 3.957 + 7.047 + 3.208
++ 2.0589 + 0.8909 + 2.7339 + 8.8569 + 17.3779 + 27.03709 + 23.4709
+
+http://www.themua.org/collections/files/original/ebaea859f8f5da32918f61c8e650b893.pdf
+
+
+https://www.battlefields.org/learn/articles/military-pay
+
+
+https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.-,Union%20Soldiers,to%206%20percent%20were%20conscripts.
+*/    function showUniformItem(item){
+        if(item === 'union_gun'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Union Weapons';
+          document.getElementById('explain_text').innerText = 'Springfield Model 1855';
+        }
+        if(item === 'bayonet'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Bayonet';
+          document.getElementById('explain_text').innerText = 'stuff';
+        }
+        if(item === 'union_hat'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Union Hat Variants';
+          document.getElementById('explain_text').innerText = 'mention hats worn by union like kepi (depicted), slouch hat';
+        }
+        if(item === 'facial_hair'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Facial Hair';
+          document.getElementById('explain_text').innerText = 'Soldiers and generals of both sides often wore beards...';
+        }
+        if(item === 'knapsack'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Knapsack';
+          document.getElementById('explain_text').innerText = 'stuff';
+        }
+        if(item === 'backpack'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Backpack';
+          document.getElementById('explain_text').innerText = 'stuff';
+        }
+        if(item === 'union_jacket'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Union Jacket';
+          document.getElementById('explain_text').innerText = 'mention unique unit 1st United States Sharpshooters'; 
+        }
+        if(item === 'union_pants'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Union Pants';
+          document.getElementById('explain_text').innerText = 'unique union unit paints - zouave, 6th Regiment European Brigade';
+        }
+
+        if(item === 'confed_hat'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Confederate Hat Variants';
+          document.getElementById('explain_text').innerText = 'confed hats';
+        }
+        if(item === 'confed_jacket'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Confederate Jacket';
+          document.getElementById('explain_text').innerText = 'unique: 5th Georgia Volunteer Infantry';
+        }
+        if(item === 'confed_gun'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Double Barreled Shotgun';
+          document.getElementById('explain_text').innerText = 'confed_gun';
+        }
+        if(item === 'pistol'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Pistol';
+          document.getElementById('explain_text').innerText = 'confed_pistol';
+        }
+        if(item === 'knife'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Knife';
+          document.getElementById('explain_text').innerText = 'confed_knife';
+        }
+        if(item === 'confed_pants'){
+          document.getElementById('explain_div').style.display = 'block';
+          document.getElementById('explain_title').innerText = 'Confederate Pants';
+          document.getElementById('explain_text').innerText = 'unique confed units - also zouave (Louisiana Tigers), ';
+        }
+      }
+
+      function openPayModal(){
+        payDistribution();
+        document.getElementById('uniform_modal').style.display = 'none';
+        document.getElementById('data_modal').style.display = 'none'; 
+        document.getElementById('pay_modal').style.display = 'block'; 
+      }
+
+      function openUniformModal(){
+        document.getElementById('uniform_modal').style.display = 'block';
+        document.getElementById('data_modal').style.display = 'none'; 
+        document.getElementById('pay_modal').style.display = 'none'; 
+      }
+
+      function formResourceData(){
+        let selected_value = document.getElementById('data_select').value;
+        let resources = ["Population", "Manufactured goods", "Exports", "Merchant Ships", "Railroads", 
+          "Grain production", "Total farms", "Iron production", "Banking capital"];
+        let union_resource_percentage = [71, 92, 56, 90, 72, 69, 67, 94, 82];
+        let confed_resource_percentage = [29, 8, 44, 10, 28, 31, 33, 6, 18];
+        let r_index = resources.indexOf(selected_value);
+        let resource_dict = {"Union": union_resource_percentage[r_index], "Confederate": confed_resource_percentage[r_index]};
+        return resource_dict;
+      }
+//GRAPH NUMBER OF BATTLES IN A SPECIFIC STATE OVER 4 YEAR PERIOD
+      function openDataModal(){
+        let resource_dict = formResourceData();
+        dataResources(resource_dict);
+        document.getElementById('uniform_modal').style.display = 'none';
+        document.getElementById('data_modal').style.display = 'block'; 
+        document.getElementById('pay_modal').style.display = 'none'; 
+      } 
+
+      function dataResources(resources_dict){
+        let color = d3.scaleOrdinal()
+          .domain(["Union", "Confederate"])
+          .range(["#19488a", "#7f827c"]);
+        
+        let pie = d3.pie()
+          .value(function(d) { return d.value; });
+
+        let data_ready = pie(d3.entries(resources_dict));
+
+// Add the polylines between chart and labels:
+        var arc = d3.arc()
+          .outerRadius(radius * 0.8)
+          .innerRadius(radius * 0.4);
+
+        var outerArc = d3.arc()
+          .innerRadius(radius * 0.9)
+          .outerRadius(radius * 0.9);
+        
+        /*resources_svg
+          .selectAll('allLabels')
+          .data(data_ready)
+          .enter()
+          .append('text')
+            .text( function(d) {return d.data.key } )
+            .attr('transform', function(d) {
+                var pos = outerArc.centroid(d);
+                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+                return 'translate(' + pos + ')';
+            })
+            .style('text-anchor', function(d) {
+                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                return (midangle < Math.PI ? 'start' : 'end')
+            })
+
+        resources_svg
+          .selectAll('allPolylines')
+          .data(data_ready)
+          .enter()
+          .append('polyline')
+            .attr("stroke", "black")
+            .style("fill", "none")
+            .attr("stroke-width", 1)
+            .attr('points', function(d) {
+              var posA = arc.centroid(d) // line insertion in the slice
+              var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+              var posC = outerArc.centroid(d); // Label position = almost the same as posB
+              var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+              posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+              return [posA, posB, posC]
+            })*/
+
+        // map to data
+        var u = resources_svg.selectAll("path")
+          .data(data_ready);
+        
+        // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+        u
+          .enter()
+          .append('path')
+          .merge(u)
+          .transition()
+          .duration(1000)
+          .attr('d', d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+          )
+          .attr('fill', function(d){ return(color(d.data.key)) })
+          .attr("stroke", "white")
+          .style("stroke-width", "2px")
+          .style("opacity", 1);
+
+        // remove the group that is not present anymore
+        u
+          .exit()
+          .remove();
+      }
+
+      //theoretical, assuming they were paid on time; which often they werent
+      //bar chart x axis: rank, y-axis: percent of finances allocated for salaries
+      //was the distribution unequitable?
+      function payDistribution(){
+        let ranks = ["Private", "Corporal", "Sergeant", "1st Sergeant", "Quartermaster Sergeant", "Sergeant Major", "Second Lieutenant",
+          "First Lieutenant", "Captain", "Major", "Lieutenant Colonel", "Colonel", "Brigadier General", "Major General",
+          "Lieutenant General", "General"];
+        ranks.reverse();
+        let people_count = 100000; //value doesn't necessarily matter, since distribution is %
+        let rank_distribution = [0.0033, 0.011, 0.033, 0.0394, 1.032, 2.242, 3.957, 7.047, 3.208,
+          2.0589, 0.8909, 2.7339, 8.8569, 17.3779, 27.03709, 23.4709];
+        rank_distribution.reverse();
+        let union_pay = [13, 13, 17, 20, 21, 21, 105.5, 105.5, 115.5, 169, 181, 212, 315, 457, 748, 748];
+        union_pay.reverse();
+        let confed_pay = [11, 13, 17, 20, 21, 21, 80, 90, 130, 150, 170, 195, 301, 301, 301, 301];
+        confed_pay.reverse();
+        let max_union_percent = 0.0;
+        let max_confed_percent = 0.0;
+        let wealth_union = [];
+        let wealth_confed = [];
+        let total_pay_union = 0;
+        let total_pay_confed = 0;
+        for(let i = 0; i < union_pay.length; i++){
+          let sum = union_pay[i] * rank_distribution[i] * people_count;
+          total_pay_union += sum;
+          sum = confed_pay[i] * rank_distribution[i] * people_count;
+          total_pay_confed += sum;
+        }
+        for(let i = 0; i < union_pay.length; i++){
+          let sum = union_pay[i] * rank_distribution[i] * people_count;
+          let percent = (sum / total_pay_union) * 100;
+          wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
+          sum = confed_pay[i] * rank_distribution[i] * people_count;
+          percent = (sum / total_pay_confed) * 100;
+          wealth_confed.push({"value": {"rank": ranks[i], "percent": percent}});
+        }
+        let data_chart = wealth_confed;
+        if(document.getElementById("salary_view").value === "Union"){
+          data_chart = wealth_union;
+        }
+        //http://bl.ocks.org/anaeliaovalle/66c3eba07c6d2c8f6b44fda14771e16e
+        //hover: https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
+
+        var margin = {top: 54, right: 60, bottom: 130, left: 88},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+          
+        var x = d3.scaleLinear().range([0, width]);
+
+        var y = d3.scaleBand().rangeRound([0, height]);
+
+        var xAxis = d3.axisBottom()
+            .scale(x)
+            .ticks(20);
+
+        var yAxis = d3.axisLeft()
+            .scale(y);
+            
+        var svg = d3.select("#pay_chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top )
+          .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
+          
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", -35)
+            .attr("dy", "0.71em")
+            .attr("fill", "#000")
+            .text("Estimated salary distribution")
+            .style("fill", "#000000");
+          
+        svg.append("text")
+            .attr("x", -69)
+            .attr("y", -8)
+            .attr("dy", "0.71em")
+            .attr("fill", "#000")
+            .text("Ranks")
+            .style("fill", "#000000");
+          
+          x.domain([0, d3.max(data_chart, function(d) { return d.value.percent; })]); 
+          y.domain(ranks.map(function(d){return d;}));
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis)
+            .selectAll("text")
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+            .append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 6)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+
+          let tooltip_div = d3.select("#pay_chart").append("div")	
+              .attr("class", "tooltip")				
+              .style("opacity", 0);
+
+          svg.selectAll(".bar")
+          .data(data_chart)
+          .enter().append("rect")
+            .style("fill", "#85bb65")
+          .attr("class", "bar")
+          .attr("width", function(d) { return x(d.value.percent); })
+          .attr("y", function(d) { return y(d.value.rank); })
+          .attr("height", 16)
+          .text(function(d) { return d; })
+          .on("mouseover", function(d) {		
+            tooltip_div.transition()		
+                .duration(500)		
+                .style("opacity", .9);	
+            tooltip_div.html("<strong>Share:</strong> <span style='color: black'>" + d.value.percent.toFixed(3) + "%</span>")	
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })			
+          .on("mouseout", function(d) {		
+              tooltip_div.transition()		
+                  .duration(200)		
+                  .style("opacity", 0);	
+          });
+
+          svg.append("text")
+            .attr("x", 350)
+            .attr("y", 370)
+            .attr("dy", "0.71em")
+            .attr("fill", "#000")
+            .text("Percentage of total salary allocated to rank")
+            .style("fill", "#000000");
+      }
+        // set the dimensions and margins of the graph
+        var width = 450
+            height = 450
+            margin = 10
+
+        // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+        var radius = Math.min(width, height) / 2 - margin
+
+        // append the svg object to the div called 'my_dataviz'
+        var resources_svg = d3.select("#chart")
+          .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+          .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+        /*resources_svg.append("g")
+          .attr("class", "labels");
+        resources_svg.append("g")
+          .attr("class", "lines");*/
+
+      /* select input data */
+      let data_select = document.querySelector('#data_select'),
+        data_input = document.querySelector('input[type="button"]');
+      data_select.addEventListener('change',function(){
+        let resource_dict = formResourceData();
+        dataResources(resource_dict);
+      });
+
+      let uniforms_select = document.querySelector('#uniforms'),
+        uniforms_input = document.querySelector('input[type="button"]');
+        uniforms_select.addEventListener('change',function(){
+          let soldier = document.getElementById('uniforms').value;
+          if(soldier === 'confederate_soldier'){
+            document.getElementById('union_soldier_image').style.display = 'none';
+            document.getElementById('confederate_soldier_image').style.display = 'inline-block';
+          }else{
+            document.getElementById('union_soldier_image').style.display = 'inline-block';
+            document.getElementById('confederate_soldier_image').style.display = 'none';
+          }
+      });
+
+      let salary_select = document.querySelector('#salary_view'),
+        salary_input = document.querySelector('input[type="button"]');
+        salary_select.addEventListener('change',function(){
+          document.getElementById("pay_chart").innerHTML = '';
+          payDistribution();
+      });
+
+      const nav = document.querySelector('.letter');
+      const offset = nav.getBoundingClientRect();
+
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > offset.top) {
+          nav.style.position = 'fixed';
+          nav.style.top = 0;
+        } else {
+          nav.style.position = 'relative';
+          nav.style.top = '';
+        }
+      });
+
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("background_img");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+        }
+        slides[slideIndex-1].style.display = "block"; 
+        let id = ""; 
+        if(slideIndex !== 1){
+          document.getElementById("see_data").style.display = 'none';
+        }else{
+          id = "see_data";
+          document.getElementById("see_data").style.display = 'block';
+          document.getElementById("image_about").innerText = "The image is of Tredegar Ironworks, which was a Confederate factory in Richmond. It's strategic importance, especially with the resource disadvantage they had, was one of the driving factors behind Richmond becoming the capital.";
+        }
+        if(slideIndex !== 2){
+          document.getElementById("see_uniforms").style.display = 'none';
+        }else{
+          id = "see_uniforms";
+          document.getElementById("see_uniforms").style.display = 'block';
+          document.getElementById("image_about").innerText = "Union troops at the Battle of Fredricksburg";
+        }
+        if(slideIndex !== 3){
+          document.getElementById("see_pay").style.display = 'none';
+        }else{
+          id = "see_pay";
+          document.getElementById("see_pay").style.display = 'block';
+          document.getElementById("image_about").innerText = "Confederate troops";
+        }
+        document.getElementById("stat").style.opacity = 0;
+        document.getElementById("quote_text").style.opacity = 0;
+        document.getElementById(id).style.opacity = 0;
+        setTimeout(()=>{
+          document.getElementById("quote_text").style.opacity = 1;
+          document.getElementById("quote_text").innerHTML = "quote"+(slideIndex-1);
+          setTimeout(()=>{
+            document.getElementById("stat").style.opacity = 1;
+            document.getElementById("stat").innerHTML = "stat"+(slideIndex-1);
+            setTimeout(()=>{
+              document.getElementById(id).style.opacity = 1;
+            }, 500);
+          }, 500);
+        }, 500);
+        //then show data
+      /*
+quotes: https://www.battlefields.org/learn/articles/civil-war-facts
+
+(NPS)
+pie chart
+What were the civilian professions of these soldiers?  ===
+Farmers comprised 48 percent of the civilian occupations in the Union. Others included mechanics, 24 percent; laborers, 16 percent; commercial, 5 percent; miscellaneous, 4 percent; and professional occupations, 3 percent.
+
+Farmers comprised 69 percent of the civilian occupations in the Confederacy. Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 percent; professional occupations, 2.1 percent; and miscellaneous, 1.6 percent.
+  
+Casualties ===
+
+people chart
+The 642,427 total Union casualties have been divided accordingly:
+
+·         110,100 killed in battle
+
+·         224,580 diseases
+
+·         275,174 wounded in action
+
+·         30,192 prisoners of war
+
+The 483,026 total Confederate casualties have been divided accordingly:
+
+·         94,000 killed in battle
+
+·         164,000 diseases
+
+·         194,026 wounded in action
+
+·         31,000 prisoners of war
+
+
+Economics ====
+(Historical Statistics of the United States)
+https://i.pinimg.com/originals/c9/fb/2f/c9fb2fae99537d55779fc7ca12401cbd.gif
+table with numbers behind an old paper
+
+pay: https://www.battlefields.org/learn/articles/military-pay
+user selects infantry type/rank and recieves payment
+
+rank ====
+https://en.wikipedia.org/wiki/Ranks_and_insignia_of_the_Confederate_States
+https://en.wikipedia.org/wiki/Confederate_States_Army
+
+https://en.wikipedia.org/wiki/Uniform_of_the_Union_Army#:~:text=Rank%20was%20displayed%20on%20epaulettes,one%2C%20two%20or%20three%20silver
+https://en.wikipedia.org/wiki/Union_Navy
+
+==demographics
+African American and "Five Civilized Tribes" soldiers ====
+pie chart
+https://cdn.historycollection.com/wp-content/uploads/2019/02/69th_New_York_Militia.jpg
+https://traveltothe1860s.weebly.com/uploads/1/7/1/3/17138326/1384870903.jpg -economic
+https://i.pinimg.com/originals/28/ee/26/28ee2681581e3c65ea203e890a0063e2.jpg - economic
+https://cdn.aarp.net/content/dam/aarp/social_change/history/2011_4/740-ambulance-civil-war.imgcache.rev03ee0d01ff435524b2815025bec0ec1e.jpg - casualties
+https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/ArtilleryCharleston1863.jpg/1200px-ArtilleryCharleston1863.jpg - confederate
+https://i0.wp.com/militaryhistorynow.com/wp-content/uploads/2017/09/7th-Illinois-Volunteer-Infantry.jpg?resize=768%2C598&ssl=1 - union
+
+1894: John S. Mosby, reflecting on his role in the war, stated in a letter to a friend that "I've always understood that we went to war on account of the thing we quarreled with the North about. I've never heard of any other cause than slavery.
+*/
+      }
+      var slideIndex = 1;
+      showSlides(slideIndex);
+      
+      document.getElementById('data_close').onclick = function() {
+        document.getElementById('data_modal').style.display = 'none';
+      }
+
+      document.getElementById('uniform_close').onclick = function() {
+        document.getElementById('uniform_modal').style.display = 'none';
+        document.getElementById('explain_div').style.display = 'none';
+      }
+
+      document.getElementById('explain_close').onclick = function() {
+        document.getElementById('explain_div').style.display = 'none';
+      }
+
+      document.getElementById('pay_close').onclick = function() {
+        document.getElementById('pay_modal').style.display = 'none';
+      }
+    </script>
+  </body>
+</html>

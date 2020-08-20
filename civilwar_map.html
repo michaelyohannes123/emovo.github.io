@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <title>War Map</title>
+  <meta charset='UTF-8'> 
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+  <meta name='Set-Cookie' content='HttpOnly;Secure;SameSite=None'/>
+  <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+  <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css'/>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+  <script src='civilwarbattlesgeo.js'></script>
+  <script src='civilwarbattles.js'></script>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway'/>
+  <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Special+Elite'/>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css'/>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: 'Rye', cursive;}
+    /*font-family: 'Raleway', Arial, Helvetica, sans-serif*/
+    body{ 
+      margin: 0; 
+      padding: 0; 
+      background-color: #d9d1ba; 
+      /*color: #ada16e; #f9b043;*/
+      color: black;
+    }
+    /* http://jsfiddle.net/hashem/n3rspnbh/
+       http://jsfiddle.net/CH9K8/
+    */
+    /*.overall{
+      width: 99.8%;
+      height: 500px;
+      overflow: hidden; 
+    }
+    .general_info{
+      width: 70%;
+      height: 70%;
+      display: none;
+      border: 1px solid antiquewhite;
+    }*/
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 7%;
+      display: flex;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .active {
+      background-color: #4CAF50;
+    }
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+
+
+    .map{ 
+      position: absolute; 
+      width: 100%;
+      height: 86%; 
+    }
+    .button{
+      font-family: 'Rye', cursive;
+      border: 2px solid #ceb793;
+      border-radius: 15%;
+      background-color: antiquewhite;
+      color: black;
+    }
+    .timeline_buttons{
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      display: flex;
+    }
+    .timeline_buttons.space_out{
+      justify-content: space-around;
+    }
+    .president_image{
+      border-radius: 50%;
+      color: antiquewhite;
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: antiquewhite;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+      overflow: auto; /* Enable scroll if needed */
+    }
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .loader {
+      border: 16px solid antiquewhite;
+      border-radius: 50%;
+      border-top: 8px solid #000000;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; 
+      animation: spin 2s linear infinite;
+    }
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <body>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#" onclick="showSettings()">Map Settings</a></li>
+      <li><a href="#" onclick="showYearReport()">Year Report</a></li>
+      <li><a href="troops.html">Troop Statistics</a></li>
+      <li><a href="morse.html">Morse Code</a></li>
+      <!--only appear for 1861 and 1864. Show candidates and adjusted map 
+          color over the maps on mapbox and have a marker to differentiate 1860 borders from today
+      -->
+      <li id="elections"><a href="#">Election Result!</a></li> 
+    </ul>
+
+    <div id='intro_modal' class='modal' style='display:none;'> 
+      <div id='intro' class='modal-content'>
+        <p id='intro_text'></p>
+        <p id='intro_long_text'></p>
+        <br>
+        <button id="intro_close" class="button">See battle map</button>
+      </div>
+    </div>
+    <div id='general_info' class='modal' style='display:none;'>
+      <div id='info' class='modal-content'>
+        <span id='general_info_close' class='close' style="float: right;">&times;</span>
+        <p id='battle_title'></p>
+        <p id='time_date'></p>
+        <p id='location'></p>
+        <p id='type'></p>
+        <p id='facts'></p>
+        <p id='outcome'></p>
+        <iframe id='iframe' width='400' height='300' src='#' style='display:none;'></iframe>
+        <br>
+        <button id='get_relics' class='button' onclick="getRelics()">See Relics</button>
+        <br>
+        <button id='fly_to_next' class='button' onclick="nextBattle()">Go to next battle</button>
+      </div>
+    </div>
+    <div id='settings_modal' class='modal' style='display:none;'> 
+      <div id='settings' class='modal-content' style="text-align: center;">
+        <span id='settings_close' class='close' style="float: right;">&times;</span>
+        <p>Show heatmap for all years all at once or show it on a year by year basis?</p>
+        <select id="heatmap_select">
+          <option value="heatmap_all" selected>Heatmap for all years</option>
+          <option value="heatmap_per_year">Heatmap for each year</option>
+        </select>
+        <br>
+        <br>
+        <label for="heatmap_only_choice">Show only heatmap? </label> 
+        <input type="checkbox" id="heatmap_only_choice">
+        <br>
+        <br>
+        <button id="apply_settings" class="button" onclick="applySettings()">Apply Settings</button>
+      </div>
+    </div>
+    <div id='report_modal' class='modal' style='display:none;'> 
+      <div id='report' class='modal-content' style="text-align: center;">
+        <span id='report_close' class='close' style="float: right;">&times;</span>
+        <h3>War Report</h3>
+        <p>Number of major battles this year: </p>
+        <br>
+        <p>percentage of principal battles by class</p>
+        <br>
+        <p>percentage of battles won by confederate or union</p>
+        <br>
+        <p>table here of battles and percentage wins by state</p>
+      </div>
+    </div>
+    <div id='relics_modal' class='modal' style='display:none;'>
+      <div id='relics' class='modal-content'>
+        <span id='relics_close' class='close' style="float: right;">&times;</span>
+        <p id="title"></p>
+        <div id='loading' class='loader'></div>
+        <img id="image" src="" alt="news" width="400" height="400"></img>
+        <button id="left" class="w3-button w3-black w3-display-left" onclick="changeNews(-1)">&#10094;</button>
+        <button id="right" class="w3-button w3-black w3-display-right" onclick="changeNews(1)">&#10095;</button>
+        <button id='get_general_info' class='button' onclick="getGeneralInfo()">General Info</button>
+        <button id='fly_to_next' class='button'>Go to next battle</button>
+      </div>
+    </div>
+    <div id='war_map' class='map'></div>
+    <div class="footer">
+      <!--<div class='timeline_buttons space_out' style='color:antiquewhite;'>
+        <h3 id='year_text'></h3>
+      </div>-->
+      <ul style='justify-content: space-around;'>
+        <!--https://www.battlefields.org/learn/primary-sources/cornerstone-speech-->
+        <li><a id='1861' href='javascript:;' onclick='preSetUpPoints(this.id)'>1861</a></li>
+
+        <li><a id='1862' href='javascript:;' onclick='preSetUpPoints(this.id)'>1862</a></li>
+
+        <li><a id='1863' href='javascript:;' onclick='preSetUpPoints(this.id)'>1863</a></li>
+
+        <li><a id='1864' href='javascript:;' onclick='preSetUpPoints(this.id)'>1864</a></li>
+
+        <li><a id='1865' href='javascript:;' onclick='preSetUpPoints(this.id)'>1865</a></li>
+      </ul>
+    </div>
+    <script>
+document.getElementById('intro_close').onclick = function() {
+  document.getElementById('intro_modal').style.display = 'none';
+}
+document.getElementById('general_info_close').onclick = function() {
+  document.getElementById('general_info').style.display = 'none';
+}
+document.getElementById('relics_close').onclick = function() {
+  document.getElementById('relics_modal').style.display = 'none';
+}
+document.getElementById('settings_close').onclick = function() {
+  document.getElementById('settings_modal').style.display = 'none';
+}
+document.getElementById('report_close').onclick = function() {
+  document.getElementById('report_modal').style.display = 'none';
+}
+
+let current_markers = {};
+let maps_url;
+let newspapers_url;
+let images_url;
+let battle_name;
+let relics = [];
+let year = 1861;
+//MAP A HEATMAP OF BATTLES
+//https://docs.mapbox.com/help/tutorials/make-a-heatmap-with-mapbox-gl-js/
+//multiple sites: battle of hancock, fort henry
+
+//HAVE A UPPER TAB THAT OVERLAYS 4 BUTTONS
+//HAVE MORSE CODE TRANSLATOR
+//LET USERS ANONYMOUSLY REPORT ANY DATA ISSUES
+//HAVE PERCENTAGE OF BATTLES AT WHICH STATE
+//26 U.S. states with Virginia (123), Tennessee (38), Missouri (29), and Georgia(28) 384 PRINCIPLE BATTLES
+
+//localStorage.setItem("year", 1861);
+mapboxgl.accessToken = 'pk.eyJ1IjoicmVkc2VhbGFicyIsImEiOiJja2MxNHU1d3MwZWJoMm9qcjNubjFycWM0In0.9HokRTHHG2RcNFwrhFHBgA';
+let map = new mapboxgl.Map({
+  container: 'war_map',
+  style: 'mapbox://styles/redsealabs/ckd85s84z082g1imwmyy87qfi',
+  center: [0, 0], 
+  interactive: true,
+  //pitch: 60, // pitch in degrees
+  //bearing: -60, // bearing in degrees
+  minZoom: 2, //zoom: 3
+  maxZoom: 15
+});
+map.flyTo({
+  center: [-98.6264896, 38.2241172],
+  essential: true
+});
+map.on('load', function() {
+  constructHeatmap(1861);
+  preSetUpPoints('1861');
+});
+
+function constructHeatmap(year){
+  //toggle heatmap: https://docs.mapbox.com/mapbox.js/example/v1.0.0/layers/
+  let battle_years = [1861, 1862, 1863, 1864, 1865];
+  let feature_array = [];
+  let keys = Object.keys(civil_war_battles_geo);
+  for(var battle_name in civil_war_battles){
+    let battle = civil_war_battles[battle_name];
+    let date = battle['date'].split(' ');
+    if(battle_years.includes(year)){
+      if(keys.indexOf(battle_name) > -1 && year === parseInt(date[2])){ 
+        let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+        let battle_lat = parseFloat(battle_loc.split(",")[0]);
+        let battle_lng = parseFloat(battle_loc.split(",")[1]);
+        let point = {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [battle_lng, battle_lat]
+          }
+        }
+        feature_array.push(point);
+      }
+    }else{
+      if(keys.indexOf(battle_name) > -1){ 
+        let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+        let battle_lat = parseFloat(battle_loc.split(",")[0]);
+        let battle_lng = parseFloat(battle_loc.split(",")[1]);
+        let point = {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [battle_lng, battle_lat]
+          }
+        }
+        feature_array.push(point);
+      }
+    }
+  }
+  map.addSource('battle_points', {
+    'type': 'geojson',
+    'data': {
+      'type': 'FeatureCollection',
+      'features': feature_array
+    }
+  });
+  
+  map.addLayer({
+    id: 'heatmap_layer',
+    source: 'battle_points',
+    type: 'heatmap',
+    paint: {
+      'heatmap-radius': 40,
+      "heatmap-color": 
+          [
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0, 'rgba(240,29,29,0)',
+            0.2, 'rgba(212, 175, 55, 1)', 
+            0.4, 'rgba(255, 165, 0, 1)', 
+            0.7, 'rgba(226, 88, 34, 1)', 
+            1.0, 'rgba(178, 34, 34, 1)'
+          ],
+      "heatmap-weight": {
+        "type": "identity", 
+        "property": "point_count"
+      }
+    }
+  });
+}
+
+let slideIndex = 0;
+function changeNews(n) {
+  slideIndex += n;
+  showNews(relics);
+}
+
+function deleteMarkers() {
+  let cm_keys = Object.keys(current_markers);
+  for(let i = 0; i < cm_keys.length; i++){
+    current_markers[cm_keys[i]]['marker'].remove();
+  }
+  current_markers = {};
+}
+
+function applySettings(){
+  //also clear up heatmap in these if statemensts
+  if(document.getElementById('heatmap_select').value === 'heatmap_all'){
+    map.removeLayer('heatmap_layer');
+    map.removeSource('battle_points');
+    constructHeatmap(-1);
+  }
+  if(document.getElementById('heatmap_select').value === 'heatmap_per_year'){
+    map.removeLayer('heatmap_layer');
+    map.removeSource('battle_points');
+    constructHeatmap(year);
+  }
+
+  if(document.getElementById('heatmap_only_choice').checked){
+    deleteMarkers();
+  }else{
+    setUpPoints(year + '');
+  }
+  document.getElementById("settings_modal").style.display = 'none';
+}
+
+function assembleYearData(){
+  let confed_vict_count = 0;
+  let union_vict_count = 0;
+  let tie_count = 0;
+  let state_counts = {};
+  let class_a_count = 0;
+  let class_b_count = 0;
+  let class_c_count = 0;
+  let class_d_count = 0;
+
+  for(var battle_name in civil_war_battles){
+    let battle = civil_war_battles[battle_name];
+    let date = battle['date'].split(' ');
+    //battles occurring in multiple states are double counted in the state table
+    if(parseInt(year) === parseInt(date[2])){    
+      if(battle['class'] === 'A')
+        class_a_count++;
+      if(battle['class'] === 'B')
+        class_b_count++;
+      if(battle['class'] === 'C')
+        class_c_count++;
+      if(battle['class'] === 'D')
+        class_d_count++;
+      
+      if(battle['victory'] === 'Inconclusive'){
+        tie_count++;
+      }else if(battle['victory'] === 'Union'){
+        union_vict_count++;
+      }else if(battle['victory'] === 'Confederate'){
+        confed_vict_count++;
+      }else{
+        console.log("victory: "+battle_name)
+      }
+      
+      if(state_counts[battle['state']] === undefined){
+        state_counts[battle['state']] = 0;
+      }else{
+        state_counts[battle['state']]++;
+      }
+    }
+  }
+  console.log("state_counts")
+  console.log(state_counts)
+}
+
+function showYearReport(){
+  /*
+    funtion here to to that 
+    <div id='report_modal' class='modal' style='display:none;'> 
+      <div id='report' class='modal-content' style="text-align: center;">
+        <span id='report_close' class='close' style="float: right;">&times;</span>
+        <p id='loading'>Number of major battles this year: </p>
+        <br>
+        <p id='loading'>percentage of principal battles by class</p>
+        <br>
+        <p id='loading'>percentage of battles won by confederate or union</p>
+        <br>
+        <p id='loading'>table here of battles and percentage wins by state</p>
+        <button id="apply_settings" class="button" onclick="applySettings()">Apply Settings</button>
+      </div>
+    </div>
+  */
+  assembleYearData();
+  document.getElementById('report_modal').style.display = 'block';
+}
+
+function showSettings(){
+  document.getElementById('settings_modal').style.display = 'block';
+}
+
+function showNews(array) {
+  console.log("slide: "+slideIndex+", array_length: "+array.length)
+  if(slideIndex >= array.length){
+    slideIndex = 0;
+  }
+  if(slideIndex < 0){
+    slideIndex = array.length - 1;
+  }
+  let imageid = 'image';
+  document.getElementById(imageid).src = array[slideIndex]["src"];
+  document.getElementById(imageid).onclick = 'window.location.href = \'' + array[slideIndex]["url"] + '\'';
+  document.getElementById(imageid).style.display = 'block'; 
+  let titleid = 'title'; 
+  document.getElementById(titleid).innerHTML = array[slideIndex]["title"];
+  document.getElementById(titleid).style.display = 'block';
+}
+
+function getGeneralInfo(){
+  document.getElementById('general_info').style.display = 'block'; 
+  document.getElementById('relics_modal').style.display = 'none';
+  document.getElementById('image').style.display = 'none'; 
+  document.getElementById('left').style.display = 'none'; 
+  document.getElementById('right').style.display = 'none'; 
+  document.getElementById('title').style.display = 'none'; 
+  document.getElementById('loading').style.display = 'none';
+}
+
+function getImages(){
+  console.log(images_url)
+  document.getElementById('general_info').style.display = 'none'; 
+  document.getElementById('relics_modal').style.display = 'block';
+  document.getElementById('image').style.display = 'none'; 
+  document.getElementById('left').style.display = 'none'; 
+  document.getElementById('right').style.display = 'none'; 
+  document.getElementById('title').style.display = 'none'; 
+  document.getElementById('loading').style.display = 'block';
+  $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(images_url) + '&callback=?', function(data){
+    //move point along a line: https://docs.mapbox.com/mapbox-gl-js/example/animate-point-along-route/
+    //e.target.style.backgroundImage = 'url(http://placekitten.com/g/50/50)';
+    //e.stopPropagation();
+    //console.log(e.target.style.backgroundImage);
+    //pull up relevant youtube video
+    console.log(data)
+    console.log(data.contents);
+    console.log(data.contents.results);
+    let images = [];
+    for(let i = 0; i < data.contents.results.length; i++){
+      let d = data.contents.results[i];
+      if(d.access_restricted === false){ 
+        // FOR GETTING HOMEFRONT OPINION
+        //data.contents.results[0].access_restricted -> make sure true
+        //data.contents.results[0].id -> newspaper link online 
+        //data.contents.results[0].date '1914-2-5' split by '-' and search for matching year,  .image_url -> array, .png url src links, .description array to headline
+        //.location -> ['united states', 'new york city', 'new york', 'new york county']
+        //.partof_title -> ['new-york tribune (new york [n.y.]) 1866-1924'] -> ALL CAP IT
+        if(d.date !== undefined && d.image_url !== undefined){
+          if(d.image_url.length > 0){
+            let time = d.date.split('-');
+            for(let j = 0; j < time.length; j++){
+              let num = parseInt(time[j]);
+              if(num >= year && num <= 1865){ //its a year, not month or day
+                images.push(d);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    let featured = false;
+    if(images.length === 0){
+      featured = true;
+      for(let i = 0; i < data.contents.featured_items.length; i++){
+        let d = data.contents.featured_items[i];
+        let t = d.title.split(" ");
+        for(let j = 0; j < t.length; j++){
+          let num = parseInt(t[j]);
+          if(num !== undefined){
+            if(num >= year && num <= 1865){ //its a year, not month or day
+              images.push(d);
+              break;
+            }
+          }
+        }
+      }
+    }
+    console.log("IMAGES")
+    console.log(images)
+    for(let j = 0; j < images.length; j++){
+      if(featured === false){
+        let url_pos = -1;
+        for(let k = images[j].image_url.length - 1; k >= 0; k--){
+          if(images[j].image_url[k].indexOf('.jpg') > -1 || images[j].image_url[k].indexOf('.png') > -1){
+            url_pos = k;
+            break;
+          }
+        }
+        if(url_pos !== -1){
+          relics.push({"src": images[j].image_url[url_pos], "title": images[j].title, "url": images[j].url}); 
+        }
+      }else{
+        relics.push({"src": 'https://loc.gov' + images[j].image, "title": images[j].title, "url": 'https://loc.gov' + images[j].url}); 
+      }  
+    }
+    document.getElementById('loading').style.display = 'none';
+    console.log("relics size: "+relics.length);
+    if(relics.length > 0){
+      document.getElementById('image').style.display = 'block';
+      document.getElementById('left').style.display = 'block';
+      document.getElementById('right').style.display = 'block';
+      for(let i = relics.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = relics[i];
+        relics[i] = relics[j];
+        relics[j] = temp;
+      }
+      console.log("RELICS")
+      console.log(relics);
+      slideIndex = 0;
+      showNews(relics);
+    }else{
+      document.getElementById('title').innerHTML = "No relics were found";
+      document.getElementById('title').style.display = 'block';
+      console.log("LENGTH: 0")
+    }
+  });
+}
+
+//get library of congress newspapers
+function getHomefront(){
+  console.log(newspapers_url)
+  document.getElementById('general_info').style.display = 'none'; 
+  document.getElementById('relics_modal').style.display = 'block';
+  document.getElementById('image').style.display = 'none'; 
+  document.getElementById('left').style.display = 'none'; 
+  document.getElementById('right').style.display = 'none'; 
+  document.getElementById('title').style.display = 'none'; 
+  document.getElementById('loading').style.display = 'block';
+  $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(newspapers_url) + '&callback=?', function(data){
+    //move point along a line: https://docs.mapbox.com/mapbox-gl-js/example/animate-point-along-route/
+    //e.target.style.backgroundImage = 'url(http://placekitten.com/g/50/50)';
+    //e.stopPropagation();
+    //console.log(e.target.style.backgroundImage);
+    //pull up relevant youtube video
+    console.log(data)
+    //console.log(data.contents);
+    //console.log(data.contents.results);
+    let news = [];
+    for(let i = 0; i < data.contents.results.length; i++){
+      let d = data.contents.results[i]
+      if(d.access_restricted === false){ 
+        // FOR GETTING HOMEFRONT OPINION
+        //data.contents.results[0].access_restricted -> make sure true
+        //data.contents.results[0].id -> newspaper link online 
+        //data.contents.results[0].date '1914-2-5' split by '-' and search for matching year,  .image_url -> array, .png url src links, .description array to headline
+        //.location -> ['united states', 'new york city', 'new york', 'new york county']
+        //.partof_title -> ['new-york tribune (new york [n.y.]) 1866-1924'] -> ALL CAP IT
+        if(d.date !== undefined && d.image_url !== undefined){
+          if(d.image_url.length > 0){
+            let time = d.date.split('-');
+            for(let j = 0; j < time.length; j++){
+              let num = parseInt(time[j]);
+              if(num >= year && num <= 1865){ //its a year, not month or day
+                news.push(d);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    let featured = false;
+    if(news.length === 0){
+      featured = true;
+      for(let i = 0; i < data.contents.featured_items.length; i++){
+        let d = data.contents.featured_items[i];
+        let t = d.title.split(' ');
+        for(let j = 0; j < t.length; j++){
+          let num = parseInt(t[j]);
+          if(num !== undefined){
+            if(num >= year && num <= 1865){ //its a year, not month or day
+              news.push(d);
+              break;
+            }
+          }
+        }
+      }
+    }
+    console.log("NEWS")
+    console.log(news)
+    for(let j = 0; j < news.length; j++){
+      if(featured === false){
+        let url_pos = -1;
+        for(let k = news[j].image_url.length - 1; k >= 0; k--){
+          if(news[j].image_url[k].indexOf('.jpg') > -1 || news[j].image_url[k].indexOf('.png') > -1){
+            url_pos = k;
+            break;
+          }
+        }
+        if(url_pos !== -1){
+          relics.push({"src": news[j].image_url[url_pos], "title": news[j].title, "url": news[j].url}); 
+        }
+      }else{
+        relics.push({"src": 'https://loc.gov' + news[j].image, "title": news[j].title, "url": 'https://loc.gov' + news[j].url}); 
+      }  
+    }
+    getMaps();
+  }); 
+}
+
+function nextBattle(){
+  let keys = Object.keys(civil_war_battles_geo);
+  let is_last_battle = false;
+  let next_battle_index = keys.indexOf(battle_name) + 1;
+  if(next_battle_index < keys.length){
+    battle_name = keys[next_battle_index];
+    let latlng = civil_war_battles_geo[battle_name]["lat_lng"].split(",");
+    let latitude = parseFloat(latlng[0]);
+    let longitude = parseFloat(latlng[1]);
+    map.flyTo({
+      center: [longitude, latitude],
+      essential: true
+    });
+    loadBattle();
+  }else{
+    if((year + 1) <= 1865){
+      year = year + 1;
+      let year_s = year + "";
+      document.getElementById("fly_to_next").style.display = 'none';
+      preSetUpPoints(year_s);
+    }else{
+      console.log("last battle of the war we have data on")
+    }
+  }
+}
+//get library of congress battle maps
+function getMaps(){
+  console.log(maps_url)
+  maps = [];
+  document.getElementById('general_info').style.display = 'none'; 
+  document.getElementById('loading').style.display = 'none'; 
+  document.getElementById('relics_modal').style.display = 'block';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('image').style.display = 'none';
+  document.getElementById('left').style.display = 'none'; 
+  document.getElementById('right').style.display = 'none'; 
+  document.getElementById('title').style.display = 'none'; 
+  $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(maps_url) + '&callback=?', function(data){
+    //console.log(data);
+    //console.log(data.contents);
+    //console.log(data.contents.results);
+    let battle_maps = [];
+    for(let i = 0; i < data.contents.results.length; i++){
+      let d = data.contents.results[i]
+      if(d.access_restricted === false){ 
+        // FOR GETTING HOMEFRONT OPINION
+        //data.contents.results[0].access_restricted -> make sure true
+        //data.contents.results[0].id -> newspaper link online 
+        //data.contents.results[0].date '1914-2-5' split by '-' and search for matching year,  .image_url -> array, .png url src links, .description array to headline
+        //.location -> ['united states', 'new york city', 'new york', 'new york county']
+        //.partof_title -> ['new-york tribune (new york [n.y.]) 1866-1924'] -> ALL CAP IT
+        if(d.date !== undefined && d.image_url !== undefined){
+          if(d.image_url.length > 0){
+            let time = d.date.split("-");
+            for(let j = 0; j < time.length; j++){
+              let num = parseInt(time[j]);
+              if(num >= year && num <= 1945){ //its a year, not month or day, CHECK MONTH ALSO ->> BATTLE OF BULGE
+                battle_maps.push(d);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log("MAPS")
+    console.log(battle_maps)
+    for(let j = 0; j < battle_maps.length; j++){
+      relics.push({"src": battle_maps[j].image_url[battle_maps[j].image_url.length - 1], "title": battle_maps[j].title, "url": battle_maps[j].url}); //LINE OF CHANGE
+    }
+    getImages();
+  });
+}
+
+function getRelics(){
+  document.getElementById('get_relics').style.display = 'none';
+  document.getElementById('image').style.display = 'none';
+  getHomefront();
+}
+
+//https://en.wikipedia.org/wiki/List_of_American_Civil_War_battles
+function setMarkerName(e) {
+  battle_name = e.target.id;
+  console.log(battle_name)
+  loadBattle();
+}
+
+function loadBattle(){
+  document.getElementById('get_relics').style.display = 'block';
+  let newspapers = [];
+  let maps = [];
+  //library of congress api
+  maps_url = 'https://www.loc.gov/collections/military-battles-and-campaigns/?fo=json&q=' + battle_name + '&st=gallery';
+  images_url = 'https://www.loc.gov/photos/?fo=json&q=' + battle_name;
+  //'https://www.loc.gov/maps/?q=' + battle_name + '&fo=json';
+  newspapers_url = 'https://www.loc.gov/newspapers/?fo=json&q=' + battle_name;
+  //'https://www.loc.gov/collections/military-battles-and-campaigns/?fo=json&' + battle_name;
+  let cm_keys = Object.keys(current_markers);
+  let battle_pos = -1;
+  for(let i = 0; i < cm_keys.length; i++){
+    if(cm_keys[i] === battle_name){
+      battle_pos = i;
+    }
+  }
+  /*for(let i = 0; i < cm_keys.length; i++){
+    current_markers[cm_keys[i]]['marker']._element.style.backgroundImage = 'url(\'usmaplogo.jpg\')';
+  }*/
+  //document.getElementById('info').innerHTML = '';
+  if(document.getElementById('battle_title') !== null){
+    document.getElementById('battle_title').style.display = 'none';
+    document.getElementById('time_date').style.display = 'none';
+    document.getElementById('location').style.display = 'none';
+    document.getElementById('type').style.display = 'none';
+    document.getElementById('facts').style.display = 'none';
+    document.getElementById('outcome').style.display = 'none';
+    document.getElementById('iframe').style.display = 'none';
+  }
+  //current_markers[battle_name]['marker']._element.style.backgroundImage = '';
+  document.getElementById('general_info').style.display = 'block';
+  //document.getElementById('info').innerHTML = '';
+  document.getElementById('battle_title').style.display = 'block';
+  document.getElementById('time_date').style.display = 'block';
+  document.getElementById('location').style.display = 'block';
+  document.getElementById('type').style.display = 'block';
+  document.getElementById('facts').style.display = 'block';
+  document.getElementById('outcome').style.display = 'block';
+  document.getElementById('iframe').style.display = 'block';
+
+  let battle_keys = Object.keys(civil_war_battles);
+  let battle_data = civil_war_battles[battle_keys[battle_pos]];
+  let battle_data_geo = civil_war_battles_geo[battle_keys[battle_pos]];
+  /*let battle_title = document.createElement('p');
+  battle_title.id = 'battle_title';
+  battle_title.innerHTML = battle_name;*/
+  document.getElementById('battle_title').innerHTML = battle_name;
+  //document.getElementById('info').appendChild(battle_title);
+
+  /*let time_date = document.createElement('p');
+  time_date.id = 'time_date';
+  time_date.innerHTML = battle_data['start-date'].split('\n')[0] + ' - ' + battle_data['end-date'].split('\n')[0]; */
+  document.getElementById('time_date').innerHTML = battle_data['date'];
+  //document.getElementById('info').appendChild(time_date);
+  
+  /*let location = document.createElement('p');
+  location.id = 'location';
+  location.innerHTML = battle_data['location'].split('\n')[0];*/
+  document.getElementById('location').innerHTML = battle_data_geo['place'];
+  //document.getElementById('info').appendChild(location);
+
+  document.getElementById('type').innerHTML = 'Class: ' + battle_data['class'];
+  //document.getElementById('info').appendChild(opposing);
+  
+  document.getElementById('facts').innerHTML = 'Info: ' + battle_data['notes'];
+  
+  /*let outcome = document.createElement('p');
+  outcome.id = 'outcome';
+  outcome.innerHTML = battle_data['result'].split('[')[0];*/
+  document.getElementById('outcome').innerHTML = battle_data['victory'];
+  if(battle_data['victory'].split(' ')[0] !== "Inconclusive"){
+    document.getElementById('outcome').innerHTML = document.getElementById('outcome').innerHTML + ' victory';
+  }
+  //document.getElementById('info').appendChild(outcome);
+
+  /*let iframe = document.createElement('iframe');
+  iframe.id = 'iframe';
+  iframe.src = 'https://www.youtube.com/embed/?listType=search&list=' + battle_name + ' battle footage&autoplay=1';
+  iframe.width = '400';
+  iframe.height = '300';*/
+  document.getElementById('iframe').src = 'https://www.youtube.com/embed/?listType=search&list=' + battle_name + ' civil war&autoplay=1'; //battle of phillipi
+  //document.getElementById('info').appendChild(iframe);
+
+  /*document.getElementById('homefront_modal').style.display = 'block';
+  document.getElementById('battle_map').style.display = 'block';
+  document.getElementById('fly_to_next').style.display = 'block';*/ 
+  if(battle_name === "Battle of Fort Blakeley"){
+    document.getElementById('fly_to_next').style.display = 'none';
+  }else{
+    document.getElementById('fly_to_next').style.display = 'block'; //inline-block?
+  }
+}
+
+function preSetUpPoints(year){
+  let ids = ['1861', '1862', '1863', '1864', '1865'];
+  for(let i = 0; i < ids.length; i++){
+    document.getElementById(ids[i]).style.color = 'white';
+  }
+  document.getElementById(year).style.color = 'gold';
+
+  applySettings();
+  document.getElementById('intro_text').innerHTML = year;
+  document.getElementById('intro_modal').style.display = 'block';
+  if(parseInt(year) === 1861 || parseInt(year) === 1864){
+    document.getElementById('elections').style.display = 'block';
+  }else{
+    document.getElementById('elections').style.display = 'none';
+  }
+  setUpPoints(year);
+}
+
+//get points relevant to selected year
+function setUpPoints(id){
+  //FILTER ONLY PLACES WITH LOCATION FOUND
+  //let intro_text = document.createElement('p');
+  //intro_text.innerHTML = id;
+  //document.getElementById('intro').appendChild(intro_text);
+
+  year = parseInt(id);
+  //document.getElementById('speeches').style.display = 'block';
+
+  //document.getElementById('year_text').innerHTML = id;
+
+  let cm_keys = Object.keys(current_markers);
+  for(let i = 0; i < cm_keys.length; i++){
+    current_markers[cm_keys[i]]['marker'].remove();
+  }
+  current_markers = {};
+  let keys = Object.keys(civil_war_battles_geo);
+  for(var battle_name in civil_war_battles){
+    let battle = civil_war_battles[battle_name];
+    let date = battle['date'].split(' ');
+    if(year === parseInt(date[2]) && keys.indexOf(battle_name) > -1){ 
+      let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+      let battle_lat = parseFloat(battle_loc.split(",")[0]);
+      let battle_lng = parseFloat(battle_loc.split(",")[1]);
+      let el = document.createElement('div');
+      el.id = battle_name;
+      el.style.backgroundImage = 'url(\'images/usmaplogo.jpg\')'; 
+      el.style.borderRadius = 6 + 'px';
+      el.style.width = 30 + 'px';
+      el.style.height = 30 + 'px';
+      let marker = new mapboxgl.Marker(el)
+        .setLngLat([battle_lng, battle_lat])
+        .addTo(map);
+      el.addEventListener('click', setMarkerName, false);
+      current_markers[battle_name] = {'marker': marker, 'lat': battle_lat, 'lon': battle_lng};
+    }
+  }
+}
+/*
+//move map around
+map.flyTo({
+center: [
+-74.5 + (Math.random() - 0.5) * 10,
+40 + (Math.random() - 0.5) * 10
+],
+essential: true // this animation is considered essential with respect to prefers-reduced-motion
+});
+*/
+    </script>
+  </body>
+</html>
