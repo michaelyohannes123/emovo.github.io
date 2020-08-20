@@ -213,13 +213,13 @@
       <div id='report' class='modal-content' style="text-align: center;">
         <span id='report_close' class='close' style="float: right;">&times;</span>
         <h3>War Report</h3>
-        <p>Number of major battles this year: </p>
+        <p id="year_count_text"></p>
         <br>
-        <p>percentage of principal battles by class</p>
+        <p id="class_comp_text"></p>
         <br>
-        <p>percentage of battles won by confederate or union</p>
+        <p id="victor_text"></p>
         <br>
-        <p>table here of battles and percentage wins by state</p>
+        <table id="battles_by_state"></table>
       </div>
     </div>
     <div id='relics_modal' class='modal' style='display:none;'>
@@ -394,10 +394,12 @@ function deleteMarkers() {
 }
 
 function applySettings(){
+
   //also clear up heatmap in these if statemensts
   if(document.getElementById('heatmap_select').value === 'heatmap_all'){
     map.removeLayer('heatmap_layer');
     map.removeSource('battle_points');
+    console.log("heatmap_all set")
     constructHeatmap(-1);
   }
   if(document.getElementById('heatmap_select').value === 'heatmap_per_year'){
@@ -415,6 +417,7 @@ function applySettings(){
 }
 
 function assembleYearData(){
+  document.getElementById('battles_by_state').innerHTML = '';
   let confed_vict_count = 0;
   let union_vict_count = 0;
   let tie_count = 0;
@@ -455,8 +458,45 @@ function assembleYearData(){
       }
     }
   }
-  console.log("state_counts")
-  console.log(state_counts)
+  let total_year = class_a_count + class_b_count + class_c_count + class_d_count;
+  document.getElementById('year_count_text').innerHTML = 'The total number of principal battles fought this year in ' + year
+   + ' was ' + total_year + '.';
+
+  let class_a_percent = (class_a_count / total_year) * 100;
+  let class_b_percent = (class_b_count / total_year) * 100;
+  let class_c_percent = (class_c_count / total_year) * 100;
+  let class_d_percent = (class_d_count / total_year) * 100;
+  document.getElementById('class_comp_text').innerHTML = 'Under CSWAC classifications, ' + class_a_percent.toFixed(2) + 
+    '% of the battles were decisive, ' + class_b_percent.toFixed(2) + '% were major engagements, ' + 
+    class_c_percent.toFixed(2) + '% were formative engagements, and '+ class_d_percent.toFixed(2) + 
+    '% were limited engagements.';
+  
+  let union_win_percent = (union_vict_count / total_year) * 100;
+  let confed_win_percent = (confed_vict_count / total_year) * 100;
+  let tie_percent = (tie_count / total_year) * 100;
+  document.getElementById('victor_text').innerHTML =  'This year, ' + union_win_percent.toFixed(2) + 
+    '% of the battles were Union victories, ' + confed_win_percent.toFixed(2)+ 
+    '% of the battles were Confederate victories, and ' + tie_percent.toFixed(2) + 
+    '% of the battles were inconclusive';
+  
+  let state_counts_keys = Object.keys(state_counts);
+  //account for 1860 boundaries
+  for (var i = 1; i < state_counts_keys.length; i++){
+    var tr = document.createElement('tr');   
+
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+
+    var text1 = document.createTextNode('State');
+    var text2 = document.createTextNode('battle');
+
+    td1.appendChild(text1);
+    td2.appendChild(text2);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+
+    document.getElementById('battles_by_state').appendChild(tr);
+  }
 }
 
 function showYearReport(){
