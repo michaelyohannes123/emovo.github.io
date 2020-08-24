@@ -376,27 +376,45 @@
       top: 30%;
       background: antiquewhite;	
     }
+/*
+TODO
+-add text 2 stuff
 
+-battles geo data
+
+-graphs
+*/
   </style>
   <body>
       <!--<div class='timeline_buttons space_out' style='color:antiquewhite;'>
         <h3 id='year_text'></h3> -->
     <ul>
-      <li><a href="about.html">About</a></li>
+      <li><a href="civilwar_about.html">About</a></li>
       <li><a href="civilwar_map.html">War Map</a></li>
       <li><a href="civilwar_morse.html">Morse Code</a></li>
     </ul>
 
     <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow-->
     <!--class="slide fade"-->
+    <!--resources-->
     <div id="background_image" class="background_img" style="filter: brightness(70%);">
       <img src="images/ironworks.jpg">
     </div>
+    <!--troop uniforms-->
     <div id="background_image" class="background_img" style="filter: brightness(65%);">
       <img src="images/union.jpg"/>
     </div>
+    <!--pay + prior professions-->
     <div id="background_image" class="background_img" style="filter: brightness(80%);">
-      <img src="images/soldiers.jpg"> <!--style="width:100%; height:100%; filter: brightness(80%);"-->
+      <img src="images/soldiers.jpg"> 
+    </div>
+    <!--casualties-->
+    <div id="background_image" class="background_img" style="filter: brightness(80%);">
+      <img src="images/wounded.jpg"> 
+    </div>
+    <!--demographics-->
+    <div id="background_image" class="background_img" style="filter: brightness(70%);">
+      <img src="images/louisiana_guard.jpg"> 
     </div>
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -409,7 +427,7 @@
         <p id='intro_long_text'>Data Source: Historical Statistics of the United States</p>
         <p>Legend: Union - blue, Confederate - gray</p>
         <br>
-        <div id="chart" style="margin: auto; width: 40%;"></div>
+        <div id="chart" style="text-align:center; margin: auto; width: 50%; left: 100%;"></div>
         <select id="data_select" name="data">
           <option value="Population" selected>Population</option>
           <option value="Manufactured goods">Manufactured goods</option>
@@ -427,7 +445,7 @@
       </div>
     </div>
     <div id="explain_div" class="letter" 
-      style="display: none; width: 25%; height: 50%; border-radius: 4%; background-image: url('images/oldpaper.jpg');">
+      style="display: none; width: 25%; height: 50%; background-image: url('images/oldpaper.jpg');">
       <span id='explain_close' class='close' style="float: right;">&times;</span>
       <h3 id="explain_title"></h3>
       <!--<img id="explain_image" src="images/union_soldier.jpg" alt="Explain aspect image" 
@@ -489,30 +507,83 @@
       </div>
     </div>
 
-    <!--pay: soldiers.jpg, demographics: family.jpg-->
-    <div id='pay_modal' class='modal' > 
+    <div id='pay_modal' class='modal'> 
       <div id='pay' class='modal-content'>
         <span id='pay_close' class='close' style="float: right;">&times;</span>
         <p id='pay_text'></p>
         <p id='pay_long_text'></p>
-        <select id="salary_view" name="salary_view">
+        <select id="professions_view" name="professions_view">
           <option value="Confederate" selected>Confederacy</option>
           <option value="Union">Union</option>
         </select>
-        <div id="pay_chart"></div>
+        <div id="pay_chart" style="text-align: center;"> <!--style="display: none;"-->
+          <br>
+          <img id="high_rank_money" src="/images/confed_money.jpg" alt="" 
+            style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
+          <h3 id="high_rank_percent" style="display: inline-block;">Yo</h3>
+          <br>
+          <img id="mid_rank_money" src="/images/confed_money.jpg" alt="" 
+            style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
+          <h3 id="mid_rank_percent" style="display: inline-block;">Yp</h3>
+          <br>
+          <img id="low_rank_money" src="/images/confed_money.jpg" alt="" 
+            style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
+          <h3 id="low_rank_percent" style="display: inline-block;">to</h3>
+        </div>
+        <br>
         <p>It's important to note that the salary allocation was based on the assumption 
           that soldiers were paid when they were supposed to. However, oftentimes due to the 
           intensity of combat and logistical challenges brought about by the sheer size of the forces, 
           payday was often not sent to the troops until much later than assigned, if they were lucky.</p>
+        <br>
+        <div id="professions_chart" style="width: 50%; margin: 0 auto; text-align: center;"></div>
+        <p>Confederates had more people as farmers due to the society of the South being more agrarian than the North.</p>
       </div>
     </div>
 
+    <div id='wounded_modal' class='modal' > 
+      <div id='wounded' class='modal-content'>
+        <span id='wounded_close' class='close' style="float: right;">&times;</span>
+        <p id='wounded_text'></p>
+        <p id='wounded_long_text'></p>
+        <select id="wounded_view" name="wounded_view">
+          <option value="Confederate" selected>Confederacy</option>
+          <option value="Union">Union</option>
+        </select>
+        <div id="wounded_chart"></div>
+        <p>The war's sheer brutality resulted in many soldiers being driven away from and drawn towards faith. While most were Christian, some were Jewish</p>
+        <p>wounded tech here</p>
+      </div>
+    </div>
+    <div id='demographics_modal' class='modal' > 
+      <div id='demographics' class='modal-content'>
+        <span id='demographics_close' class='close' style="float: right;">&times;</span>
+        <img src="images/22ndreg.jpg" alt="22nd reg" 
+        style="object-fit: fill; min-width: 10%; width: 20%; height: 20%;"></img>
+        <p>African Americans, </p>
+        <br>
+        <img src="images/native_american_soldier.jpg" alt="22nd reg" 
+        style="object-fit: fill; min-width: 10%; width: 20%; height: 20%;"></img>
+        <p>Native Americans</p>
+        <br>
+        <img src="images/foreigners.jpg" alt="22nd reg" 
+        style="object-fit: fill; min-width: 10%; width: 20%; height: 20%;"></img>
+        <p>Foreigners: Sent observers, immigrants contributed greatly to war effort</p> <!--http://www.sonofthesouth.net/civil-war-pictures/strategy/foreign-observers.htm-->
+        <br>
+        <img src="images/women_soldier.jpg" alt="22nd reg" 
+        style="object-fit: fill; min-width: 10%; width: 20%; height: 20%;"></img>
+        <p>Women sometimes dressed as men to join the battlefield, as they were barred from enlisting.</p> <!--Humanities Kansas-->
+        <br>
+      </div>
+    </div>
     <div class="text_div">
       <div id="quote_text" class="quote">Caption Text</div>
       <div id="stat" class="quote">hi</div>
       <button id="see_data" class="button" onclick="openDataModal()">See Data</button>
       <button id="see_uniforms" class="button" onclick="openUniformModal()">See Uniforms</button>
       <button id="see_pay" class="button" onclick="openPayModal()">See Pay</button>
+      <button id="see_wounded" class="button" onclick="openWoundedModal()">See Casualties</button>
+      <button id="see_demographics" class="button" onclick="openDemographicsModal()">See Data</button>
     </div>
     <div class="tooltip">About
       <span id="image_about" class="tooltiptext">
@@ -555,7 +626,206 @@ https://www.battlefields.org/learn/articles/military-pay
 
 
 https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.-,Union%20Soldiers,to%206%20percent%20were%20conscripts.
-*/    function showUniformItem(item){
+*/    
+      function openDemographicsModal(){
+        document.getElementById('demographics_modal').style.display = 'block';
+      }
+
+      function woundedDistribution(){
+        /*
+The 642,427 total Union casualties have been divided accordingly:
+
+·         110,100 killed in battle
+
+·         224,580 diseases
+
+·         275,174 wounded in action
+
+·         30,192 prisoners of war
+
+The 483,026 total Confederate casualties have been divided accordingly:
+
+·         94,000 killed in battle
+
+·         164,000 diseases
+
+·         194,026 wounded in action
+
+·         31,000 prisoners of war
+*/ 
+        document.getElementById('wounded_chart').innerHTML = '';
+        //Source: National Park Service
+        let casualties = ['Diseases', 'POW', 'KIA', "WIA"];
+        let cu_counts = [224580, 30192, 110100, 275174];
+        let u_total = 642427;
+        let cc_counts = [94000, 164000, 194026, 31000];
+        let c_total = 483026;
+        let data_chart = {};
+        if(document.getElementById('wounded_view').value === 'Union'){
+          let total_cu = cu_counts[0] + cu_counts[1] + cu_counts[2] + cu_counts[3];
+          let cu_0 = (cu_counts[0] / total_cu * 100).toFixed(2);
+          let cu_1 = (cu_counts[1] / total_cu * 100).toFixed(2);
+          let cu_2 = (cu_counts[2] / total_cu * 100).toFixed(2);
+          let cu_3 = (cu_counts[3] / total_cu * 100).toFixed(2);
+          data_chart = [{'value': {'casualty': 'Diseases', 'count': cu_0}}, {'value': {'casualty': 'POW', 'count': cu_1}}, 
+            {'value': {'casualty': 'KIA', 'count': cu_2}}, {'value': {'casualty': 'WIA', 'count': cu_3}}]; 
+        }else{
+          let total_cc = cc_counts[0] + cc_counts[1] + cc_counts[2] + cc_counts[3];
+          let cc_0 = (cc_counts[0] / total_cc * 100).toFixed(2);
+          let cc_1 = (cc_counts[1] / total_cc * 100).toFixed(2);
+          let cc_2 = (cc_counts[2] / total_cc * 100).toFixed(2);
+          let cc_3 = (cc_counts[3] / total_cc * 100).toFixed(2);
+          data_chart = [{'value': {'casualty': 'Diseases', 'count': cc_counts[0]}}, {'value': {'casualty': 'POW', 'count': cc_counts[1]}}, 
+            {'value': {'casualty': 'KIA', 'count': cc_counts[2]}}, {'value': {'casualty': 'WIA', 'count': cc_counts[3]}}]; 
+        }
+        /*
+          wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
+          sum = confed_pay[i] * rank_distribution[i] * people_count;
+          percent = (sum / total_pay_confed) * 100;
+          wealth_confed.push({"value": {"rank": ranks[i], "percent": percent}});
+        */
+        //http://bl.ocks.org/anaeliaovalle/66c3eba07c6d2c8f6b44fda14771e16e
+        //hover: https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
+
+        var margin = {top: 54, right: 60, bottom: 130, left: 88},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+          
+        var x = d3.scaleLinear().range([0, width]);
+
+        var y = d3.scaleBand().rangeRound([0, height]);
+
+        var xAxis = d3.axisBottom()
+            .scale(x)
+            .ticks(20);
+
+        var yAxis = d3.axisLeft()
+            .scale(y);
+            
+        var svg = d3.select("#wounded_chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top )
+          .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
+          
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", -35)
+            .attr("dy", "0.71em")
+            .attr("fill", "#000")
+            .text("Casualties distribution")
+            .style("fill", "#000000");
+          
+          x.domain([0, d3.max(data_chart, function(d) { return d.value.count; })]); 
+          y.domain(casualties.map(function(d){return d;}));
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis)
+            .selectAll("text")
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+            .append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 6)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+
+          let tooltip_div = d3.select("#wounded_chart").append("div")	
+              .attr("class", "tooltip")				
+              .style("opacity", 0);
+
+          svg.selectAll(".bar")
+          .data(data_chart)
+          .enter().append("rect")
+            .style("fill", "#85bb65")
+          .attr("class", "bar")
+          .attr("width", function(d) { return x(d.value.count); })
+          .attr("y", function(d) { return y(d.value.casualty); })
+          .attr("height", 16)
+          .text(function(d) { return d; });
+         
+          svg.append("text")
+            .attr("x", 350)
+            .attr("y", 370)
+            .attr("dy", "0.71em")
+            .attr("fill", "#000")
+            .text("Casualty Count")
+            .style("fill", "#000000");
+        /*var margin = {top: 54, right: 60, bottom: 130, left: 88},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+          
+        var x = d3.scaleLinear().range([0, width]);
+
+        var y = d3.scaleBand().rangeRound([0, height]);
+
+        var xAxis = d3.axisBottom()
+            .scale(x)
+            .ticks(20);
+
+        var yAxis = d3.axisLeft()
+            .scale(y);
+            
+        var svg = d3.select("#wounded_chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top )
+          .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
+          
+          x.domain([0, d3.max(data_chart, function(d) { return d.value.count; })]); 
+          y.domain(casualties.map(function(d){return d;}));
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis)
+            .selectAll("text")
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+            .append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 6)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+
+          let tooltip_div = d3.select("#pay_chart").append("div")	
+              .attr("class", "tooltip")				
+              .style("opacity", 0);
+
+          svg.selectAll(".bar")
+          .data(data_chart)
+          .enter().append("rect")
+            .style("fill", "#85bb65")
+          .attr("class", "bar")
+          .attr("width", function(d) { return x(d.value.count); })
+          .attr("y", function(d) { return y(d.value.casualty); })
+          .attr("height", 16)
+          .text(function(d) { return d; });
+         
+          svg.append("text")
+            .attr("x", 350)
+            .attr("y", 370)
+            .attr("dy", "0.71em")
+            .attr("fill", "#000")
+            .text("Casualty Count")
+            .style("fill", "#000000");*/
+      }
+      function openWoundedModal(){
+        //http://bl.ocks.org/tomcardoso/1d44732cc7f3d97d6bf7
+       //<div id="wounded_chart"></div> 
+        document.getElementById('wounded_chart').innerHTML = '';
+        woundedDistribution();
+        document.getElementById('wounded_modal').style.display = 'block';
+      }
+      function showUniformItem(item){
         if(item === 'union_gun'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Union Weapons';
@@ -628,9 +898,11 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
           document.getElementById('explain_text').innerText = 'unique confed units - also zouave (Louisiana Tigers), ';
         }
       }
-
+      
       function openPayModal(){
+        document.getElementById('professions_chart').innerHTML = '';
         payDistribution();
+        professionsDistribution();
         document.getElementById('uniform_modal').style.display = 'none';
         document.getElementById('data_modal').style.display = 'none'; 
         document.getElementById('pay_modal').style.display = 'block'; 
@@ -655,6 +927,7 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
 //GRAPH NUMBER OF BATTLES IN A SPECIFIC STATE OVER 4 YEAR PERIOD
       function openDataModal(){
         let resource_dict = formResourceData();
+        document.getElementById('chart').innerHTML = ''; 
         dataResources(resource_dict);
         document.getElementById('uniform_modal').style.display = 'none';
         document.getElementById('data_modal').style.display = 'block'; 
@@ -739,7 +1012,109 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
           .exit()
           .remove();
       }
+      
+      function professionsDistribution(){
+        /*
+(NPS)
+pie chart
+What were the civilian professions of these soldiers?  ===
+Farmers comprised 48 percent of the civilian occupations in the Union. Others included mechanics, 24 percent; laborers, 
+16 percent; commercial, 5 percent; miscellaneous, 4 percent; and professional occupations, 3 percent.
 
+Farmers comprised 69 percent of the civilian occupations in the Confederacy. 
+Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 percent; professional occupations, 
+2.1 percent; and miscellaneous, 1.6 percent.
+        */
+        let categories = ['Mechanics', 'Commercial', 'Laborers', 'Miscellaneous', 'Farmer', 'Professional'];
+        //[48, 24, 16, 5, 4, 3]
+        let data = {'Mechanics': 5.3, 'Commercial': 5, 'Laborers': 9, 'Miscellaneous': 1.6, 'Farmer': 69,'Professional': 2.1};
+        if(document.getElementById("professions_view").value === "Union"){
+          data = {'Mechanics': 24, 'Commercial': 5, 'Laborers': 16, 'Miscellaneous': 4, 'Farmer': 48, 'Professional': 3};
+        }
+        // set the dimensions and margins of the graph
+        var width = 450
+            height = 450
+            margin = 120
+
+        // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+        var radius = Math.min(width, height) / 2 - margin
+
+        var svg = d3.select("#professions_chart")
+          .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+          .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        // set the color scale
+        var color = d3.scaleOrdinal()
+          .domain(categories)
+          .range(d3.schemeDark2);
+
+        // Compute the position of each group on the pie:
+        var pie = d3.pie()
+          .sort(null) // Do not sort group by size
+          .value(function(d) {return d.value; })
+        var data_ready = pie(d3.entries(data))
+
+        // The arc generator
+        var arc = d3.arc()
+          .innerRadius(radius * 0.5)         // This is the size of the donut hole
+          .outerRadius(radius * 0.8)
+
+        // Another arc that won't be drawn. Just for labels positioning
+        var outerArc = d3.arc()
+          .innerRadius(radius * 0.9)
+          .outerRadius(radius * 0.9)
+
+        // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+        svg
+          .selectAll('allSlices')
+          .data(data_ready)
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d){ return(color(d.data.key)) })
+          .attr("stroke", "white")
+          .style("stroke-width", "2px")
+          .style("opacity", 0.7)
+
+        // Add the polylines between chart and labels:
+        svg
+          .selectAll('allPolylines')
+          .data(data_ready)
+          .enter()
+          .append('polyline')
+            .attr("stroke", "black")
+            .style("fill", "none")
+            .attr("stroke-width", 1)
+            .attr('points', function(d) {
+              var posA = arc.centroid(d) // line insertion in the slice
+              var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+              var posC = outerArc.centroid(d); // Label position = almost the same as posB
+              var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+              posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+              return [posA, posB, posC]
+            })
+
+        // Add the polylines between chart and labels:
+        svg
+          .selectAll('allLabels')
+          .data(data_ready)
+          .enter()
+          .append('text')
+            .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+            .attr('transform', function(d) {
+                var pos = outerArc.centroid(d);
+                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+                return 'translate(' + pos + ')';
+            })
+            .style('text-anchor', function(d) {
+                var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+                return (midangle < Math.PI ? 'start' : 'end')
+            })
+      }
       //theoretical, assuming they were paid on time; which often they werent
       //bar chart x axis: rank, y-axis: percent of finances allocated for salaries
       //was the distribution unequitable?
@@ -747,11 +1122,11 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
         let ranks = ["Private", "Corporal", "Sergeant", "1st Sergeant", "Quartermaster Sergeant", "Sergeant Major", "Second Lieutenant",
           "First Lieutenant", "Captain", "Major", "Lieutenant Colonel", "Colonel", "Brigadier General", "Major General",
           "Lieutenant General", "General"];
+        let sorted_ranks = ['High Ranked', 'Mid Ranked', 'Low Ranked'];
         ranks.reverse();
         let people_count = 100000; //value doesn't necessarily matter, since distribution is %
         let rank_distribution = [0.0033, 0.011, 0.033, 0.0394, 1.032, 2.242, 3.957, 7.047, 3.208,
           2.0589, 0.8909, 2.7339, 8.8569, 17.3779, 27.03709, 23.4709];
-        rank_distribution.reverse();
         let union_pay = [13, 13, 17, 20, 21, 21, 105.5, 105.5, 115.5, 169, 181, 212, 315, 457, 748, 748];
         union_pay.reverse();
         let confed_pay = [11, 13, 17, 20, 21, 21, 80, 90, 130, 150, 170, 195, 301, 301, 301, 301];
@@ -768,22 +1143,63 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
           sum = confed_pay[i] * rank_distribution[i] * people_count;
           total_pay_confed += sum;
         }
+        let u_percent = 0;
+        let ur_distr = 0;
+        let c_percent = 0;
+        let cr_distr = 0;
         for(let i = 0; i < union_pay.length; i++){
           let sum = union_pay[i] * rank_distribution[i] * people_count;
-          let percent = (sum / total_pay_union) * 100;
-          wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
+          u_percent += (sum / total_pay_union) * 100;
+          ur_distr += rank_distribution[i];
+          if(i === 4){ //low rank
+            wealth_union.push({"value": {"rank": sorted_ranks[0], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
+            u_percent = 0;
+            ur_distr = 0;
+          }if(i === 9){//mid rank
+            wealth_union.push({"value": {"rank": sorted_ranks[1], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
+            u_percent = 0;
+            ur_distr = 0;
+          }
+          //wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
           sum = confed_pay[i] * rank_distribution[i] * people_count;
-          percent = (sum / total_pay_confed) * 100;
-          wealth_confed.push({"value": {"rank": ranks[i], "percent": percent}});
+          c_percent += (sum / total_pay_confed) * 100;
+          cr_distr += rank_distribution[i];
+          //wealth_confed.push({"value": {"rank": ranks[i], "percent": percent}});
+          if(i === 4){ //low rank
+            wealth_confed.push({"value": {"rank": sorted_ranks[0], "percent": c_percent.toFixed(2)}});
+            c_percent = 0;
+            cr_distr = 0;
+          }if(i === 8){//mid rank
+            wealth_confed.push({"value": {"rank": sorted_ranks[1], "percent": c_percent.toFixed(2)}});
+            c_percent = 0;
+            cr_distr = 0;
+          }
         }
+        wealth_union.push({"value": {"rank": sorted_ranks[2], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
+        wealth_confed.push({"value": {"rank": sorted_ranks[2], "percent": c_percent.toFixed(2), "num_percent": cr_distr.toFixed(2)}});
         let data_chart = wealth_confed;
-        if(document.getElementById("salary_view").value === "Union"){
+        if(document.getElementById("professions_view").value === "Union"){
           data_chart = wealth_union;
         }
+        //"display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"
+
+        /*
+          <img id="high_rank_money" src="/images/confed_money.jpg" alt="" 
+            style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
+          <h3 id="high_rank_percent" style="display: inline-block;">Yo</h3>
+          <br>
+          <img id="mid_rank_money" src="/images/confed_money.jpg" alt="" 
+            style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
+          <h3 id="mid_rank_percent" style="display: inline-block;">Yp</h3>
+          <br>
+          <img id="low_rank_money" src="/images/confed_money.jpg" alt="" 
+            style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
+          <h3 id="low_rank_percent" style="display: inline-block;">to</h3>
+        */
         //http://bl.ocks.org/anaeliaovalle/66c3eba07c6d2c8f6b44fda14771e16e
         //hover: https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
 
-        var margin = {top: 54, right: 60, bottom: 130, left: 88},
+        /*var margin = {top: 54, right: 60, bottom: 130, left: 88},
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
           
@@ -852,7 +1268,7 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
           .attr("y", function(d) { return y(d.value.rank); })
           .attr("height", 16)
           .text(function(d) { return d; });
-          /*.on("mouseover", function(d) {		
+          .on("mouseover", function(d) {		
             tooltip_div.transition()		
                 .duration(500)		
                 .style("opacity", .9);	
@@ -864,7 +1280,7 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
               tooltip_div.transition()		
                   .duration(200)		
                   .style("opacity", 0);	
-          });*/
+          });
          
           svg.append("text")
             .attr("x", 350)
@@ -872,8 +1288,9 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
             .attr("dy", "0.71em")
             .attr("fill", "#000")
             .text("Percentage of total salary allocated to rank")
-            .style("fill", "#000000");
+            .style("fill", "#000000");*/
       }
+
         // set the dimensions and margins of the graph
         var width = 450
             height = 450
@@ -916,12 +1333,19 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
             document.getElementById('confederate_soldier_image').style.display = 'none';
           }
       });
+      
+      let professions_select = document.querySelector('#professions_view'),
+        professions_input = document.querySelector('input[type="button"]');
+        professions_select.addEventListener('change',function(){
+          document.getElementById("professions_chart").innerHTML = '';
+          professionsDistribution();
+      });
 
-      let salary_select = document.querySelector('#salary_view'),
-        salary_input = document.querySelector('input[type="button"]');
-        salary_select.addEventListener('change',function(){
-          document.getElementById("pay_chart").innerHTML = '';
-          payDistribution();
+      let wounded_select = document.querySelector('#wounded_view'),
+        wounded_input = document.querySelector('input[type="button"]');
+        wounded_select.addEventListener('change',function(){
+          document.getElementById("wounded_chart").innerHTML = '';
+          woundedDistribution();
       });
 
       const nav = document.querySelector('.letter');
@@ -976,6 +1400,20 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
           document.getElementById("see_pay").style.display = 'block';
           document.getElementById("image_about").innerText = "Confederate troops";
         }
+        if(slideIndex !== 4){
+          document.getElementById("see_wounded").style.display = 'none';
+        }else{
+          id = "see_wounded";
+          document.getElementById("see_wounded").style.display = 'block';
+          document.getElementById("image_about").innerText = "Hospital";
+        }
+        if(slideIndex !== 5){
+          document.getElementById("see_demographics").style.display = 'none';
+        }else{
+          id = "see_demographics";
+          document.getElementById("see_demographics").style.display = 'block';
+          document.getElementById("image_about").innerText = "Confederate troops";
+        }
         document.getElementById("stat").style.opacity = 0;
         document.getElementById("quote_text").style.opacity = 0;
         document.getElementById(id).style.opacity = 0;
@@ -992,6 +1430,8 @@ https://www.historynet.com/civil-war-soldiers#:~:text=article%20was%20published.
         }, 500);
         //then show data
       /*
+IDEA: bar chart is for casualties, chart.js for professions, for pay table with bills that differ in size
+
 quotes: https://www.battlefields.org/learn/articles/civil-war-facts
 
 (NPS)
@@ -1071,6 +1511,14 @@ https://i0.wp.com/militaryhistorynow.com/wp-content/uploads/2017/09/7th-Illinois
 
       document.getElementById('pay_close').onclick = function() {
         document.getElementById('pay_modal').style.display = 'none';
+      }
+
+      document.getElementById('wounded_close').onclick = function() {
+        document.getElementById('wounded_modal').style.display = 'none';
+      }
+
+      document.getElementById('demographics_close').onclick = function() {
+        document.getElementById('demographics_modal').style.display = 'none';
       }
     </script>
   </body>

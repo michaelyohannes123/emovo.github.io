@@ -8,10 +8,13 @@
   <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
   <link rel='stylesheet' href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css'/>
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
   <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
   <script src='civilwarbattlesgeo.js'></script>
   <script src='civilwarbattles.js'></script>
+  <script src='us_state_bounds.js'></script>
+  <script src='world_bounds.js'></script>
+  <script src='civilwar_elections.js'></script>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway'/>
   <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Special+Elite'/>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css'/>
@@ -81,6 +84,7 @@
       position: absolute; 
       width: 100%;
       height: 86%; 
+      z-index: -1;
     }
     .button{
       font-family: 'Rye', cursive;
@@ -121,6 +125,7 @@
       background-color: antiquewhite;
       margin: 15% auto; /* 15% from the top and centered */
       padding: 20px;
+      z-index: 2;
       border: 1px solid #888;
       width: 80%; /* Could be more or less, depending on screen size */
       overflow: auto; /* Enable scroll if needed */
@@ -136,6 +141,24 @@
       color: #000;
       text-decoration: none;
       cursor: pointer;
+    }
+    #search_box{
+      float: left;
+      background: antiquewhite;
+      z-index: 2;
+    }
+    .box{
+      z-index: 1;
+      float: right;
+      width: 25%;
+      background: antiquewhite;
+    }
+    .box-content {
+      background-color: antiquewhite;
+      margin: 15% auto; 
+      padding: 20px;
+      z-index: 2;
+      overflow: auto; 
     }
     .loader {
       border: 16px solid antiquewhite;
@@ -154,10 +177,40 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    .autocomplete {
+      z-index: 2;
+    }
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      z-index: 99;
+      /*position the autocomplete items to be the same width as the container:*/
+      top: 100%;
+      left: 0;
+      right: 0;
+    }
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+    .autocomplete-items div:hover {
+      /*when hovering an item:*/
+      background-color: #e9e9e9;
+    }
+    .autocomplete-active {
+      /*when navigating through the items using the arrow keys:*/
+      background-color: DodgerBlue !important;
+      color: #ffffff;
+    }
   </style>
   <body>
     <ul>
-      <li><a href="about.html">About</a></li>
+      <li><a href="civilwar_about.html">About</a></li>
       <li><a href="#" onclick="showSettings()">Map Settings</a></li>
       <li><a href="#" onclick="showYearReport()">Year Report</a></li>
       <li><a href="civilwar_troops.html">Troop Statistics</a></li>
@@ -165,15 +218,57 @@
       <!--only appear for 1861 and 1864. Show candidates and adjusted map 
           color over the maps on mapbox and have a marker to differentiate 1860 borders from today
       -->
-      <li id="elections"><a href="#">Election Result!</a></li> 
+      <li id="elections"><a href="#" onclick="showElection()">Recent Election!</a></li> 
     </ul>
-
     <div id='intro_modal' class='modal' style='display:none;'> 
       <div id='intro' class='modal-content'>
         <p id='intro_text'></p>
         <p id='intro_long_text'></p>
         <br>
         <button id="intro_close" class="button">See battle map</button>
+      </div>
+    </div>
+    <div id="heatmap_sides" style="float: left; top: 30%; z-index: 3;">
+      <!--<select id="heatmap_view">
+        <option value="heatmap_general" selected>Heatmap (General)</option>
+        <br>
+        <option value="heatmap_union">Heatmap (Union Victories)</option>
+        <br>
+        <option value="heatmap_confed">Heatmap (Confederate Victories)</option>
+      </select>-->
+      <input type="radio" id="heatmap_general" name="heatmap_choice" value="heatmap_general" onclick="chooseHeatmap(this.id)" checked="checked">
+      <label for="heatmap_general">Heatmap (General)</label>
+      <br>
+      <input type="radio" id="heatmap_union" name="heatmap_choice" value="heatmap_union" onclick="chooseHeatmap(this.id)">
+      <label for="heatmap_general">Heatmap (Union Victories)</label>
+      <br>
+      <input type="radio" id="heatmap_confed" name="heatmap_choice" value="heatmap_confed" onclick="chooseHeatmap(this.id)">
+      <label for="heatmap_general">Heatmap (Confederate Victories)</label>
+      <br>
+    </div>
+    <!--<div class="autocomplete">
+      <input id="search_box" type="text" onkeyup="checkBattle('search_box')" placeholder="Search a battle">
+    </div>-->
+    <div id='election_modal' class='modal' style='display:none;'> 
+      <div id='election' class='modal-content'>
+        <p id='election_text'></p>
+        <p id='election_long_text'></p>
+        <br>
+        <button id="election_close" class="button">See Election</button>
+      </div>
+    </div>
+    <div id='candidates_box_hover' class='box' style='display:none; border-radius: 5%; width: 15%;'> 
+      <div id='candidates' class='box-content'>
+        <p id='state_hover_text'></p>
+        <p id='state_hover_long_text'>Click a state to see its election results.</p>
+      </div>
+    </div>
+    <div id='candidates_box' class='box' style='display:none;'> 
+      <div id='candidates' class='box-content'>
+        <span id='candidates_box_close' class='close' style="float: right;">&times;</span>
+        <p id='candidates_text'></p>
+        <p id='candidates_long_text'></p>
+        <div id="candidates_vote_table"></div>
       </div>
     </div>
     <div id='general_info' class='modal' style='display:none;'>
@@ -256,6 +351,9 @@
 document.getElementById('intro_close').onclick = function() {
   document.getElementById('intro_modal').style.display = 'none';
 }
+document.getElementById('election_close').onclick = function() {
+  document.getElementById('election_modal').style.display = 'none';
+}
 document.getElementById('general_info_close').onclick = function() {
   document.getElementById('general_info').style.display = 'none';
 }
@@ -268,6 +366,10 @@ document.getElementById('settings_close').onclick = function() {
 document.getElementById('report_close').onclick = function() {
   document.getElementById('report_modal').style.display = 'none';
 }
+document.getElementById('candidates_box_close').onclick = function() {
+  document.getElementById('candidates_box').style.display = 'none';
+  clicked_election_state = false;
+}
 
 let current_markers = {};
 let maps_url;
@@ -276,6 +378,8 @@ let images_url;
 let battle_name;
 let relics = [];
 let year = 1861;
+let mouse_list = [];
+let election_button = false;
 //MAP A HEATMAP OF BATTLES
 //https://docs.mapbox.com/help/tutorials/make-a-heatmap-with-mapbox-gl-js/
 //multiple sites: battle of hancock, fort henry
@@ -307,8 +411,13 @@ map.on('load', function() {
   constructHeatmap(1861);
   preSetUpPoints('1861');
 });
-
 function constructHeatmap(year){
+  if(map.getLayer('heatmap_layer')){
+    map.removeLayer('heatmap_layer');
+  }
+  if(map.getSource('battle_points')){
+    map.removeSource('battle_points');
+  }
   //toggle heatmap: https://docs.mapbox.com/mapbox.js/example/v1.0.0/layers/
   let battle_years = [1861, 1862, 1863, 1864, 1865];
   let feature_array = [];
@@ -378,13 +487,609 @@ function constructHeatmap(year){
     }
   });
 }
-
+function chooseHeatmap(heatmap_val){
+  if(heatmap_val === 'heatmap_general')
+    constructHeatmap(year);
+  if(heatmap_val === 'heatmap_union')
+    adjustedHeatmap(year, 'Union');
+  if(heatmap_val === 'heatmap_confed')
+    adjustedHeatmap(year, 'Confederate');
+}
+function adjustedHeatmap(year, side){
+  if(map.getLayer('heatmap_layer')){
+    map.removeLayer('heatmap_layer');
+  }
+  if(map.getSource('battle_points')){
+    map.removeSource('battle_points');
+  }
+  //toggle heatmap: https://docs.mapbox.com/mapbox.js/example/v1.0.0/layers/
+  let battle_years = [1861, 1862, 1863, 1864, 1865];
+  let feature_array = [];
+  let keys = Object.keys(civil_war_battles_geo);
+  for(var battle_name in civil_war_battles){
+    let battle = civil_war_battles[battle_name];
+    let date = battle['date'].split(' ');
+    if(battle_years.includes(year)){
+      if(keys.indexOf(battle_name) > -1 && year === parseInt(date[2]) && battle['victory'] === side){ 
+        let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+        let battle_lat = parseFloat(battle_loc.split(",")[0]);
+        let battle_lng = parseFloat(battle_loc.split(",")[1]);
+        let point = {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [battle_lng, battle_lat]
+          }
+        }
+        feature_array.push(point);
+      }
+    }else{
+      if(keys.indexOf(battle_name) > -1){ 
+        let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+        let battle_lat = parseFloat(battle_loc.split(",")[0]);
+        let battle_lng = parseFloat(battle_loc.split(",")[1]);
+        let point = {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [battle_lng, battle_lat]
+          }
+        }
+        feature_array.push(point);
+      }
+    }
+  }
+  map.addSource('battle_points', {
+    'type': 'geojson',
+    'data': {
+      'type': 'FeatureCollection',
+      'features': feature_array
+    }
+  });
+  map.addLayer({
+    id: 'heatmap_layer',
+    source: 'battle_points',
+    type: 'heatmap',
+    paint: {
+      'heatmap-radius': 40,
+      "heatmap-color": [  
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0, 'rgba(240,29,29,0)',
+            0.2, 'rgba(212, 175, 55, 1)', 
+            0.4, 'rgba(255, 165, 0, 1)', 
+            0.7, 'rgba(226, 88, 34, 1)', 
+            1.0, 'rgba(178, 34, 34, 1)'
+          ],
+      "heatmap-weight": {
+        "type": "identity", 
+        "property": "point_count"
+      }
+    }
+  });
+}
 let slideIndex = 0;
 function changeNews(n) {
   slideIndex += n;
   showNews(relics);
 }
 
+function clearElection(){
+  document.getElementById('candidates_box').style.display = 'none';
+  document.getElementById('candidates_box_hover').style.display = 'none';
+  if(election_button){
+    for(let i = 0; i < mouse_list.length; i++){
+      map.removeLayer(mouse_list[i]);
+      map.removeSource(mouse_list[i]);
+    }
+  }
+  mouse_list = [];
+}
+
+function constructHeatmap1864(){
+  //toggle heatmap: https://docs.mapbox.com/mapbox.js/example/v1.0.0/layers/
+  let battle_years = [1861, 1862, 1863, 1864, 1865];
+  let feature_array = [];
+  let keys = Object.keys(civil_war_battles_geo);
+  let union_victs = 0;
+  let confed_victs = 0;
+  let ties = 0;
+  for(var battle_name in civil_war_battles){
+    let battle = civil_war_battles[battle_name];
+    let date = battle['date'].split(' ');
+    let nearElection = false;
+    let nearMonths = ['June', 'July', 'August', 'September', 'October', 'November']; //Nat. Union convention occurred in June
+    for(let i = 0; i < nearMonths.length; i++){
+      if(battle['date'].includes(nearMonths[i])){
+        nearElection = true;
+      }
+    }
+    if(keys.indexOf(battle_name) > -1 && 1864 === parseInt(date[2]) && nearElection){ 
+      if(battle['victory'] === 'Inconclusive'){
+        ties++;
+      }else if(battle['victory'] === 'Union'){
+        union_victs++;
+      }else if(battle['victory'] === 'Confederate'){
+        confed_victs++;
+      }
+      let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+      let battle_lat = parseFloat(battle_loc.split(",")[0]);
+      let battle_lng = parseFloat(battle_loc.split(",")[1]);
+      let point = {
+        'type': 'Feature',
+        'geometry': {
+          'type': 'Point',
+          'coordinates': [battle_lng, battle_lat]
+        }
+      }
+      feature_array.push(point);
+    }
+  }
+  map.addSource('battle_points', {
+    'type': 'geojson',
+    'data': {
+      'type': 'FeatureCollection',
+      'features': feature_array
+    }
+  });
+  
+  map.addLayer({
+    id: 'heatmap_layer',
+    source: 'battle_points',
+    type: 'heatmap',
+    paint: {
+      'heatmap-radius': 40,
+      "heatmap-color": 
+          [  
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0, 'rgba(240,29,29,0)',
+            0.2, 'rgba(212, 175, 55, 1)', 
+            0.4, 'rgba(255, 165, 0, 1)', 
+            0.7, 'rgba(226, 88, 34, 1)', 
+            1.0, 'rgba(178, 34, 34, 1)'
+          ],
+      "heatmap-weight": {
+        "type": "identity", 
+        "property": "point_count"
+      }
+    }
+  });
+  return {'union_victs': union_victs, 'confed_victs': confed_victs, 'ties': ties};
+}
+
+let state_hovered = "";
+let clicked_election_state = false;
+function showElection(){
+  document.getElementById('heatmap_sides').style.display = 'none';
+  clicked_election_state = false;
+  //document.getElementById('search_box').style.display = 'none';
+  document.getElementById('candidates_box_hover').style.display = 'block';
+  removeWorldData();
+  deleteMarkers();
+  clearElection();
+  if(map.getLayer('heatmap_layer')){
+    map.removeLayer('heatmap_layer');
+  }
+  if(map.getSource('battle_points')){
+    map.removeSource('battle_points');
+  }
+  if(parseInt(year) === 1861){
+    document.getElementById('election_text').innerText = 'Election of 1860';
+    document.getElementById('election_modal').style.display = 'block';
+    showElection1860();
+  }
+  if(parseInt(year) === 1864){
+    let war_state = constructHeatmap1864();
+    //'union_victs': union_victs, 'confed_victs': confed_victs, 'ties': ties
+    document.getElementById('election_text').innerText = 'Election of 1864';
+    document.getElementById('election_long_text').innerText = '(union:'+war_state.union_victs
+      +', confed:'+war_state.confed_victs+', ties:'+war_state.ties+')';
+    document.getElementById('election_modal').style.display = 'block';
+    showElection1864();
+  }
+}
+
+let state_choices_1860 = {};
+function showElection1860(){
+  let state_names_1860 = Object.keys(election_data_1860);
+  let feature_states = [];
+  for(let i = 0; i < stateBounds.features.length; i++){
+    feature_states.push(stateBounds.features[i].properties.name);
+  }
+  election_button = true; 
+  for(let i = 0; i < feature_states.length; i++){
+    let name_index = state_names.indexOf(feature_states[i]);
+    if(name_index > -1){
+      mouse_list.push(feature_states[i]);
+      let feature  = {"type":"FeatureCollection","features":[stateBounds.features[i]]};
+      map.addSource(feature_states[i], {
+        type: 'geojson',
+        data: feature
+      });
+      let color = '#edc9af';  //color for if it was still a territory
+      let name_index_1860 = state_names_1860.indexOf(feature_states[i]);
+      if(name_index_1860 > -1){
+        let state_1860 = election_data_1860[feature_states[i]];
+        let state_1860_counts = [];
+        if(!isNaN(parseInt(state_1860.r_e)) && parseInt(state_1860.r_e) !== undefined){
+          state_1860_counts['Republican'] = parseInt(state_1860.r_e);
+        }
+        if(!isNaN(parseInt(state_1860.nd_e)) && parseInt(state_1860.nd_e) !== undefined){
+          state_1860_counts['Northern Democrat'] = parseInt(state_1860.nd_e);
+        }
+        if(!isNaN(parseInt(state_1860.sd_e)) && parseInt(state_1860.sd_e) !== undefined){
+          state_1860_counts['Southern Democrat'] = parseInt(state_1860.sd_e);
+        }
+        if(!isNaN(parseInt(state_1860.cu_e)) && parseInt(state_1860.cu_e) !== undefined){
+          state_1860_counts['Constitutional Union'] = parseInt(state_1860.cu_e);
+        }
+        if(!isNaN(parseInt(state_1860.f_e)) && parseInt(state_1860.f_e) !== undefined){
+          state_1860_counts['Fusion'] = parseInt(state_1860.f_e);
+        }
+        let counts = Object.keys(state_1860_counts).map(function(key) {
+          return [key, state_1860_counts[key]];
+        });
+        counts.sort(function(first, second) {
+          return second[1] - first[1];
+        });
+        if(counts.length > 0){
+          //Constitutional Union: Orange (#ffa500), republican, northern democrat(#40e0d0), southern democrat (#6699CC), no fusion party wins 
+          if(counts[0][0] === 'Republican'){
+            state_choices_1860[feature_states[i]] = 'Abraham Lincoln (Republican Party)';
+            color = '#de1738';
+          }
+          if(counts[0][0] === 'Northern Democrat'){ 
+            state_choices_1860[feature_states[i]] = 'Stephen A. Douglas (Northern Democrats)';
+            color = '#40e0d0';
+          }
+          if(counts[0][0] === 'Southern Democrat'){
+            state_choices_1860[feature_states[i]] = 'John C. Breckinridge (Southern Democrats)';
+            color = '#6699cc';
+          }
+          if(counts[0][0] === 'Constitutional Union'){ 
+            state_choices_1860[feature_states[i]] = 'John J.Crittenden (Constitutional Union Party)';
+            color = '#ffa500';
+          }
+          if(counts[0][0] === 'Fusion'){ 
+            console.log("ISSUE: "+feature_states[i])
+          }
+          if(feature_states[i] === 'New Jersey'){ //split between lincoln (4) and douglass (3)
+            color = '#a35c73';
+          }
+        }
+      }
+      map.addLayer({
+        'id': feature_states[i],
+        'type': 'fill',
+        'source': feature_states[i],
+        'layout': {},
+        'paint': {
+          'fill-color': color,
+          'fill-opacity': 0.8
+          //'fill-outline-color': '#000'
+        }
+      });
+    }
+  }
+  map.on('click', function(e) {
+    let states = map.queryRenderedFeatures(e.point, {
+      layers: mouse_list
+    });
+    if(states.length > 0){
+      document.getElementById('candidates_box_hover').style.display = 'none';
+      document.getElementById('candidates_vote_table').innerHTML = ''; 
+      clicked_election_state = true;
+      //if(state_hovered !== states[0].properties.name){
+        state_hovered = states[0].properties.name;
+        if(state_hovered === 'Colorado' || state_hovered === 'Nebraska'){
+          document.getElementById('candidates_text').innerText = state_hovered + ' was not a state at the time, and was considered '
+            + territories_1860[states_to_terrs_1860[state_hovered]].info;
+        }else if(state_hovered === 'West Virginia'){
+          document.getElementById('candidates_text').innerText = state_hovered + 
+            ' was not a state at the time, a part of Virginia. It later became a state in 1863 and participated in the 1864 election (head to 1864 for more info!).';
+        }else if(states_to_terrs_1860[state_hovered] !== undefined){ //territory at the time
+          document.getElementById('candidates_text').innerText = state_hovered + 
+            ' was not a state at the time, and was considered to be ' + states_to_terrs_1860[state_hovered] + '. ';
+            //+ territories_1860[states_to_terrs_1860[state_hovered]].info;
+        }else{
+          if(state_hovered !== 'New Jersey'){
+            document.getElementById('candidates_text').innerText = state_hovered + ' was a part of the election, and voted for ' 
+              + state_choices_1860[state_hovered] + '.';
+          }else{
+            document.getElementById('candidates_text').innerText = state_hovered + ' was a part of the election, and split the electoral ' 
+              + 'vote between Abraham Lincoln (Republican) and Stephen A. Douglass (Northern Democrat).';
+          }
+          let state_counts =  {};
+          let total_votes = 0;
+          let state_1860 = election_data_1860[state_hovered];
+          let sr_c = state_1860.r_c.split(',').join('');
+          let snd_c = state_1860.nd_c.split(',').join('');
+          let ssd_c = state_1860.sd_c.split(',').join('');
+          let scu_c = state_1860.cu_c.split(',').join('');
+          let sf_c = state_1860.f_c.split(',').join('');
+          if(!isNaN(parseInt(sr_c)) && parseInt(sr_c) !== undefined){
+            total_votes += parseInt(sr_c);
+            state_counts['Republican'] = parseInt(sr_c);
+          }
+          if(!isNaN(parseInt(snd_c)) && parseInt(snd_c) !== undefined){
+            total_votes += parseInt(snd_c);
+            state_counts['Northern Democrat'] = parseInt(snd_c);
+          }
+          if(!isNaN(parseInt(ssd_c)) && parseInt(ssd_c) !== undefined){
+            total_votes += parseInt(ssd_c);
+            state_counts['Southern Democrat'] = parseInt(ssd_c);
+          }
+          if(!isNaN(parseInt(scu_c)) && parseInt(scu_c) !== undefined){
+            total_votes += parseInt(scu_c);
+            state_counts['Constitutional Union'] = parseInt(scu_c);
+          }
+          if(!isNaN(parseInt(sf_c)) && parseInt(sf_c) !== undefined){
+            total_votes += parseInt(sf_c);
+            state_counts['Fusion'] = parseInt(sf_c);
+          }
+          let r_percent = 'N/A';
+          let nd_percent = 'N/A';
+          let sd_percent = 'N/A';
+          let cu_percent = 'N/A';
+          let f_percent = 'N/A';
+          if(state_counts['Republican'] !== undefined)
+            r_percent = (parseInt(state_1860.r_c.split(',').join('')) / total_votes * 100).toFixed(2);
+          if(state_counts['Northern Democrat'] !== undefined)
+            nd_percent = (parseInt(state_1860.nd_c.split(',').join('')) / total_votes * 100).toFixed(2);
+          if(state_counts['Southern Democrat'] !== undefined)
+            sd_percent = (parseInt(state_1860.sd_c.split(',').join('')) / total_votes * 100).toFixed(2);
+          if(state_counts['Constitutional Union'] !== undefined)
+            cu_percent = (parseInt(state_1860.cu_c.split(',').join('')) / total_votes * 100).toFixed(2);
+          if(state_counts['Fusion'] !== undefined)
+            f_percent = (parseInt(state_1860.f_c.split(',').join('')) / total_votes * 100).toFixed(2);          
+          let table = document.createElement('TABLE');
+          let parties = document.createElement('TBODY');
+          let header = document.createElement('TR');
+          let columns = ['Party', 'Popular Vote Count', '% of Popular Vote', 'Electoral Vote Count'];
+          let rows = ['Republican', 'Northern Democrat', 'Southern Democrat', 'Constitutional Union', 'Fusion'];
+          for(let i = 0; i < columns.length; i++){
+            let td = document.createElement('TD');
+            td.width = '75';
+            td.appendChild(document.createTextNode(columns[i]));
+            header.appendChild(td);
+          }
+          parties.appendChild(header);
+          for(let i = 0; i < rows.length; i++){
+            let party = document.createElement('TR');
+            let td_header = document.createElement('TD');
+            td_header.width = '75';
+            td_header.appendChild(document.createTextNode(rows[i]));
+            party.appendChild(td_header);
+            let texts = [];
+            let electoral = '';
+            if(rows[i] === 'Republican'){
+              texts.push(election_data_1860[state_hovered].r_c + '');
+              texts.push(r_percent + '');
+              electoral = election_data_1860[state_hovered].r_e;
+            }
+            if(rows[i] === 'Northern Democrat'){
+              texts.push(election_data_1860[state_hovered].nd_c + '');
+              texts.push(nd_percent + '');
+              electoral = election_data_1860[state_hovered].nd_e;
+            }
+            if(rows[i] === 'Southern Democrat'){
+              texts.push(election_data_1860[state_hovered].sd_c + '');
+              texts.push(sd_percent + '');
+              electoral = election_data_1860[state_hovered].sd_e;
+            }
+            if(rows[i] === 'Constitutional Union'){
+              texts.push(election_data_1860[state_hovered].cu_c + '');
+              texts.push(cu_percent + '');
+              electoral = election_data_1860[state_hovered].cu_e;
+            }
+            if(rows[i] === 'Fusion'){
+              texts.push(election_data_1860[state_hovered].f_c + '');
+              texts.push(f_percent + '');
+              electoral = election_data_1860[state_hovered].f_e;
+            }
+            let electoral_text = '';
+            if(parseInt(electoral) !== NaN && parseInt(electoral) !== undefined){
+              if(parseInt(electoral) > -1){
+                electoral_text = electoral + '';
+              }else{
+                electoral_text = '0';
+              }
+            }else{
+              electoral_text = '0';
+            }
+            texts.push(electoral_text);
+            for(let j = 0; j < texts.length; j++){ //single box
+              let td = document.createElement('TD');
+              td.width = '75';
+              td.appendChild(document.createTextNode(texts[j]));
+              party.appendChild(td);
+            }
+            parties.appendChild(party);
+          }
+          table.appendChild(parties);
+          document.getElementById('candidates_vote_table').appendChild(table);
+        //}
+      }
+      document.getElementById('candidates_box').style.display = 'block';
+    }
+  });
+  map.on('mousemove', function(e) {
+    let states = map.queryRenderedFeatures(e.point, {
+      layers: mouse_list
+    });
+    if(states.length > 0){
+      if(clicked_election_state === false){ //state_hovered !== states[0].properties.name && 
+        state_hovered = states[0].properties.name;
+        document.getElementById('candidates_box_hover').style.display = 'block';
+        if(state_hovered === 'Colorado'){
+          document.getElementById('state_hover_text').innerText = state_hovered;
+        }else if(state_hovered === 'West Virginia'){
+          document.getElementById('state_hover_text').innerText = state_hovered + ' (Virginia)';
+        }else if(states_to_terrs_1860[state_hovered] !== undefined){
+          document.getElementById('state_hover_text').innerText = state_hovered + ' (' + states_to_terrs_1860[state_hovered] + ')'; 
+        }else{
+          document.getElementById('state_hover_text').innerText = state_hovered;
+        }
+      }
+    }else{
+      document.getElementById('candidates_box_hover').style.display = 'none';
+    }
+  });
+}
+
+let state_choices_1864 = {};
+function showElection1864(){
+  //November 8, 1864
+  //"no popular vote"
+  let state_names_1864 = Object.keys(election_data_1864);
+  let feature_states = [];
+  for(let i = 0; i < stateBounds.features.length; i++){
+    feature_states.push(stateBounds.features[i].properties.name);
+  }
+  election_button = true;
+  for(let i = 0; i < feature_states.length; i++){
+    let name_index = state_names.indexOf(feature_states[i]);
+    if(name_index > -1){
+      mouse_list.push(feature_states[i]);
+      let feature  = {"type":"FeatureCollection","features":[stateBounds.features[i]]};
+      map.addSource(feature_states[i], {
+        type: 'geojson',
+        data: feature
+      });
+      let color = '#edc9af';  //color for if it was still a territory
+      let name_index_1864 = state_names_1864.indexOf(feature_states[i]);
+      //it's an elections state it's either red or blue
+      if(name_index_1864 > -1){
+        //'Louisiana':{'nu_count':'no popular vote','nu_electoral':'7','dem_count':'no popular vote','dem_electoral':'-1'},
+        let state_1864 = election_data_1864[feature_states[i]];
+        if(parseInt(state_1864.nu_electoral) > parseInt(state_1864.dem_electoral)){
+          state_choices_1864[feature_states[i]] = 'Abraham Lincoln (National Union Party)';
+          color = '#de1738';
+        }else{ //since they dont split electoral votes
+          state_choices_1864[feature_states[i]] = 'George B. McClellan (Democrat Party)';
+          color = '#0015BC';
+        }
+  
+      }else{  
+        let confed_index = confed_states_1864.indexOf(feature_states[i]);
+        //part of confederacy at the time
+        if(confed_index > -1){
+          color = '#808080';
+        }
+      }
+      map.addLayer({
+        'id': feature_states[i],
+        'type': 'fill',
+        'source': feature_states[i],
+        'layout': {},
+        'paint': {
+          'fill-color': color,
+          'fill-opacity': 0.8
+          //'fill-outline-color': '#000'
+        }
+      });
+      //map.moveLayer('heatmap_layer', feature_states[i]);
+    }
+  }
+  map.on('click', function(e) {
+    let states = map.queryRenderedFeatures(e.point, {
+      layers: mouse_list
+    });
+    if(states.length > 0){
+      document.getElementById('candidates_box_hover').style.display = 'none';
+      document.getElementById('candidates_vote_table').innerHTML = ''; 
+      clicked_election_state = true;
+      //if(state_hovered !== states[0].properties.name){
+        state_hovered = states[0].properties.name;
+        if(states_to_terrs_1864[state_hovered] !== undefined){ //territory at the time
+          document.getElementById('candidates_text').innerText = state_hovered + 
+            ' was not a state at the time, and was considered to be ' + states_to_terrs_1864[state_hovered] + '. ';
+            //+ territories_1864[states_to_terrs_1864[state_hovered]].info;
+        }else if(confed_states_1864.includes(state_hovered)){ //inside confederacy at the time
+          document.getElementById('candidates_text').innerText = state_hovered + ' was part of the confederacy at the time and thus was not part of the election.';
+        }else{
+          document.getElementById('candidates_text').innerText = state_hovered + ' was a part of the election, and voted for ' 
+            + state_choices_1864[state_hovered] + '.';
+          let total_votes = parseInt(election_data_1864[state_hovered].nu_count) + parseInt(election_data_1864[state_hovered].dem_count);
+          let nu_percent = parseInt(election_data_1864[state_hovered].nu_count) / total_votes * 100;
+          let dem_percent = parseInt(election_data_1864[state_hovered].dem_count) / total_votes * 100;
+          let table = document.createElement('TABLE');
+          let parties = document.createElement('TBODY');
+          let header = document.createElement('TR');
+          let columns = ['Party', 'Popular Vote Count', '% of Popular Vote', 'Electoral Vote Count'];
+          let rows = ['National Union', 'Democrat'];
+          for(let i = 0; i < columns.length; i++){
+            let td = document.createElement('TD');
+            td.width = '75';
+            td.appendChild(document.createTextNode(columns[i]));
+            header.appendChild(td);
+          }
+          parties.appendChild(header);
+          for(let i = 0; i < rows.length; i++){
+            let party = document.createElement('TR');
+            let td_header = document.createElement('TD');
+            td_header.width = '75';
+            td_header.appendChild(document.createTextNode(rows[i]));
+            party.appendChild(td_header);
+            let texts = [];
+            let electoral = '';
+            if(rows[i] === 'National Union'){
+              texts.push(election_data_1864[state_hovered].nu_count + '');
+              texts.push(nu_percent.toFixed(2) + '');
+              electoral = election_data_1864[state_hovered].nu_electoral;
+            }else{
+              texts.push(election_data_1864[state_hovered].dem_count + '');
+              texts.push(dem_percent.toFixed(2) + '');
+              electoral = election_data_1864[state_hovered].dem_electoral;
+            }
+            let electoral_text = '';
+            if(parseInt(electoral) !== NaN && parseInt(electoral) !== undefined){
+              if(parseInt(electoral) > -1){
+                electoral_text = electoral + '';
+              }else{
+                electoral_text = '0';
+              }
+            }else{
+              electoral_text = '0';
+            }
+            texts.push(electoral_text);
+            for(let j = 0; j < texts.length; j++){ //single box
+              let td = document.createElement('TD');
+              td.width = '75';
+              td.appendChild(document.createTextNode(texts[j]));
+              party.appendChild(td);
+            }
+            parties.appendChild(party);
+          }
+          table.appendChild(parties);
+          document.getElementById('candidates_vote_table').appendChild(table);
+        //}
+      }
+      document.getElementById('candidates_box').style.display = 'block';
+    }
+  });
+  map.on('mousemove', function(e) {
+    let states = map.queryRenderedFeatures(e.point, {
+      layers: mouse_list
+    });
+    if(states.length > 0){
+      if(clicked_election_state === false){ //state_hovered !== states[0].properties.name && 
+        state_hovered = states[0].properties.name;
+        document.getElementById('candidates_box_hover').style.display = 'block';
+        if(states_to_terrs_1864[state_hovered] !== undefined){
+          document.getElementById('state_hover_text').innerText = state_hovered + ' (' + states_to_terrs_1864[state_hovered] + ')'; 
+        }else{
+          document.getElementById('state_hover_text').innerText = state_hovered;
+        }
+      }
+    }else{
+      document.getElementById('candidates_box_hover').style.display = 'none';
+    }
+  });
+}
 function deleteMarkers() {
   let cm_keys = Object.keys(current_markers);
   for(let i = 0; i < cm_keys.length; i++){
@@ -394,18 +1099,23 @@ function deleteMarkers() {
 }
 
 function applySettings(){
-
-  //also clear up heatmap in these if statemensts
   if(document.getElementById('heatmap_select').value === 'heatmap_all'){
-    map.removeLayer('heatmap_layer');
-    map.removeSource('battle_points');
-    console.log("heatmap_all set")
+    if(map.getLayer('heatmap_layer')){
+      map.removeLayer('heatmap_layer');
+    }
+    if(map.getSource('battle_points')){
+      map.removeSource('battle_points');
+    }
     constructHeatmap(-1);
   }
   if(document.getElementById('heatmap_select').value === 'heatmap_per_year'){
-    map.removeLayer('heatmap_layer');
-    map.removeSource('battle_points');
-    constructHeatmap(year);
+    if(map.getLayer('heatmap_layer')){
+      map.removeLayer('heatmap_layer');
+    }
+    if(map.getSource('battle_points')){
+      map.removeSource('battle_points');
+    }
+    constructHeatmap(parseInt(year));
   }
 
   if(document.getElementById('heatmap_only_choice').checked){
@@ -447,8 +1157,6 @@ function assembleYearData(){
         union_vict_count++;
       }else if(battle['victory'] === 'Confederate'){
         confed_vict_count++;
-      }else{
-        console.log("victory: "+battle_name)
       }
       
       if(state_counts[battle['state']] === undefined){
@@ -479,7 +1187,7 @@ function assembleYearData(){
     '% of the battles were Confederate victories, and ' + tie_percent.toFixed(2) + 
     '% of the battles were inconclusive';
   
-  let state_counts_keys = Object.keys(state_counts);
+  /*let state_counts_keys = Object.keys(state_counts);
   //account for 1860 boundaries
   for (var i = 1; i < state_counts_keys.length; i++){
     var tr = document.createElement('tr');   
@@ -496,7 +1204,7 @@ function assembleYearData(){
     tr.appendChild(td2);
 
     document.getElementById('battles_by_state').appendChild(tr);
-  }
+  }*/
 }
 
 function showYearReport(){
@@ -758,6 +1466,7 @@ function nextBattle(){
     }
   }
 }
+
 //get library of congress battle maps
 function getMaps(){
   console.log(maps_url)
@@ -816,7 +1525,7 @@ function getRelics(){
 //https://en.wikipedia.org/wiki/List_of_American_Civil_War_battles
 function setMarkerName(e) {
   battle_name = e.target.id;
-  console.log(battle_name)
+  //console.log(battle_name)
   loadBattle();
 }
 
@@ -830,11 +1539,12 @@ function loadBattle(){
   //'https://www.loc.gov/maps/?q=' + battle_name + '&fo=json';
   newspapers_url = 'https://www.loc.gov/newspapers/?fo=json&q=' + battle_name;
   //'https://www.loc.gov/collections/military-battles-and-campaigns/?fo=json&' + battle_name;
-  let cm_keys = Object.keys(current_markers);
+  let battle_keys = Object.keys(civil_war_battles);
   let battle_pos = -1;
-  for(let i = 0; i < cm_keys.length; i++){
-    if(cm_keys[i] === battle_name){
+  for(let i = 0; i < battle_keys.length; i++){
+    if(battle_keys[i] === battle_name){
       battle_pos = i;
+      break;
     }
   }
   /*for(let i = 0; i < cm_keys.length; i++){
@@ -860,8 +1570,6 @@ function loadBattle(){
   document.getElementById('facts').style.display = 'block';
   document.getElementById('outcome').style.display = 'block';
   document.getElementById('iframe').style.display = 'block';
-
-  let battle_keys = Object.keys(civil_war_battles);
   let battle_data = civil_war_battles[battle_keys[battle_pos]];
   let battle_data_geo = civil_war_battles_geo[battle_keys[battle_pos]];
   /*let battle_title = document.createElement('p');
@@ -881,8 +1589,16 @@ function loadBattle(){
   location.innerHTML = battle_data['location'].split('\n')[0];*/
   document.getElementById('location').innerHTML = battle_data_geo['place'];
   //document.getElementById('info').appendChild(location);
-
-  document.getElementById('type').innerHTML = 'Class: ' + battle_data['class'];
+  let class_text = 'The battle was classified as ';
+  if(battle_data['class'] === 'A')
+    class_text += 'DECISIVE (class A) ';
+  if(battle_data['class'] === 'B')
+    class_text += 'MAJOR (class B) ';
+  if(battle_data['class'] === 'C')
+    class_text += 'FORMATIVE (class C) ';
+  if(battle_data['class'] === 'D')
+    class_text += 'LIMITED (class D) ';
+  document.getElementById('type').innerHTML = class_text + ' by the <a href="http://npshistory.com/publications/battlefield/cwsac/report.pdf" style="color: black;">Civil War Sites Advisory Commission</a>.'
   //document.getElementById('info').appendChild(opposing);
   
   document.getElementById('facts').innerHTML = 'Info: ' + battle_data['notes'];
@@ -914,14 +1630,73 @@ function loadBattle(){
   }
 }
 
+let mouse_list_world = [];
+let place_hovered = '';
+function removeWorldData(){
+  mouse_list_world = [];
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska'];
+  for(let i = 0; i < places.length; i++){
+    if(map.getLayer(places[i])){
+      map.removeLayer(places[i]);
+    }
+    if(map.getSource(places[i])){
+      map.removeSource(places[i]);
+    }
+  }
+}
+function plotWorldData(year){
+      /*
+World bounds: 
+//Canada, Mexico #006341, Australia #ab4b52, United Kingdom #ab4b52, Brazil #FFDF00, India #ab4b52, Russia #ffffff, France #0055A4, Ireland #ab4b52, 
+Alaska #ffffff
+worldBounds.features[i].properties.name
+worldBounds.features[i].geometry.coordinates
+      */
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska'];
+  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52', '#ffffff'];
+  for(let i = 0; i < places.length; i++){
+    //if statement to filter using year
+    mouse_list_world.push(places[i]);
+    let feature  = {"type":"FeatureCollection","features":[worldBounds.features[i]]};
+    map.addSource(places[i], {
+      type: 'geojson',
+      data: feature
+    });
+    map.addLayer({
+      'id': places[i],
+      'type': 'fill',
+      'source': places[i],
+      'layout': {},
+      'paint': {
+        'fill-color': place_colors[i],
+        'fill-opacity': 0.8
+      }
+    });
+  }
+  map.on('mousemove', function(e) {
+    let places = map.queryRenderedFeatures(e.point, {
+      layers: mouse_list_world
+    });
+    if(places.length > 0){
+      place_hovered = places[0].properties.name;
+      document.getElementById('candidates_box_hover').style.display = 'block';
+      document.getElementById('state_hover_text').innerText = place_hovered;
+    }else{
+      document.getElementById('candidates_box_hover').style.display = 'none';
+    }
+  });
+}
+
 function preSetUpPoints(year){
+  document.getElementById('heatmap_sides').style.display = 'block';
+  document.getElementById('heatmap_general').checked = true;
+  clearElection();
+  removeWorldData();
   let ids = ['1861', '1862', '1863', '1864', '1865'];
   for(let i = 0; i < ids.length; i++){
     document.getElementById(ids[i]).style.color = 'white';
   }
   document.getElementById(year).style.color = 'gold';
-
-  applySettings();
   document.getElementById('intro_text').innerHTML = year;
   document.getElementById('intro_modal').style.display = 'block';
   if(parseInt(year) === 1861 || parseInt(year) === 1864){
@@ -930,20 +1705,15 @@ function preSetUpPoints(year){
     document.getElementById('elections').style.display = 'none';
   }
   setUpPoints(year);
+  mouse_list_world = [];
+  plotWorldData(parseInt(year));
+  applySettings();
+  //document.getElementById('search_box').style.display = 'block';
 }
 
 //get points relevant to selected year
 function setUpPoints(id){
-  //FILTER ONLY PLACES WITH LOCATION FOUND
-  //let intro_text = document.createElement('p');
-  //intro_text.innerHTML = id;
-  //document.getElementById('intro').appendChild(intro_text);
-
   year = parseInt(id);
-  //document.getElementById('speeches').style.display = 'block';
-
-  //document.getElementById('year_text').innerHTML = id;
-
   let cm_keys = Object.keys(current_markers);
   for(let i = 0; i < cm_keys.length; i++){
     current_markers[cm_keys[i]]['marker'].remove();
@@ -959,7 +1729,15 @@ function setUpPoints(id){
       let battle_lng = parseFloat(battle_loc.split(",")[1]);
       let el = document.createElement('div');
       el.id = battle_name;
-      el.style.backgroundImage = 'url(\'images/usmaplogo.jpg\')'; 
+      let battle = civil_war_battles[battle_name];
+      if(battle['class'] === 'A')
+        el.style.backgroundImage = 'url(\'images/a_battle.png\')'; 
+      if(battle['class'] === 'B')
+        el.style.backgroundImage = 'url(\'images/b_battle.png\')'; 
+      if(battle['class'] === 'C')
+        el.style.backgroundImage = 'url(\'images/c_battle.png\')'; 
+      if(battle['class'] === 'D')
+        el.style.backgroundImage = 'url(\'images/d_battle.png\')';
       el.style.borderRadius = 6 + 'px';
       el.style.width = 30 + 'px';
       el.style.height = 30 + 'px';
@@ -971,16 +1749,106 @@ function setUpPoints(id){
     }
   }
 }
-/*
-//move map around
-map.flyTo({
-center: [
--74.5 + (Math.random() - 0.5) * 10,
-40 + (Math.random() - 0.5) * 10
-],
-essential: true // this animation is considered essential with respect to prefers-reduced-motion
-});
-*/
+
+//FROM https://www.w3schools.com/howto/howto_js_autocomplete.asp
+function checkBattle(inp) {
+  let input = document.getElementById(inp);
+  let arr = Object.keys(current_markers);
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  input.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              input.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  input.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != input) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+}
     </script>
   </body>
 </html>

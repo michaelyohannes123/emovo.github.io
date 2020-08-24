@@ -19,6 +19,7 @@
       background-repeat: no-repeat;
       background-size: 100% 100%;
     }
+
     .button{
       font-family: 'Rye', cursive;
       border: 2px solid #ceb793;
@@ -26,19 +27,54 @@
       background-color: antiquewhite;
       color: black;
     }
-    .enter{
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 7%;
+      display: flex;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+      background-color: #111;
+    }
+
+    .letter{
+      background-image: url('images/oldpaper.jpg');
+      /*background-color: rgb(223, 173, 107);*/
       position: absolute;
       text-align: center;
+      width: 60%;
       left: 50%;
-      top: 30%;
+      top: 50%;
       -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     }
   </style>
   <body>
-    <div class="enter">
-      <h1 id="title">Civil War Map</h1>
-      <button id="button" class="button" onclick="location.href='civilwar_map.html'">Explore</button>
+    <ul>
+      <li><a href="civilwar_troops.html">Troop Statistics</a></li>
+      <li><a href="civilwar_map.html">War Map</a></li>
+      <li><a href="civilwar_morse.html">Morse Code</a></li>
+    </ul>  
+    <div class="letter">
+      <h1>About</h1>
+      <p>About</p>
     </div>
   </body>
   <script>
