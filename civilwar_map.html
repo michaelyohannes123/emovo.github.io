@@ -245,6 +245,7 @@
       <input type="radio" id="heatmap_confed" name="heatmap_choice" value="heatmap_confed" onclick="chooseHeatmap(this.id)">
       <label for="heatmap_general">Heatmap (Confederate Victories)</label>
       <br>
+      <!--<button id="slidebar_activate" class="button">Activate Timeline</button>-->
     </div>
     <!--<div class="autocomplete">
       <input id="search_box" type="text" onkeyup="checkBattle('search_box')" placeholder="Search a battle">
@@ -292,8 +293,8 @@
         <span id='settings_close' class='close' style="float: right;">&times;</span>
         <p>Show heatmap for all years all at once or show it on a year by year basis?</p>
         <select id="heatmap_select">
-          <option value="heatmap_all" selected>Heatmap for all years</option>
-          <option value="heatmap_per_year">Heatmap for each year</option>
+          <option value="heatmap_all">Heatmap for all years</option>
+          <option value="heatmap_per_year" selected>Heatmap for each year</option>
         </select>
         <br>
         <br>
@@ -314,7 +315,9 @@
         <br>
         <p id="victor_text"></p>
         <br>
-        <table id="battles_by_state"></table>
+        <p id="of_victor_text"></p>
+        <br>
+        <table id="battles_by_state" cellspacing="1" cellpadding="1" style="margin: 0 auto;"></table>
       </div>
     </div>
     <div id='relics_modal' class='modal' style='display:none;'>
@@ -1131,16 +1134,26 @@ function assembleYearData(){
   let confed_vict_count = 0;
   let union_vict_count = 0;
   let tie_count = 0;
-  let state_counts = {};
   let class_a_count = 0;
   let class_b_count = 0;
   let class_c_count = 0;
   let class_d_count = 0;
-
+  let u_class_a_count = 0;
+  let u_class_b_count = 0;
+  let u_class_c_count = 0;
+  let u_class_d_count = 0;
+  let c_class_a_count = 0;
+  let c_class_b_count = 0;
+  let c_class_c_count = 0;
+  let c_class_d_count = 0;
+  let states_dict = {};
+  let t = 0;
   for(var battle_name in civil_war_battles){
     let battle = civil_war_battles[battle_name];
     let date = battle['date'].split(' ');
-    //battles occurring in multiple states are double counted in the state table
+    let state_name_parsed = civil_war_battles_geo[battle_name].place.split(',');
+    let state = state_name_parsed[state_name_parsed.length - 1];
+    //battles occurring in multiple states are not double counted in the state table
     if(parseInt(year) === parseInt(date[2])){    
       if(battle['class'] === 'A')
         class_a_count++;
@@ -1150,22 +1163,57 @@ function assembleYearData(){
         class_c_count++;
       if(battle['class'] === 'D')
         class_d_count++;
-      
+      //find which state
+      for(let i = 0; i < state_names.length; i++){
+        if(state.includes(state_names[i])){
+          state = state_names[i];
+          break;
+        }
+      }
       if(battle['victory'] === 'Inconclusive'){
         tie_count++;
+        if(states_dict[state] !== undefined){
+          states_dict[state].tie_count++;
+          states_dict[state].total_count++;
+        }else{
+          states_dict[state] = {'total_count': 1, "union_vict": 0, "confed_vict": 0, "tie_count": 1};
+        }
       }else if(battle['victory'] === 'Union'){
         union_vict_count++;
+        if(states_dict[state] !== undefined){
+          states_dict[state].union_vict++;
+          states_dict[state].total_count++;
+        }else{
+          states_dict[state] = {'total_count': 1, "union_vict": 1, "confed_vict": 0, "tie_count": 0};
+        }
+        if(battle['class'] === 'A')
+          u_class_a_count++;
+        if(battle['class'] === 'B')
+          u_class_b_count++;
+        if(battle['class'] === 'C')
+          u_class_c_count++;
+        if(battle['class'] === 'D')
+          u_class_d_count++;
       }else if(battle['victory'] === 'Confederate'){
         confed_vict_count++;
-      }
-      
-      if(state_counts[battle['state']] === undefined){
-        state_counts[battle['state']] = 0;
-      }else{
-        state_counts[battle['state']]++;
+        if(states_dict[state] !== undefined){
+          states_dict[state].confed_vict++;
+          states_dict[state].total_count++;
+        }else{
+          states_dict[state] = {'total_count': 1, "union_vict": 0, "confed_vict": 1, "tie_count": 0};
+        }
+        if(battle['class'] === 'A')
+          c_class_a_count++;
+        if(battle['class'] === 'B')
+          c_class_b_count++;
+        if(battle['class'] === 'C')
+          c_class_c_count++;
+        if(battle['class'] === 'D')
+          c_class_d_count++;
       }
     }
   }
+
   let total_year = class_a_count + class_b_count + class_c_count + class_d_count;
   document.getElementById('year_count_text').innerHTML = 'The total number of principal battles fought this year in ' + year
    + ' was ' + total_year + '.';
@@ -1185,26 +1233,78 @@ function assembleYearData(){
   document.getElementById('victor_text').innerHTML =  'This year, ' + union_win_percent.toFixed(2) + 
     '% of the battles were Union victories, ' + confed_win_percent.toFixed(2)+ 
     '% of the battles were Confederate victories, and ' + tie_percent.toFixed(2) + 
-    '% of the battles were inconclusive';
+    '% of the battles were inconclusive. Note that a few of the classified battles were not strictly a Union v. Confederate engagement, as Native American tribes were involved in certain battles.';
   
-  /*let state_counts_keys = Object.keys(state_counts);
+  let u_total_year = u_class_a_count + u_class_b_count + u_class_c_count + u_class_d_count;
+  let u_class_a_percent = (u_class_a_count / u_total_year) * 100;
+  let u_class_b_percent = (u_class_b_count / u_total_year) * 100;
+  let u_class_c_percent = (u_class_c_count / u_total_year) * 100;
+  let u_class_d_percent = (u_class_d_count / u_total_year) * 100;
+
+  let c_total_year = c_class_a_count + c_class_b_count + c_class_c_count + c_class_d_count;
+  let c_class_a_percent = (c_class_a_count / c_total_year) * 100;
+  let c_class_b_percent = (c_class_b_count / c_total_year) * 100;
+  let c_class_c_percent = (c_class_c_count / c_total_year) * 100;
+  let c_class_d_percent = (c_class_d_count / c_total_year) * 100;
+  document.getElementById('of_victor_text').innerHTML =  'Of the Union victories, ' + u_class_a_percent.toFixed(2) + '% were classified as decisive engagements, ' + 
+    u_class_b_percent.toFixed(2) + '% classified as major engagements, ' + u_class_c_percent.toFixed(2) + '% were classified as formative engagements, and ' + 
+    u_class_d_percent.toFixed(2) + '% were classified as limited engagements. Of the Confederate victories, ' + c_class_a_percent.toFixed(2) + 
+    '% were classified as decisive engagements, ' + c_class_b_percent.toFixed(2) + '% classified as major engagements, ' + c_class_c_percent.toFixed(2) + 
+    '% were classified as formative engagements, and ' + c_class_d_percent.toFixed(2) + '% were classified as limited engagements.';
+
+  let state_data_header = document.createElement('tr');   
+  let state_td_header = document.createElement('td');
+  let total_td_header = document.createElement('td');
+  let union_td_header = document.createElement('td');
+  let confed_td_header = document.createElement('td');    
+  let ties_td_header = document.createElement('td');   
+
+  let state_txt_header = document.createTextNode('Victors');
+  let total_txt_header = document.createTextNode('Total');
+  let union_txt_header = document.createTextNode('Union');
+  let confed_txt_header = document.createTextNode('Confederacy');
+  let ties_txt_header = document.createTextNode('Tie');
+  state_td_header.appendChild(state_txt_header);
+  total_td_header.appendChild(total_txt_header);
+  union_td_header.appendChild(union_txt_header);
+  confed_td_header.appendChild(confed_txt_header);
+  ties_td_header.appendChild(ties_txt_header);
+  let table_header = document.createElement('tr');   
+  table_header.appendChild(state_td_header);
+  table_header.appendChild(total_td_header);
+  table_header.appendChild(union_td_header);
+  table_header.appendChild(confed_td_header);
+  table_header.appendChild(ties_td_header);
+  document.getElementById('battles_by_state').appendChild(table_header);
+  let state_counts_keys = Object.keys(states_dict);
   //account for 1860 boundaries
   for (var i = 1; i < state_counts_keys.length; i++){
-    var tr = document.createElement('tr');   
+    let state_data = document.createElement('tr');   
+    let state_td = document.createElement('td');
+    let total_td = document.createElement('td');
+    let union_td = document.createElement('td');
+    let confed_td = document.createElement('td');  
+    let ties_td = document.createElement('td');   
 
-    var td1 = document.createElement('td');
-    var td2 = document.createElement('td');
+    let state_txt = document.createTextNode(state_counts_keys[i]);
+    let total_txt = document.createTextNode(states_dict[state_counts_keys[i]].total_count + '');
+    let union_txt = document.createTextNode(states_dict[state_counts_keys[i]].union_vict + '');
+    let confed_txt = document.createTextNode(states_dict[state_counts_keys[i]].confed_vict + '');
+    let ties_txt = document.createTextNode(states_dict[state_counts_keys[i]].tie_count + '');
 
-    var text1 = document.createTextNode('State');
-    var text2 = document.createTextNode('battle');
+    state_td.appendChild(state_txt);
+    total_td.appendChild(total_txt);
+    union_td.appendChild(union_txt);
+    confed_td.appendChild(confed_txt);
+    ties_td.appendChild(ties_txt);
 
-    td1.appendChild(text1);
-    td2.appendChild(text2);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-
-    document.getElementById('battles_by_state').appendChild(tr);
-  }*/
+    state_data.appendChild(state_td);
+    state_data.appendChild(total_td);
+    state_data.appendChild(union_td);
+    state_data.appendChild(confed_td);
+    state_data.appendChild(ties_td);
+    document.getElementById('battles_by_state').appendChild(state_data);
+  }
 }
 
 function showYearReport(){
@@ -1754,100 +1854,6 @@ function setUpPoints(id){
 function checkBattle(inp) {
   let input = document.getElementById(inp);
   let arr = Object.keys(current_markers);
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
-  var currentFocus;
-  /*execute a function when someone writes in the text field:*/
-  input.addEventListener("input", function(e) {
-      var a, b, i, val = this.value;
-      /*close any already open lists of autocompleted values*/
-      closeAllLists();
-      if (!val) { return false;}
-      currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
-      a = document.createElement("DIV");
-      a.setAttribute("id", this.id + "autocomplete-list");
-      a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
-      this.parentNode.appendChild(a);
-      /*for each item in the array...*/
-      for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              input.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
-  });
-  /*execute a function presses a key on the keyboard:*/
-  input.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-        currentFocus++;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-        currentFocus--;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-        e.preventDefault();
-        if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
-        }
-      }
-  });
-  function addActive(x) {
-    /*a function to classify an item as "active":*/
-    if (!x) return false;
-    /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-  function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-  function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != input) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
-  /*execute a function when someone clicks in the document:*/
-  document.addEventListener("click", function (e) {
-      closeAllLists(e.target);
-  });
 }
     </script>
   </body>

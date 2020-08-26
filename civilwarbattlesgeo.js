@@ -203,10 +203,10 @@ let civil_war_battles_geo =
       "lat_lng": "34.6968953,-76.691311"
    },
    "Battle of Glorieta Pass": {
-      "place": "New Mexico Territory, United States",
+      "place": "New Mexico Territory, New Mexico",
       "lat_lng": "35.5915929,-105.7867279"
    },
-   "Siege of Yorktown (1862)(Battle of Yorktown)": {
+   "Siege of Yorktown (Battle of Yorktown)": {
       "place": "York County and Newport News, Virginia",
       "lat_lng": "37.196983,-76.6020702"
    },
@@ -354,8 +354,6 @@ let civil_war_battles_geo =
       "place": "Adair County, Missouri",
       "lat_lng": "40.1951,-92.5837"
    },
-
-   
    "First Battle of Donaldsonville": {
       "place": "Ascension Parish, Louisiana",
       "lat_lng": "30.112883, -90.986858"
@@ -393,7 +391,7 @@ let civil_war_battles_geo =
       "lat_lng": "38.83,-77.72"
    },
    "Battle of Richmond (Kentucky)": {
-      "place": "Madison County",
+      "place": "Madison County, Kentucky",
       "lat_lng": "37.6845272,-84.2601173"
    },
    "Battle of Chantilly or Ox Hill": {
@@ -409,11 +407,11 @@ let civil_war_battles_geo =
       "lat_lng": "37.257642,-85.8903992"
    },
    "Battle of South Mountain or Boonsboro": {
-      "place": "Frederick County and Washington County",
+      "place": "Frederick County and Washington County, Maryland",
       "lat_lng": "39.48501,-77.62161"
    },
    "Battle of Antietam": {
-      "place": "Washington County",
+      "place": "Washington County, Maryland",
       "lat_lng": "39.473333,-77.744722"
    },
    "Battle of Shepherdstown": {
@@ -421,7 +419,7 @@ let civil_war_battles_geo =
       "lat_lng": "39.426084, -77.777523"
    },
    "Battle of Iuka": {
-      "place": "Tishomingo County",
+      "place": "Tishomingo County, Mississippi",
       "lat_lng": "34.778093, -88.250723"
    },
    "Battle of Wood Lake": {
@@ -457,7 +455,7 @@ let civil_war_battles_geo =
       "lat_lng": "37.675278,-84.971111"
    },
    "Battle of Old Fort Wayne": {
-      "place": "Fort Wayne, Indian Territory",
+      "place": "Fort Wayne, Indian Territory (now Delaware County, Oklahoma)",
       "lat_lng": "36.5315472,-94.816605"
    },
    "Battle of Georgia Landing": {
@@ -512,252 +510,252 @@ let civil_war_battles_geo =
       "place": "Near Murfreesboro, Tennessee",
       "lat_lng": "35.868472,-86.430556"
    },
-
-
-   /*
-"Battle of Galveston (Second Battle of Galveston)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+   
+   //1863
+    "Battle of Galveston (Second Battle of Galveston)": {
+      "place": "Galveston, Texas",
+      "lat_lng": "29.3127069,-94.7989639"
     },
     "Second Battle of Springfield": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Springfield, Missouri",
+      "lat_lng": "37.148673, -93.276963"
     },
     "Battle of Arkansas Post (Battle of Fort Hindman)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Arkansas Post, Arkansas",
+      "lat_lng": "34.019,-91.349"
     },
     "Battle of Hartville": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Wright County, Missouri",
+      "lat_lng": "37.2500462,-92.5211537"
     },
     "Bear River Massacre": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Bear River, Washington Territory (now Franklin County, Idaho)",
+      "lat_lng": "42.1370413,-112.1695926"
     },
     "Battle of Dover": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Stewart County, Tennessee",
+      "lat_lng": "36.4824657,-87.8687901"
     },
     "Battle of Fort McAllister (1863)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Bryan County, Georgia",
+      "lat_lng": "31.8911655,-81.1979543"
     },
     "Battle of Thompson's Station": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Williamson County, Tennessee",
+      "lat_lng": "35.8123966,-86.9463683"
     },
     "Battle of Fort Anderson": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Craven County, North Carolina",
+      "lat_lng": "34.0405335,-77.9480882"
     },
     "Battle of Kelly's Ford": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Culpeper and Fauquier Counties, Virginia",
+      "lat_lng": "38.4768171,-77.7917898"
     },
     "Battle of Vaught's Hill": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Rutherford County, Tennessee",
+      "lat_lng": "35.9297851,-86.190412"
     },
     "Battle of Brentwood": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Williamson County, Tennessee",
+      "lat_lng": "36.038072,-86.787273"
     },
     "Battle of Washington, NC": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Beaufort County, North Carolina",
+      "lat_lng": "35.5683495,-77.0825375"
     },
     "First Battle of Charleston Harbor": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Charleston, South Carolina",
+      "lat_lng": "32.7708272,-79.9318929"
     },
     "Battle of Franklin (1863)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Williamson County, Tennessee",
+      "lat_lng": "35.9054426,-86.9179807"
     },
     "Battle of Suffolk (Hill's Point)(Battle of Fort Huger)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Smithfield, Virginia",
+      "lat_lng": "37.1095996,-76.6598841"
     },
     "Battle of Suffolk (Norfleet House);Siege of Suffolk": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Suffolk, Virginia",
+      "lat_lng": "36.7601486,-76.5723162"
     },
     "Battle of Fort Bisland": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "St. Mary Parish, Louisiana",
+      "lat_lng": "29.700314, -91.355646"
     },
     "Battle of Irish Bend": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "St. Mary Parish, Louisiana",
+      "lat_lng": "29.8188161,-91.4619205"
     },
     "Battle of Vermillion Bayou": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Lafayette Parish, Louisiana",
+      "lat_lng": "30.192765, -92.013609"
     },
     "Battle of Cape Girardeau": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Cape Girardeau County, Missouri",
+      "lat_lng": "37.315952, -89.533003"
     },
     "Battle of Grand Gulf": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Grand Gulf, Mississippi",
+      "lat_lng": "32.029167,-91.056111"
     },
     "Battle of Snyder's Bluff": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Warren County, Mississippi",
+      "lat_lng": "32.4964,-90.8"
     },
     "Battle of Day's Gap": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Cullman County, Alabama",
+      "lat_lng": "34.3096,-87.011"
     },
     "Battle of Chancellorsville": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Spotsylvania County, Virginia",
+      "lat_lng": "38.3105,-77.6484"
     },
     "Battle of Port Gibson": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Claiborne County, near Port Gibson, Mississippi",
+      "lat_lng": "31.954152, -91.042105"
     },
     "Battle of Chalk Bluff": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Near Chalk Bluff, northwest of St. Francis (present-day Clay County, Arkansas)",
+      "lat_lng": "36.477261,-90.158831"
     },
     "Second Battle of Fredericksburg": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Fredericksburg, Virginia",
+      "lat_lng": "38.303594, -77.472035"
     },
     "Battle of Salem Church": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Spotsylvania County, Virginia",
+      "lat_lng": "38.28896,-77.5318047"
     },
     "Battle of Raymond": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Hinds County, near Raymond, Mississippi",
+      "lat_lng": "32.2604462,-90.4257031"
     },
     "Battle of Jackson, Mississippi": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Hinds County, Mississippi",
+      "lat_lng": "32.3385158,-90.2025515"
     },
     "Battle of Champion Hill": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Hinds County, Mississippi",
+      "lat_lng": "32.3501449,-90.5460747"
     },
     "Battle of Big Black River Bridge": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Hinds County, Mississippi",
+      "lat_lng": "32.3473371,-90.7066762"
     },
     "Siege of Vicksburg": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Warren County, Mississippi",
+      "lat_lng": "32.343611,-90.851111"
     },
     "Battle of Plains Store": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "East Baton Rouge Parish, Louisiana",
+      "lat_lng": "30.5788799,-91.2211808"
     },
     "Siege of Port Hudson": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "East Baton Rouge Parish and East Feliciana Parish, Louisiana",
+      "lat_lng": "30.6934118,-91.2782342"
     },
     "Battle of Milliken's Bend": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Madison Parish, Louisiana",
+      "lat_lng": "32.477827, -91.120318"
    },
     "Battle of Brandy Station": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Culpeper County, Virginia",
+      "lat_lng": "38.5338534,-77.8688618"
     },
     "Battle of Lake Providence": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Carroll Parish, Louisiana",
+      "lat_lng": "32.809844,-91.193392"
     },
     "Second Battle of Winchester": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Frederick County and Winchester, Virginia",
+      "lat_lng": "39.18473,-78.16708"
     },
     "Battle of Aldie": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Loudoun County, Virginia",
+      "lat_lng": "38.9826,-77.6588"
     },
     "Battle of Middleburg": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Loudoun County, Virginia",
+      "lat_lng": "38.96785,-77.75973"
     },
     "Battle of LaFourche Crossing": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Lafourche Parish, near Thibodaux, Louisiana",
+      "lat_lng": "29.7668,-90.7646"
     },
     "Battle of Upperville": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Loudoun County, Virginia",
+      "lat_lng": "38.9851,-77.8343"
     },
     "Battle of Hoover's Gap": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Bedford and Rutherford Counties, Tennessee",
+      "lat_lng": "35.6305,-86.2454"
     },
     "Second Battle of Donaldsonville": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Ascension Parish, Louisiana",
+      "lat_lng": "30.108333,-90.991389"
     },
     "Battle of Goodrich's Landing": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "East Carroll Parish, Louisiana",
+      "lat_lng": "32.7432,-91.1791"
     },
     "Battle of Hanover": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Hanover, Pennsylvania",
+      "lat_lng": "39.80099,-76.98247"
     },
     "Battle of Cabin Creek": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Mayes County, Oklahoma",
+      "lat_lng": "36.48899,-95.121603"
     },
     "Battle of Gettysburg": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Gettysburg, Pennsylvania",
+      "lat_lng": "39.811,-77.225"
     },
+
     "Battle of Helena": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Helena–West Helena, Arkansas",
+      "lat_lng": "34.526111,-90.596944"
     },
     "Battle of Williamsport": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Washington County, Maryland",
+      "lat_lng": "39.633333,-77.716667"
     },
     "Battle of Boonsboro": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Washington County, Maryland",
+      "lat_lng": "39.5254,-77.6632"
     },
     "Battle of Corydon": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Corydon, Indiana",
+      "lat_lng": "38.199,-86.129"
     },
     "Battle of Fort Wagner": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Morris Island, South Carolina",
+      "lat_lng": "32.73,-79.871111"
     },
     "Battle of Kock's Plantation": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Ascension Parish, Louisiana",
+      "lat_lng": "30.0865,-91.0295"
     },
     "Battle of Grimball's Landing": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "James Island, South Carolina",
+      "lat_lng": "32.698,-79.983"
     },
     "Battle of Honey Springs": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Muskogee and McIntosh Counties, Oklahoma",
+      "lat_lng": "35.55618,-95.4699"
     },
     "Second Battle of Fort Wagner(Battle of Fort Wagner, Morris Island)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Morris Island, South Carolina",
+      "lat_lng": "32.73,-79.871111"
     },
     "Battle of Buffington Island": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Portland, Ohio, and Buffington Island, West Virginia",
+      "lat_lng": "38.991111,-81.771389"
     },
     "Battle of Manassas Gap": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Warren County, Virginia",
+      "lat_lng": "38.914,-78.114"
     },
     "Battle of Big Mound": {
       "place": "Near Murfreesboro, Tennessee",
@@ -772,1064 +770,779 @@ let civil_war_battles_geo =
       "lat_lng": "35.868472,-86.430556"
     },
     "Battle of Stony Lake": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Dakota Territory (Kidder County, North Dakota)",
+      "lat_lng": "47.024036,-99.629087"
     },
     "Second Battle of Fort Sumter": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Charleston, South Carolina",
+      "lat_lng": "32.7524,-79.8749"
     },
     "Second Battle of Charleston Harbor": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Charleston, South Carolina",
+      "lat_lng": "32.7524,-79.8749"
     },
     "Second Battle of Chattanooga": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Chattanooga, Tennessee",
+      "lat_lng": "35.0739,-85.3186"
     },
     "Lawrence Massacre (Quantrill's Raid)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Lawrence, Douglas County, Kansas",
+      "lat_lng": "38.966667, -95.233333"
     },
     "Battle of Devil's Backbone": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Sebastian County, Arkansas",
+      "lat_lng": "35.1785,-94.3106"
     },
     "Battle of Whitestone Hill": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Dickey County, North Dakota (Dakota Territory)",
+      "lat_lng": "46.1697,-98.8557"
     },
     "Second Battle of Sabine Pass": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Jefferson County, Texas",
+      "lat_lng": "29.720514, -93.870747"
     },
     "Battle of Bayou Fourche": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Near the Bayou Fourche (present-day Little Rock), Arkansas",
+      "lat_lng": "34.721972,-92.2015"
     },
     "Battle of Davis's Cross Roads": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Dade and Walker Counties, Georgia",
+      "lat_lng": "34.7557, -85.368"
     },
     "Battle of Chickamauga": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Catoosa and Walker counties, Georgia",
+      "lat_lng": "34.9176,-85.2606"
     },
     "Battle of Blountville(Battle of Blountsville)": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Sullivan County, Tennessee",
+      "lat_lng": "36.533333,-82.326389"
     },
     "Battle of Stirling's Plantation": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Pointe Coupee Parish, Louisiana",
+      "lat_lng": "30.6834, -91.6596"
     },
     "Battle of Baxter Springs": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Cherokee County, Kansas",
+      "lat_lng": "37.0308, -94.735"
     },
     "Battle of Blue Springs": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Greene County, Tennessee",
+      "lat_lng": "36.1934, -82.9373"
     },
     "First Battle of Auburn": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Fauquier County, Virginia",
+      "lat_lng": "38.7, -77.7"
     },
     "Battle of Bristoe Station": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Prince William County, Virginia",
+      "lat_lng": "38.7234, -77.5418"
     },
     "Second Battle of Auburn": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Fauquier County, Virginia",
+      "lat_lng": "38.65, -77.65"
     },
     "Battle of Fort Brooke": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Tampa, Florida",
+      "lat_lng": "28.00062, -82.47368"
     },
     "Battle of Buckland Mills": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Fauquier County, Virginia",
+      "lat_lng": "38.7747, -77.692"
     },
     "Battle of Pine Bluff": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Jefferson County, Arkansas",
+      "lat_lng": "34.229556, -92.003444"
     },
     "Battle of Wauhatchie": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Hamilton County, Tennessee",
+      "lat_lng": "35.002,-85.38"
     },
     "Battle of Collierville": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Shelby County, Tennessee",
+      "lat_lng": "35.044,-89.6645"
     },
     "Battle of Droop Mountain": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Pocahontas County, West Virginia",
+      "lat_lng": "38.1128, -80.274"
     },
     "Second Battle of Rappahannock Station": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Culpeper and Fauquier Counties, Virginia",
+      "lat_lng": "38.533, -77.8136"
     },
     "Battle of Campbell's Station": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Knox County, Tennessee",
+      "lat_lng": "35.8846, -84.1539"
     },
     "Battle of Lookout Mountain": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Chattanooga, Tennessee",
+      "lat_lng": "35.017, -85.342"
      },
     "Battle of Missionary Ridge": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Chattanooga, Tennessee",
+      "lat_lng": "35.03,-85.257"
     },
     "Battle of Mine Run": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Orange County, Virginia",
+      "lat_lng": "38.3379,-77.8187"
     },
     "Battle of Ringgold Gap": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Catoosa County, Georgia",
+      "lat_lng": "34.9112,-85.1015"
     },
     "Battle of Fort Sanders": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Knox County, Tennessee",
+      "lat_lng": "35.9589,-83.9338"
     },
     "Battle of Bean's Station": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Bean Station, Tennessee",
+      "lat_lng": "36.3248,-83.369"
     },
     "Battle of Mossy Creek": {
-      "place": "Near Murfreesboro, Tennessee",
-      "lat_lng": "35.868472,-86.430556"
+      "place": "Jefferson County, Tennessee",
+      "lat_lng": "36.1444, -83.4423"
     },
-   */
 
    //1864
-   /*
     "Battle of Dandridge": {
-       "date": "January 17, 1864",
-       "state": "Tennessee",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Union forces withdraw.\n"
+      "place": "Jefferson County, Tennessee",
+      "lat_lng": "36.0472,-83.3493"
     },
     "Battle of Athens": {
-       "date": "January 26, 1864",
-       "state": "Alabama",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Union victory in Northern Alabama.\n"
+      "place": "Athens, Alabama",
+      "lat_lng": "34.8033,-86.9722"
     },
     "Battle of Fair Garden": {
-       "date": "January 27, 1864",
-       "state": "Tennessee",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "Union victory followed by withdrawal.\n"
+      "place": "Sevier County, Tennessee",
+      "lat_lng": "35.8645,-83.5096"
     },
     "Battle of Morton's Ford": {
-       "date": "February 6–7, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Inconclusive",
-       "notes": "Diversionary Union attack.\n"
+      "place": "Orange and Culpeper Counties, Virginia",
+      "lat_lng": "38.3746,-77.904"
     },
     "Battle of Middle Boggy Depot": {
-       "date": "February 13, 1864",
-       "state": "Oklahoma(Indian Territory at the time)",
-       "class": "D",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Choctaw Nation, Indian Territory, near present-day Allen, Oklahoma",
+      "lat_lng": "34.319976,-96.30814"
     },
     "Battle of Meridian": {
-       "date": "February 14–20, 1864",
-       "state": "Mississippi",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Sherman occupies town.\n"
+      "place": "Lauderdale County, Mississippi",
+      "lat_lng": "32.3654,-88.7043"
     },
     "Battle of Olustee": {
-       "date": "February 20, 1864",
-       "state": "Florida",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Union fails to take Florida.\n"
+      "place": "Baker County, Florida",
+      "lat_lng": "30.216111,-82.388611"
     },
     "Battle of Okolona": {
-       "date": "February 22, 1864",
-       "state": "Mississippi",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Confederate cavalry, commanded by Maj. Gen. Nathan Bedford Forrest, routed 7,000 cavalry under the command of Brig. Gen. William Sooy Smith.\n"
-    },
+      "place": "Chickasaw County, Mississippi",
+      "lat_lng": "34.0021,-88.7556"
+   },
     "First Battle of Dalton": {
-       "date": "February 22–27, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "After several days of intense skirmishing, Maj. Gen. George H. Thomas's army withdrew upon realizing Gen. Joseph E. Johnston's troops could repel any assault. However, the intelligence garnered from the Battle of Dalton helped pave the way for a Union victory in the summer.\n"
+      "place": "Whitfield County, Georgia",
+      "lat_lng": "34.8031, -85.0124"
     },
     "Battle of Walkerton": {
-       "date": "March 2, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "controversy surrounding the Dahlgren Affair.\n"
+      "place": "Walkerton, King and Queen County, Virginia",
+      "lat_lng": "37.709167,-76.924722"
     },
     "Battle of Fort De Russy": {
-       "date": "March 12–14, 1864",
-       "state": "Louisiana",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Fort DeRussy fell and the Red River to Alexandria was open.\n"
+      "place": "Fort DeRussy, Louisiana",
+      "lat_lng": "31.1838,-92.05436"
     },
     "Battle of Paducah": {
-       "date": "March 25, 1864",
-       "state": "Kentucky",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Confederate raid by Forrest successful.\n"
+      "place": "McCracken County, Kentucky",
+      "lat_lng": "37.0931,-88.6058"
     },
     "Battle of Elkin's Ferry": {
-       "date": "April 3–4, 1864",
-       "state": "Arkansas",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Confederates unable to prevent Union river crossing.\n"
+      "place": "Clark and Nevada counties, Arkansas",
+      "lat_lng": "33.930556, -93.357222"
     },
     "Battle of Mansfield": {
-       "date": "April 8, 1864",
-       "state": "Louisiana",
-       "class": "A",
-       "victory": "Confederate",
-       "notes": "Banks Union Red River Campaign halted by the Confederates.\n"
+      "place": "De Soto Parish, Louisiana",
+      "lat_lng": "32.0121,-93.6652"
     },
     "Battle of Prairie D'Ane": {
-       "date": "April 9–13, 1864",
-       "state": "Arkansas",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Frederick Steele defeats Sterling Price.\n"
+      "place": "Nevada County, Arkansas",
+      "lat_lng": "33.7765,-93.36656"
     },
     "Battle of Pleasant Hill": {
-       "date": "April 9, 1864",
-       "state": "Louisiana",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Confederate attack fails.\n"
+      "place": "Desoto Parish and Sabine Parish, Louisiana",
+      "lat_lng": "31.851,-93.51"
     },
     "Battle of Fort Pillow": {
-       "date": "April 12, 1864",
-       "state": "Tennessee",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "N.B. Forrest takes fort, massacres African American soldiers.\n"
+      "place": "Lauderdale County, Tennessee",
+      "lat_lng": "35.6324,-89.8487"
     },
     "Battle of Blair's Landing": {
-       "date": "April 12–13, 1864",
-       "state": "Louisiana",
-       "class": "C",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Red River Parish, Louisiana",
+      "lat_lng": "31.941,-93.289"
     },
     "Battle of Plymouth": {
-       "date": "April 17, 1864",
-       "state": "North Carolina",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Confederate land forces, supported by naval ram, retake two Union forts near Plymouth, North Carolina.\n"
+      "place": "Washington County, North Carolina",
+      "lat_lng": "35.86648,-76.7519"
     },
     "Battle of Poison Spring": {
-       "date": "April 18, 1864",
-       "state": "Arkansas",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Part of Red River Campaign in Arkansas, African American troops massacred.\n"
+      "place": "Ouachita County, Arkansas",
+      "lat_lng": "33.638806,-93.004333"
     },
     "Battle of Monett's Ferry": {
-       "date": "April 23, 1864",
-       "state": "Louisiana",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Confederate forces driven back.\n"
+      "place": "Natchitoches Parish, Louisiana",
+      "lat_lng": "31.498,-92.857"
     },
     "Battle of Marks' Mills": {
-       "date": "April 25, 1864",
-       "state": "Arkansas",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Part of Red River Campaign in Arkansas.\n"
+      "place": "Near New Edinburg, Arkansas",
+      "lat_lng": "33.781028,-92.256917"
     },
     "Battle of Jenkins' Ferry": {
-       "date": "April 30, 1864",
-       "state": "Arkansas",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Part of Red River Campaign in Arkansas.\n"
+      "place": "Grant County, Arkansas",
+      "lat_lng": "34.213167,-92.547389"
     },
     "Battle of Albemarle Sound": {
-       "date": "May 5, 1864",
-       "state": "North Carolina",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "Indecisive naval battle during U.S. Civil War.\n"
+      "place": "Albemarle Sound, North Carolina",
+      "lat_lng": "35.978561,-76.536942"
     },
     "Battle of the Wilderness": {
-       "date": "May 5–7, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Inconclusive",
-       "notes": "Grant and Lee meet inconclusively.\n"
+      "place": "Spotsylvania and Orange Counties, Virginia",
+      "lat_lng": "38.3164,-77.7597"
     },
     "Battle of Port Walthall Junction": {
-       "date": "May 6–7, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union forces destroy railroad\n"
+      "place": "Chesterfield County, Virginia",
+      "lat_lng": "37.3116,-77.4028"
     },
     "Battle of Rocky Face Ridge": {
-       "date": "May 7–13, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Due to a flanking movement by Union troops under Maj. Gen. William Tecumseh Sherman, Confederates led by Gen. Joseph E. Johnston were forced to evacuate their strong position near Atlanta.\n"
+      "place": "Whitfield County, Georgia",
+      "lat_lng": "34.74105,-85.01568"
     },
     "Battle of Spotsylvania Court House": {
-       "date": "May 8–21, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Inconclusive",
-       "notes": "Grant and Lee meet inconclusively, Grant writes to Halleck \"I propose to fight it out on this line if it takes all summer\".\n"
+      "place": "Spotsylvania County, Virginia",
+      "lat_lng": "38.2242,-77.5981"
     },
     "Battle of Swift Creek": {
-       "date": "May 9, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "Union forces damage railroad, but are stopped by Confederate forces.\n"
+      "place": "Chesterfield County, Virginia",
+      "lat_lng": "37.2861,-77.4118"
     },
     "Battle of Cloyd's Mountain": {
-       "date": "May 9, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union victory, Confederate General Albert G. Jenkins killed.\n"
+      "place": "Pulaski County, Virginia",
+      "lat_lng": "37.174583,-80.709"
     },
     "Battle of Chester Station": {
-       "date": "May 10, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Inconclusive",
-       "notes": "Union forces under Benjamin Butler pushed back.\n"
+      "place": "Chesterfield County, Virginia",
+      "lat_lng": "37.352861,-77.41225"
     },
     "Battle of Cove Mountain": {
-       "date": "May 10, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Union victory after brief battle.\n"
+      "place": "Wythe County, Virginia",
+      "lat_lng": "37.0092, -81.07322"
     },
     "Battle of Yellow Tavern": {
-       "date": "May 11, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union forces win cavalry battle, J.E.B. Stuart is mortally wounded.\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.6599,-77.4552"
     },
     "Battle of Proctor's Creek": {
-       "date": "May 12–16, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Beauregard defeats Butler.\n"
+      "place": "Chesterfield County, Virginia",
+      "lat_lng": "37.3935,-77.4277"
     },
     "Battle of Resaca": {
-       "date": "May 13, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "Sherman defeats Johnston\n"
+      "place": "Gordon and Whitfield Counties, Georgia",
+      "lat_lng": "34.5815,-84.9385"
     },
     "Battle of New Market": {
-       "date": "May 15, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Confederate forces halt Union army under Franz Sigel from advance up the Shenandoah Valley.\n"
+      "place": "Shenandoah County, Virginia",
+      "lat_lng": "38.65515,-78.67825"
     },
     "Battle of Mansura": {
-       "date": "May 16, 1864",
-       "state": "Louisiana",
-       "class": "C",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Mansura, Louisiana",
+      "lat_lng": "31.055,-92.047778"
     },
     "Battle of Adairsville": {
-       "date": "May 17, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Failed Confederate attempt to destroy part of the Union force approaching Atlanta.\n"
+      "place": "Bartow County, Georgia",
+      "lat_lng": "34.4083,-84.9389"
     },
     "Battle of Yellow Bayou": {
-       "date": "May 18, 1864",
-       "state": "Louisiana",
-       "class": "C",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Avoyelles Parish, Yellow Bayou, Louisiana",
+      "lat_lng": "30.9985,-91.8668"
     },
     "Battle of Ware Bottom Church": {
-       "date": "May 20, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Beauregard boxes Butler in.\n"
+      "place": "Chesterfield County, Virginia",
+      "lat_lng": "37.344444,-77.391389"
     },
     "Battle of North Anna": {
-       "date": "May 23–26, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Inconclusive",
-       "notes": "Lee outmaneuvers Grant, but because of illness, he is unable to capitalize.\n"
+      "place": "Caroline and Hanover Counties, Virginia",
+      "lat_lng": "37.8862,-77.4943"
     },
     "Battle of Wilson's Wharf": {
-       "date": "May 24, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Confederates under Fitzhugh Lee defeated by two Union African American regiments.\n"
+      "place": "Charles City, Virginia",
+      "lat_lng": "37.3067,-76.9967"
     },
     "Battle of New Hope Church": {
-       "date": "May 25–26, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Hooker's forces defeated.\n"
+      "place": "Paulding County, Georgia",
+      "lat_lng": "33.961,-84.7875"
     },
     "Battle of Dallas (Georgia)": {
-       "date": "May 26 – June 4, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Confederate withdrawal in Georgia.\n"
+      "place": "Paulding County, Georgia",
+      "lat_lng": "33.9127,-84.828"
     },
     "Battle of Pickett's Mill": {
-       "date": "May 27, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Unsuccessful attack by Sherman on Johnston.\n"
+      "place": "Paulding County, Georgia",
+      "lat_lng": "33.975,-84.759"
     },
     "Battle of Haw's Shop": {
-       "date": "May 28, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union advance halted.\n"
+      "place": "Hanover County, Virginia",
+      "lat_lng": "37.676,-77.3118"
     },
     "Battle of Totopotomoy Creek": {
-       "date": "May 28–30, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Inconclusive",
-       "notes": "Union forces pushed back.\n"
+      "place": "Hanover County, Virginia",
+      "lat_lng": "37.634,-77.2987"
     },
     "Battle of Old Church": {
-       "date": "May 30, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union forces drive Confederates back to Cold Harbor.\n"
+      "place": "Hanover County, Virginia",
+      "lat_lng": "37.6444,-77.2209"
     },
     "Battle of Cold Harbor": {
-       "date": "May 31 – June 12, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Confederate",
-       "notes": "Lee repulses Grant, Confederate general says \"This is not war, this is murder\".\n"
+      "place": "Hanover County, near Mechanicsville, Virginia",
+      "lat_lng": "37.59,-77.285"
     },
     "Battle of Piedmont": {
-       "date": "June 5, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Union forces under David Hunter defeat Confederate defenses on march to Staunton, Virginia, upper Shenandoah Valley.\n"
+      "place": "Augusta County, Virginia",
+      "lat_lng": "38.2142,-78.8994"
     },
     "Battle of Old River Lake": {
-       "date": "June 6, 1864",
-       "state": "Arkansas",
-       "class": "D",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Chicot County, Arkansas",
+      "lat_lng": "33.268547,-91.192703"
     },
     "Battle of Marietta": {
-       "date": "June 6 – July 3, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Sherman defeats Johnston.\n"
+      "place": "Cobb County, Georgia",
+      "lat_lng": "33.9531,-84.5499"
     },
     "First Battle of Petersburg": {
-       "date": "June 9, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Beauregard defeats Butler.\n"
+      "place": "Petersburg, Virginia",
+      "lat_lng": "37.2038,-77.3831"
     },
     "Battle of Brice's Crossroads": {
-       "date": "June 10, 1864",
-       "state": "Mississippi",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "N.B. Forrest routs Union force almost three times as large.\n"
+      "place": "Near Baldwyn, Mississippi",
+      "lat_lng": "34.506111,-88.728889"
     },
     "Battle of Cynthiana": {
-       "date": "June 11–12, 1864",
-       "state": "Kentucky",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union Brig. Gen. Stephen Gano Burbridge defeated Confederate Brig. Gen. John Hunt Morgan. Most Confederate soldiers were casualties, though Morgan escaped.\n"
+      "place": "Cynthiana, Kentucky",
+      "lat_lng": "38.407, -84.3056"
     },
     "Battle of Trevilian Station": {
-       "date": "June 11–12, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Confederate victory, George Armstrong Custer nearly surrounded and has to be rescued by Sheridan.\n"
+      "place": "Louisa County, Virginia",
+      "lat_lng": "38.04973, -78.06604"
     },
     "Second Battle of Petersburg": {
-       "date": "June 15–18, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Confederate",
-       "notes": "Lee repulses Grant at back door to Richmond.\n"
+      "place": "Prince George County, Virginia",
+      "lat_lng": "37.2211,-77.3782"
     },
     "Battle of Lynchburg": {
-       "date": "June 17–18, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Fake Confederate reinforcements lead to Union retreat.\n"
+      "place": "Lynchburg, Virginia",
+      "lat_lng": "37.3845,-79.1832"
     },
     "Battle of Jerusalem Plank Road": {
-       "date": "June 21–24, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Inconclusive",
-       "notes": "Union siege lines extended for Siege of Petersburg.\n"
+      "place": "Petersburg, Virginia",
+      "lat_lng": "37.1844,-77.3767"
     },
     "Battle of Kolb's Farm": {
-       "date": "June 22, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Confederate attack fails due to poor terrain conditions.\n"
+      "place": "Cobb County, Georgia",
+      "lat_lng": "33.91037, -84.59714"
     },
     "Battle of Saint Mary's Church": {
-       "date": "June 24, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Inconclusive",
-       "notes": "Union forces fight a successful delaying action.\n"
+      "place": "Charles City, Virginia",
+      "lat_lng": "37.4322, -77.1506"
     },
     "Battle of Staunton River Bridge": {
-       "date": "June 25, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "\n"
+      "place": "Halifax and Charlotte Counties, Virginia",
+      "lat_lng": "36.8857,-78.7044"
     },
     "Battle of Kennesaw Mountain": {
-       "date": "June 27, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Johnston repulses Sherman.\n"
+      "place": "Cobb County, Georgia",
+      "lat_lng": "33.9363,-84.5979"
     },
     "Battle of Sappony Church": {
-       "date": "June 28, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "\n"
+      "place": "Sussex County, Virginia",
+      "lat_lng": "36.945889,-77.453056"
     },
     "First Battle of Ream's Station": {
-       "date": "June 29, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Maj. Gen. William Mahone and Brig. Gen. Fitzhugh Lee defeated Union cavalry raiding Confederate railroads south of Petersburg, Virginia.\n"
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.0959,-77.4226"
     },
     "Battle of Monocacy": {
-       "date": "July 9, 1864",
-       "state": "Maryland",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Union Gen. Lew Wallace slows up Jubal Early, saving DC.\n"
+      "place": "Frederick County, Maryland",
+      "lat_lng": "39.3711,-77.392"
     },
     "Battle of Fort Stevens": {
-       "date": "July 11–12, 1864",
-       "state": "District of Columbia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Failed Confederate attempt to capture Washington, D.C., President Lincoln, observing the battle, comes under Confederate fire.\n"
+      "place": "District of Columbia",
+      "lat_lng": "38.9641,-77.0288"
     },
     "Battle of Tupelo": {
-       "date": "July 14–15, 1864",
-       "state": "Mississippi",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Confederate forces under Stephen D. Lee are defeated and Nathan Bedford Forrest is wounded in action.\n"
+      "place": "Near Tupelo, Mississippi",
+      "lat_lng": "34.255667,-88.737"
     },
     "Battle of Cool Spring": {
-       "date": "July 18–19, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "\n"
+      "place": "Clarke County, Virginia",
+      "lat_lng": "39.15,-77.86"
     },
     "Battle of Peachtree Creek": {
-       "date": "July 20, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "(Atlanta Campaign) First Confederate attack against Union forces north of Atlanta fails.\n"
+      "place": "Fulton County, Georgia",
+      "lat_lng": "33.8109,-84.4038"
     },
     "Battle of Rutherford's Farm": {
-       "date": "July 20, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Confederates under Jubal Early caught by surprise and defeated.\n"
+      "place": "Frederick County, Virginia",
+      "lat_lng": "39.219333,-78.133333"
     },
     "Battle of Atlanta": {
-       "date": "July 22, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "(Atlanta Campaign) Sherman turns back Hood's attack east of Atlanta.\n"
+      "place": "Fulton and DeKalb counties, Georgia",
+      "lat_lng": "33.7459,-84.3488"
     },
     "Second Battle of Kernstown": {
-       "date": "July 24, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Jubal Early defeats Union forces.\n"
+      "place": "Frederick County, Virginia",
+      "lat_lng": "39.13,-78.19"
     },
     "First Battle of Deep Bottom": {
-       "date": "July 27–29, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.4359,-77.2609"
     },
     "Battle of Ezra Church": {
-       "date": "July 28, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "(Atlanta Campaign) Confederate attack on Union army northwest of Atlanta fails to gain element of surprise, finding entrenched Union forces. Union victory.\n"
+      "place": "Fulton County, Georgia",
+      "lat_lng": "33.752778,-84.439167"
     },
     "Battle of Killdeer Mountain": {
-       "date": "July 28–29, 1864",
-       "state": "North Dakota(Dakota Territory at the time)",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Sioux Wars/Dakota War of 1862: Union forces defeat Sioux.\n"
+      "place": "Dunn County, North Dakota",
+      "lat_lng": "47.4252,-102.9184"
     },
     "Battle of the Crater": {
-       "date": "July 30, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Confederate",
-       "notes": "Lee defeats Burnside.\n"
+      "place": "Petersburg, Virginia",
+      "lat_lng": "37.2183,-77.3777"
     },
     "Battle of Folck's Mill": {
-       "date": "August 1, 1864",
-       "state": "Maryland",
-       "class": "D",
-       "victory": "Inconclusive",
-       "notes": "Indecisive Civil War battle.\n"
+      "place": "Allegany County, Maryland",
+      "lat_lng": "39.6639,-78.753"
     },
     "Battle of Mobile Bay": {
-       "date": "August 2–23, 1864",
-       "state": "Alabama",
-       "class": "A",
-       "victory": "Union",
-       "notes": "David Farragut takes port, says \"Damn the torpedoes, full speed ahead\".\n"
+      "place": "Mobile Bay, Alabama",
+      "lat_lng": "30.241, -88.053"
     },
     "Battle of Utoy Creek": {
-       "date": "August 5–7, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "(Atlanta Campaign) Indecisive battle on Union right flank near Atlanta.\n"
+      "place": "Fulton County, Georgia",
+      "lat_lng": "33.7209,-84.4704"
     },
     "Battle of Moorefield": {
-       "date": "August 7, 1864",
-       "state": "West Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Hardy County, West Virginia",
+      "lat_lng": "39.0941,-78.9645"
     },
     "Second Battle of Dalton": {
-       "date": "August 14–15, 1864",
-       "state": "Georgia",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Union forces withstand attack until relieved.\n"
+      "place": "Whitfield County, Georgia",
+      "lat_lng": "34.7889,-84.9807"
     },
     "Second Battle of Deep Bottom": {
-       "date": "August 14–20, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "The Confederates drove back the Union threat, but at a cost of diluting their forces as the Union had hoped.\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.4438,-77.2844"
     },
     "Battle of Guard Hill": {
-       "date": "August 16, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "\n"
+      "place": "Warren County, Virginia",
+      "lat_lng": "38.953056,-78.200139"
     },
     "Battle of Globe Tavern": {
-       "date": "August 18–21, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Confederate forces lose control of railroads at Petersburg.\n"
+      "place": "Petersburg, Virginia",
+      "lat_lng": "37.1747,-77.4203"
     },
     "Battle of Lovejoy's Station": {
-       "date": "August 20, 1864",
-       "state": "Georgia",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Confederates repel Union raiders attacking the station.\n"
+      "place": "Clayton County, Georgia",
+      "lat_lng": "33.4441,-84.3084"
     },
     "Second Battle of Memphis": {
-       "date": "August 21, 1864",
-       "state": "Tennessee",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Partially successful Confederate raid.\n"
+      "place": "Memphis, Tennessee",
+      "lat_lng": "35.1446,-90.054"
     },
     "Battle of Summit Point": {
-       "date": "August 21, 1864",
-       "state": "West Virginia",
-       "class": "D",
-       "victory": "Inconclusive",
-       "notes": "\n"
+      "place": "Summit Point, West Virginia",
+      "lat_lng": "39.2499,-77.9586"
     },
     "Second Battle of Ream's Station": {
-       "date": "August 25, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Union lines overrun by Confederates.\n"
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.0959,-77.4226"
     },
     "Battle of Smithfield Crossing": {
-       "date": "August 25–29, 1864",
-       "state": "West Virginia",
-       "class": "D",
-       "victory": "Inconclusive",
-       "notes": "\n"
+      "place": "Jefferson and Berkeley Counties, West Virginia",
+      "lat_lng": "39.308,-77.9824"
     },
     "Battle of Jonesborough": {
-       "date": "August 31 –September 1, 1864",
-       "state": "Georgia",
-       "class": "A",
-       "victory": "Union",
-       "notes": "William J. Hardee's Confederates defeated, resulting in Atlanta's fall the following day.\n"
+      "place": "Clayton County, Georgia",
+      "lat_lng": "33.5307,-84.3621"
     },
     "Battle of Berryville": {
-       "date": "September 3–4, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Inconclusive",
-       "notes": "At the same time Confederate Lt. Gen. Jubal A. Early sent Maj. Gen. Joseph B. Kershaw's division to attack Colonel Joseph Thoburn's division of the VIII Corps, and Kershaw initially routed Thoburn's left flank. Darkness ended the fighting. The next morning, Early, seeing the strength of the Union's entrenched line, retreated behind Opequon Creek.\n"
+      "place": "Clarke County, Virginia",
+      "lat_lng": "39.162083,-77.997556"
     },
     "Battle of Opequon(Third Battle of Winchester)": {
-       "date": "September 19, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Union",
-       "notes": "Sheridan defeats Early, several officers killed or wounded on both sides.\n"
+      "place": "Frederick County, Virginia",
+      "lat_lng": "39.1956,-78.1325"
     },
     "Battle of Fisher's Hill": {
-       "date": "September 21–22, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Successful Union frontal assault.\n"
+      "place": "Shenandoah County, Virginia",
+      "lat_lng": "38.9838,-78.3959"
     },
     "Battle of Fort Davidson (Battle of Pilot Knob)": {
-       "date": "September 27, 1864",
-       "state": "Missouri",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Union forces detonate their own fort after losing to Confederates.\n"
+      "place": "Iron County, Missouri",
+      "lat_lng": "37.6194,-90.6415"
     },
     "Battle of Chaffin's Farm (New Market Heights)": {
-       "date": "September 29–30, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Union forces victorious, but fail to capture several forts.\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.4268,-77.3729"
     },
     "Battle of Peebles' Farm": {
-       "date": "September 30 – October 2, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Union victory near Petersburg.\n"
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.1705,-77.4537"
     },
     "First Battle of Saltville": {
-       "date": "October 1–3, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Confederates defeat Union Black Cavalry, war crimes committed against captured African Americans.\n"
+      "place": "Smyth County, Virginia",
+      "lat_lng": "36.8857,-81.7592"
     },
     "Battle of Allatoona": {
-       "date": "October 5, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Union fortifications hold.\n"
+      "place": "Bartow County, Georgia",
+      "lat_lng": "34.116,-84.716"
     },
     "Battle of Darbytown and New Market": {
-       "date": "October 7, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.4576,-77.3467"
     },
     "Battle of Tom's Brook": {
-       "date": "October 9, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union cavalry defeats Confederates.\n"
+      "place": "Shenandoah County, Virginia",
+      "lat_lng": "38.9429,-78.4458"
     },
     "Battle of Darbytown Road": {
-       "date": "October 13, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Federal assault on Confederate fortifications repulsed with heavy casualties.\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.483,-77.3574"
     },
     "Battle of Glasgow": {
-       "date": "October 15, 1864",
-       "state": "Missouri",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Union forces surrender.\n"
+      "place": "Glasgow, Missouri",
+      "lat_lng": "39.2379,-92.8422"
     },
     "Second Battle of Lexington": {
-       "date": "October 19, 1864",
-       "state": "Missouri",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Union forces driven out of town.\n"
+      "place": "Lexington, Missouri",
+      "lat_lng": "39.183056,-93.875"
     },
     "Battle of Cedar Creek": {
-       "date": "October 19, 1864",
-       "state": "Virginia",
-       "class": "A",
-       "victory": "Union",
-       "notes": "Sheridan defeats Early, drives Confederates from Shenandoah Valley.\n"
+      "place": "Frederick, Shenandoah, and Warren Counties, Virginia",
+      "lat_lng": "39.0208,-78.3038"
     },
     "Battle of Little Blue River": {
-       "date": "October 21, 1864",
-       "state": "Missouri",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Confederate victory in Missouri.\n"
+      "place": "Jackson County, Missouri",
+      "lat_lng": "39.1369,-94.3139"
     },
     "Battle of Byram's Ford": {
-       "date": "October 22–23, 1864",
-       "state": "Missouri",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Confederates under Marmaduke defeated.\n"
+      "place": "Kansas City, Missouri",
+      "lat_lng": "39.0228,-94.5307"
     },
     "Second Battle of Independence": {
-       "date": "October 22, 1864",
-       "state": "Missouri",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Union forces occupy town.\n"
+      "place": "Independence, Missouri",
+      "lat_lng": "39.0856,-94.4412"
     },
     "Battle of Westport": {
-       "date": "October 23, 1864",
-       "state": "Missouri",
-       "class": "A",
-       "victory": "Union",
-       "notes": "Union forces win decisive battle to take control of Missouri.\n"
+      "place": "Westport, Kansas City, Missouri",
+      "lat_lng": "39.03,-94.594444"
     },
     "Battle of Marais des Cygnes": {
-       "date": "October 25, 1864",
-       "state": "Kansas",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Price's Confederates pursued into Kansas.\n"
+      "place": "Linn County, Kansas",
+      "lat_lng": "38.2552,-94.6783"
     },
     "Battle of Mine Creek": {
-       "date": "October 25, 1864",
-       "state": "Kansas",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Price's army crushed, flees back into Missouri.\n"
+      "place": "Linn County, Kansas",
+      "lat_lng": "38.145,-94.723333"
     },
     "Battle of Marmiton River": {
-       "date": "October 25, 1864",
-       "state": "Missouri",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Price escapes Union pursuit.\n"
+      "place": "Vernon County, Missouri",
+      "lat_lng": "37.8717,-94.6153"
     },
     "Battle of Decatur": {
-       "date": "October 26–29, 1864",
-       "state": "Alabama",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Confederates unable to cross river.\n"
+      "place": "Morgan County, Alabama",
+      "lat_lng": "34.614,-86.986"
     },
     "Battle of Boydton Plank Road": {
-       "date": "October 27–28, 1864",
-       "state": "Virginia",
-       "class": "B",
-       "victory": "Inconclusive",
-       "notes": "Union forces take control of road, but withdraw after battle.\n"
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.1431,-77.5116"
     },
     "Battle of Fair Oaks & Darbytown Road": {
-       "date": "October 27–28, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Confederates repel a Union attack.\n"
+      "place": "Henrico County, Virginia",
+      "lat_lng": "37.494,-77.334"
     },
     "Second Battle of Newtonia": {
-       "date": "October 28, 1864",
-       "state": "Missouri",
-       "class": "B",
-       "victory": "Union",
-       "notes": "James G. Blunt defeats Joseph O. Shelby.\n"
+      "place": "Newton County, Missouri",
+      "lat_lng": "36.8739,-94.1903"
     },
     "Battle of Johnsonville": {
-       "date": "November 4–5, 1864",
-       "state": "Tennessee",
-       "class": "B",
-       "victory": "Confederate",
-       "notes": "Confederates bombard Union forces during the night after a fire starts near union positions.\n"
+      "place": "Benton and Humphreys Counties, Tennessee",
+      "lat_lng": "36.0708,-87.9757"
     },
     "Battle of Bull's Gap": {
-       "date": "November 11–13, 1864",
-       "state": "Tennessee",
-       "class": "D",
-       "victory": "Confederate",
-       "notes": "Minor Confederate victory during U.S. Civil War.\n"
+      "place": "Hamblen and Greene Counties, Tennessee",
+      "lat_lng": "36.252,-83.081"
     },
     "Battle of Griswoldville": {
-       "date": "November 22, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Sherman's march to the sea continued.\n"
+      "place": "Jones County, Georgia",
+      "lat_lng": "32.8695,-83.460023"
     },
     "Battle of Columbia": {
-       "date": "November 24, 1864",
-       "state": "Tennessee",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Confederates divert attention.\n"
+      "place": "Maury County, Tennessee",
+      "lat_lng": "35.6163,-87.0488"
     },
     "Battle of Buck Head Creek": {
-       "date": "November 28, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Union forces repel a Confederate attack.\n"
+      "place": "Jenkins County, Georgia",
+      "lat_lng": "32.8991,-82.0255"
     },
     "Battle of Spring Hill": {
-       "date": "November 29, 1864",
-       "state": "Tennessee",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Confederate mistakes allow Federal forces to redeploy, leading to the Battle of Franklin.\n"
+      "place": "Maury County, Tennessee",
+      "lat_lng": "35.7374,-86.9323"
     },
     "Sand Creek massacre": {
-       "date": "November 29, 1864",
-       "state": "Colorado(Colorado Territory at the time)",
-       "class": "B",
-       "victory": "Union",
-       "notes": "Colorado War: U.S. forces massacre Cheyenne and Arapaho.\n"
+      "place": "Kiowa County, Colorado (Colorado Territory)",
+      "lat_lng": "38.547708,-102.50635"
     },
     "Battle of Honey Hill": {
-       "date": "November 30, 1864",
-       "state": "South Carolina",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "The third battle of Sherman's March to the Sea was a failed Union Army expedition under Maj. Gen. John P. Hatch that attempted to cut off the Charleston and Savannah Railroad in support of Sherman's projected arrival in Savannah.\n"
+      "place": "Jasper and Beaufort Counties, South Carolina",
+      "lat_lng": "32.486,-80.9343"
     },
     "Battle of Franklin (1864)": {
-       "date": "November 30, 1864",
-       "state": "Tennessee",
-       "class": "A",
-       "victory": "Union",
-       "notes": "Hood attacks Schofield but suffers crushing losses; Pickett's Charge of the West.\n"
+      "place": "Williamson County, Tennessee",
+      "lat_lng": "35.9174,-86.8733"
     },
     "Battle of Waynesboro, Georgia": {
-       "date": "December 4, 1864",
-       "state": "Georgia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Kilpatrick stops Wheeler from attacking Sherman.\n"
+      "place": "Waynesboro, Georgia",
+      "lat_lng": "33.08972,-82.01583"
     },
     "Third Battle of Murfreesboro": {
-       "date": "December 5–7, 1864",
-       "state": "Tennessee",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Confederate raid mostly unsuccessful.\n"
+      "place": "Murfreesboro, Tennessee",
+      "lat_lng": "35.8689,-86.4593"
     },
     "First Battle of Fort Fisher": {
-       "date": "December 7–27, 1864",
-       "state": "North Carolina",
-       "class": "C",
-       "victory": "Confederate",
-       "notes": "Failed Union attempt to take fort.\n"
+      "place": "New Hanover County, North Carolina",
+      "lat_lng": "33.9715,-77.918"
     },
     "Second Battle of Fort McAllister": {
-       "date": "December 13, 1864",
-       "state": "Georgia",
-       "class": "B",
-       "victory": "Union",
-       "notes": "William B. Hazen captures Fort McAllister.\n"
+      "place": "Bryan County, Georgia",
+      "lat_lng": "31.8888,-81.1941"
     },
     "Battle of Nashville": {
-       "date": "December 15–16, 1864",
-       "state": "Tennessee",
-       "class": "A",
-       "victory": "Union",
-       "notes": "Thomas attacks and virtually destroys Hood's Confederate Army of Tennessee.\n"
+      "place": "Nashville, Tennessee",
+      "lat_lng": "36.0881,-86.8098"
     },
     "Battle of Marion": {
-       "date": "December 17–18, 1864",
-       "state": "Virginia",
-       "class": "D",
-       "victory": "Union",
-       "notes": "Union forces destroy beneficial infrastructue.\n"
+      "place": "Smyth County, Virginia",
+      "lat_lng": "36.852,-81.4873"
     },
     "Second Battle of Saltville": {
-       "date": "December 20–21, 1864",
-       "state": "Virginia",
-       "class": "C",
-       "victory": "Union",
-       "notes": "Confederate forces retreated, and General George Stoneman's troops entered the town and destroyed the saltworks.\n"
+      "place": "Saltville, Virginia",
+      "lat_lng": "36.8646,-81.7674"
     },
-   */
+  
+//1865
+    "Second Battle of Fort Fisher": {
+      "place": "New Hanover County, North Carolina",
+      "lat_lng": "33.9715,-77.918"
+    },
+    "Battle of Rivers' Bridge": {
+      "place": "Bamberg County, South Carolina",
+      "lat_lng": "33.052778,-81.099722"
+    },
+    "Battle of Hatcher's Run": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.1305,-77.4853"
+    },
+    "Battle of Wilmington (North Carolina)": {
+      "place": "Wilmington, North Carolina",
+      "lat_lng": "34.1795,-77.954"
+    },
+    "Battle of Waynesboro, Virginia": {
+      "place": "Augusta County, Virginia",
+      "lat_lng": "38.0656,-78.8962"
+    },
+    "Battle of Natural Bridge": {
+      "place": "Leon County, Florida",
+      "lat_lng": "30.283889, -84.151944"
+    },
+    "Battle of Wyse Fork": {
+      "place": "Lenoir County, North Carolina",
+      "lat_lng": "35.224,-77.5297"
+    },
+    "Battle of Monroe's Cross Roads": {
+      "place": "Hoke County, North Carolina",
+      "lat_lng": "35.1259,-79.2032"
+    },
+    "Battle of Averasborough": {
+      "place": "Harnett and Cumberland Counties, North Carolina",
+      "lat_lng": "35.320412,-78.600148"
+    },
+    "Battle of Bentonville": {
+      "place": "Bentonville, North Carolina",
+      "lat_lng": "35.2532,-78.6708"
+    },
+    "Battle of Fort Stedman": {
+      "place": "Petersburg, Virginia",
+      "lat_lng": "37.226,-77.371"
+    },
+    "Battle of Spanish Fort": {
+      "place": "Baldwin County, Alabama",
+      "lat_lng": "30.684278,-87.916375"
+    },
+    "Battle of Lewis's Farm": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.128333,-77.527778"
+    },
+    "Battle of White Oak Road": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.148444,-77.519667"
+    },
+    "Battle of Dinwiddie Court House": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.07725,-77.58711"
+    },
+    "Battle of Five Forks": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.139444,-77.622778"
+    },
+    "Battle of Selma": {
+      "place": "Selma, Alabama",
+      "lat_lng": "32.424,-87.0237"
+    },
+    "Third Battle of Petersburg": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.1776,-77.4774"
+    },
+    "Battle of Sutherland's Station": {
+      "place": "Dinwiddie County, Virginia",
+      "lat_lng": "37.1975,-77.5625"
+    },
+    "Battle of Namozine Church": {
+      "place": "Amelia County, Virginia",
+      "lat_lng": "37.248889,-77.725556"
+    },
+    "Battle of Amelia Springs": {
+      "place": "Amelia County, Virginia",
+      "lat_lng": "37.3344,-78.079"
+    },
+    "Battle of Rice's Station": {
+      "place": "Prince Edward County, Virginia",
+      "lat_lng": "37.2691,-78.2947"
+    },
+    "Battle of Sayler's Creek(or Sailor's Creek)": {
+      "place": "Amelia, Prince Edward, and Nottoway Counties, Virginia",
+      "lat_lng": "37.30551,-78.22797"
+    },
+    "Battle of High Bridge": {
+      "place": "Prince Edward and Cumberland Counties, Virginia",
+      "lat_lng": "37.3122,-78.3177"
+    },
+    "Battle of Cumberland Church": {
+      "place": "Cumberland County, Virginia",
+      "lat_lng": "37.3464,-78.3866"
+    },
+    "Battle of Appomattox Station": {
+      "place": "Appomattox County, Virginia",
+      "lat_lng": "37.353472,-78.827306"
+    },
+    "Battle of Appomattox Court House": {
+      "place": "Appomattox County, Virginia",
+      "lat_lng": "37.377778,-78.794444"
+    },
+    "Battle of Fort Blakeley": {
+      "place": "Baldwin County, Alabama",
+      "lat_lng": "30.742408,-87.927039"
+    }
 }

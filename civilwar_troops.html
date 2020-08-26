@@ -38,6 +38,7 @@
       border: 1px solid antiquewhite;
     }*/
     .button{
+      margin:0 auto;
       font-family: 'Rye', cursive;
       border: 2px solid #ceb793;
       border-radius: 15%;
@@ -88,18 +89,32 @@
       -o-animation: blink 1s;
       -o-animation-iteration-count: 1;
 
-      position: fixed;
-      top: 50%;
+      
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) ;
+    width: 70%;
+    text-align: center;
+      vertical-align: middle;
+      /*top: 50%;
       left: 50%;
       margin-top: -50px;
-      margin-left: -100px;
-      text-align: center;
-    }
-    .quote{
-      font-size: 200%;
-      color: antiquewhite; 
+      margin-left: -100px;*/
+
+      /*text-align: center;
+      vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;*/
+
+      font-size: 150%;
+      /*color: antiquewhite; */
+      color: goldenrod;
       font-family: 'Satisfy', cursive;
     }
+
     @-webkit-keyframes blink {
       0% {
         filter: invert(100);
@@ -396,26 +411,26 @@ TODO
 
     <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow-->
     <!--class="slide fade"-->
-    <!--resources-->
-    <div id="background_image" class="background_img" style="filter: brightness(70%);">
-      <img src="images/ironworks.jpg">
-    </div>
     <!--troop uniforms-->
-    <div id="background_image" class="background_img" style="filter: brightness(65%);">
+    <div id="background_image" class="background_img" style="filter: brightness(60%);">
       <img src="images/union.jpg"/>
     </div>
     <!--pay + prior professions-->
-    <div id="background_image" class="background_img" style="filter: brightness(80%);">
-      <img src="images/soldiers.jpg"> 
+    <div id="background_image" class="background_img" style="filter: brightness(60%);">
+      <img src="images/confed_soldiers.jpg"> 
+    </div>
+    <!--resources-->
+    <div id="background_image" class="background_img" style="filter: brightness(65%);">
+      <img src="images/ironworks.jpg">
     </div>
     <!--casualties-->
-    <div id="background_image" class="background_img" style="filter: brightness(80%);">
+    <!--<div id="background_image" class="background_img" style="filter: brightness(80%);">
       <img src="images/wounded.jpg"> 
-    </div>
+    </div>-->
     <!--demographics-->
-    <div id="background_image" class="background_img" style="filter: brightness(70%);">
+    <!--<div id="background_image" class="background_img" style="filter: brightness(70%);">
       <img src="images/louisiana_guard.jpg"> 
-    </div>
+    </div>-->
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
     <a class="next" onclick="plusSlides(1)">&#10095;</a>
     
@@ -423,11 +438,13 @@ TODO
     <div id='data_modal' class='modal'>  
       <div id='intro' class='modal-content'>
         <span id='data_close' class='close' style="float: right;">&times;</span>
-        <p id='intro_text'>The Union had a significant resources advantage over the Confederacy.</p>
+        <p id='intro_text'>The Union had a significant resources advantage over the Confederacy, enabling them to 
+          outpace the Confederates in producing railroads, ships, heavy and light weaponry, as well as other war material.</p>
         <p id='intro_long_text'>Data Source: Historical Statistics of the United States</p>
         <p>Legend: Union - blue, Confederate - gray</p>
         <br>
-        <div id="chart" style="text-align:center; margin: auto; width: 50%; left: 100%;"></div>
+        <div id="chart" style="text-align:center; margin: auto; width: 38%; display: block;"></div>
+        <p id="intro_data"></p>
         <select id="data_select" name="data">
           <option value="Population" selected>Population</option>
           <option value="Manufactured goods">Manufactured goods</option>
@@ -510,14 +527,17 @@ TODO
     <div id='pay_modal' class='modal'> 
       <div id='pay' class='modal-content'>
         <span id='pay_close' class='close' style="float: right;">&times;</span>
-        <p id='pay_text'></p>
-        <p id='pay_long_text'></p>
         <select id="professions_view" name="professions_view">
           <option value="Confederate" selected>Confederacy</option>
           <option value="Union">Union</option>
         </select>
+        <!--<div id="money_chart" style="text-align: center;"></div>-->
+        <p id='pay_text'>In regards to pay, both sides had a somewhat exponential increase in soldier's pay as you go up the rank ladder.
+          Using both side's pay grade system, if we, acting like the government, allocated and distributed $x of dollars to soldier's pay, the 
+          following graph would be an estimated distribution:
+        </p>
         <div id="pay_chart" style="text-align: center;"> <!--style="display: none;"-->
-          <br>
+          <!--<br>
           <img id="high_rank_money" src="/images/confed_money.jpg" alt="" 
             style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
           <h3 id="high_rank_percent" style="display: inline-block;">Yo</h3>
@@ -528,16 +548,21 @@ TODO
           <br>
           <img id="low_rank_money" src="/images/confed_money.jpg" alt="" 
             style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
-          <h3 id="low_rank_percent" style="display: inline-block;">to</h3>
+          <h3 id="low_rank_percent" style="display: inline-block;">to</h3>-->
         </div>
         <br>
-        <p>It's important to note that the salary allocation was based on the assumption 
-          that soldiers were paid when they were supposed to. However, oftentimes due to the 
+        <p>The graph above accounts for the number of soldiers in each rank, estimating the distribution of soldiers among the rank hierarchy
+          to be comparable to the current United States military. Here we see the mid-ranked soldiers sharing the majority 
+          of the total salary being allocated. It's important to note that the salary allocation was based on the assumption 
+          that lower-ranked soldiers were paid when they were supposed to. However, oftentimes due to the 
           intensity of combat and logistical challenges brought about by the sheer size of the forces, 
-          payday was often not sent to the troops until much later than assigned, if they were lucky.</p>
+          payday was often not sent to the troops until much later than assigned, if they were lucky.
+        </p>
         <br>
-        <div id="professions_chart" style="width: 50%; margin: 0 auto; text-align: center;"></div>
-        <p>Confederates had more people as farmers due to the society of the South being more agrarian than the North.</p>
+        <p>In regards to the prior profession of much of these enlisted soldiers, Confederates had more people as farmers due to 
+          the society of the South being more agrarian than the North.</p>
+        <p id="professions_nums"></p>
+        <div id="professions_chart" style="width: 40%; margin: 0 auto; text-align: center;"></div>
       </div>
     </div>
 
@@ -552,7 +577,6 @@ TODO
         </select>
         <div id="wounded_chart"></div>
         <p>The war's sheer brutality resulted in many soldiers being driven away from and drawn towards faith. While most were Christian, some were Jewish</p>
-        <p>wounded tech here</p>
       </div>
     </div>
     <div id='demographics_modal' class='modal' > 
@@ -577,11 +601,12 @@ TODO
       </div>
     </div>
     <div class="text_div">
-      <div id="quote_text" class="quote">Caption Text</div>
-      <div id="stat" class="quote">hi</div>
-      <button id="see_data" class="button" onclick="openDataModal()">See Data</button>
+      <p id="quote_text"></p>
+      <p id="stat"></p>
+      <br>
+      <button id="see_data" class="button" onclick="openDataModal()">See Resources</button>
       <button id="see_uniforms" class="button" onclick="openUniformModal()">See Uniforms</button>
-      <button id="see_pay" class="button" onclick="openPayModal()">See Pay</button>
+      <button id="see_pay" class="button" onclick="openPayModal()">See Pay Stats</button>
       <button id="see_wounded" class="button" onclick="openWoundedModal()">See Casualties</button>
       <button id="see_demographics" class="button" onclick="openDemographicsModal()">See Data</button>
     </div>
@@ -675,8 +700,8 @@ The 483,026 total Confederate casualties have been divided accordingly:
           let cc_1 = (cc_counts[1] / total_cc * 100).toFixed(2);
           let cc_2 = (cc_counts[2] / total_cc * 100).toFixed(2);
           let cc_3 = (cc_counts[3] / total_cc * 100).toFixed(2);
-          data_chart = [{'value': {'casualty': 'Diseases', 'count': cc_counts[0]}}, {'value': {'casualty': 'POW', 'count': cc_counts[1]}}, 
-            {'value': {'casualty': 'KIA', 'count': cc_counts[2]}}, {'value': {'casualty': 'WIA', 'count': cc_counts[3]}}]; 
+          data_chart = [{'value': {'casualty': 'Diseases', 'count': cc_0}}, {'value': {'casualty': 'POW', 'count': cc_1}}, 
+            {'value': {'casualty': 'KIA', 'count': cc_2}}, {'value': {'casualty': 'WIA', 'count': cc_3}}]; 
         }
         /*
           wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
@@ -756,67 +781,7 @@ The 483,026 total Confederate casualties have been divided accordingly:
             .attr("fill", "#000")
             .text("Casualty Count")
             .style("fill", "#000000");
-        /*var margin = {top: 54, right: 60, bottom: 130, left: 88},
-            width = 960 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
-          
-        var x = d3.scaleLinear().range([0, width]);
 
-        var y = d3.scaleBand().rangeRound([0, height]);
-
-        var xAxis = d3.axisBottom()
-            .scale(x)
-            .ticks(20);
-
-        var yAxis = d3.axisLeft()
-            .scale(y);
-            
-        var svg = d3.select("#wounded_chart").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top )
-          .append("g")
-            .attr("transform", 
-                  "translate(" + margin.left + "," + margin.top + ")");
-          
-          x.domain([0, d3.max(data_chart, function(d) { return d.value.count; })]); 
-          y.domain(casualties.map(function(d){return d;}));
-
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis)
-            .selectAll("text")
-
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
-            .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", ".71em")
-              .style("text-anchor", "end")
-
-          let tooltip_div = d3.select("#pay_chart").append("div")	
-              .attr("class", "tooltip")				
-              .style("opacity", 0);
-
-          svg.selectAll(".bar")
-          .data(data_chart)
-          .enter().append("rect")
-            .style("fill", "#85bb65")
-          .attr("class", "bar")
-          .attr("width", function(d) { return x(d.value.count); })
-          .attr("y", function(d) { return y(d.value.casualty); })
-          .attr("height", 16)
-          .text(function(d) { return d; });
-         
-          svg.append("text")
-            .attr("x", 350)
-            .attr("y", 370)
-            .attr("dy", "0.71em")
-            .attr("fill", "#000")
-            .text("Casualty Count")
-            .style("fill", "#000000");*/
       }
       function openWoundedModal(){
         //http://bl.ocks.org/tomcardoso/1d44732cc7f3d97d6bf7
@@ -927,7 +892,6 @@ The 483,026 total Confederate casualties have been divided accordingly:
 //GRAPH NUMBER OF BATTLES IN A SPECIFIC STATE OVER 4 YEAR PERIOD
       function openDataModal(){
         let resource_dict = formResourceData();
-        document.getElementById('chart').innerHTML = ''; 
         dataResources(resource_dict);
         document.getElementById('uniform_modal').style.display = 'none';
         document.getElementById('data_modal').style.display = 'block'; 
@@ -935,6 +899,8 @@ The 483,026 total Confederate casualties have been divided accordingly:
       } 
 
       function dataResources(resources_dict){
+        document.getElementById('intro_data').innerText = 'Union: ' + resources_dict.Union + '%, Confederate: ' + 
+          resources_dict.Confederate + '%';
         let color = d3.scaleOrdinal()
           .domain(["Union", "Confederate"])
           .range(["#19488a", "#7f827c"]);
@@ -1026,11 +992,17 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
 2.1 percent; and miscellaneous, 1.6 percent.
         */
         let categories = ['Mechanics', 'Commercial', 'Laborers', 'Miscellaneous', 'Farmer', 'Professional'];
-        //[48, 24, 16, 5, 4, 3]
         let data = {'Mechanics': 5.3, 'Commercial': 5, 'Laborers': 9, 'Miscellaneous': 1.6, 'Farmer': 69,'Professional': 2.1};
+        document.getElementById('professions_nums').innerText = 'On the Confederate side, ';
         if(document.getElementById("professions_view").value === "Union"){
           data = {'Mechanics': 24, 'Commercial': 5, 'Laborers': 16, 'Miscellaneous': 4, 'Farmer': 48, 'Professional': 3};
+          document.getElementById('professions_nums').innerText = 'On the Union side, ';
         }
+        let distribution = data['Mechanics'] + '% were mechanics, ' + data['Laborers'] + '% were laborers, ' 
+          + data['Farmer'] + '% were farmers, ' + data['Commercial'] + '% were in manufacturing/commercial industry, '
+          + data['Professional'] + '% were in professional occupations, and ' + data['Miscellaneous'] + 
+            '% were in miscellaneous industries.';
+        document.getElementById('professions_nums').innerHTML += distribution
         // set the dimensions and margins of the graph
         var width = 450
             height = 450
@@ -1115,6 +1087,14 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
                 return (midangle < Math.PI ? 'start' : 'end')
             })
       }
+      function moneyDistribution(){
+        let ranks = ["Private", "Corporal", "Sergeant", "1st Sergeant", "Quartermaster Sergeant", "Sergeant Major", "Second Lieutenant",
+          "First Lieutenant", "Captain", "Major", "Lieutenant Colonel", "Colonel", "Brigadier General", "Major General",
+          "Lieutenant General", "General"];
+        let union_pay = [13, 13, 17, 20, 21, 21, 105.5, 105.5, 115.5, 169, 181, 212, 315, 457, 748, 748];
+        let confed_pay = [11, 13, 17, 20, 21, 21, 80, 90, 130, 150, 170, 195, 301, 301, 301, 301];
+        //money_chart
+      }
       //theoretical, assuming they were paid on time; which often they werent
       //bar chart x axis: rank, y-axis: percent of finances allocated for salaries
       //was the distribution unequitable?
@@ -1149,9 +1129,9 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
         let cr_distr = 0;
         for(let i = 0; i < union_pay.length; i++){
           let sum = union_pay[i] * rank_distribution[i] * people_count;
-          u_percent += (sum / total_pay_union) * 100;
-          ur_distr += rank_distribution[i];
-          if(i === 4){ //low rank
+          let percent = (sum / total_pay_union) * 100;
+          //ur_distr += rank_distribution[i];
+          /*if(i === 4){ //low rank
             wealth_union.push({"value": {"rank": sorted_ranks[0], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
             u_percent = 0;
             ur_distr = 0;
@@ -1159,13 +1139,13 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
             wealth_union.push({"value": {"rank": sorted_ranks[1], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
             u_percent = 0;
             ur_distr = 0;
-          }
-          //wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
+          }*/
+          wealth_union.push({"value": {"rank": ranks[i], "percent": percent}});
           sum = confed_pay[i] * rank_distribution[i] * people_count;
-          c_percent += (sum / total_pay_confed) * 100;
-          cr_distr += rank_distribution[i];
-          //wealth_confed.push({"value": {"rank": ranks[i], "percent": percent}});
-          if(i === 4){ //low rank
+          percent = (sum / total_pay_confed) * 100;
+          //cr_distr += rank_distribution[i];
+          wealth_confed.push({"value": {"rank": ranks[i], "percent": percent}});
+          /*if(i === 4){ //low rank
             wealth_confed.push({"value": {"rank": sorted_ranks[0], "percent": c_percent.toFixed(2)}});
             c_percent = 0;
             cr_distr = 0;
@@ -1173,16 +1153,30 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
             wealth_confed.push({"value": {"rank": sorted_ranks[1], "percent": c_percent.toFixed(2)}});
             c_percent = 0;
             cr_distr = 0;
-          }
+          }*/
         }
-        wealth_union.push({"value": {"rank": sorted_ranks[2], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
-        wealth_confed.push({"value": {"rank": sorted_ranks[2], "percent": c_percent.toFixed(2), "num_percent": cr_distr.toFixed(2)}});
+        //wealth_union.push({"value": {"rank": sorted_ranks[2], "percent": u_percent.toFixed(2), "num_percent": ur_distr.toFixed(2)}});
+        //wealth_confed.push({"value": {"rank": sorted_ranks[2], "percent": c_percent.toFixed(2), "num_percent": cr_distr.toFixed(2)}});
         let data_chart = wealth_confed;
         if(document.getElementById("professions_view").value === "Union"){
           data_chart = wealth_union;
         }
+        console.log(data_chart)
+        /*console.log(data_chart)
+        let d_width = 10;
+        let d_height = 4.4;
+        let c_1 = data_chart[1].value.percent / data_chart[0].value.percent;
+        let mid_w = d_width * c_1;
+        let mid_h = d_height * c_1
+        let c_2 = data_chart[2].value.percent / data_chart[0].value.percent;
+        let high_w = d_width * c_2;
+        let high_h = d_height * c_2
+        console.log("high_w: "+high_w+", high_h: "+high_h+"mid_w: "+mid_w+", mid_h: "+mid_h)
+        document.getElementById('high_rank_money').style.width = high_w + '%';
+        document.getElementById('high_rank_money').style.height = high_h + '%';
+        document.getElementById('mid_rank_money').style.width = mid_w + '%';
+        document.getElementById('mid_rank_money').style.height = mid_h + '%';*/
         //"display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"
-
         /*
           <img id="high_rank_money" src="/images/confed_money.jpg" alt="" 
             style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
@@ -1196,10 +1190,11 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
             style="display: inline-block; object-fit: fill; min-width: 10%; width: 10%; height: 4.4%;"></img>
           <h3 id="low_rank_percent" style="display: inline-block;">to</h3>
         */
+        //document.getElementById('high_rank_money').style.width = ;
         //http://bl.ocks.org/anaeliaovalle/66c3eba07c6d2c8f6b44fda14771e16e
         //hover: https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
 
-        /*var margin = {top: 54, right: 60, bottom: 130, left: 88},
+        var margin = {top: 54, right: 60, bottom: 130, left: 88},
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
           
@@ -1268,7 +1263,7 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
           .attr("y", function(d) { return y(d.value.rank); })
           .attr("height", 16)
           .text(function(d) { return d; });
-          .on("mouseover", function(d) {		
+          /*.on("mouseover", function(d) {		
             tooltip_div.transition()		
                 .duration(500)		
                 .style("opacity", .9);	
@@ -1280,7 +1275,7 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
               tooltip_div.transition()		
                   .duration(200)		
                   .style("opacity", 0);	
-          });
+          });*/
          
           svg.append("text")
             .attr("x", 350)
@@ -1288,7 +1283,7 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
             .attr("dy", "0.71em")
             .attr("fill", "#000")
             .text("Percentage of total salary allocated to rank")
-            .style("fill", "#000000");*/
+            .style("fill", "#000000");
       }
 
         // set the dimensions and margins of the graph
@@ -1337,7 +1332,11 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
       let professions_select = document.querySelector('#professions_view'),
         professions_input = document.querySelector('input[type="button"]');
         professions_select.addEventListener('change',function(){
-          document.getElementById("professions_chart").innerHTML = '';
+          document.getElementById('professions_chart').innerHTML = '';
+          document.getElementById('pay_chart').innerHTML = '';
+          //document.getElementById('money_chart').innerHTML = '';
+          moneyDistribution();
+          payDistribution();
           professionsDistribution();
       });
 
@@ -1371,34 +1370,47 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
 
       function showSlides(n) {
         var i;
-        var slides = document.getElementsByClassName("background_img");
+        var slides = document.getElementsByClassName('background_img');
+        let stat = '';
+        let quote = '';
         if (n > slides.length) {slideIndex = 1}    
         if (n < 1) {slideIndex = slides.length}
         for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";  
+          slides[i].style.display = 'none';  
         }
-        slides[slideIndex-1].style.display = "block"; 
+        slides[slideIndex-1].style.display = 'block'; 
         let id = ""; 
         if(slideIndex !== 1){
+          document.getElementById('see_uniforms').style.display = 'none';
+        }else{
+          id = 'see_uniforms';
+          quote = '"When the Union men charged, it was heads erect, shoulders squared and thrown back, and with a firm stride.' 
+            + ' But when the Johnnies charger, it was with a jog trot in a half-bent position, and although they might be met '
+            + 'with heavy and blighting volleys, they came on with the pertinacity of bulldogs, filling up the gaps and trotting' 
+            +' on with their never ceasing "ki-yi" until we found them face to face."';
+          stat = 'Gilbert Adam Hays, 63rd Pennsylvania Volunteers';
+          document.getElementById("see_uniforms").style.display = 'block';
+          document.getElementById("image_about").innerText = "Union troops at the Battle of Fredricksburg, 1862";
+        }
+        if(slideIndex !== 2){
+          document.getElementById("see_pay").style.display = 'none';
+        }else{
+          id = "see_pay";
+          document.getElementById("see_pay").style.display = 'block';
+          document.getElementById("image_about").innerText = "Confederate troops near Charleston, South Carolina in 1863";
+          quote = '"This struggle is too large for you to be diverted from it by any small matter. ' + 
+            'When you return to your homes rise up to the height of a generation of men worthy of a free Government, ' 
+            +'and we will carry out the great work we have commenced."';
+          stat = 'Abraham Lincoln, 1864';
+        }
+        if(slideIndex !== 3){
           document.getElementById("see_data").style.display = 'none';
         }else{
           id = "see_data";
           document.getElementById("see_data").style.display = 'block';
           document.getElementById("image_about").innerText = "The image is of Tredegar Ironworks, which was a Confederate factory in Richmond. It's strategic importance, especially with the resource disadvantage they had, was one of the driving factors behind Richmond becoming the capital.";
-        }
-        if(slideIndex !== 2){
-          document.getElementById("see_uniforms").style.display = 'none';
-        }else{
-          id = "see_uniforms";
-          document.getElementById("see_uniforms").style.display = 'block';
-          document.getElementById("image_about").innerText = "Union troops at the Battle of Fredricksburg";
-        }
-        if(slideIndex !== 3){
-          document.getElementById("see_pay").style.display = 'none';
-        }else{
-          id = "see_pay";
-          document.getElementById("see_pay").style.display = 'block';
-          document.getElementById("image_about").innerText = "Confederate troops";
+          quote = '"The war has stimulated the genius of our people and directed it to the service of our country. Sixty-six new inventions relating to engines, implements, and articles of warfare have been illustrated in our columns."'; 
+          stat = 'Scientific American magazine, 1861';
         }
         if(slideIndex !== 4){
           document.getElementById("see_wounded").style.display = 'none';
@@ -1419,10 +1431,10 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
         document.getElementById(id).style.opacity = 0;
         setTimeout(()=>{
           document.getElementById("quote_text").style.opacity = 1;
-          document.getElementById("quote_text").innerHTML = "quote"+(slideIndex-1);
+          document.getElementById("quote_text").innerHTML = quote; //"quote"+(slideIndex-1);
           setTimeout(()=>{
             document.getElementById("stat").style.opacity = 1;
-            document.getElementById("stat").innerHTML = "stat"+(slideIndex-1);
+            document.getElementById("stat").innerHTML = stat; //"stat"+(slideIndex-1);
             setTimeout(()=>{
               document.getElementById(id).style.opacity = 1;
             }, 500);

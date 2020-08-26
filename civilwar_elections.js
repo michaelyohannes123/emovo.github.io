@@ -3,7 +3,7 @@ let state_names = ['Alabama','Arizona','Arkansas','California','Colorado',
 'Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota',
 'Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York',
 'North Carolina','Ohio','Oklahoma','Oregon', 'Pennsylvania', 'Rhode Island','South Carolina',
-'Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin',
+'Tennessee','Texas','Utah','Vermont','West Virginia', 'Virginia','Washington','Wisconsin',
 'Wyoming', 'North Dakota', 'South Dakota'];
 
 let confed_states_1864 = ['Texas', 'Arkansas', 'Louisiana', 'Tennessee', 'Mississippi', 'Alabama', 

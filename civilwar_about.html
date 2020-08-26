@@ -65,6 +65,48 @@
       -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     }
+
+    .tooltip {
+      position: absolute;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+      bottom: 10px;
+      background-color: antiquewhite;
+      right: 50px;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
   <body>
     <ul>
@@ -74,13 +116,15 @@
     </ul>  
     <div class="letter">
       <h1>About</h1>
-      <p>About</p>
+      <p>Any dataset I created in making this site is free for use. Email redsealabs@gmail.com if there's any specific data questions/issues you spot!</p>
+    </div>
+    <div class="tooltip">About
+      <span id="image_about" class="tooltiptext">
+        An ironclad battle.
+      </span>
     </div>
   </body>
   <script>
-    /*
-NOTES:
 
-    */
   </script>
 </html>
