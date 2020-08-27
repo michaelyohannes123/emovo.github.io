@@ -83,7 +83,7 @@
     .map{ 
       position: absolute; 
       width: 100%;
-      height: 86%; 
+      height: 87%; 
       z-index: -1;
     }
     .button{
@@ -271,7 +271,7 @@
         <br>
         <option value="heatmap_confed">Heatmap (Confederate Victories)</option>
       </select>-->
-      <div id="heatmap_part">
+      <div id="heatmap_part" style="display: none;">
         <input type="radio" id="heatmap_general" name="heatmap_choice" value="heatmap_general" onclick="chooseHeatmap(this.id)" checked="checked">
         <label for="heatmap_general">Heatmap (General)</label>
         <br>
@@ -1867,6 +1867,7 @@ Alaska #ffffff
 worldBounds.features[i].properties.name
 worldBounds.features[i].geometry.coordinates
       */
+  mouse_list_world = [];
   let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland'];
   let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52'];
   for(let i = 0; i < places.length; i++){
@@ -1910,7 +1911,7 @@ worldBounds.features[i].geometry.coordinates
       will_show = true;
     }
     if(places[i] === 'France'){
-      place_html = 'While a neutral nation like the all the other foreign powers, the French saw territorial opportunities in the North American region, given the chaos, and had a preference for the Confederacy'
+      place_html = 'While a neutral nation like the all the other foreign powers, the French saw territorial opportunities in the North American region given the chaos, and had a preference for the Confederacy'
         + ' in that regard, as evident when they would begin their intervention campaign in Mexico in 1861. However, they did seek to maintain a non-combative relationship with the Union during the war. The Confederacy was hoping for them to intervene on their side, but they never did as they did not wish to incite war with the United States';
       will_show = true;
     }
@@ -1944,10 +1945,10 @@ worldBounds.features[i].geometry.coordinates
     }
   }
   map.on('mousemove', function(e) {
-    if(!clicked_nation){
-      let places = map.queryRenderedFeatures(e.point, {
+    let places = map.queryRenderedFeatures(e.point, {
         layers: mouse_list_world
       });
+    if(!clicked_nation){
       if(places.length > 0){
         place_hovered = places[0].properties.name;
         document.getElementById('candidates_box_hover').style.display = 'block';
