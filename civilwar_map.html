@@ -207,6 +207,41 @@
       background-color: DodgerBlue !important;
       color: #ffffff;
     }
+
+    #timeline{
+      width: 100%;
+      z-index: 100;
+    }
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 25px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #4CAF50;
+      cursor: pointer;
+    }
   </style>
   <body>
     <ul>
@@ -236,16 +271,18 @@
         <br>
         <option value="heatmap_confed">Heatmap (Confederate Victories)</option>
       </select>-->
-      <input type="radio" id="heatmap_general" name="heatmap_choice" value="heatmap_general" onclick="chooseHeatmap(this.id)" checked="checked">
-      <label for="heatmap_general">Heatmap (General)</label>
+      <div id="heatmap_part">
+        <input type="radio" id="heatmap_general" name="heatmap_choice" value="heatmap_general" onclick="chooseHeatmap(this.id)" checked="checked">
+        <label for="heatmap_general">Heatmap (General)</label>
+        <br>
+        <input type="radio" id="heatmap_union" name="heatmap_choice" value="heatmap_union" onclick="chooseHeatmap(this.id)">
+        <label for="heatmap_general">Heatmap (Union Victories)</label>
+        <br>
+        <input type="radio" id="heatmap_confed" name="heatmap_choice" value="heatmap_confed" onclick="chooseHeatmap(this.id)">
+        <label for="heatmap_general">Heatmap (Confederate Victories)</label>
+      </div>
       <br>
-      <input type="radio" id="heatmap_union" name="heatmap_choice" value="heatmap_union" onclick="chooseHeatmap(this.id)">
-      <label for="heatmap_general">Heatmap (Union Victories)</label>
-      <br>
-      <input type="radio" id="heatmap_confed" name="heatmap_choice" value="heatmap_confed" onclick="chooseHeatmap(this.id)">
-      <label for="heatmap_general">Heatmap (Confederate Victories)</label>
-      <br>
-      <!--<button id="slidebar_activate" class="button">Activate Timeline</button>-->
+      <button id="slidebar_activate" class="button" onclick="runTimeline()" style="display:none;">Activate Timeline</button>
     </div>
     <!--<div class="autocomplete">
       <input id="search_box" type="text" onkeyup="checkBattle('search_box')" placeholder="Search a battle">
@@ -270,6 +307,13 @@
         <p id='candidates_text'></p>
         <p id='candidates_long_text'></p>
         <div id="candidates_vote_table"></div>
+      </div>
+    </div>
+    <div id='nations_modal' class='modal' style='display:none;'>
+      <div id='nations' class='modal-content'>
+        <span id='nations_close' class='close' style="float: right;">&times;</span>
+        <p id='nations_text'></p>
+        <p id='nations_modal_long_text'></p>
       </div>
     </div>
     <div id='general_info' class='modal' style='display:none;'>
@@ -317,7 +361,7 @@
         <br>
         <p id="of_victor_text"></p>
         <br>
-        <table id="battles_by_state" cellspacing="1" cellpadding="1" style="margin: 0 auto;"></table>
+        <table id="battles_by_state" cellspacing="1" cellpadding="1" style="margin: 0 auto; display: none;"></table>
       </div>
     </div>
     <div id='relics_modal' class='modal' style='display:none;'>
@@ -337,6 +381,10 @@
       <!--<div class='timeline_buttons space_out' style='color:antiquewhite;'>
         <h3 id='year_text'></h3>
       </div>-->
+      <div id="timeline" style="display: none;">
+        <p id="timeline_date">Yo</p>
+        <input id="timeline_value" type="range" min="1" max="100" value="5" class="slider">
+      </div>
       <ul style='justify-content: space-around;'>
         <!--https://www.battlefields.org/learn/primary-sources/cornerstone-speech-->
         <li><a id='1861' href='javascript:;' onclick='preSetUpPoints(this.id)'>1861</a></li>
@@ -373,7 +421,10 @@ document.getElementById('candidates_box_close').onclick = function() {
   document.getElementById('candidates_box').style.display = 'none';
   clicked_election_state = false;
 }
-
+document.getElementById('nations_close').onclick = function() {
+  document.getElementById('nations_modal').style.display = 'none';
+  clicked_nation = false;
+}
 let current_markers = {};
 let maps_url;
 let newspapers_url;
@@ -427,9 +478,9 @@ function constructHeatmap(year){
   let keys = Object.keys(civil_war_battles_geo);
   for(var battle_name in civil_war_battles){
     let battle = civil_war_battles[battle_name];
-    let date = battle['date'].split(' ');
+    let date = battle['date'].split(',');
     if(battle_years.includes(year)){
-      if(keys.indexOf(battle_name) > -1 && year === parseInt(date[2])){ 
+      if(keys.indexOf(battle_name) > -1 && year === parseInt(date[1])){ 
         let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
         let battle_lat = parseFloat(battle_loc.split(",")[0]);
         let battle_lng = parseFloat(battle_loc.split(",")[1]);
@@ -511,11 +562,11 @@ function adjustedHeatmap(year, side){
   let keys = Object.keys(civil_war_battles_geo);
   for(var battle_name in civil_war_battles){
     let battle = civil_war_battles[battle_name];
-    let date = battle['date'].split(' ');
+    let date = battle['date'].split(',');
     if(battle_years.includes(year)){
-      if(keys.indexOf(battle_name) > -1 && year === parseInt(date[2]) && battle['victory'] === side){ 
+      if(keys.indexOf(battle_name) > -1 && year === parseInt(date[1]) && battle['victory'] === side){ 
         let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
-        let battle_lat = parseFloat(battle_loc.split(",")[0]);
+        let battle_lat = parseFloat(battle_loc.split(",")[1]);
         let battle_lng = parseFloat(battle_loc.split(",")[1]);
         let point = {
           'type': 'Feature',
@@ -600,7 +651,7 @@ function constructHeatmap1864(){
   let ties = 0;
   for(var battle_name in civil_war_battles){
     let battle = civil_war_battles[battle_name];
-    let date = battle['date'].split(' ');
+    let date = battle['date'].split(',');
     let nearElection = false;
     let nearMonths = ['June', 'July', 'August', 'September', 'October', 'November']; //Nat. Union convention occurred in June
     for(let i = 0; i < nearMonths.length; i++){
@@ -608,7 +659,7 @@ function constructHeatmap1864(){
         nearElection = true;
       }
     }
-    if(keys.indexOf(battle_name) > -1 && 1864 === parseInt(date[2]) && nearElection){ 
+    if(keys.indexOf(battle_name) > -1 && 1864 === parseInt(date[1]) && nearElection){ 
       if(battle['victory'] === 'Inconclusive'){
         ties++;
       }else if(battle['victory'] === 'Union'){
@@ -1129,6 +1180,71 @@ function applySettings(){
   document.getElementById("settings_modal").style.display = 'none';
 }
 
+/*
+      <div id="timeline">
+        <p id="timeline_date">Yo</p>
+        <input type="range" min="1" max="100" value="5">
+      </div>
+
+      slidebar_activate
+
+            <div id="timeline">
+        <p id="timeline_date">Yo</p>
+        <input id="timeline_value" type="range" min="1" max="100" value="5" class="slider">
+      </div>
+*/
+function runTimeline(){
+  document.getElementById('heatmap_part').style.display = 'none';
+  document.getElementById('timeline_value').value = 0;
+  document.getElementById('timeline').style.display = 'block';
+  document.getElementById('slidebar_activate').innerText = 'Stop animation';
+  document.getElementById('slidebar_activate').onclick = 'stopTimeline()';
+  removeWorldData();
+  deleteMarkers();
+  clearElection();
+  setInterval(function() {
+    let c_keys = Object.keys(civil_war_battles);
+    let battle_name = c_keys[document.getElementById('timeline_value').value];
+    let battle = battles_in_year[battle_name]
+    let year = battle['date'].split(',')[1];
+    let battle_date_parsed = battle['date'].split('-');
+    let month_day = battle_date_parsed[0];
+    if(battle_date_parsed.length === 1){
+      month_day = battle['date'].split(',')[0];
+    }
+    let month = month_day.split(' ')[0];
+    let day = parseInt(month_day.split(' ')[1]);
+    document.getElementById('timeline_date').innerText = month + ' ' + day + ', ' + year;
+    document.getElementById('timeline_value').value++;
+
+    let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+    let battle_lat = parseFloat(battle_loc.split(",")[0]);
+    let battle_lng = parseFloat(battle_loc.split(",")[1]);
+    let el = document.createElement('div');
+    el.id = battle_name;
+    if(battle['class'] === 'A')
+      el.style.backgroundImage = 'url(\'images/a_battle.png\')'; 
+    if(battle['class'] === 'B')
+      el.style.backgroundImage = 'url(\'images/b_battle.png\')'; 
+    if(battle['class'] === 'C')
+      el.style.backgroundImage = 'url(\'images/c_battle.png\')'; 
+    if(battle['class'] === 'D')
+      el.style.backgroundImage = 'url(\'images/d_battle.png\')';
+    el.style.borderRadius = 6 + 'px';
+    el.style.width = 30 + 'px';
+    el.style.height = 30 + 'px';
+    let marker = new mapboxgl.Marker(el)
+      .setLngLat([battle_lng, battle_lat])
+      .addTo(map);
+    el.addEventListener('click', setMarkerName, false);
+    current_markers[battle_name] = {'marker': marker, 'lat': battle_lat, 'lon': battle_lng};
+  }, 600);
+}
+
+function stopTimeline(){
+console.log("stop")
+}
+
 function assembleYearData(){
   document.getElementById('battles_by_state').innerHTML = '';
   let confed_vict_count = 0;
@@ -1147,14 +1263,13 @@ function assembleYearData(){
   let c_class_c_count = 0;
   let c_class_d_count = 0;
   let states_dict = {};
-  let t = 0;
   for(var battle_name in civil_war_battles){
     let battle = civil_war_battles[battle_name];
-    let date = battle['date'].split(' ');
+    let date = battle['date'].split(',');
     let state_name_parsed = civil_war_battles_geo[battle_name].place.split(',');
     let state = state_name_parsed[state_name_parsed.length - 1];
     //battles occurring in multiple states are not double counted in the state table
-    if(parseInt(year) === parseInt(date[2])){    
+    if(parseInt(year) === parseInt(date[1])){  
       if(battle['class'] === 'A')
         class_a_count++;
       if(battle['class'] === 'B')
@@ -1184,7 +1299,7 @@ function assembleYearData(){
           states_dict[state].union_vict++;
           states_dict[state].total_count++;
         }else{
-          states_dict[state] = {'total_count': 1, "union_vict": 1, "confed_vict": 0, "tie_count": 0};
+          states_dict[state] = {'total_count': 1, 'union_vict': 1, 'confed_vict': 0, 'tie_count': 0};
         }
         if(battle['class'] === 'A')
           u_class_a_count++;
@@ -1200,7 +1315,7 @@ function assembleYearData(){
           states_dict[state].confed_vict++;
           states_dict[state].total_count++;
         }else{
-          states_dict[state] = {'total_count': 1, "union_vict": 0, "confed_vict": 1, "tie_count": 0};
+          states_dict[state] = {'total_count': 1, 'union_vict': 0, 'confed_vict': 1, 'tie_count': 0};
         }
         if(battle['class'] === 'A')
           c_class_a_count++;
@@ -1213,10 +1328,9 @@ function assembleYearData(){
       }
     }
   }
-
   let total_year = class_a_count + class_b_count + class_c_count + class_d_count;
-  document.getElementById('year_count_text').innerHTML = 'The total number of principal battles fought this year in ' + year
-   + ' was ' + total_year + '.';
+  document.getElementById('year_count_text').innerHTML = 'The total number of principal battles fought this year in ' 
+    + year + ' was ' + total_year + '.';
 
   let class_a_percent = (class_a_count / total_year) * 100;
   let class_b_percent = (class_b_count / total_year) * 100;
@@ -1226,7 +1340,7 @@ function assembleYearData(){
     '% of the battles were decisive, ' + class_b_percent.toFixed(2) + '% were major engagements, ' + 
     class_c_percent.toFixed(2) + '% were formative engagements, and '+ class_d_percent.toFixed(2) + 
     '% were limited engagements.';
-  
+
   let union_win_percent = (union_vict_count / total_year) * 100;
   let confed_win_percent = (confed_vict_count / total_year) * 100;
   let tie_percent = (tie_count / total_year) * 100;
@@ -1285,7 +1399,6 @@ function assembleYearData(){
     let union_td = document.createElement('td');
     let confed_td = document.createElement('td');  
     let ties_td = document.createElement('td');   
-
     let state_txt = document.createTextNode(state_counts_keys[i]);
     let total_txt = document.createTextNode(states_dict[state_counts_keys[i]].total_count + '');
     let union_txt = document.createTextNode(states_dict[state_counts_keys[i]].union_vict + '');
@@ -1744,6 +1857,8 @@ function removeWorldData(){
     }
   }
 }
+let world_info = {};
+let clicked_nation = false;
 function plotWorldData(year){
       /*
 World bounds: 
@@ -1752,37 +1867,109 @@ Alaska #ffffff
 worldBounds.features[i].properties.name
 worldBounds.features[i].geometry.coordinates
       */
-  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska'];
-  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52', '#ffffff'];
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland'];
+  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52'];
   for(let i = 0; i < places.length; i++){
-    //if statement to filter using year
-    mouse_list_world.push(places[i]);
-    let feature  = {"type":"FeatureCollection","features":[worldBounds.features[i]]};
-    map.addSource(places[i], {
-      type: 'geojson',
-      data: feature
-    });
-    map.addLayer({
-      'id': places[i],
-      'type': 'fill',
-      'source': places[i],
-      'layout': {},
-      'paint': {
-        'fill-color': place_colors[i],
-        'fill-opacity': 0.8
-      }
-    });
+    let will_show = false;
+    let place_html = '';
+    if(places[i] === 'Canada'){
+      place_html = 'Canada was still part of the British Empire during the war, as they became independent in 1867. ' 
+        + 'They were neutral during the war, with only minor <a href="https://en.wikipedia.org/wiki/Canada_and_the_American_Civil_War" style="color: black;">cross-border incidents</a> by the Confederates inciting tensions between the '
+        + 'Union and Confederacy. It is important to note though that much of the populace largely supported the Union.';
+      will_show = true;
+    }
+    if(places[i] === 'Mexico' && parseInt(year) < 1864){
+      place_html = 'Mexico was in the midst of its own turbulent <a href="https://en.wikipedia.org/wiki/Second_French_intervention_in_Mexico" style="color: black;">situation</a> throughout the entire American Civil War, as France ' + 
+        'invaded the country to overthrow Mexico\'s liberal president Benito Juárez. He was unpopular by the ruling conservative elites ' +
+        'and the Catholic Church, and France saw an opportunity with the Civil War plaguing America, to try and assert power in a region ' +
+        'that was protected by the Monroe doctorine as a place for no European intervention.';
+      will_show = true;
+    }
+    if(places[i] === 'Mexico' && parseInt(year) >= 1864){
+      place_html = 'Austrian prince Maximillian I was now installed as ruler of Mexico, in the form of the Second Mexican Empire. Juarez and his forces '
+       + 'continued the fight, and signs of the war shifting in favor of Juarez and the Mexican Republic would appear to show.';
+       will_show = true;
+    }
+    if(places[i] === 'Australia'){
+      place_html = 'Similar to India, Australia becomes more useful to Britain for its cotton production, as the Confederacy was in the midst of war. Their sympathies for either side were largely split.';
+      will_show = true;
+    }
+    if(places[i] === 'United Kingdom'){
+      place_html = 'The United Kingdom maintained neutrality throughout the conflict, though for the elites and big businesses, the Confederacy was the more sympathetic side. Oftentimes private businesses were producing ships and supplies for the Confederacy, '
+       + 'and even transporting Confederate ambassadors to the United Kingdom. The latter means of support would lead to the <a href="https://en.wikipedia.org/wiki/Trent_Affair" style="color: black;">Trent Affair</a>, which was the incident that nearly caused war between them and the Union. '
+       + 'The Union was more sympathetically viewed among the working class, most especially once Abraham Lincoln declared the Emancipation Proclamation and thus proclaimed the war to be over slavery.';
+      will_show = true;
+    }
+    if(places[i] === 'Brazil' && parseInt(year) === 1865){
+      place_html = 'Of the Confederates who fled the United States upon the Confederacy\'s defeat, a majority went to Brazil to re-settle, as Brazil still had legalized slavery and relied on cotton production as well. Some actually remained there and started families and even founded a city called Americana ' +
+      ' <a href="https://en.wikipedia.org/wiki/Americana,_S%C3%A3o_Paulo" style="color: black;">Americana</a>.';
+      will_show = true;
+    }
+    if(places[i] === 'India' && parseInt(year) === 1865){
+      place_html = 'India was part of the British Empire at the time, and with the South collapsing, Britain sought to use India as their new primary source for cotton production.';
+      will_show = true;
+    }
+    if(places[i] === 'France'){
+      place_html = 'While a neutral nation like the all the other foreign powers, the French saw territorial opportunities in the North American region, given the chaos, and had a preference for the Confederacy'
+        + ' in that regard, as evident when they would begin their intervention campaign in Mexico in 1861. However, they did seek to maintain a non-combative relationship with the Union during the war. The Confederacy was hoping for them to intervene on their side, but they never did as they did not wish to incite war with the United States';
+      will_show = true;
+    }
+    if(places[i] === 'Russia'){
+      place_html = 'Russia was quite sympathetic to Union, one reason being to counterbalance the British government\'s sympathies for the Confederacy. At the time both nations were competing for global influence in ' + 
+         'a period called <a href="https://en.wikipedia.org/wiki/The_Great_Game" style="color: black;">The Great Game</a>. ';
+      will_show = true;
+    }
+    if(places[i] === 'Ireland'){
+      place_html = 'With the Great Famine occuring in Ireland ~15 years earlier, many Irish immigrating to the United States and would serve in the conflict, mostly on the <a href="https://en.wikipedia.org/wiki/Irish_Brigade_(Union_Army)" style="color: black;">Union</a> side.';
+      will_show = true;    
+    }
+    if(will_show){
+      world_info[places[i]] = place_html;
+      mouse_list_world.push(places[i]);
+      let feature  = {"type":"FeatureCollection","features":[worldBounds.features[i]]};
+      map.addSource(places[i], {
+        type: 'geojson',
+        data: feature
+      });
+      map.addLayer({
+        'id': places[i],
+        'type': 'fill',
+        'source': places[i],
+        'layout': {},
+        'paint': {
+          'fill-color': place_colors[i],
+          'fill-opacity': 0.8
+        }
+      });
+    }
   }
   map.on('mousemove', function(e) {
+    if(!clicked_nation){
+      let places = map.queryRenderedFeatures(e.point, {
+        layers: mouse_list_world
+      });
+      if(places.length > 0){
+        place_hovered = places[0].properties.name;
+        document.getElementById('candidates_box_hover').style.display = 'block';
+        document.getElementById('state_hover_text').innerText = place_hovered;
+        document.getElementById('state_hover_long_text').innerHTML = 'Click to see more about the nation.';
+      }else{
+        document.getElementById('candidates_box_hover').style.display = 'none';
+      }
+    }
+  });
+  map.on('click', function(e) {
+    clicked_nation = true;
     let places = map.queryRenderedFeatures(e.point, {
       layers: mouse_list_world
     });
     if(places.length > 0){
       place_hovered = places[0].properties.name;
-      document.getElementById('candidates_box_hover').style.display = 'block';
-      document.getElementById('state_hover_text').innerText = place_hovered;
+      document.getElementById('nations_modal').style.display = 'block';
+      document.getElementById('nations_text').innerText = place_hovered;
+      document.getElementById('nations_modal_long_text').innerHTML = world_info[place_hovered];
     }else{
-      document.getElementById('candidates_box_hover').style.display = 'none';
+      document.getElementById('nations_modal').style.display = 'none';
     }
   });
 }
@@ -1811,6 +1998,7 @@ function preSetUpPoints(year){
   //document.getElementById('search_box').style.display = 'block';
 }
 
+let battles_in_year = {};
 //get points relevant to selected year
 function setUpPoints(id){
   year = parseInt(id);
@@ -1822,14 +2010,15 @@ function setUpPoints(id){
   let keys = Object.keys(civil_war_battles_geo);
   for(var battle_name in civil_war_battles){
     let battle = civil_war_battles[battle_name];
-    let date = battle['date'].split(' ');
-    if(year === parseInt(date[2]) && keys.indexOf(battle_name) > -1){ 
+    let date = battle['date'].split(',');
+    if(year === parseInt(date[1]) && keys.indexOf(battle_name) > -1){ 
       let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
       let battle_lat = parseFloat(battle_loc.split(",")[0]);
       let battle_lng = parseFloat(battle_loc.split(",")[1]);
       let el = document.createElement('div');
       el.id = battle_name;
       let battle = civil_war_battles[battle_name];
+      battles_in_year[battle_name] = battle;
       if(battle['class'] === 'A')
         el.style.backgroundImage = 'url(\'images/a_battle.png\')'; 
       if(battle['class'] === 'B')

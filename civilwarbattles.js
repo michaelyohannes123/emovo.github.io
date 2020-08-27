@@ -1,21 +1,21 @@
 let civil_war_battles = 
 {
     "Battle of Fort Sumter": {
-       "date": "April 12–13, 1861",
+       "date": "April 12-13, 1861",
        "state": "South Carolina",
        "class": "A",
        "victory": "Confederate",
        "notes": "Beauregard takes Charleston Federal fort in the first battle of the American Civil War.\n"
     },
     "Battle of Sewell's Point": {
-       "date": "May 18–19, 1861",
+       "date": "May 18-19, 1861",
        "state": "Virginia",
        "class": "D",
        "victory": "Inconclusive",
        "notes": "Union gunboats fight inconclusive battle with Confederate artillery.\n"
     },
     "Battle of Aquia Creek": {
-       "date": "May 29 – June 1, 1861",
+       "date": "May 29 - June 1, 1861",
        "state": "Virginia",
        "class": "D",
        "victory": "Inconclusive",
@@ -92,7 +92,7 @@ let civil_war_battles =
        "notes": "Confederates under John B. Floyd surprise and defeat Union forces under Erastus B. Tyler.\n"
     },
     "Battle of Hatteras Inlet Batteries": {
-       "date": "August 28–29, 1861",
+       "date": "August 28-29, 1861",
        "state": "North Carolina",
        "class": "C",
        "victory": "Union",
@@ -113,14 +113,14 @@ let civil_war_battles =
        "notes": "Confederates withdraw by night after several hours of fighting.\n"
     },
     "Battle of Cheat Mountain": {
-       "date": "September 12–15, 1861",
+       "date": "September 12-15, 1861",
        "state": "West Virginia (Virginia at the time)",
        "class": "B",
        "victory": "Union",
        "notes": "300 Union troops withstand uncoordinated Confederate attacks.\n"
     },
     "First Battle of Lexington": {
-       "date": "September 13–20, 1861",
+       "date": "September 13-20, 1861",
        "state": "Missouri",
        "class": "C",
        "victory": "Confederate",
@@ -253,7 +253,7 @@ let civil_war_battles =
        "notes": "Inconclusive Civil War battle in Virginia.\n"
     },
     "Battle of Hancock": {
-       "date": "January 5–6, 1862",
+       "date": "January 5-6, 1862",
        "state": "Maryland",
        "class": "D",
        "victory": "Inconclusive",
@@ -288,42 +288,42 @@ let civil_war_battles =
        "notes": "Ulysses S. Grant and Foote's gunboats gain control of Tennessee River by defeating Lloyd Tilghman\n"
     },
     "Battle of Roanoke Island": {
-       "date": "February 7–8, 1862",
+       "date": "February 7-8, 1862",
        "state": "North Carolina",
        "class": "B",
        "victory": "Union",
        "notes": "Union forces under Ambrose E. Burnside capture island from Henry A. Wise\n"
     },
     "Battle of Fort Donelson": {
-       "date": "February 11–16, 1862",
+       "date": "February 11-16, 1862",
        "state": "Tennessee",
        "class": "A",
        "victory": "Union",
        "notes": "Confederate army under Simon Bolivar Buckner surrenders to Grant, Union gains control of Cumberland River\n"
     },
     "Battle of Valverde": {
-       "date": "February 20–21, 1862",
+       "date": "February 20-21, 1862",
        "state": "New Mexico (New Mexico Territory at the time)",
        "class": "B",
        "victory": "Confederate",
        "notes": "Union forces routed in New Mexico Territory.\n"
     },
     "Battle of Island Number Ten (Battle of New Madrid)": {
-       "date": "February 28–April 8, 1862",
+       "date": "February 28-April 8, 1862",
        "state": "Missouri",
        "class": "A",
        "victory": "Union",
        "notes": "Union victory by Pope over John P. McCown.\n"
     },
     "Battle of Pea Ridge or Elkhorn Tavern": {
-       "date": "March 6–8, 1862",
+       "date": "March 6-8, 1862",
        "state": "Arkansas",
        "class": "A",
        "victory": "Union",
        "notes": "Union victory by Samuel Ryan Curtis over Earl Van Dorn ensured continued Union control of Missouri.\n"
     },
     "Battle of Hampton Roads": {
-       "date": "March 8–9, 1862",
+       "date": "March 8-9, 1862",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
@@ -344,42 +344,42 @@ let civil_war_battles =
        "notes": "Union forces defeat Confederates under \"Stonewall\" Jackson.\n"
     },
     "Battle of Fort Macon": {
-       "date": "March 23 – April 26, 1862",
+       "date": "March 23 - April 26, 1862",
        "state": "North Carolina",
        "class": "C",
        "victory": "Union",
        "notes": "Confederate fort surrenders after Union artillery bombardment.\n"
     },
     "Battle of Glorieta Pass": {
-       "date": "March 26–28, 1862",
+       "date": "March 26-28, 1862",
        "state": "New Mexico (New Mexico Territory at the time)",
        "class": "A",
        "victory": "Inconclusive",
        "notes": "Confederate tactical victory. Union strategic victory. Dubbed the \"Gettysburg of the West\".\n"
     },
     "Siege of Yorktown (Battle of Yorktown)": {
-       "date": "April 5 – May 4, 1862",
+       "date": "April 5 - May 4, 1862",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
        "notes": "Union troops win skirmish near site of decisive Revolutionary War battle.\n"
     },
     "Battle of Shiloh or Pittsburg Landing": {
-       "date": "April 6–7, 1862",
+       "date": "April 6-7, 1862",
        "state": "Tennessee",
        "class": "A",
        "victory": "Union",
        "notes": "Grant and reinforcements under Buell repulse Albert Sidney Johnston and P. G. T. Beauregard, but the Union lost more men.\n"
     },
     "Battle of Fort Pulaski": {
-       "date": "April 10–11, 1862",
+       "date": "April 10-11, 1862",
        "state": "Georgia",
        "class": "B",
        "victory": "Union",
        "notes": "Union blockade closes Savannah, Georgia. Parrott rifle makes masonry forts obsolete.\n"
     },
     "Battle of Forts Jackson and St. Philip": {
-       "date": "April 18–28, 1862",
+       "date": "April 18-28, 1862",
        "state": "Louisiana",
        "class": "A",
        "victory": "Union",
@@ -393,14 +393,14 @@ let civil_war_battles =
        "notes": "Confederates thwart attempt to destroy a canal.\n"
     },
     "Capture of New Orleans": {
-       "date": "April 25 – May 1, 1862",
+       "date": "April 25 - May 1, 1862",
        "state": "Louisiana",
        "class": "B",
        "victory": "Union",
        "notes": "Union forces capture city.\n"
     },
     "Siege of Corinth": {
-       "date": "April 29 – May 30, 1862",
+       "date": "April 29 - May 30, 1862",
        "state": "Mississippi",
        "class": "A",
        "victory": "Union",
@@ -435,7 +435,7 @@ let civil_war_battles =
        "notes": "Union naval attack repelled by Confederate artillery.\n"
     },
     "Battle of Princeton Court House": {
-       "date": "May 15–17, 1862",
+       "date": "May 15-17, 1862",
        "state": "West Virginia(Virginia at the time)[A]",
        "class": "C",
        "victory": "Confederate",
@@ -463,7 +463,7 @@ let civil_war_battles =
        "notes": "Union victory during U.S. Civil War.\n"
     },
     "Battle of Seven Pines": {
-       "date": "May 31 – June 1, 1862",
+       "date": "May 31 - June 1, 1862",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
@@ -484,7 +484,7 @@ let civil_war_battles =
        "notes": "Union forces capture the city.\n"
     },
     "First Battle of Chattanooga": {
-       "date": "June 7–8, 1862",
+       "date": "June 7-8, 1862",
        "state": "Tennessee",
        "class": "D",
        "victory": "Union",
@@ -547,7 +547,7 @@ let civil_war_battles =
        "notes": "(Seven Days) Lee defeats McClellan.\n"
     },
     "Battle of Garnett's & Golding's Farm": {
-       "date": "June 27–28, 1862",
+       "date": "June 27-28, 1862",
        "state": "Virginia",
        "class": "D",
        "victory": "Inconclusive",
@@ -561,7 +561,7 @@ let civil_war_battles =
        "notes": "(Seven Days) Union forces withdraw.\n"
     },
     "Battle of Tampa": {
-       "date": "June 30 – July 1, 1862",
+       "date": "June 30 - July 1, 1862",
        "state": "Florida",
        "class": "D",
        "victory": "Confederate",
@@ -610,7 +610,7 @@ let civil_war_battles =
        "notes": "Union troops repulse attempt to recapture Baton Rouge.\n"
     },
     "Battle of Kirksville": {
-       "date": "August 6–9, 1862",
+       "date": "August 6-9, 1862",
        "state": "Missouri",
        "class": "D",
        "victory": "Union",
@@ -638,35 +638,35 @@ let civil_war_battles =
        "notes": "Confederate victory near Kansas City.\n"
     },
     "Battle of Lone Jack": {
-       "date": "August 15–16, 1862",
+       "date": "August 15-16, 1862",
        "state": "Missouri",
        "class": "D",
        "victory": "Confederate",
        "notes": "Confederate victory, Union commander killed. Rebels forced to withdraw after battle.\n"
     },
     "Battle of Fort Ridgely": {
-       "date": "August 21–22, 1862",
+       "date": "August 21-22, 1862",
        "state": "Minnesota",
        "class": "C",
        "victory": "Union",
        "notes": "Dakota War of 1862: Failed Santee Sioux attack on Union controlled fort.\n"
     },
     "First Battle of Rappahannock Station": {
-       "date": "August 22–25, 1862",
+       "date": "August 22-25, 1862",
        "state": "Virginia",
        "class": "D",
        "victory": "Inconclusive",
        "notes": "Union supplies destroyed during skirmish.\n"
     },
     "Battle of Manassas Station Ops.": {
-       "date": "August 25–27, 1862",
+       "date": "August 25-27, 1862",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
        "notes": "Jackson turns into Pope's rear area; destroys Manassas Station.\n"
     },
     "Second Battle of Bull Run or Second Manassas": {
-       "date": "August 28–30, 1862",
+       "date": "August 28-30, 1862",
        "state": "Virginia",
        "class": "A",
        "victory": "Confederate",
@@ -694,14 +694,14 @@ let civil_war_battles =
        "notes": "Union forces nearly being cut off, Isaac Stevens and Philip Kearny are killed.\n"
     },
     "Battle of Harpers Ferry": {
-       "date": "September 12–15, 1862",
+       "date": "September 12-15, 1862",
        "state": "West Virginia(Virginia at the time)[A]",
        "class": "B",
        "victory": "Confederate",
        "notes": "Stonewall Jackson captures Union garrison under Dixon S. Miles\n"
     },
     "Battle of Munfordville": {
-       "date": "September 14–17, 1862",
+       "date": "September 14-17, 1862",
        "state": "Kentucky",
        "class": "B",
        "victory": "Confederate",
@@ -722,7 +722,7 @@ let civil_war_battles =
        "notes": "McClellan ends Lee's first invasion of North, bloodiest single day of the war.\n"
     },
     "Battle of Shepherdstown": {
-       "date": "September 19–20, 1862",
+       "date": "September 19-20, 1862",
        "state": "West Virginia (Virginia at the time)",
        "class": "C",
        "victory": "Confederate",
@@ -757,14 +757,14 @@ let civil_war_battles =
        "notes": "Union forces panic under bombardment from Confederate artillery.\n"
     },
     "Battle of Saint John's Bluff": {
-       "date": "October 1–3, 1862",
+       "date": "October 1-3, 1862",
        "state": "Florida",
        "class": "D",
        "victory": "Union",
        "notes": "\n"
     },
     "Second Battle of Corinth (Battle of Corinth)": {
-       "date": "October 3–4, 1862",
+       "date": "October 3-4, 1862",
        "state": "Mississippi",
        "class": "B",
        "victory": "Union",
@@ -869,7 +869,7 @@ let civil_war_battles =
        "notes": "Confederate feint to distract Union forces.\n"
     },
     "Battle of Chickasaw Bayou": {
-       "date": "December 26–29, 1862",
+       "date": "December 26-29, 1862",
        "state": "Mississippi",
        "class": "B",
        "victory": "Confederate",
@@ -883,7 +883,7 @@ let civil_war_battles =
        "notes": "Confederates repel Union double-pronged assault.\n"
     },
     "Battle of Stones River (Second Battle of Murfreesboro)": {
-       "date": "December 31, 1862 –January 2, 1863",
+       "date": "December 31, 1862 -January 2, 1863",
        "state": "Tennessee",
        "class": "A",
        "victory": "Union",
@@ -911,7 +911,7 @@ let civil_war_battles =
        "notes": "Part of Vicksburg Campaign, fight for control of mouth of Arkansas River.\n"
     },
     "Battle of Hartville": {
-       "date": "January 9–11, 1863",
+       "date": "January 9-11, 1863",
        "state": "Missouri",
        "class": "D",
        "victory": "Confederate",
@@ -946,7 +946,7 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Battle of Fort Anderson": {
-       "date": "March 13–15, 1863",
+       "date": "March 13-15, 1863",
        "state": "North Carolina",
        "class": "D",
        "victory": "Union",
@@ -974,7 +974,7 @@ let civil_war_battles =
        "notes": "Union force surrenders.\n"
     },
     "Battle of Washington, NC": {
-       "date": "March 30 – April 20, 1863",
+       "date": "March 30 - April 20, 1863",
        "state": "North Carolina",
        "class": "D",
        "victory": "Inconclusive",
@@ -995,21 +995,21 @@ let civil_war_battles =
        "notes": "Confederates withdraw after rearguard defeat.\n"
     },
     "Battle of Suffolk (Hill's Point)(Battle of Fort Huger)": {
-       "date": "April 11 – May 4, 1863",
+       "date": "April 11 - May 4, 1863",
        "state": "Virginia",
        "class": "C",
        "victory": "Inconclusive",
        "notes": "\n"
     },
     "Battle of Suffolk (Norfleet House);Siege of Suffolk": {
-       "date": "April 11 – May 4, 1863",
+       "date": "April 11 - May 4, 1863",
        "state": "Virginia",
        "class": "C",
        "victory": "Inconclusive",
        "notes": "Twin battles fought over Suffolk.\n"
     },
     "Battle of Fort Bisland": {
-       "date": "April 12–13, 1863",
+       "date": "April 12-13, 1863",
        "state": "Louisiana",
        "class": "D",
        "victory": "Union",
@@ -1044,7 +1044,7 @@ let civil_war_battles =
        "notes": "Unsuccessful naval attack by Grant's forces.\n"
     },
     "Battle of Snyder's Bluff": {
-       "date": "April 29 – May 1, 1863",
+       "date": "April 29 - May 1, 1863",
        "state": "Mississippi",
        "class": "D",
        "victory": "Confederate",
@@ -1058,7 +1058,7 @@ let civil_war_battles =
        "notes": "Union victory during a raid in Alabama.\n"
     },
     "Battle of Chancellorsville": {
-       "date": "April 30 – May 6, 1863",
+       "date": "April 30 - May 6, 1863",
        "state": "Virginia",
        "class": "A",
        "victory": "Confederate",
@@ -1072,7 +1072,7 @@ let civil_war_battles =
        "notes": "in Vicksburg campaign, Grant defeats Confederates\n"
     },
     "Battle of Chalk Bluff": {
-       "date": "May 1–2, 1863",
+       "date": "May 1-2, 1863",
        "state": "Arkansas",
        "class": "D",
        "victory": "Confederate",
@@ -1086,7 +1086,7 @@ let civil_war_battles =
        "notes": "Union forces under John Sedgwick defeat Confederate forces left to guard the town by Lee.\n"
     },
     "Battle of Salem Church": {
-       "date": "May 3–4, 1863",
+       "date": "May 3-4, 1863",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
@@ -1121,7 +1121,7 @@ let civil_war_battles =
        "notes": "Confederate forces trapped in Vicksburg.\n"
     },
     "Siege of Vicksburg": {
-       "date": "May 18 – July 4, 1863",
+       "date": "May 18 - July 4, 1863",
        "state": "Mississippi",
        "class": "A",
        "victory": "Union",
@@ -1135,7 +1135,7 @@ let civil_war_battles =
        "notes": "Union victory near Baton Rouge.\n"
     },
     "Siege of Port Hudson": {
-       "date": "May 21 – July 9, 1863",
+       "date": "May 21 - July 9, 1863",
        "state": "Louisiana",
        "class": "A",
        "victory": "Union",
@@ -1163,7 +1163,7 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Second Battle of Winchester": {
-       "date": "June 13–15, 1863",
+       "date": "June 13-15, 1863",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
@@ -1177,14 +1177,14 @@ let civil_war_battles =
        "notes": "Indecisive battle during Robert E. Lee's march north.\n"
     },
     "Battle of Middleburg": {
-       "date": "June 17–19, 1863",
+       "date": "June 17-19, 1863",
        "state": "Virginia",
        "class": "C",
        "victory": "Inconclusive",
        "notes": "J.E.B. Stuart retreats from engagement with Union cavalry.\n"
     },
     "Battle of LaFourche Crossing": {
-       "date": "June 20–21, 1863",
+       "date": "June 20-21, 1863",
        "state": "Louisiana",
        "class": "D",
        "victory": "Union",
@@ -1198,7 +1198,7 @@ let civil_war_battles =
        "notes": "Indecisive cavalry battle during Lee's invasion.\n"
     },
     "Battle of Hoover's Gap": {
-       "date": "June 24–26, 1863",
+       "date": "June 24-26, 1863",
        "state": "Tennessee",
        "class": "C",
        "victory": "Union",
@@ -1212,7 +1212,7 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Battle of Goodrich's Landing": {
-       "date": "June 29–30, 1863",
+       "date": "June 29-30, 1863",
        "state": "Louisiana",
        "class": "D",
        "victory": "Inconclusive",
@@ -1226,14 +1226,14 @@ let civil_war_battles =
        "notes": "J.E.B. Stuart forced to change his route, delaying his efforts to unite with Lee's force outside Gettysburg.\n"
     },
     "Battle of Cabin Creek": {
-       "date": "July 1–2, 1863",
+       "date": "July 1-2, 1863",
        "state": "Oklahoma(Indian Territory at the time)",
        "class": "C",
        "victory": "Union",
        "notes": "\n"
     },
     "Battle of Gettysburg": {
-       "date": "July 1–3, 1863",
+       "date": "July 1-3, 1863",
        "state": "Pennsylvania",
        "class": "A",
        "victory": "Union",
@@ -1247,7 +1247,7 @@ let civil_war_battles =
        "notes": "Confederate assault on river port fails securing eastern Arkansas for Union.\n"
     },
     "Battle of Williamsport": {
-       "date": "July 6–16, 1863",
+       "date": "July 6-16, 1863",
        "state": "Maryland",
        "class": "C",
        "victory": "Inconclusive",
@@ -1275,7 +1275,7 @@ let civil_war_battles =
        "notes": "first of two Union attempts to take Ft. Wagner.\n"
     },
     "Battle of Kock's Plantation": {
-       "date": "July 12–13, 1863",
+       "date": "July 12-13, 1863",
        "state": "Louisiana",
        "class": "C",
        "victory": "Confederate",
@@ -1317,7 +1317,7 @@ let civil_war_battles =
        "notes": "Indecisive battle by day, Confederates withdraw by night.\n"
     },
     "Battle of Big Mound": {
-       "date": "July 24–25, 1863",
+       "date": "July 24-25, 1863",
        "state": "North Dakota(Dakota Territory at the time)",
        "class": "C",
        "victory": "Union",
@@ -1345,21 +1345,21 @@ let civil_war_battles =
        "notes": "Dakota War of 1862: Sioux forces escape Union forces in pursuit.\n"
     },
     "Second Battle of Fort Sumter": {
-       "date": "August 17 – September 9, 1863",
+       "date": "August 17 - September 9, 1863",
        "state": "South Carolina",
        "class": "B",
        "victory": "Confederate",
        "notes": "Union's massive bombardment and naval attack fails to retake the fort.\n"
     },
     "Second Battle of Charleston Harbor": {
-       "date": "August 17 – September 8, 1863",
+       "date": "August 17 - September 8, 1863",
        "state": "South Carolina",
        "class": "B",
        "victory": "Inconclusive",
        "notes": "\n"
     },
     "Second Battle of Chattanooga": {
-       "date": "August 21 – September 8, 1863",
+       "date": "August 21 - September 8, 1863",
        "state": "Tennessee",
        "class": "D",
        "victory": "Union",
@@ -1380,7 +1380,7 @@ let civil_war_battles =
        "notes": "Union victory after heavy fighting.\n"
     },
     "Battle of Whitestone Hill": {
-       "date": "September 3–5, 1863",
+       "date": "September 3-5, 1863",
        "state": "North Dakota(Dakota Territory at the time)",
        "class": "D",
        "victory": "Union",
@@ -1401,14 +1401,14 @@ let civil_war_battles =
        "notes": "Union victory allows for capture of Little Rock.\n"
     },
     "Battle of Davis's Cross Roads": {
-       "date": "September 10–11, 1863",
+       "date": "September 10-11, 1863",
        "state": "Georgia",
        "class": "C",
        "victory": "Union",
        "notes": "Union forces establish defensive positions prior to Chickamauga.\n"
     },
     "Battle of Chickamauga": {
-       "date": "September 19–20, 1863",
+       "date": "September 19-20, 1863",
        "state": "Georgia",
        "class": "A",
        "victory": "Confederate",
@@ -1464,7 +1464,7 @@ let civil_war_battles =
        "notes": "Confederates attack Union rearguard, indecisive.\n"
     },
     "Battle of Fort Brooke": {
-       "date": "October 16–18, 1863",
+       "date": "October 16-18, 1863",
        "state": "Florida",
        "class": "D",
        "victory": "Union",
@@ -1485,7 +1485,7 @@ let civil_war_battles =
        "notes": "Confederate attack fails.\n"
     },
     "Battle of Wauhatchie": {
-       "date": "October 28–29, 1863",
+       "date": "October 28-29, 1863",
        "state": "Tennessee",
        "class": "B",
        "victory": "Union",
@@ -1534,7 +1534,7 @@ let civil_war_battles =
        "notes": "Grant routs Braxton Bragg's army ending the siege of Union forces in Chattanooga. Note: combined with the Battle of Lookout Mountain as Chattanooga III in the CWSAC report.\n"
     },
     "Battle of Mine Run": {
-       "date": "November 27 –December 2, 1863",
+       "date": "November 27 -December 2, 1863",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
@@ -1590,7 +1590,7 @@ let civil_war_battles =
        "notes": "Union victory followed by withdrawal.\n"
     },
     "Battle of Morton's Ford": {
-       "date": "February 6–7, 1864",
+       "date": "February 6-7, 1864",
        "state": "Virginia",
        "class": "D",
        "victory": "Inconclusive",
@@ -1604,7 +1604,7 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Battle of Meridian": {
-       "date": "February 14–20, 1864",
+       "date": "February 14-20, 1864",
        "state": "Mississippi",
        "class": "C",
        "victory": "Union",
@@ -1625,7 +1625,7 @@ let civil_war_battles =
        "notes": "Confederate cavalry, commanded by Maj. Gen. Nathan Bedford Forrest, routed 7,000 cavalry under the command of Brig. Gen. William Sooy Smith.\n"
     },
     "First Battle of Dalton": {
-       "date": "February 22–27, 1864",
+       "date": "February 22-27, 1864",
        "state": "Georgia",
        "class": "C",
        "victory": "Confederate",
@@ -1639,7 +1639,7 @@ let civil_war_battles =
        "notes": "controversy surrounding the Dahlgren Affair.\n"
     },
     "Battle of Fort De Russy": {
-       "date": "March 12–14, 1864",
+       "date": "March 12-14, 1864",
        "state": "Louisiana",
        "class": "B",
        "victory": "Union",
@@ -1653,7 +1653,7 @@ let civil_war_battles =
        "notes": "Confederate raid by Forrest successful.\n"
     },
     "Battle of Elkin's Ferry": {
-       "date": "April 3–4, 1864",
+       "date": "April 3-4, 1864",
        "state": "Arkansas",
        "class": "C",
        "victory": "Union",
@@ -1667,7 +1667,7 @@ let civil_war_battles =
        "notes": "Banks Union Red River Campaign halted by the Confederates.\n"
     },
     "Battle of Prairie D'Ane": {
-       "date": "April 9–13, 1864",
+       "date": "April 9-13, 1864",
        "state": "Arkansas",
        "class": "B",
        "victory": "Union",
@@ -1688,7 +1688,7 @@ let civil_war_battles =
        "notes": "N.B. Forrest takes fort, massacres African American soldiers.\n"
     },
     "Battle of Blair's Landing": {
-       "date": "April 12–13, 1864",
+       "date": "April 12-13, 1864",
        "state": "Louisiana",
        "class": "C",
        "victory": "Union",
@@ -1737,28 +1737,28 @@ let civil_war_battles =
        "notes": "Indecisive naval battle during U.S. Civil War.\n"
     },
     "Battle of the Wilderness": {
-       "date": "May 5–7, 1864",
+       "date": "May 5-7, 1864",
        "state": "Virginia",
        "class": "A",
        "victory": "Inconclusive",
        "notes": "Grant and Lee meet inconclusively.\n"
     },
     "Battle of Port Walthall Junction": {
-       "date": "May 6–7, 1864",
+       "date": "May 6-7, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Union",
        "notes": "Union forces destroy railroad\n"
     },
     "Battle of Rocky Face Ridge": {
-       "date": "May 7–13, 1864",
+       "date": "May 7-13, 1864",
        "state": "Georgia",
        "class": "C",
        "victory": "Union",
        "notes": "Due to a flanking movement by Union troops under Maj. Gen. William Tecumseh Sherman, Confederates led by Gen. Joseph E. Johnston were forced to evacuate their strong position near Atlanta.\n"
     },
     "Battle of Spotsylvania Court House": {
-       "date": "May 8–21, 1864",
+       "date": "May 8-21, 1864",
        "state": "Virginia",
        "class": "A",
        "victory": "Inconclusive",
@@ -1800,7 +1800,7 @@ let civil_war_battles =
        "notes": "Union forces win cavalry battle, J.E.B. Stuart is mortally wounded.\n"
     },
     "Battle of Proctor's Creek": {
-       "date": "May 12–16, 1864",
+       "date": "May 12-16, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
@@ -1849,7 +1849,7 @@ let civil_war_battles =
        "notes": "Beauregard boxes Butler in.\n"
     },
     "Battle of North Anna": {
-       "date": "May 23–26, 1864",
+       "date": "May 23-26, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
@@ -1863,14 +1863,14 @@ let civil_war_battles =
        "notes": "Confederates under Fitzhugh Lee defeated by two Union African American regiments.\n"
     },
     "Battle of New Hope Church": {
-       "date": "May 25–26, 1864",
+       "date": "May 25-26, 1864",
        "state": "Georgia",
        "class": "C",
        "victory": "Confederate",
        "notes": "Hooker's forces defeated.\n"
     },
     "Battle of Dallas (Georgia)": {
-       "date": "May 26 – June 4, 1864",
+       "date": "May 26 - June 4, 1864",
        "state": "Georgia",
        "class": "C",
        "victory": "Union",
@@ -1891,7 +1891,7 @@ let civil_war_battles =
        "notes": "Union advance halted.\n"
     },
     "Battle of Totopotomoy Creek": {
-       "date": "May 28–30, 1864",
+       "date": "May 28-30, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
@@ -1905,7 +1905,7 @@ let civil_war_battles =
        "notes": "Union forces drive Confederates back to Cold Harbor.\n"
     },
     "Battle of Cold Harbor": {
-       "date": "May 31 – June 12, 1864",
+       "date": "May 31 - June 12, 1864",
        "state": "Virginia",
        "class": "A",
        "victory": "Confederate",
@@ -1926,7 +1926,7 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Battle of Marietta": {
-       "date": "June 6 – July 3, 1864",
+       "date": "June 6 - July 3, 1864",
        "state": "Georgia",
        "class": "B",
        "victory": "Union",
@@ -1947,35 +1947,35 @@ let civil_war_battles =
        "notes": "N.B. Forrest routs Union force almost three times as large.\n"
     },
     "Battle of Cynthiana": {
-       "date": "June 11–12, 1864",
+       "date": "June 11-12, 1864",
        "state": "Kentucky",
        "class": "C",
        "victory": "Union",
        "notes": "Union Brig. Gen. Stephen Gano Burbridge defeated Confederate Brig. Gen. John Hunt Morgan. Most Confederate soldiers were casualties, though Morgan escaped.\n"
     },
     "Battle of Trevilian Station": {
-       "date": "June 11–12, 1864",
+       "date": "June 11-12, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
        "notes": "Confederate victory, George Armstrong Custer nearly surrounded and has to be rescued by Sheridan.\n"
     },
     "Second Battle of Petersburg": {
-       "date": "June 15–18, 1864",
+       "date": "June 15-18, 1864",
        "state": "Virginia",
        "class": "A",
        "victory": "Confederate",
        "notes": "Lee repulses Grant at back door to Richmond.\n"
     },
     "Battle of Lynchburg": {
-       "date": "June 17–18, 1864",
+       "date": "June 17-18, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
        "notes": "Fake Confederate reinforcements lead to Union retreat.\n"
     },
     "Battle of Jerusalem Plank Road": {
-       "date": "June 21–24, 1864",
+       "date": "June 21-24, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
@@ -2031,21 +2031,21 @@ let civil_war_battles =
        "notes": "Union Gen. Lew Wallace slows up Jubal Early, saving DC.\n"
     },
     "Battle of Fort Stevens": {
-       "date": "July 11–12, 1864",
+       "date": "July 11-12, 1864",
        "state": "District of Columbia",
        "class": "B",
        "victory": "Union",
        "notes": "Failed Confederate attempt to capture Washington, D.C., President Lincoln, observing the battle, comes under Confederate fire.\n"
     },
     "Battle of Tupelo": {
-       "date": "July 14–15, 1864",
+       "date": "July 14-15, 1864",
        "state": "Mississippi",
        "class": "B",
        "victory": "Union",
        "notes": "Confederate forces under Stephen D. Lee are defeated and Nathan Bedford Forrest is wounded in action.\n"
     },
     "Battle of Cool Spring": {
-       "date": "July 18–19, 1864",
+       "date": "July 18-19, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Confederate",
@@ -2080,7 +2080,7 @@ let civil_war_battles =
        "notes": "Jubal Early defeats Union forces.\n"
     },
     "First Battle of Deep Bottom": {
-       "date": "July 27–29, 1864",
+       "date": "July 27-29, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Confederate",
@@ -2094,7 +2094,7 @@ let civil_war_battles =
        "notes": "(Atlanta Campaign) Confederate attack on Union army northwest of Atlanta fails to gain element of surprise, finding entrenched Union forces. Union victory.\n"
     },
     "Battle of Killdeer Mountain": {
-       "date": "July 28–29, 1864",
+       "date": "July 28-29, 1864",
        "state": "North Dakota(Dakota Territory at the time)",
        "class": "C",
        "victory": "Union",
@@ -2115,14 +2115,14 @@ let civil_war_battles =
        "notes": "Indecisive Civil War battle.\n"
     },
     "Battle of Mobile Bay": {
-       "date": "August 2–23, 1864",
+       "date": "August 2-23, 1864",
        "state": "Alabama",
        "class": "A",
        "victory": "Union",
        "notes": "David Farragut takes port, says \"Damn the torpedoes, full speed ahead\".\n"
     },
     "Battle of Utoy Creek": {
-       "date": "August 5–7, 1864",
+       "date": "August 5-7, 1864",
        "state": "Georgia",
        "class": "C",
        "victory": "Inconclusive",
@@ -2136,14 +2136,14 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Second Battle of Dalton": {
-       "date": "August 14–15, 1864",
+       "date": "August 14-15, 1864",
        "state": "Georgia",
        "class": "D",
        "victory": "Union",
        "notes": "Union forces withstand attack until relieved.\n"
     },
     "Second Battle of Deep Bottom": {
-       "date": "August 14–20, 1864",
+       "date": "August 14-20, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Confederate",
@@ -2157,7 +2157,7 @@ let civil_war_battles =
        "notes": "\n"
     },
     "Battle of Globe Tavern": {
-       "date": "August 18–21, 1864",
+       "date": "August 18-21, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Union",
@@ -2192,21 +2192,21 @@ let civil_war_battles =
        "notes": "Union lines overrun by Confederates.\n"
     },
     "Battle of Smithfield Crossing": {
-       "date": "August 25–29, 1864",
+       "date": "August 25-29, 1864",
        "state": "West Virginia",
        "class": "D",
        "victory": "Inconclusive",
        "notes": "\n"
     },
     "Battle of Jonesborough": {
-       "date": "August 31 –September 1, 1864",
+       "date": "August 31 -September 1, 1864",
        "state": "Georgia",
        "class": "A",
        "victory": "Union",
        "notes": "William J. Hardee's Confederates defeated, resulting in Atlanta's fall the following day.\n"
     },
     "Battle of Berryville": {
-       "date": "September 3–4, 1864",
+       "date": "September 3-4, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Inconclusive",
@@ -2220,7 +2220,7 @@ let civil_war_battles =
        "notes": "Sheridan defeats Early, several officers killed or wounded on both sides.\n"
     },
     "Battle of Fisher's Hill": {
-       "date": "September 21–22, 1864",
+       "date": "September 21-22, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Union",
@@ -2234,21 +2234,21 @@ let civil_war_battles =
        "notes": "Union forces detonate their own fort after losing to Confederates.\n"
     },
     "Battle of Chaffin's Farm (New Market Heights)": {
-       "date": "September 29–30, 1864",
+       "date": "September 29-30, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Union",
        "notes": "Union forces victorious, but fail to capture several forts.\n"
     },
     "Battle of Peebles' Farm": {
-       "date": "September 30 – October 2, 1864",
+       "date": "September 30 - October 2, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Union",
        "notes": "Union victory near Petersburg.\n"
     },
     "First Battle of Saltville": {
-       "date": "October 1–3, 1864",
+       "date": "October 1-3, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Confederate",
@@ -2311,7 +2311,7 @@ let civil_war_battles =
        "notes": "Confederate victory in Missouri.\n"
     },
     "Battle of Byram's Ford": {
-       "date": "October 22–23, 1864",
+       "date": "October 22-23, 1864",
        "state": "Missouri",
        "class": "B",
        "victory": "Union",
@@ -2353,21 +2353,21 @@ let civil_war_battles =
        "notes": "Price escapes Union pursuit.\n"
     },
     "Battle of Decatur": {
-       "date": "October 26–29, 1864",
+       "date": "October 26-29, 1864",
        "state": "Alabama",
        "class": "C",
        "victory": "Union",
        "notes": "Confederates unable to cross river.\n"
     },
     "Battle of Boydton Plank Road": {
-       "date": "October 27–28, 1864",
+       "date": "October 27-28, 1864",
        "state": "Virginia",
        "class": "B",
        "victory": "Inconclusive",
        "notes": "Union forces take control of road, but withdraw after battle.\n"
     },
     "Battle of Fair Oaks & Darbytown Road": {
-       "date": "October 27–28, 1864",
+       "date": "October 27-28, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Confederate",
@@ -2381,14 +2381,14 @@ let civil_war_battles =
        "notes": "James G. Blunt defeats Joseph O. Shelby.\n"
     },
     "Battle of Johnsonville": {
-       "date": "November 4–5, 1864",
+       "date": "November 4-5, 1864",
        "state": "Tennessee",
        "class": "B",
        "victory": "Confederate",
        "notes": "Confederates bombard Union forces during the night after a fire starts near union positions.\n"
     },
     "Battle of Bull's Gap": {
-       "date": "November 11–13, 1864",
+       "date": "November 11-13, 1864",
        "state": "Tennessee",
        "class": "D",
        "victory": "Confederate",
@@ -2451,14 +2451,14 @@ let civil_war_battles =
        "notes": "Kilpatrick stops Wheeler from attacking Sherman.\n"
     },
     "Third Battle of Murfreesboro": {
-       "date": "December 5–7, 1864",
+       "date": "December 5-7, 1864",
        "state": "Tennessee",
        "class": "D",
        "victory": "Union",
        "notes": "Confederate raid mostly unsuccessful.\n"
     },
     "First Battle of Fort Fisher": {
-       "date": "December 7–27, 1864",
+       "date": "December 7-27, 1864",
        "state": "North Carolina",
        "class": "C",
        "victory": "Confederate",
@@ -2472,28 +2472,28 @@ let civil_war_battles =
        "notes": "William B. Hazen captures Fort McAllister.\n"
     },
     "Battle of Nashville": {
-       "date": "December 15–16, 1864",
+       "date": "December 15-16, 1864",
        "state": "Tennessee",
        "class": "A",
        "victory": "Union",
        "notes": "Thomas attacks and virtually destroys Hood's Confederate Army of Tennessee.\n"
     },
     "Battle of Marion": {
-       "date": "December 17–18, 1864",
+       "date": "December 17-18, 1864",
        "state": "Virginia",
        "class": "D",
        "victory": "Union",
        "notes": "Union forces destroy beneficial infrastructue.\n"
     },
     "Second Battle of Saltville": {
-       "date": "December 20–21, 1864",
+       "date": "December 20-21, 1864",
        "state": "Virginia",
        "class": "C",
        "victory": "Union",
        "notes": "Confederate forces retreated, and General George Stoneman's troops entered the town and destroyed the saltworks.\n"
     },
     "Second Battle of Fort Fisher": {
-       "date": "January 13–15, 1865",
+       "date": "January 13-15, 1865",
        "state": "North Carolina",
        "class": "A",
        "victory": "Union",
@@ -2507,7 +2507,7 @@ let civil_war_battles =
        "notes": "Union forces capture river crossing.\n"
     },
     "Battle of Hatcher's Run": {
-       "date": "February 5–7, 1865",
+       "date": "February 5-7, 1865",
        "state": "Virginia",
        "class": "B",
        "victory": "Union",
@@ -2535,7 +2535,7 @@ let civil_war_battles =
        "notes": "Confederate victory in Florida prevents the capture of Tallahassee.\n"
     },
     "Battle of Wyse Fork": {
-       "date": "March 7–10, 1865",
+       "date": "March 7-10, 1865",
        "state": "North Carolina",
        "class": "D",
        "victory": "Union",
@@ -2556,7 +2556,7 @@ let civil_war_battles =
        "notes": "Union and Confederate forces attack one another in turn, both attacks fail.\n"
     },
     "Battle of Bentonville": {
-       "date": "March 19–21, 1865",
+       "date": "March 19-21, 1865",
        "state": "North Carolina",
        "class": "A",
        "victory": "Union",
@@ -2570,7 +2570,7 @@ let civil_war_battles =
        "notes": "Lee attempts to break siege.\n"
     },
     "Battle of Spanish Fort": {
-       "date": "March 27 – April 8, 1865",
+       "date": "March 27 - April 8, 1865",
        "state": "Alabama",
        "class": "B",
        "victory": "Union",
@@ -2654,7 +2654,7 @@ let civil_war_battles =
        "notes": "Lee realizes his army is on the verge of defeat.\n"
     },
     "Battle of High Bridge": {
-       "date": "April 6–7, 1865",
+       "date": "April 6-7, 1865",
        "state": "Virginia",
        "class": "C",
        "victory": "Inconclusive",
