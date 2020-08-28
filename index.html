@@ -8,13 +8,48 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" href="emovo.png">
+<link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
 .fa-anchor,.fa-coffee {font-size:200px}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: antiquewhite;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  z-index: 2;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  overflow: auto; /* Enable scroll if needed */
+}
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 <body>
-
 <!-- Navbar -->
 <div class="w3-top">
   <div class="w3-bar w3-light-grey w3-card w3-left-align w3-large">
@@ -37,7 +72,21 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <!--<a href="profile.html" class="w3-bar-item w3-button w3-padding-large">Your Profile</a>-->
   </div>
 </div>
-
+<!--redirect option to civil war map -->
+<div id='redirect_modal' class='modal' style='font-family: rye, cursive;'> 
+  <div id='redirect' class='modal-content'>
+    <p id='redirect_text'>Greetings!</p>
+    <p id='redirect_long_text'>I have recently made an interactive Civil War site that's under the EMOVO domain (Link: https://emovo.github.io/civilwar_intro.html). 
+     If you decide to the come back to the EMOVO retirement project you'd use this link: https://emovo.github.io/ instead.
+    </p>
+    <button id="redirect_no" class="button" style="padding-top: 2%; padding-left: 2%; padding-right: 2%; padding-bottom: 2%;" onclick="stayHere()">I'm staying here</button>
+    <br>
+    <button id="redirct_yes" class="button" style="padding-top: 2%; padding-left: 2%; padding-right: 2%; padding-bottom: 2%;" onclick="visitWarMap()">Visit the war map</button>
+    <br>
+    <button id="help_open" class="button">Help</button>
+  </div>
+</div>
+  
 <!-- Header -->
 <header class="w3-container w3-orange w3-center" style="padding:128px 16px">
   <h1 class="w3-margin w3-jumbo">Welcome to EMOVO!</h1>
@@ -101,6 +150,12 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
  <p>Website design based from <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> template</p>
 </footer>
 <script>
+function visitWarMap(){
+  window.location.href = "civilwar_intro.html";
+}
+function stayHere(){
+  document.getElementById("redirect_modal").style.display = "none";
+}
 function toggle() {
   var x = document.getElementById("navDemo");
   if (x.className.indexOf("w3-show") == -1) {
