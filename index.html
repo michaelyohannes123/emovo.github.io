@@ -36,18 +36,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   width: 80%; /* Could be more or less, depending on screen size */
   overflow: auto; /* Enable scroll if needed */
 }
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
 </style>
 <body>
 <!-- Navbar -->
@@ -73,7 +61,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   </div>
 </div>
 <!--redirect option to civil war map -->
-<div id='redirect_modal' class='modal' style='font-family: rye, cursive;'> 
+<div id='redirect_modal' class='modal' style='font-family: rye, cursive; display: none;'> 
   <div id='redirect' class='modal-content'>
     <p id='redirect_text'>Greetings!</p>
     <p id='redirect_long_text'>I have recently made an interactive Civil War site that's under the EMOVO domain (Link: https://emovo.github.io/civilwar_intro.html). 
@@ -150,6 +138,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
  <p>Website design based from <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> template</p>
 </footer>
 <script>
+window.onload = function(){document.getElementById("redirect_modal").style.display = "block";}
 function visitWarMap(){
   window.location.href = "civilwar_intro.html";
 }
