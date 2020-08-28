@@ -9,6 +9,7 @@ let state_names = ['Alabama','Arizona','Arkansas','California','Colorado',
 let confed_states_1864 = ['Texas', 'Arkansas', 'Louisiana', 'Tennessee', 'Mississippi', 'Alabama', 
   'Georgia', 'Florida', 'South Carolina', 'North Carolina', 'Virginia'];
 
+//Data source from https://en.wikipedia.org/wiki/1864_United_States_presidential_election
 let election_data_1864 = {'California':{'nu_count':'62,053','nu_electoral':'5','dem_count':'43,837','dem_electoral':'-1'},
   'Connecticut':{'nu_count':'44,673','nu_electoral':'6','dem_count':'42,285','dem_electoral':'-1'},
   'Delaware':{'nu_count':'8,155','nu_electoral':'–','dem_count':'8,767','dem_electoral':'3'},
@@ -72,6 +73,7 @@ let states_to_terrs_1860 = {'Wyoming': 'Nebraska Territory', 'North Dakota': 'Ne
   'New Mexico': 'New Mexico Territory', 'Kansas': 'Kansas Territory', 'Nevada': 'Utah Territory'
 };
 
+//Data source from https://en.wikipedia.org/wiki/1860_United_States_presidential_election
 let election_data_1860 = 
 {
     "Alabama": {

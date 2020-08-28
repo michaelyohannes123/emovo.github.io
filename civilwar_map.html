@@ -259,10 +259,39 @@
       <div id='intro' class='modal-content'>
         <p id='intro_text'></p>
         <p id='intro_long_text'></p>
-        <br>
         <button id="intro_close" class="button">See battle map</button>
+        <br>
+        <br>
+        <button id="help_open" class="button">Help</button>
       </div>
     </div>
+    <div id='help_modal' class='modal' style='display:none;'> 
+      <div id='help' class='modal-content'>
+        <span id='help_close' class='close' style="float: right;">&times;</span>
+        <p>Instructions</p>
+        <p>In regards to the map:</p>
+        <p>- Click the little map markers to see more information about a specific battle. The map markers have the following significance based on 
+          <a href="http://npshistory.com/publications/battlefield/cwsac/report.pdf" style="color: black;">Civil War Sites Advisory Commission</a> classifications:</p>
+        <br>
+        <img src="images\a_battle.png" src="" alt="class A"></img> - Decisive Engagement (class A)
+        <br>
+        <img src="images\b_battle.png" src="" alt="class B"></img> - Major Engagement (class B)
+        <br>
+        <img src="images\c_battle.png" src="" alt="class C"></img> - Formative Engagement (class C)
+        <br>
+        <img src="images\d_battle.png" src="" alt="class D"></img> - Limited Engagement (class D)
+        <br>
+        <br>
+        <p>- Click highlighted countries to see some information about how they responded to the conflict.</p>
+        <p>- Use the "Map Settings" tab to adjust the heatmap visuals for the battles.</p>
+        <p>- Use the "War Report" tab to see general conflict statistics related to the year.</p>
+        <br>
+        <p>In regards to the tabs:</p>
+        <p>- Use the "Troop Statistics" tab to see a slideshow infographic-esque visual of certain statistics about the conflict.</p>
+        <p>- Use the "Morse Code" tab to see a text to morse code (and vice versa) converter.</p>
+      </div>
+    </div>
+    
     <div id="heatmap_sides" style="float: left; top: 30%; z-index: 3;">
       <!--<select id="heatmap_view">
         <option value="heatmap_general" selected>Heatmap (General)</option>
@@ -425,6 +454,14 @@ document.getElementById('nations_close').onclick = function() {
   document.getElementById('nations_modal').style.display = 'none';
   clicked_nation = false;
 }
+document.getElementById('help_close').onclick = function() {
+  document.getElementById('help_modal').style.display = 'none';
+}
+document.getElementById('help_open').onclick = function() {
+  document.getElementById('intro_modal').style.display = 'none';
+  document.getElementById('help_modal').style.display = 'block';
+}
+
 let current_markers = {};
 let maps_url;
 let newspapers_url;
@@ -732,15 +769,25 @@ function showElection(){
   }
   if(parseInt(year) === 1861){
     document.getElementById('election_text').innerText = 'Election of 1860';
+    document.getElementById('election_long_text').innerHTML = 'With the issue of slavery and the associated states rights becoming an increasingly unavoidable issue to address, the election became extremely tumultuous, as certain states began threatening to secede from the Union if the election results weren\'t in their favor. ' 
+      + ' The Republicans were a relatively new party, selecting Abraham Lincoln - Hannibal Hamlin as their ticket. The party was anti-slavery, making them firmly supported in the North. '
+      + ' The primary party opposing them was the Southern Democrats, a newly formed group that emerged from the splitting of the Democrat Party. Their platform was pro-slavery and they selected John Breckinbridge - Joseph Lane as their ticket.'
+      + ' There was also the Northern Democrats, the other half of the original Democrat Party, who nominated Stephen Douglas - Herschel Johnson as their ticket. There platform was not pro-slavery, and were somewhat more moderate on the slavery issue, with Douglas being the one who devised the concept of popular sovereignty (let the states decide whether to be a slave or free state) for new states entering the Union. '
+      + ' Another contender was the Constitutional Party, which nominated John Bell - Edward Everett as their ticket. They were against the idea of secession, as they saw it as an affront to the Constitution, and did not have a stance on slavery. Much of their votes came from people in the South who weren\'t as fervent in the idea of secession ';
+      + ' (see <a href="https://en.wikipedia.org/wiki/Southern_Unionist" style="color: black;">Southern Unionist</a>). '
+      + ' In some of the pro-Lincoln states, non-Republican candidates pooled their votes together into a fusion ticket, though it was unsuccessful in preventing Lincoln from getting the electoral votes from those states. '
+      + '<br><br>Click on the color-coded states to see the election results.';
     document.getElementById('election_modal').style.display = 'block';
     showElection1860();
   }
   if(parseInt(year) === 1864){
     let war_state = constructHeatmap1864();
-    //'union_victs': union_victs, 'confed_victs': confed_victs, 'ties': ties
     document.getElementById('election_text').innerText = 'Election of 1864';
-    document.getElementById('election_long_text').innerText = '(union:'+war_state.union_victs
-      +', confed:'+war_state.confed_victs+', ties:'+war_state.ties+')';
+    document.getElementById('election_long_text').innerHTML = ' With the Civil War still raging on, the Union were to conduct a presidential election under unprecedented circumstances. For this election, Abraham Lincoln, the incumbent and head of the National Union Party (a re-naming of the Republican Party), and chose his new VP to be Andrew Johnson of the War Democrats. '
+      + ' Opposing them was former Union George McClellan with George Pendleton as the VP pick. The main question at the time was to decide whether to pursue peace with the Confederacy or continue the war, '
+      + ' with the National Union platform wanting to continue, and the Democrat platform being split among the Peace and War Democrat factions. '
+      + ' It\'s important to remember that at the time for much of the Civil War, the Union becoming a victor in the conflict was not necessarily a certainty, especially given the many battle victories the Confederates got. '
+      + '<br><br>Click on the states to see their voting records this election. A heatmap of the battles that occurred around the election time period is also displayed as well, as its important to remember the nation was still divided.';
     document.getElementById('election_modal').style.display = 'block';
     showElection1864();
   }
@@ -977,6 +1024,7 @@ function showElection1860(){
     if(states.length > 0){
       if(clicked_election_state === false){ //state_hovered !== states[0].properties.name && 
         state_hovered = states[0].properties.name;
+        document.getElementById('state_hover_long_text').innerHTML = 'Click to see more about the state.';
         document.getElementById('candidates_box_hover').style.display = 'block';
         if(state_hovered === 'Colorado'){
           document.getElementById('state_hover_text').innerText = state_hovered;
@@ -1062,8 +1110,10 @@ function showElection1864(){
           document.getElementById('candidates_text').innerText = state_hovered + 
             ' was not a state at the time, and was considered to be ' + states_to_terrs_1864[state_hovered] + '. ';
             //+ territories_1864[states_to_terrs_1864[state_hovered]].info;
+        }else if(state_hovered === 'Tennessee' || state_hovered === 'Louisiana'){
+          document.getElementById('candidates_text').innerText = state_hovered + ' recently became under control for the most part by Union forces, and was able to cast electoral votes. However Congress, due to the firm control of Radical Republicans at the time, denied their votes from counting. This would not have changed the overall election outcome however.';
         }else if(confed_states_1864.includes(state_hovered)){ //inside confederacy at the time
-          document.getElementById('candidates_text').innerText = state_hovered + ' was part of the confederacy at the time and thus was not part of the election.';
+          document.getElementById('candidates_text').innerText = state_hovered + ' was part of the Confederacy at the time and thus was not part of the election.';
         }else{
           document.getElementById('candidates_text').innerText = state_hovered + ' was a part of the election, and voted for ' 
             + state_choices_1864[state_hovered] + '.';
@@ -1131,6 +1181,7 @@ function showElection1864(){
     });
     if(states.length > 0){
       if(clicked_election_state === false){ //state_hovered !== states[0].properties.name && 
+        document.getElementById('state_hover_long_text').innerHTML = 'Click to see more about the state.';
         state_hovered = states[0].properties.name;
         document.getElementById('candidates_box_hover').style.display = 'block';
         if(states_to_terrs_1864[state_hovered] !== undefined){
@@ -1847,7 +1898,7 @@ let mouse_list_world = [];
 let place_hovered = '';
 function removeWorldData(){
   mouse_list_world = [];
-  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska'];
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska', 'Hawaii'];
   for(let i = 0; i < places.length; i++){
     if(map.getLayer(places[i])){
       map.removeLayer(places[i]);
@@ -1868,8 +1919,8 @@ worldBounds.features[i].properties.name
 worldBounds.features[i].geometry.coordinates
       */
   mouse_list_world = [];
-  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland'];
-  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52'];
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska', 'Hawaii'];
+  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52', '#ffffff', '#b19cd9'];
   for(let i = 0; i < places.length; i++){
     let will_show = false;
     let place_html = '';
@@ -1892,17 +1943,18 @@ worldBounds.features[i].geometry.coordinates
        will_show = true;
     }
     if(places[i] === 'Australia'){
-      place_html = 'Similar to India, Australia becomes more useful to Britain for its cotton production, as the Confederacy was in the midst of war. Their sympathies for either side were largely split.';
+      place_html = 'Similar to India, Australia becomes more useful to Britain for its cotton production, as the Confederacy was in the midst of war. The Australian public\'s sympathies for either side were largely split.';
       will_show = true;
     }
     if(places[i] === 'United Kingdom'){
       place_html = 'The United Kingdom maintained neutrality throughout the conflict, though for the elites and big businesses, the Confederacy was the more sympathetic side. Oftentimes private businesses were producing ships and supplies for the Confederacy, '
        + 'and even transporting Confederate ambassadors to the United Kingdom. The latter means of support would lead to the <a href="https://en.wikipedia.org/wiki/Trent_Affair" style="color: black;">Trent Affair</a>, which was the incident that nearly caused war between them and the Union. '
-       + 'The Union was more sympathetically viewed among the working class, most especially once Abraham Lincoln declared the Emancipation Proclamation and thus proclaimed the war to be over slavery.';
+       + 'The Union was more sympathetically viewed among the working class, most especially once Abraham Lincoln declared the Emancipation Proclamation and proclaimed the war to be over slavery, which was a very unpopular system among much of the British populace, given they recently outlawed it. '
+       + 'The Confederacy was hoping for them and France to intervene on their side, but they never did since they didn\'t see much benefits from inciting war with the United States.';
       will_show = true;
     }
     if(places[i] === 'Brazil' && parseInt(year) === 1865){
-      place_html = 'Of the Confederates who fled the United States upon the Confederacy\'s defeat, a majority went to Brazil to re-settle, as Brazil still had legalized slavery and relied on cotton production as well. Some actually remained there and started families and even founded a city called Americana ' +
+      place_html = 'Of the Confederates who fled the United States upon the Confederacy\'s defeat, a majority went to Brazil to re-settle, as Brazil still had legalized slavery and relied on cotton production as well. Some actually remained there and started families and even founded a city called ' +
       ' <a href="https://en.wikipedia.org/wiki/Americana,_S%C3%A3o_Paulo" style="color: black;">Americana</a>.';
       will_show = true;
     }
@@ -1911,8 +1963,8 @@ worldBounds.features[i].geometry.coordinates
       will_show = true;
     }
     if(places[i] === 'France'){
-      place_html = 'While a neutral nation like the all the other foreign powers, the French saw territorial opportunities in the North American region given the chaos, and had a preference for the Confederacy'
-        + ' in that regard, as evident when they would begin their intervention campaign in Mexico in 1861. However, they did seek to maintain a non-combative relationship with the Union during the war. The Confederacy was hoping for them to intervene on their side, but they never did as they did not wish to incite war with the United States';
+      place_html = 'While a neutral nation like the all the other foreign powers, the French saw territorial opportunities in the North American region due to the conflict, and was sympathetic to the Confederacy'
+        + ' in that regard, as evident when they would begin their intervention campaign in Mexico in 1861. However, they did seek to maintain a non-combative relationship with the Union during the war. The Confederacy was hoping for them and the British to intervene on their side, but they never did as they didn\'t see much benefits from inciting war with the United States.';
       will_show = true;
     }
     if(places[i] === 'Russia'){
@@ -1920,8 +1972,17 @@ worldBounds.features[i].geometry.coordinates
          'a period called <a href="https://en.wikipedia.org/wiki/The_Great_Game" style="color: black;">The Great Game</a>. ';
       will_show = true;
     }
+    if(places[i] === 'Alaska'){
+      place_html = 'Alaska was part of the Russian Empire at the time, and was purchased by the United States in 1867. Russia was quite sympathetic to Union, one reason being to counterbalance the British government\'s sympathies for the Confederacy. At the time both nations were competing for global influence in ' + 
+         'a period called <a href="https://en.wikipedia.org/wiki/The_Great_Game" style="color: black;">The Great Game</a>. ';
+      will_show = true;
+    }
     if(places[i] === 'Ireland'){
       place_html = 'With the Great Famine occuring in Ireland ~15 years earlier, many Irish immigrating to the United States and would serve in the conflict, mostly on the <a href="https://en.wikipedia.org/wiki/Irish_Brigade_(Union_Army)" style="color: black;">Union</a> side.';
+      will_show = true;    
+    }
+    if(places[i] === 'Hawaii'){
+      place_html = 'Hawaii was an independent kingdom at the time, led by King Kamehameha IV. They were neutral during the conflict like all the other nations, though held sympathetic views largely towards the Union.';
       will_show = true;    
     }
     if(will_show){
@@ -1986,6 +2047,29 @@ function preSetUpPoints(year){
   }
   document.getElementById(year).style.color = 'gold';
   document.getElementById('intro_text').innerHTML = year;
+  /*<div id='intro_modal' class='modal' style='display:none;'> 
+      <div id='intro' class='modal-content'>
+        <p id='intro_text'></p>
+        <p id='intro_long_text'></p>
+        <br>
+        <button id="intro_close" class="button">See battle map</button>
+      </div>
+    </div>*/
+  if(parseInt(year) === 1861){
+    document.getElementById('intro_long_text').innerHTML = 'The war commenced this year, with April 12 Confederate attack on Fort Sumter initiating hostilities. For a bit of context, see the "Recent Election!" tab to see the results of the 1860 election, which was one of the short term catalysts for the war starting.';
+  }
+  if(parseInt(year) === 1862){
+    document.getElementById('intro_long_text').innerHTML = '';
+  }
+  if(parseInt(year) === 1863){
+    document.getElementById('intro_long_text').innerHTML = '';
+  }
+  if(parseInt(year) === 1864){
+    document.getElementById('intro_long_text').innerHTML = 'See the "Recent Election!" tab to see the 1864 eletions results.';
+  }
+  if(parseInt(year) === 1865){
+    document.getElementById('intro_long_text').innerHTML = '';
+  }
   document.getElementById('intro_modal').style.display = 'block';
   if(parseInt(year) === 1861 || parseInt(year) === 1864){
     document.getElementById('elections').style.display = 'block';
@@ -2040,7 +2124,6 @@ function setUpPoints(id){
   }
 }
 
-//FROM https://www.w3schools.com/howto/howto_js_autocomplete.asp
 function checkBattle(inp) {
   let input = document.getElementById(inp);
   let arr = Object.keys(current_markers);

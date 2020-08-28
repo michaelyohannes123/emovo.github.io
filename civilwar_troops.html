@@ -178,6 +178,7 @@
       -moz-animation-iteration-count: 1;
       -o-animation: blink 1s;
       -o-animation-iteration-count: 1;
+      opacity: 0.7;
     }
 
     .tooltip {
@@ -248,7 +249,8 @@
 
     /* On hover, add a black background color with a little bit see-through */
     .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
+      background: antiquewhite;
+      color: black;
     }
 
     svg {
@@ -410,15 +412,15 @@ TODO
     <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow-->
     <!--class="slide fade"-->
     <!--troop uniforms-->
-    <div id="background_image" class="background_img" style="filter: brightness(60%);">
+    <div id="background_image" class="background_img" style="filter: brightness(45%);">
       <img src="images/union.jpg"/>
     </div>
     <!--pay + prior professions-->
-    <div id="background_image" class="background_img" style="filter: brightness(60%);">
+    <div id="background_image" class="background_img" style="filter: brightness(50%);">
       <img src="images/confed_soldiers.jpg"> 
     </div>
     <!--resources-->
-    <div id="background_image" class="background_img" style="filter: brightness(65%);">
+    <div id="background_image" class="background_img" style="filter: brightness(55%);">
       <img src="images/ironworks.jpg">
     </div>
     <!--casualties-->
@@ -437,7 +439,7 @@ TODO
       <div id='intro' class='modal-content'>
         <span id='data_close' class='close' style="float: right;">&times;</span>
         <p id='intro_text'>The Union had a significant resources advantage over the Confederacy, enabling them to 
-          outpace the Confederates in producing railroads, ships, heavy and light weaponry, as well as other war material.</p>
+          outpace the Confederates in producing railroads, ships, heavy and light weaponry, as well as other war material. Their advantage proved useful for engaging in an attrition strategy to diminish and eventually control the Confederacy.</p>
         <p id='intro_long_text'>Data Source: Historical Statistics of the United States</p>
         <p>Legend: Union - blue, Confederate - gray</p>
         <br>
@@ -471,8 +473,8 @@ TODO
     <div id='uniform_modal' class='modal'> 
       <div class='modal-content'>
         <span id='uniform_close' class='close' style="float: right;">&times;</span>
-        <p id='uniform_text'>Civil War uniforms often varied greatly </p>
-        <p id='uniform_long_text'>Hover over the infantry soldier to see more information on his uniforms.</p>
+        <p id='uniform_text'>Civil War uniforms often varied greatly from unit to unit. Here are just two uniform variations from both sides:</p>
+        <p id='uniform_long_text'>Hover over parts of the infantry soldier to see more information about his uniform..</p>
         <!-- Hover over certain parts of the soldier to see general characteristics about Springfield Model 1855 width="25px" height="50px"-->
         <select id="uniforms" name="uniforms">
           <option value="union_soldier" selected>Union Soldier</option>
@@ -514,6 +516,8 @@ TODO
             onmouseover="showUniformItem('confed_jacket')" onmouseout="showUniformItem('')"></a>
           <a style="top: 56%; left: 41%; width: 5%; height: 25%;"
             onmouseover="showUniformItem('knife')" onmouseout="showUniformItem('')"></a>
+          <a style="top: 70%; left: 46%; width: 18%; height: 20%;"
+            onmouseover="showUniformItem('confed_pants')" onmouseout="showUniformItem('')"></a>
           <a style="top: 14%; left: 38%; width: 3%; height: 57%;"
             onmouseover="showUniformItem('confed_gun')" onmouseout="showUniformItem('')"></a>
           <a style="top: 58%; left: 53%; width: 6%; height: 12%;"
@@ -792,73 +796,79 @@ The 483,026 total Confederate casualties have been divided accordingly:
         if(item === 'union_gun'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Union Weapons';
-          document.getElementById('explain_text').innerText = 'Springfield Model 1855';
+          document.getElementById('explain_text').innerText = 'The soldier is armed with the Springfield Model 1855, which is a rifle musket that, along with the other Springfield variants, were widely used during the war. These single-shot rifles had an effective firing range that was well suited for the "line of marching infantrymen" tactic often used during battles.';
         }
         if(item === 'bayonet'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Bayonet';
-          document.getElementById('explain_text').innerText = 'stuff';
+          document.getElementById('explain_text').innerText = 'In the event of charge order issued, the bayonet proved useful in engaging in close combat with the enemy.';
         }
         if(item === 'union_hat'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Union Hat Variants';
-          document.getElementById('explain_text').innerText = 'mention hats worn by union like kepi (depicted), slouch hat';
+          document.getElementById('explain_text').innerText = 'The soldier\'s wearing a forage cap, whose design was largely based on the French kepi. Other types of headgear the soldiers would wear in the field would be the Hardee, slouch, and pork pie hats.';
         }
         if(item === 'facial_hair'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Facial Hair';
-          document.getElementById('explain_text').innerText = 'Soldiers and generals of both sides often wore beards...';
+          document.getElementById('explain_text').innerHTML = 'Soldiers of all ranks on both sides often wore facial hair, as it was the style of the time. More information <a href="https://prologue.blogs.archives.gov/2014/08/25/civil-war-fashion-a-facial-hair-frenzy/" style="color: black;">here</a>.';
         }
         if(item === 'knapsack'){
           document.getElementById('explain_div').style.display = 'block';
-          document.getElementById('explain_title').innerText = 'Knapsack';
-          document.getElementById('explain_text').innerText = 'stuff';
+          document.getElementById('explain_title').innerText = 'Blanket Roll';
+          document.getElementById('explain_text').innerHTML = 'With the average daily march being around <a href="https://www.civilwarmed.org/quick-facts/onthego/#:~:text=%2C%202004%2C%20338.-,Marching,in%20retreat%20or%20in%20pursuit." style="color: black;">8 to 13</a> miles, the blanket roll proved useful for their rest periods during the night.';
         }
         if(item === 'backpack'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Backpack';
-          document.getElementById('explain_text').innerText = 'stuff';
+          document.getElementById('explain_text').innerHTML = 'Carrying around <a href="https://www.civilwarmed.org/quick-facts/onthego/#:~:text=%2C%202004%2C%20338.-,Marching,in%20retreat%20or%20in%20pursuit." style="color: black;">30 to 50 pounds</a> of military gear, backpacks were often a necessary tool during marches.';
         }
         if(item === 'union_jacket'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Union Jacket';
-          document.getElementById('explain_text').innerText = 'mention unique unit 1st United States Sharpshooters'; 
+          document.getElementById('explain_text').innerHTML = 'While volunteer units often wore a variety of different uniforms, for the most part the Union were in blue. There were certain unique units who deviated from this color scheme, notably the elite <a href="https://en.wikipedia.org/wiki/1st_United_States_Sharpshooters" style="color: black;">1st United States Sharpshooters</a> unit, who wore an entirely green uniform instead.'; 
         }
         if(item === 'union_pants'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Union Pants';
-          document.getElementById('explain_text').innerText = 'unique union unit paints - zouave, 6th Regiment European Brigade';
+          document.getElementById('explain_text').innerHTML = 'In general Union pants were blue, with some having a stripe depending if the soldier was an NCO. There were variations on this standard, '
+            + 'as there were units inspired by the Europeans, more specifically the famed French Zouave units at the time, who wore baggy trousers. For the Union one example unit would be the <a href="https://en.wikipedia.org/wiki/5th_New_York_Volunteer_Infantry" style="color: black;">5th New York Volunteer Infantry</a>.';
         }
 
         if(item === 'confed_hat'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Confederate Hat Variants';
-          document.getElementById('explain_text').innerText = 'confed hats';
+          document.getElementById('explain_text').innerHTML = 'The soldier appears to be wearing a variant of the slouch hat, which was popularly used by both the Confederate and Union forces. The kepi was also another popular headgear.';
         }
         if(item === 'confed_jacket'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Confederate Jacket';
-          document.getElementById('explain_text').innerText = 'unique: 5th Georgia Volunteer Infantry';
+          document.getElementById('explain_text').innerHTML = 'While volunteer units often wore a variety of different uniforms, for the most part the Confederates wore gray. There were certain unique units who deviated from this color scheme, such as wearing green uniforms. '
+            + 'Like the Union, some units were inspired by the European military, such as the <a href="https://en.wikipedia.org/wiki/6th_Regiment,_European_Brigade" style="color: black;">6th Regiment European Brigade</a>, '
+            + ' who wore uniforms that resembled the red jacket-blue pants units of the famed Italian revolutionary Giuseppe Garibaldi.'
         }
         if(item === 'confed_gun'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Double Barreled Shotgun';
-          document.getElementById('explain_text').innerText = 'confed_gun';
+          document.getElementById('explain_text').innerHTML = 'This soldier is wielding a Double Barreled Shotgun, which was put to effective use during close quarters combat that soldiers would often encounter during charges.';
         }
         if(item === 'pistol'){
           document.getElementById('explain_div').style.display = 'block';
-          document.getElementById('explain_title').innerText = 'Pistol';
-          document.getElementById('explain_text').innerText = 'confed_pistol';
+          document.getElementById('explain_title').innerText = 'Revolver';
+          document.getElementById('explain_text').innerHTML = 'The soldier is armed with a single revolver, which was put to effective use during close quarters combat, as you can fire multiple shots in relatively rapid succession.';
         }
         if(item === 'knife'){
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Knife';
-          document.getElementById('explain_text').innerText = 'confed_knife';
+          document.getElementById('explain_text').innerHTML = 'Knives were often wielded for extremely hand to hand combat that could occur through charging tactics. However, they were outclassed by bayonets due to their limited range.';
         }
         if(item === 'confed_pants'){
+          console.log("hi")
           document.getElementById('explain_div').style.display = 'block';
           document.getElementById('explain_title').innerText = 'Confederate Pants';
-          document.getElementById('explain_text').innerText = 'unique confed units - also zouave (Louisiana Tigers), ';
+          document.getElementById('explain_text').innerHTML = 'In general Confederate pants were gray, with some having a small stripe depending if the soldier was an NCO. There were variations on this standard, '
+            + 'as there were units inspired by the Europeans, more specifically the famed French Zouave units at the time, who wore baggy trousers. One example unit would be '
+            + ' the <a href="https://en.wikipedia.org/wiki/Louisiana_Tigers" style="color: black;">Louisiana Tigers</a>.';
         }
       }
       
@@ -1047,7 +1057,7 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
           .attr('fill', function(d){ return(color(d.data.key)) })
           .attr("stroke", "white")
           .style("stroke-width", "2px")
-          .style("opacity", 0.7)
+          .style("opacity", 0.96)
 
         // Add the polylines between chart and labels:
         svg
@@ -1388,14 +1398,14 @@ Others included laborers, 9 percent; mechanics, 5.3 percent; commercial, 5 perce
             +' on with their never ceasing "ki-yi" until we found them face to face."';
           stat = 'Gilbert Adam Hays, 63rd Pennsylvania Volunteers';
           document.getElementById("see_uniforms").style.display = 'block';
-          document.getElementById("image_about").innerText = "Union troops at the Battle of Fredricksburg, 1862";
+          document.getElementById("image_about").innerText = "Union troops at the Battle of Fredricksburg, 1862.";
         }
         if(slideIndex !== 2){
           document.getElementById("see_pay").style.display = 'none';
         }else{
           id = "see_pay";
           document.getElementById("see_pay").style.display = 'block';
-          document.getElementById("image_about").innerText = "Confederate troops near Charleston, South Carolina in 1863";
+          document.getElementById("image_about").innerText = "Confederate troops near Charleston, South Carolina in 1863.";
           quote = '"This struggle is too large for you to be diverted from it by any small matter. ' + 
             'When you return to your homes rise up to the height of a generation of men worthy of a free Government, ' 
             +'and we will carry out the great work we have commenced."';

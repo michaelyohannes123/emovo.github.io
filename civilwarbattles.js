@@ -1,3 +1,4 @@
+//Data source from https://en.wikipedia.org/wiki/List_of_American_Civil_War_battles
 let civil_war_battles = 
 {
     "Battle of Fort Sumter": {

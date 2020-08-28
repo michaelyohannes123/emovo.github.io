@@ -82,6 +82,10 @@
         document.getElementById('on_this_day').innerText = 'On this day, ' + months[curr_month - 1] + ' ' 
           + curr_day + ', ' + ' the ' + battle_names_on_day[0].split('(')[0] + ' commenced ' + 
           (curr_year - battle_names_years[0]) + ' years ago.';
+      }else{
+        document.getElementById('on_this_day').innerHTML = (curr_year - 1865) + ' years, ' + Math.abs(curr_month - 11) + 
+          ' months, and ' + Math.abs(curr_day - 6)  + ' days ago, the Confederate ship CSS Shenandoah surrendered to the British, ending the Civil War. '
+          + '<br><br>See the battles that lead up to this point.';
       }
     }
   </script>
