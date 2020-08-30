@@ -137,7 +137,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
  <p>Website design based from <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> template</p>
 </footer>
 <script>
-window.onload = function(){document.getElementById("redirect_modal").style.display = "block";}
+window.onload = function(){
+  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    document.getElementById("redirect_modal").style.display = "none";
+  }else{
+    document.getElementById("redirect_modal").style.display = "block";
+  }
+}
 function visitWarMap(){
   window.location.href = "civilwar_intro.html";
 }
