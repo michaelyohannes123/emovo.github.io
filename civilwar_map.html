@@ -12,6 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
   <script src='civilwarbattlesgeo.js'></script>
   <script src='civilwarbattles.js'></script>
+  <script src='spam_battles.js'></script>
+  <script src='spam_battles_geo.js'></script>
   <script src='us_state_bounds.js'></script>
   <script src='world_bounds.js'></script>
   <script src='civilwar_elections.js'></script>
@@ -254,6 +256,7 @@
           color over the maps on mapbox and have a marker to differentiate 1860 borders from today
       -->
       <li id="elections"><a href="#" onclick="showElection()">Recent Election!</a></li> 
+      <li id="spam_sim"><a href="#" onclick="run1898()">1898 Simulation</a></li> 
     </ul>
     <div id='intro_modal' class='modal' style='display:none;'> 
       <div id='intro' class='modal-content'>
@@ -300,7 +303,7 @@
         <br>
         <option value="heatmap_confed">Heatmap (Confederate Victories)</option>
       </select>-->
-      <div id="heatmap_part" style="display: none;">
+      <div id="heatmap_part">
         <input type="radio" id="heatmap_general" name="heatmap_choice" value="heatmap_general" onclick="chooseHeatmap(this.id)" checked="checked">
         <label for="heatmap_general">Heatmap (General)</label>
         <br>
@@ -607,7 +610,7 @@ function adjustedHeatmap(year, side){
     if(battle_years.includes(year)){
       if(keys.indexOf(battle_name) > -1 && year === parseInt(date[1]) && battle['victory'] === side){ 
         let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
-        let battle_lat = parseFloat(battle_loc.split(",")[1]);
+        let battle_lat = parseFloat(battle_loc.split(",")[0]);
         let battle_lng = parseFloat(battle_loc.split(",")[1]);
         let point = {
           'type': 'Feature',
@@ -1793,7 +1796,6 @@ function getRelics(){
 //https://en.wikipedia.org/wiki/List_of_American_Civil_War_battles
 function setMarkerName(e) {
   battle_name = e.target.id;
-  //console.log(battle_name)
   loadBattle();
 }
 
@@ -1807,7 +1809,12 @@ function loadBattle(){
   //'https://www.loc.gov/maps/?q=' + battle_name + '&fo=json';
   newspapers_url = 'https://www.loc.gov/newspapers/?fo=json&q=' + battle_name;
   //'https://www.loc.gov/collections/military-battles-and-campaigns/?fo=json&' + battle_name;
-  let battle_keys = Object.keys(civil_war_battles);
+  let battle_keys = [];
+  if(year === 1898){
+    battle_keys = Object.keys(spam_battles);
+  }else{
+    battle_keys = Object.keys(civil_war_battles);
+  }
   let battle_pos = -1;
   for(let i = 0; i < battle_keys.length; i++){
     if(battle_keys[i] === battle_name){
@@ -1838,8 +1845,32 @@ function loadBattle(){
   document.getElementById('facts').style.display = 'block';
   document.getElementById('outcome').style.display = 'block';
   document.getElementById('iframe').style.display = 'block';
-  let battle_data = civil_war_battles[battle_keys[battle_pos]];
-  let battle_data_geo = civil_war_battles_geo[battle_keys[battle_pos]];
+
+  let battle_data = {};
+  let battle_data_geo = {};
+  if(year === 1898){
+    battle_keys = Object.keys(spam_battles);
+    battle_data = spam_battles[battle_keys[battle_pos]];
+    battle_data_geo = spam_battles_geo[battle_keys[battle_pos]];
+    document.getElementById('type').style.display = 'none';
+    document.getElementById('fly_to_next').style.display = 'none';
+  }else{
+    battle_keys = Object.keys(civil_war_battles);
+    battle_data = civil_war_battles[battle_keys[battle_pos]];
+    battle_data_geo = civil_war_battles_geo[battle_keys[battle_pos]];
+    let class_text = 'The battle was classified as ';
+    if(battle_data['class'] === 'A')
+      class_text += 'DECISIVE (class A) ';
+    if(battle_data['class'] === 'B')
+      class_text += 'MAJOR (class B) ';
+    if(battle_data['class'] === 'C')
+      class_text += 'FORMATIVE (class C) ';
+    if(battle_data['class'] === 'D')
+      class_text += 'LIMITED (class D) ';
+    document.getElementById('type').innerHTML = class_text + ' by the <a href="http://npshistory.com/publications/battlefield/cwsac/report.pdf" style="color: black;">Civil War Sites Advisory Commission</a>.'
+    //document.getElementById('info').appendChild(opposing);
+  }
+
   /*let battle_title = document.createElement('p');
   battle_title.id = 'battle_title';
   battle_title.innerHTML = battle_name;*/
@@ -1857,27 +1888,29 @@ function loadBattle(){
   location.innerHTML = battle_data['location'].split('\n')[0];*/
   document.getElementById('location').innerHTML = battle_data_geo['place'];
   //document.getElementById('info').appendChild(location);
-  let class_text = 'The battle was classified as ';
-  if(battle_data['class'] === 'A')
-    class_text += 'DECISIVE (class A) ';
-  if(battle_data['class'] === 'B')
-    class_text += 'MAJOR (class B) ';
-  if(battle_data['class'] === 'C')
-    class_text += 'FORMATIVE (class C) ';
-  if(battle_data['class'] === 'D')
-    class_text += 'LIMITED (class D) ';
-  document.getElementById('type').innerHTML = class_text + ' by the <a href="http://npshistory.com/publications/battlefield/cwsac/report.pdf" style="color: black;">Civil War Sites Advisory Commission</a>.'
-  //document.getElementById('info').appendChild(opposing);
   
   document.getElementById('facts').innerHTML = 'Info: ' + battle_data['notes'];
   
   /*let outcome = document.createElement('p');
   outcome.id = 'outcome';
   outcome.innerHTML = battle_data['result'].split('[')[0];*/
-  document.getElementById('outcome').innerHTML = battle_data['victory'];
-  if(battle_data['victory'].split(' ')[0] !== "Inconclusive"){
-    document.getElementById('outcome').innerHTML = document.getElementById('outcome').innerHTML + ' victory';
+  if(year === 1898){
+    let outcome_text = '';
+    let victor = battle_data['notes'].split(',')[0];
+    if(victor.split(' ')[0].includes('American') || victor.split(' ')[0].includes('US'))
+      outcome_text = 'American victory';  
+    else if(victor.split(' ')[0].includes('Spanish'))
+      outcome_text = 'Spanish victory';
+    else if(victor.split(' ')[0].includes('Inconclusive'))
+      outcome_text = 'Inconclusive';
+    document.getElementById('outcome').innerHTML = outcome_text;
+  }else{
+    document.getElementById('outcome').innerHTML = battle_data['victory'];
+    if(battle_data['victory'].split(' ')[0] !== 'Inconclusive'){
+      document.getElementById('outcome').innerHTML = document.getElementById('outcome').innerHTML + ' victory';
+    }
   }
+
   //document.getElementById('info').appendChild(outcome);
 
   /*let iframe = document.createElement('iframe');
@@ -1885,13 +1918,18 @@ function loadBattle(){
   iframe.src = 'https://www.youtube.com/embed/?listType=search&list=' + battle_name + ' battle footage&autoplay=1';
   iframe.width = '400';
   iframe.height = '300';*/
-  document.getElementById('iframe').src = 'https://www.youtube.com/embed/?listType=search&list=' + battle_name + ' civil war&autoplay=1'; //battle of phillipi
+  document.getElementById('iframe').style.display = 'none';
+  /*if(year === 1898){
+    document.getElementById('iframe').style.display = 'none';
+  }else{
+    document.getElementById('iframe').src = 'https://www.youtube.com/embed/?listType=search&list=' + battle_name + ' civil war&autoplay=1'; //battle of phillipi
+  }*/
   //document.getElementById('info').appendChild(iframe);
 
   /*document.getElementById('homefront_modal').style.display = 'block';
   document.getElementById('battle_map').style.display = 'block';
   document.getElementById('fly_to_next').style.display = 'block';*/ 
-  if(battle_name === "Battle of Fort Blakeley"){
+  if(battle_name === "Battle of Fort Blakeley" || year === 1898){
     document.getElementById('fly_to_next').style.display = 'none';
   }else{
     document.getElementById('fly_to_next').style.display = 'block'; //inline-block?
@@ -2041,6 +2079,7 @@ worldBounds.features[i].geometry.coordinates
 }
 
 function preSetUpPoints(year){
+  document.getElementById('heatmap_part').style.display = 'block';
   document.getElementById('heatmap_sides').style.display = 'block';
   document.getElementById('heatmap_general').checked = true;
   clearElection();
@@ -2072,13 +2111,18 @@ function preSetUpPoints(year){
     document.getElementById('intro_long_text').innerHTML = 'See the "Recent Election!" tab to see the 1864 eletions results.';
   }
   if(parseInt(year) === 1865){
-    document.getElementById('intro_long_text').innerHTML = '';
+    document.getElementById('intro_long_text').innerHTML = 'With the Union prevailing this year and the country subsequently reuniting, the United States, through 30 years of industrialization, would begin to emerge as a possible world power. See the \'1898 Simulation\' for more information.';
   }
   document.getElementById('intro_modal').style.display = 'block';
   if(parseInt(year) === 1861 || parseInt(year) === 1864){
     document.getElementById('elections').style.display = 'block';
   }else{
     document.getElementById('elections').style.display = 'none';
+  }
+  if(parseInt(year) === 1865){
+    document.getElementById('spam_sim').style.display = 'block';
+  }else{
+    document.getElementById('spam_sim').style.display = 'none';
   }
   setUpPoints(year);
   mouse_list_world = [];
@@ -2131,6 +2175,53 @@ function setUpPoints(id){
 function checkBattle(inp) {
   let input = document.getElementById(inp);
   let arr = Object.keys(current_markers);
+}
+
+function run1898(){
+  clearElection();
+  deleteMarkers();
+  removeWorldData();
+  document.getElementById('heatmap_part').style.display = 'none';
+  if(map.getLayer('heatmap_layer')){
+    map.removeLayer('heatmap_layer');
+  }
+  if(map.getSource('battle_points')){
+    map.removeSource('battle_points');
+  }
+  year = 1898;
+  //center map to 21.8708996,-81.7209732
+
+  //color states in union, spain, cuba 
+
+  //animate ship movements
+  for(var battle_name in spam_battles){
+    let battle = spam_battles[battle_name];
+    let coordinates = spam_battles_geo[battle_name]['lat_lng'];
+    let battle_lat = parseFloat(coordinates.split(',')[0]);
+    let battle_lng = parseFloat(coordinates.split(',')[1]);
+    let victor = battle['notes'].split(',')[0];
+    let el = document.createElement('div');
+    el.id = battle_name;
+    //white marker - us/cuba land battle win 
+    //red marker - spain land battle win
+    //red ship - spain ocean battle win
+    //white ship us ocean battle win
+    //use a timeline instead
+    if(victor.split(' ')[0].includes('American') || victor.split(' ')[0].includes('US'))
+      el.style.backgroundImage = 'url(\'images/us_battle.png\')'; 
+    else if(victor.split(' ')[0].includes('Spanish'))
+      el.style.backgroundImage = 'url(\'images/b_battle.png\')'; 
+    else if(victor.split(' ')[0].includes('Inconclusive'))
+      el.style.backgroundImage = 'url(\'images/tie.png\')'; 
+    el.style.borderRadius = 6 + 'px';
+    el.style.width = 30 + 'px';
+    el.style.height = 30 + 'px';
+    let marker = new mapboxgl.Marker(el)
+      .setLngLat([battle_lng, battle_lat])
+      .addTo(map);
+    el.addEventListener('click', setMarkerName, false); 
+    current_markers[battle_name] = {'marker': marker, 'lat': battle_lat, 'lon': battle_lng};
+  }
 }
     </script>
   </body>
