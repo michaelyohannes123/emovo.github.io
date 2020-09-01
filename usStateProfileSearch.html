@@ -226,11 +226,11 @@
             </table>
       </div>
       <br>
-      <div style="display:none; margin: auto;"><!--display: table-->
+      <!--<div style="display: table; margin: auto;">
         <p>Featured Location Video</p>
         <iframe id="video" width="400" height="300" src="#">
         </iframe>
-      </div>
+      </div>-->
      <br>
      <p id="login" style="display:table; margin: 0 auto;">You must be logged in to rate and comment</p>
      <br>
@@ -528,7 +528,7 @@ var stateIncomeTaxes={"Alabama":3.5,"Alaska":0,"Arizona":3.565,"Arkansas":3.9000
 //document.getElementById("myModal").style="display:none;"
 var state=JSON.parse(localStorage.getItem("stateSearch"))
 
-document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=best-places-to-live-in-"+state.name.replace(" "+"-")+"&autoplay=1"
+//document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=best-places-to-live-in-"+state.name.replace(" "+"-")+"&autoplay=1"
 //document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=living-in-"+state.name.replace(" "+"-")+"&autoplay=1"
 ////console.log(state)
 document.getElementById("starsRating").reset()
