@@ -14,6 +14,7 @@
   <script src='civilwarbattles.js'></script>
   <script src='spam_battles.js'></script>
   <script src='spam_battles_geo.js'></script>
+  <script src='spam_json.js'></script>
   <script src='us_state_bounds.js'></script>
   <script src='world_bounds.js'></script>
   <script src='civilwar_elections.js'></script>
@@ -256,7 +257,7 @@
           color over the maps on mapbox and have a marker to differentiate 1860 borders from today
       -->
       <li id="elections"><a href="#" onclick="showElection()">Recent Election!</a></li> 
-      <li id="spam_sim"><a href="#" onclick="run1898()">1898 Simulation</a></li> 
+      <li id="spam_sim"><a href="#" onclick="run1898()">1898</a></li> 
     </ul>
     <div id='intro_modal' class='modal' style='display:none;'> 
       <div id='intro' class='modal-content'>
@@ -268,6 +269,22 @@
         <button id="help_open" class="button">Help</button>
       </div>
     </div>
+    <div id='help_1898_modal' class='modal' style='display:none;'> 
+      <div id='help_1898' class='modal-content'>
+        <span id='help_1898_close' class='close' style="float: right;">&times;</span>
+        <p>Instructions</p>
+        <p>In regards to the map:</p>
+        <p>- Click the little map markers to see more information about a specific battle. The map markers in the case of the Spanish American War have the following significance based on 
+        <br>
+        <img src="images\b_battle.png" alt="spanish battle win"></img> - Spanish victory
+        <br>
+        <img src="images\us_battle.png" alt="us battle win"></img> - American victory
+        <br>
+        <img src="images\tie.png" alt="inconclusive"></img> - Inconclusive
+        <br>
+        <br>
+      </div>
+    </div>
     <div id='help_modal' class='modal' style='display:none;'> 
       <div id='help' class='modal-content'>
         <span id='help_close' class='close' style="float: right;">&times;</span>
@@ -276,13 +293,13 @@
         <p>- Click the little map markers to see more information about a specific battle. The map markers have the following significance based on 
           <a href="http://npshistory.com/publications/battlefield/cwsac/report.pdf" style="color: black;">Civil War Sites Advisory Commission</a> classifications:</p>
         <br>
-        <img src="images\a_battle.png" src="" alt="class A"></img> - Decisive Engagement (class A)
+        <img src="images\a_battle.png" alt="class A"></img> - Decisive Engagement (class A)
         <br>
-        <img src="images\b_battle.png" src="" alt="class B"></img> - Major Engagement (class B)
+        <img src="images\b_battle.png" alt="class B"></img> - Major Engagement (class B)
         <br>
-        <img src="images\c_battle.png" src="" alt="class C"></img> - Formative Engagement (class C)
+        <img src="images\c_battle.png" alt="class C"></img> - Formative Engagement (class C)
         <br>
-        <img src="images\d_battle.png" src="" alt="class D"></img> - Limited Engagement (class D)
+        <img src="images\d_battle.png" alt="class D"></img> - Limited Engagement (class D)
         <br>
         <br>
         <p>- Click highlighted countries to see some information about how they responded to the conflict.</p>
@@ -305,13 +322,13 @@
       </select>-->
       <div id="heatmap_part">
         <input type="radio" id="heatmap_general" name="heatmap_choice" value="heatmap_general" onclick="chooseHeatmap(this.id)" checked="checked">
-        <label for="heatmap_general">General Heatmap</label>
+        <label for="heatmap_general" onclick="document.getElementById('heatmap_general').checked = true">General Heatmap</label>
         <br>
         <input type="radio" id="heatmap_union" name="heatmap_choice" value="heatmap_union" onclick="chooseHeatmap(this.id)">
-        <label for="heatmap_general">Union Victories</label>
+        <label for="heatmap_union" onclick="document.getElementById('heatmap_union').checked = true">Union Victories</label>
         <br>
         <input type="radio" id="heatmap_confed" name="heatmap_choice" value="heatmap_confed" onclick="chooseHeatmap(this.id)">
-        <label for="heatmap_general">Confederate Victories</label>
+        <label for="heatmap_confed" onclick="document.getElementById('heatmap_confed').checked = true">Confederate Victories</label>
       </div>
       <br>
       <button id="slidebar_activate" class="button" onclick="runTimeline()" style="display:none;">Activate Timeline</button>
@@ -319,6 +336,16 @@
     <!--<div class="autocomplete">
       <input id="search_box" type="text" onkeyup="checkBattle('search_box')" placeholder="Search a battle">
     </div>-->
+    <div id='1898_modal' class='modal' style='display:none;'> 
+      <div id='1898' class='modal-content'>
+        <p id='1898_text'>33 years after the end of the Civil War, the United States was an industrialized and most importantly united nation. Nearing the turn of the century, the United States would begin to act as a world power, laying the foundations for the American foreign policy of today. This was exemplified in the Spanish American war, a "splendid little war" that saw the United States acquiring overseas possessions in the Caribbean and Pacific from the ailing Spanish Empire. Many of America's generals during this war were Civil War veterans who fought on both sides of that conflict, and were now on the same side fighting to take territory from a foreign power.</p>
+        <br>
+        <button id="1898_close" class="button">See Battles</button>
+        <br>
+        <br>
+        <button id="help_1898_open" class="button">Help</button>
+      </div>
+    </div>
     <div id='election_modal' class='modal' style='display:none;'> 
       <div id='election' class='modal-content'>
         <p id='election_text'></p>
@@ -410,12 +437,12 @@
     </div>
     <div id='war_map' class='map'></div>
     <div class="footer">
-      <!--<div class='timeline_buttons space_out' style='color:antiquewhite;'>
+      <div class='timeline_buttons space_out' style='color:antiquewhite;'>
         <h3 id='year_text'></h3>
-      </div>-->
+      </div>
       <div id="timeline" style="display: none;">
         <p id="timeline_date">Yo</p>
-        <input id="timeline_value" type="range" min="1" max="100" value="5" class="slider">
+        <input id="timeline_value" type="range" min="1" max="23" value="1" class="slider">
       </div>
       <ul style='justify-content: space-around;'>
         <!--https://www.battlefields.org/learn/primary-sources/cornerstone-speech-->
@@ -440,6 +467,9 @@ document.getElementById('intro_close').onclick = function() {
 }
 document.getElementById('election_close').onclick = function() {
   document.getElementById('election_modal').style.display = 'none';
+}
+document.getElementById('1898_close').onclick = function() {
+  document.getElementById('1898_modal').style.display = 'none';
 }
 document.getElementById('general_info_close').onclick = function() {
   document.getElementById('general_info').style.display = 'none';
@@ -467,6 +497,13 @@ document.getElementById('help_close').onclick = function() {
 document.getElementById('help_open').onclick = function() {
   document.getElementById('intro_modal').style.display = 'none';
   document.getElementById('help_modal').style.display = 'block';
+}
+document.getElementById('help_1898_close').onclick = function() {
+  document.getElementById('help_1898_modal').style.display = 'none';
+}
+document.getElementById('help_1898_open').onclick = function() {
+  document.getElementById('1898_modal').style.display = 'none';
+  document.getElementById('help_1898_modal').style.display = 'block';
 }
 
 let current_markers = {};
@@ -1202,8 +1239,11 @@ function showElection1864(){
     }
   });
 }
+
 function deleteMarkers() {
   let cm_keys = Object.keys(current_markers);
+  //console.log("deleteMarkers: ")
+  //console.log(cm_keys)
   for(let i = 0; i < cm_keys.length; i++){
     current_markers[cm_keys[i]]['marker'].remove();
   }
@@ -1251,18 +1291,17 @@ function applySettings(){
         <input id="timeline_value" type="range" min="1" max="100" value="5" class="slider">
       </div>
 */
-function runTimeline(){
-  document.getElementById('heatmap_part').style.display = 'none';
-  document.getElementById('timeline_value').value = 0;
-  document.getElementById('timeline').style.display = 'block';
-  document.getElementById('slidebar_activate').innerText = 'Stop animation';
-  document.getElementById('slidebar_activate').onclick = 'stopTimeline()';
+let battles_in_year = {};
+$("#timeline_value").on("input", function() {
   removeWorldData();
   deleteMarkers();
   clearElection();
-  setInterval(function() {
-    let c_keys = Object.keys(civil_war_battles);
-    let battle_name = c_keys[document.getElementById('timeline_value').value];
+  timelineFill(this.value);
+});
+function timelineFill(stop_length){
+  let c_keys = Object.keys(spam_battles);
+  for(let i = 0; i < stop_length; i++){
+    let battle_name = c_keys[i];
     let battle = battles_in_year[battle_name]
     let year = battle['date'].split(',')[1];
     let battle_date_parsed = battle['date'].split('-');
@@ -1272,22 +1311,22 @@ function runTimeline(){
     }
     let month = month_day.split(' ')[0];
     let day = parseInt(month_day.split(' ')[1]);
-    document.getElementById('timeline_date').innerText = month + ' ' + day + ', ' + year;
-    document.getElementById('timeline_value').value++;
-
-    let battle_loc = civil_war_battles_geo[battle_name]['lat_lng'];
+    if(i === stop_length - 1){
+      document.getElementById('timeline_date').innerText = month + ' ' + day + ', ' + year;
+    }
+    let battle_loc = spam_battles_geo[battle_name]['lat_lng']; //civil_war_battles_geo
     let battle_lat = parseFloat(battle_loc.split(",")[0]);
     let battle_lng = parseFloat(battle_loc.split(",")[1]);
     let el = document.createElement('div');
     el.id = battle_name;
-    if(battle['class'] === 'A')
-      el.style.backgroundImage = 'url(\'images/a_battle.png\')'; 
-    if(battle['class'] === 'B')
+    //spanish american war
+    let victor = spam_battles[battle_name]['notes'].split(',')[0];
+    if(victor.split(' ')[0].includes('American') || victor.split(' ')[0].includes('US'))
+      el.style.backgroundImage = 'url(\'images/us_battle.png\')'; 
+    else if(victor.split(' ')[0].includes('Spanish'))
       el.style.backgroundImage = 'url(\'images/b_battle.png\')'; 
-    if(battle['class'] === 'C')
-      el.style.backgroundImage = 'url(\'images/c_battle.png\')'; 
-    if(battle['class'] === 'D')
-      el.style.backgroundImage = 'url(\'images/d_battle.png\')';
+    else if(victor.split(' ')[0].includes('Inconclusive'))
+      el.style.backgroundImage = 'url(\'images/tie.png\')'; 
     el.style.borderRadius = 6 + 'px';
     el.style.width = 30 + 'px';
     el.style.height = 30 + 'px';
@@ -1296,11 +1335,124 @@ function runTimeline(){
       .addTo(map);
     el.addEventListener('click', setMarkerName, false);
     current_markers[battle_name] = {'marker': marker, 'lat': battle_lat, 'lon': battle_lng};
+  }
+}
+function timelineIncrement(stop_length){
+  let interval = setInterval(function() {
+    if(localStorage.getItem('stopped') !== 'true'){ //stopped timeline
+    if(parseInt(document.getElementById('timeline_value').value) >= parseInt(document.getElementById('timeline_value').max)){
+      document.getElementById('slidebar_activate').innerText = 'Restart animation';
+      document.getElementById('slidebar_activate').onclick = restartTimeline;
+    }else{
+      document.getElementById('slidebar_activate').innerText = 'Stop animation';
+      document.getElementById('slidebar_activate').onclick = stopTimeline;
+    }  
+    console.log("timelineIncrement: "+localStorage.getItem('stopped'))
+    if(parseInt(document.getElementById('timeline_value').value) > stop_length){ //end of timeline
+      clearInterval(interval);
+    }else{ //continue incrementing timeline
+      let c_keys = Object.keys(spam_battles); //civil_war_battles
+      let battle_name = c_keys[document.getElementById('timeline_value').value];
+      let battle = battles_in_year[battle_name]
+      let year = battle['date'].split(',')[1];
+      let battle_date_parsed = battle['date'].split('-');
+      let month_day = battle_date_parsed[0];
+      if(battle_date_parsed.length === 1){
+        month_day = battle['date'].split(',')[0];
+      }
+      let month = month_day.split(' ')[0];
+      let day = parseInt(month_day.split(' ')[1]);
+      document.getElementById('timeline_date').innerText = month + ' ' + day + ', ' + year;
+      document.getElementById('timeline_value').value++;
+      let battle_loc = spam_battles_geo[battle_name]['lat_lng']; //civil_war_battles_geo
+      let battle_lat = parseFloat(battle_loc.split(",")[0]);
+      let battle_lng = parseFloat(battle_loc.split(",")[1]);
+      let el = document.createElement('div');
+      el.id = battle_name;
+      /*//civil war
+      if(battle['class'] === 'A')
+        el.style.backgroundImage = 'url(\'images/a_battle.png\')'; 
+      if(battle['class'] === 'B')
+        el.style.backgroundImage = 'url(\'images/b_battle.png\')'; 
+      if(battle['class'] === 'C')
+        el.style.backgroundImage = 'url(\'images/c_battle.png\')'; 
+      if(battle['class'] === 'D')
+        el.style.backgroundImage = 'url(\'images/d_battle.png\')';*/
+      //spanish american war
+      let victor = spam_battles[battle_name]['notes'].split(',')[0];
+      if(victor.split(' ')[0].includes('American') || victor.split(' ')[0].includes('US'))
+        el.style.backgroundImage = 'url(\'images/us_battle.png\')'; 
+      else if(victor.split(' ')[0].includes('Spanish'))
+        el.style.backgroundImage = 'url(\'images/b_battle.png\')'; 
+      else if(victor.split(' ')[0].includes('Inconclusive'))
+        el.style.backgroundImage = 'url(\'images/tie.png\')'; 
+      el.style.borderRadius = 6 + 'px';
+      el.style.width = 30 + 'px';
+      el.style.height = 30 + 'px';
+      let marker = new mapboxgl.Marker(el)
+        .setLngLat([battle_lng, battle_lat])
+        .addTo(map);
+      el.addEventListener('click', setMarkerName, false);
+      current_markers[battle_name] = {'marker': marker, 'lat': battle_lat, 'lon': battle_lng};
+    }
+    }
   }, 600);
 }
 
+function runTimeline(){
+  console.log("runTimeline: "+localStorage.getItem('stopped'));
+  document.getElementById('heatmap_part').style.display = 'none';
+  document.getElementById('timeline_value').value = 0;
+  document.getElementById('timeline').style.display = 'block';
+  //document.getElementById('slidebar_activate').style.display = 'block';
+  document.getElementById('slidebar_activate').innerText = 'Stop animation';
+  document.getElementById('slidebar_activate').onclick = stopTimeline;
+  removeWorldData();
+  deleteMarkers();
+  clearElection();
+  timelineIncrement();
+}
+
 function stopTimeline(){
-console.log("stop")
+  localStorage.setItem('stopped', 'true');
+  console.log("stopTimeline: "+localStorage.getItem('stopped'))
+  document.getElementById('slidebar_activate').innerText = 'Continue animation';
+  document.getElementById('slidebar_activate').onclick = afterStopTimeline;
+}
+
+function afterStopTimeline(){
+  localStorage.clear();
+  timelineIncrement();
+}
+
+function clearTimeline(){
+  /*
+      <div class='timeline_buttons space_out' style='color:antiquewhite;'>
+        <h3 id='year_text'></h3>
+      </div>
+      <div id="timeline" style="display: none;">
+        <p id="timeline_date">Yo</p>
+        <input id="timeline_value" type="range" min="1" max="23" value="1" class="slider">
+      </div>
+        document.getElementById('slidebar_activate').innerText = 'Stop animation';
+  document.getElementById('slidebar_activate').onclick = 'runTimeline()';
+  */
+  localStorage.clear();
+  removeWorldData();
+  deleteMarkers();
+  clearElection();
+  document.getElementById('timeline').style.display = 'none';
+  document.getElementById('timeline_value').value = document.getElementById('timeline_value').max + 1;  
+  document.getElementById('slidebar_activate').style.display = 'none';
+}
+
+function restartTimeline(){
+  clearTimeline();
+  document.getElementById('timeline').style.display = 'block';
+  document.getElementById('timeline_value').value = 0;  
+  //document.getElementById('slidebar_activate').style.display = 'block';
+  document.getElementById('slidebar_activate').innerText = 'Stop animation';
+  document.getElementById('slidebar_activate').onclick = runTimeline;
 }
 
 function assembleYearData(){
@@ -1940,7 +2092,7 @@ let mouse_list_world = [];
 let place_hovered = '';
 function removeWorldData(){
   mouse_list_world = [];
-  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska', 'Hawaii'];
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska', 'Hawaii', 'Spain'];
   for(let i = 0; i < places.length; i++){
     if(map.getLayer(places[i])){
       map.removeLayer(places[i]);
@@ -1961,8 +2113,10 @@ worldBounds.features[i].properties.name
 worldBounds.features[i].geometry.coordinates
       */
   mouse_list_world = [];
-  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 'Russia', 'France', 'Ireland', 'Alaska', 'Hawaii'];
-  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', '#ffffff', '#0055a4', '#ab4b52', '#ffffff', '#b19cd9'];
+  let places = ['Canada', 'Mexico', 'Australia', 'United Kingdom', 'Brazil', 'India', 
+    'Russia', 'France', 'Ireland', 'Alaska', 'Hawaii', 'Spain'];
+  let place_colors = ['#ab4b52', '#006341', '#ab4b52', '#ab4b52', '#ffdf00', '#ab4b52', 
+    '#ffffff', '#0055a4', '#ab4b52', '#ffffff', '#b19cd9', '#e60026'];
   for(let i = 0; i < places.length; i++){
     let will_show = false;
     let place_html = '';
@@ -2027,6 +2181,10 @@ worldBounds.features[i].geometry.coordinates
       place_html = 'Hawaii was an independent kingdom at the time, led by King Kamehameha IV. They were neutral during the conflict like all the other nations, though held sympathetic views largely towards the Union.';
       will_show = true;    
     }
+    if(places[i] === 'Spain'){
+      place_html = 'The Spanish Empire, having territories in the Americas, had tense relations with the United States due to their expansionist ambitions. During the Civil War they remained neutral, and were concerns over the possibility that they may try to annex places like Cuba, which were under Spanish control. This overall concern of America and its Monroe Doctrine foreign policy, combined with its increasing industrialization, would lead to a greater strain of relations and subsequent war (see "1898" in the 1865 section for more information).';
+      will_show = true;    
+    }
     if(will_show){
       world_info[places[i]] = place_html;
       mouse_list_world.push(places[i]);
@@ -2077,11 +2235,25 @@ worldBounds.features[i].geometry.coordinates
     }
   });
 }
-
+function remove1898(){
+  console.log("mlist")
+  console.log(mouse_list)
+  for(let i = 0; i < mouse_list.length; i++){
+    if(map.getLayer(mouse_list[i])){
+      map.removeLayer(mouse_list[i]);
+    }
+    if(map.getSource(mouse_list[i])){
+      map.removeSource(mouse_list[i]);
+    }
+  }
+  mouse_list = [];
+}
 function preSetUpPoints(year){
   document.getElementById('heatmap_part').style.display = 'block';
   document.getElementById('heatmap_sides').style.display = 'block';
   document.getElementById('heatmap_general').checked = true;
+  remove1898();
+  clearTimeline();
   clearElection();
   removeWorldData();
   let ids = ['1861', '1862', '1863', '1864', '1865'];
@@ -2111,7 +2283,7 @@ function preSetUpPoints(year){
     document.getElementById('intro_long_text').innerHTML = 'See the "Recent Election!" tab to see the 1864 eletions results.';
   }
   if(parseInt(year) === 1865){
-    document.getElementById('intro_long_text').innerHTML = 'With the Union prevailing this year and the country subsequently reuniting, the United States, through 30 years of industrialization, would begin to emerge as a possible world power. See the \'1898 Simulation\' for more information.';
+    document.getElementById('intro_long_text').innerHTML = 'With the Union prevailing this year and the country subsequently reuniting, the United States, through 30 years of industrialization, would begin to emerge as a possible world power. See "1898" for more information.';
   }
   document.getElementById('intro_modal').style.display = 'block';
   if(parseInt(year) === 1861 || parseInt(year) === 1864){
@@ -2131,7 +2303,6 @@ function preSetUpPoints(year){
   //document.getElementById('search_box').style.display = 'block';
 }
 
-let battles_in_year = {};
 //get points relevant to selected year
 function setUpPoints(id){
   year = parseInt(id);
@@ -2151,7 +2322,7 @@ function setUpPoints(id){
       let el = document.createElement('div');
       el.id = battle_name;
       let battle = civil_war_battles[battle_name];
-      battles_in_year[battle_name] = battle;
+      //battles_in_year[battle_name] = battle;
       if(battle['class'] === 'A')
         el.style.backgroundImage = 'url(\'images/a_battle.png\')'; 
       if(battle['class'] === 'B')
@@ -2177,10 +2348,72 @@ function checkBattle(inp) {
   let arr = Object.keys(current_markers);
 }
 
+function colorCountries1898(){
+  let feature_states = [];
+  for(let i = 0; i < stateBounds_1898.features.length; i++){
+    feature_states.push(stateBounds_1898.features[i].properties.name);
+  }
+  for(let i = 0; i < feature_states.length; i++){
+    let name_index = state_names_1898.indexOf(feature_states[i]);
+    if(name_index > -1){
+      mouse_list.push(feature_states[i]);
+      let feature  = {"type":"FeatureCollection","features":[stateBounds_1898.features[i]]};
+      map.addSource(feature_states[i], {
+        type: 'geojson',
+        data: feature
+      });
+      let color = '#edc9af';  //color for if it was still a territory
+      let name_index_terr = territories_1898.indexOf(feature_states[i]);
+      //if it was a state
+      if(name_index_terr < 0){
+        color = '#3c3b6e';
+      }
+      map.addLayer({
+        'id': feature_states[i],
+        'type': 'fill',
+        'source': feature_states[i],
+        'layout': {},
+        'paint': {
+          'fill-color': color,
+          'fill-opacity': 0.8
+          //'fill-outline-color': '#000'
+        }
+      });
+      //map.moveLayer('heatmap_layer', feature_states[i]);
+    }
+  }
+  let spanish_empire_names = Object.keys(spanish_empire);
+  for(let i = 0; i < spanish_empire_names.length; i++){
+    let color = '#e60026';
+    let feature  = {"type":"FeatureCollection","features":[spanish_empire[spanish_empire_names[i]]]};
+    mouse_list.push(spanish_empire_names[i]);
+    map.addSource(spanish_empire_names[i], {
+      type: 'geojson',
+      data: spanish_empire[spanish_empire_names[i]]
+    });
+    map.addLayer({
+      'id': spanish_empire_names[i],
+      'type': 'fill',
+      'source': spanish_empire_names[i],
+      'layout': {},
+      'paint': {
+        'fill-color': color,
+        'fill-opacity': 0.8
+      }
+    });
+  }
+}
 function run1898(){
+  //document.getElementById('slidebar_activate').style.display = 'block';
+  document.getElementById('1898_modal').style.display = 'block';
   clearElection();
   deleteMarkers();
   removeWorldData();
+  for(let i = 0; i < mouse_list.length; i++){
+    map.removeLayer(mouse_list[i]);
+    map.removeSource(mouse_list[i]);
+  }
+  mouse_list = [];
   document.getElementById('heatmap_part').style.display = 'none';
   if(map.getLayer('heatmap_layer')){
     map.removeLayer('heatmap_layer');
@@ -2189,8 +2422,9 @@ function run1898(){
     map.removeSource('battle_points');
   }
   year = 1898;
+  colorCountries1898();
   //center map to 21.8708996,-81.7209732
-
+ 
   //color states in union, spain, cuba 
 
   //animate ship movements
@@ -2216,6 +2450,7 @@ function run1898(){
     el.style.borderRadius = 6 + 'px';
     el.style.width = 30 + 'px';
     el.style.height = 30 + 'px';
+    battles_in_year[battle_name] = battle;
     let marker = new mapboxgl.Marker(el)
       .setLngLat([battle_lng, battle_lat])
       .addTo(map);

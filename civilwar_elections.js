@@ -6,6 +6,16 @@ let state_names = ['Alabama','Arizona','Arkansas','California','Colorado',
 'Tennessee','Texas','Utah','Vermont','West Virginia', 'Virginia','Washington','Wisconsin',
 'Wyoming', 'North Dakota', 'South Dakota'];
 
+let state_names_1898 = ['Alaska', 'Alabama','Arizona','Arkansas','California','Colorado',
+'Connecticut','Delaware','District of Columbia', 'Florida','Georgia', 'Hawaii', 'Idaho','Illinois',
+'Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota',
+'Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York',
+'North Carolina','Ohio','Oklahoma','Oregon', 'Pennsylvania', 'Rhode Island','South Carolina',
+'Tennessee','Texas','Utah','Vermont','West Virginia', 'Virginia','Washington','Wisconsin',
+'Wyoming', 'North Dakota', 'South Dakota'];
+
+let territories_1898 = ['Oklahoma', 'New Mexico', 'Arizona', 'Alaska', 'Hawaii'];
+
 let confed_states_1864 = ['Texas', 'Arkansas', 'Louisiana', 'Tennessee', 'Mississippi', 'Alabama', 
   'Georgia', 'Florida', 'South Carolina', 'North Carolina', 'Virginia'];
 
