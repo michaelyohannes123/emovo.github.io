@@ -184,11 +184,11 @@
             </table>
       </div>
       <br>
-      <!--<div style="display:table; margin: auto;">
+      <div style="display:table; margin: auto;">
         <p>Featured Location Video (randomly selected)</p>
         <iframe id="video" width="400" height="300" src="#">
         </iframe>
-      </div>-->
+      </div>
      <br>
      <p id="login" style="display:table; margin: 0 auto;"></p>
      <br>
@@ -507,10 +507,10 @@ function Country(name, capitalcity, gini, gni, taxrates, housingcost, currencyLi
 }
 //document.getElementById("myModal").style="display:none;"
 var country=JSON.parse(localStorage.getItem("nation"))
-/*if(country.name=="Bonaire, Sint Eustatius and Saba")
+if(country.name=="Bonaire, Sint Eustatius and Saba")
   document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=Caribbean-Netherlands-country&autoplay=1"
 else
-  document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list="+country.name.replace(" "+"-")+"-country&autoplay=1"*/
+  document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list="+country.name.replace(" "+"-")+"-country&autoplay=1"
 //document.getElementById("video").src="https://www.youtube.com/embed/?listType=search&list=living-in-"+country.name.replace(" "+"-")+"&autoplay=1"
 ////console.log(country)
 document.getElementById("starsRating").reset()
