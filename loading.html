@@ -291,7 +291,8 @@ if(stayInUS==true){
         document.getElementById("fact").innerHTML=loadingText
       }
       coFact++*/
-      var flaglink="https://www.states101.com/img/flags/png/small/"+data.name.toLowerCase().replace(" ","-")+".png"
+      //old link: "https://www.states101.com/img/flags/png/small/"+data.name.toLowerCase().replace(" ","-")+".png"
+      var flaglink = "https://www.states101.com/img/flags/svg/" + data.name.toLowerCase().replace(" ","-") + ".svg"
       if((data.comments==[] && data.cities==[])||(data.comments==null && data.cities==null)){
       states[data.name]=new State(data.id,data.name,data.avgIncome,data.medianPropertyCost,data.popPerDoctorRatio,data.popPerDentistRatio,
       data.popPerMentalHealthRatio,data.popOtherHealthRatio,data.healthCareCost,data.violentCrime,data.foodHealthIndex,data.exerciseAccess,data.pollution,
